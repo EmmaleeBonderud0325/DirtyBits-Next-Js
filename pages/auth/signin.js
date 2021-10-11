@@ -1,15 +1,30 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Input from "../../components/Input";
+import { validate } from "email-validator";
 
 function signin() {
-  const isError = false;
+  let [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    remeberMe: false,
+  });
+
+  let [isError, setIsError] = useState(false);
+
   const inputColor = isError ? "border-red-300" : "border-white-400";
   const inputFocusColor = isError ? "border-red-300" : "border-custom-yellow";
   const labelColor = isError ? "text-red-700" : "text-gray-700";
 
-  let [formData, setFormData] = useState({ email: "", password: "" });
-  console.log(formData);
+  const submitLoginForm = () => {
+    if (validate(formData.email)) {
+      setIsError(false);
+      console.log(formData);
+    } else {
+      setIsError(true);
+      console.log("Invalid Email");
+    }
+  };
 
   return (
     <div>
@@ -24,7 +39,7 @@ function signin() {
               <img src="" className="mb-3" />
               <h1 className="mb-3 font-bold text-5xl">
                 Hello Welcome to{" "}
-                <span classNameName="text-custom-yellow">
+                <span className="text-custom-yellow">
                   <Link href="/">
                     <a>DirtyBits</a>
                   </Link>
@@ -90,7 +105,7 @@ function signin() {
                     }
                   />
                   <div style={{ height: "1rem" }}>
-                    {isError ? (
+                    {formData.password.length === 0 ? (
                       <span classNameName="text-xs text-red-400 ml-2">
                         Password can't be empty
                       </span>
@@ -105,6 +120,13 @@ function signin() {
                       id="remember_me"
                       name="remember_me"
                       type="checkbox"
+                      checked={formData.remeberMe}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          remeberMe: !formData.remeberMe,
+                        })
+                      }
                       className="h-4 w-4 bg-blue-500 focus:ring-blue-400 border-gray-300 rounded"
                     />
                     <label
@@ -123,6 +145,7 @@ function signin() {
                 <div>
                   <button
                     type="submit"
+                    onClick={submitLoginForm}
                     className="w-full flex justify-center bg-custom-yellow2 hover:bg-custom-yellow text-gray-100 p-3  rounded-full tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
                   >
                     Sign in
