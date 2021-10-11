@@ -10,19 +10,58 @@ function signin() {
     remeberMe: false,
   });
 
-  let [isError, setIsError] = useState(false);
+  let [isError, setIsError] = useState({
+    email: { error: false, details: "" },
+    password: { error: false, details: "" },
+  });
 
-  const inputColor = isError ? "border-red-300" : "border-white-400";
-  const inputFocusColor = isError ? "border-red-300" : "border-custom-yellow";
-  const labelColor = isError ? "text-red-700" : "text-gray-700";
+  const emailInputColor = isError.email.error
+    ? "border-red-300"
+    : "border-white-400";
+  const emailInputFocusColor = isError.email.error
+    ? "border-red-300"
+    : "border-custom-yellow";
+  const emailLabelColor = isError.email.error
+    ? "text-red-700"
+    : "text-gray-700";
+
+  const passwordInputColor = isError.password.error
+    ? "border-red-300"
+    : "border-white-400";
+  const passwordInputFocusColor = isError.password.error
+    ? "border-red-300"
+    : "border-custom-yellow";
+  const passwordLabelColor = isError.password.error
+    ? "text-red-700"
+    : "text-gray-700";
 
   const submitLoginForm = () => {
     if (validate(formData.email)) {
-      setIsError(false);
-      console.log(formData);
+      if (formData.password.length === 0) {
+        setIsError({
+          ...isError,
+          password: { error: true, details: "Password can't be empty !" },
+        });
+      } else if (formData.password.length < 8) {
+        setIsError({
+          ...isError,
+          password: {
+            error: true,
+            details: "Password must have atleast 8 characters !",
+          },
+        });
+      } else {
+        setIsError({
+          email: { error: false, details: "" },
+          password: { error: false, details: "" },
+        });
+        console.log(formData);
+      }
     } else {
-      setIsError(true);
-      console.log("Invalid Email");
+      setIsError({
+        ...isError,
+        email: { error: true, details: "Invalid Email !" },
+      });
     }
   };
 
@@ -64,7 +103,7 @@ function signin() {
                 <div className="space-y-2">
                   {/* Change text-red-700 to text-gray-700 if there's no error */}
                   <label
-                    className={`text-sm font-medium ${labelColor} tracking-wide`}
+                    className={`text-sm font-medium ${emailLabelColor} tracking-wide`}
                   >
                     Email
                   </label>
@@ -72,16 +111,16 @@ function signin() {
                     type="text"
                     placeholder={"@gmail.com"}
                     value={formData.email}
-                    color={inputColor}
-                    focusColor={inputFocusColor}
+                    color={emailInputColor}
+                    focusColor={emailInputFocusColor}
                     onchangeFunction={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
                   />
                   <div style={{ height: "1rem" }}>
-                    {isError ? (
+                    {isError.email.error ? (
                       <span classNameName="text-xs text-red-400 ml-2 mb:2">
-                        Invalid Email
+                        {isError.email.details}
                       </span>
                     ) : (
                       <span></span>
@@ -90,7 +129,7 @@ function signin() {
                 </div>
                 <div className="space-y-2">
                   <label
-                    className={`mb-5 text-sm font-medium ${labelColor} tracking-wide`}
+                    className={`mb-5 text-sm font-medium ${passwordLabelColor} tracking-wide`}
                   >
                     Password
                   </label>
@@ -98,16 +137,16 @@ function signin() {
                     type="password"
                     placeholder={"Enter your password"}
                     value={formData.password}
-                    color={inputColor}
-                    focusColor={inputFocusColor}
+                    color={passwordInputColor}
+                    focusColor={passwordInputFocusColor}
                     onchangeFunction={(e) =>
                       setFormData({ ...formData, password: e.target.value })
                     }
                   />
                   <div style={{ height: "1rem" }}>
-                    {formData.password.length === 0 ? (
+                    {isError.password.error ? (
                       <span classNameName="text-xs text-red-400 ml-2">
-                        Password can't be empty
+                        {isError.password.details}
                       </span>
                     ) : (
                       <span></span>
