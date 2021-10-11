@@ -1,0 +1,67 @@
+@tailwind base;
+
+/* Write your own custom base styles here */
+
+/* Start purging... */
+@tailwind components;
+/* Stop purging. */
+
+/* Write you own custom component styles here */
+
+/* Start purging... */
+@tailwind utilities;
+/* Stop purging. */
+
+/* Your own custom utilities */
+
+@layer components {
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+.customHero {
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url("../public//background.jpg");
+  background-position: center center;
+  background-size: cover;
+  padding: 80px;
+}
+
+.cartoon {
+  animation: updown 2s ease infinite;
+}
+
+html::-webkit-scrollbar {
+  width: 6px;
+}
+
+html::-webkit-scrollbar-track {
+  background-color: #000;
+  border-radius: 100px;
+}
+
+html::-webkit-scrollbar-thumb {
+  background-color: #fb7a16;
+  border-radius: 100px;
+}
+
+@keyframes updown {
+  0% {
+    transform: translateY(-10px);
+  }
+
+  50% {
+    transform: translateY(5px);
+  }
+
+  100% {
+    transform: translateY(-10px);
+  }
+}
