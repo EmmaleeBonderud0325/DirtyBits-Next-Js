@@ -132,7 +132,7 @@ function signin() {
                 <p className="text-gray-500">Please sign in to your account.</p>
               </div>
               <div className="space-y-5">
-                <div className="space-y-2">
+                <div className="space-y-1">
                   {/* Change text-red-700 to text-gray-700 if there's no error */}
                   <label
                     className={`text-sm font-medium ${emailLabelColor} tracking-wide`}
@@ -159,7 +159,7 @@ function signin() {
                     )}
                   </div>
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-1">
                   <label
                     className={`mb-5 text-sm font-medium ${passwordLabelColor} tracking-wide`}
                   >
