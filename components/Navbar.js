@@ -86,11 +86,11 @@ export default function Example() {
                         <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                           <span className="sr-only">Open user menu</span>
                           <img
-                            className="h-8 w-8 rounded-full"
+                            className="h-10 w-10 rounded-full"
                             src="https://lh3.googleusercontent.com/ogw/ADea4I5wIPGFJSysHMWa6CyMkW0ABbNxUasYYCCG2pZhpQ=s32-c-mo"
                             alt=""
                           />
-                          <span className="text-white p-1 text-base">
+                          <span className="text-white px-2 pt-1.5 pr-3 text-base">
                             Mohit Bisht
                           </span>
                         </Menu.Button>

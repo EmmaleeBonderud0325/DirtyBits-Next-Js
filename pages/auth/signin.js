@@ -35,34 +35,66 @@ function signin() {
     ? "text-red-700"
     : "text-gray-700";
 
-  const submitLoginForm = () => {
+  const validateFormData = () => {
     if (validate(formData.email)) {
       if (formData.password.length === 0) {
         setIsError({
           ...isError,
+          email: { error: false, details: "" },
           password: { error: true, details: "Password can't be empty !" },
         });
+        return false;
       } else if (formData.password.length < 8) {
         setIsError({
           ...isError,
+          email: { error: false, details: "" },
           password: {
             error: true,
             details: "Password must have atleast 8 characters !",
           },
         });
+        return false;
       } else {
         setIsError({
           email: { error: false, details: "" },
           password: { error: false, details: "" },
         });
-        console.log(formData);
+        return true;
       }
     } else {
-      setIsError({
-        ...isError,
-        email: { error: true, details: "Invalid Email !" },
-      });
+      if (formData.password.length === 0) {
+        setIsError({
+          ...isError,
+          email: { error: true, details: "Invalid Email !" },
+          password: { error: true, details: "Password can't be empty !" },
+        });
+        return false;
+      } else if (formData.password.length < 8) {
+        setIsError({
+          ...isError,
+          email: { error: true, details: "Invalid Email !" },
+          password: {
+            error: true,
+            details: "Password must have atleast 8 characters !",
+          },
+        });
+        return false;
+      } else {
+        setIsError({
+          ...isError,
+          email: { error: true, details: "Invalid Email !" },
+        });
+        return false;
+      }
     }
+  };
+
+  const submitLoginForm = () => {
+    const isValid = validateFormData();
+    if (isValid) {
+      console.log(formData);
+    }
+    return;
   };
 
   return (
@@ -119,7 +151,7 @@ function signin() {
                   />
                   <div style={{ height: "1rem" }}>
                     {isError.email.error ? (
-                      <span classNameName="text-xs text-red-400 ml-2 mb:2">
+                      <span className="text-xs text-red-400 ml-2 mb:2">
                         {isError.email.details}
                       </span>
                     ) : (
@@ -143,9 +175,10 @@ function signin() {
                       setFormData({ ...formData, password: e.target.value })
                     }
                   />
+
                   <div style={{ height: "1rem" }}>
                     {isError.password.error ? (
-                      <span classNameName="text-xs text-red-400 ml-2">
+                      <span className="text-xs text-red-400 ml-2">
                         {isError.password.details}
                       </span>
                     ) : (
