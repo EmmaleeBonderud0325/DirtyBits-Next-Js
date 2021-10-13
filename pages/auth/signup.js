@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from "react";
 import Link from "next/link";
+import { validateUserName } from "../../components/api/apis";
 
 import Debounce from "../../components/Helper/Debounce";
-import Input from "../../components/Input";
-
+import Input from "../../components/input";
 
 function signup() {
   const isError = false;
@@ -16,6 +16,10 @@ function signup() {
     email: { error: false, details: "" },
     password: { error: false, details: "" },
   });
+
+  let [usernameInputFocusColor, setUsernameInputFocusColor] = useState(
+    "border-custom-yellow"
+  );
 
   const emailInputColor = isErrors.email.error
     ? "border-red-300"
@@ -30,9 +34,6 @@ function signup() {
   const usernameInputColor = isErrors.username.error
     ? "border-red-300"
     : "border-white-400";
-  const usernameInputFocusColor = isErrors.username.error
-    ? "border-red-300"
-    : "border-custom-yellow";
   const usernameLabelColor = isErrors.username.error
     ? "text-red-700"
     : "text-gray-700";
@@ -61,9 +62,48 @@ function signup() {
 
   const handleUsernameChange = async () => {
     console.log("called");
+    const username = document.getElementById("username-field").value;
+    if (username.length < 5) {
+      setUsernameInputFocusColor("border-green-300");
+      setIsErrors({
+        ...isErrors,
+        username: {
+          error: true,
+          details: "Username should have atleast 5 characters !",
+        },
+      });
+    } else {
+      await validateUserName
+        .post("/", { username: username })
+        .then((result) => {
+          const data = result.data;
+          if (data.success) {
+            setIsErrors({
+              ...isErrors,
+              username: {
+                error: false,
+                details: "",
+              },
+            });
+            setUsernameInputFocusColor("border-green-400");
+          } else {
+            setIsErrors({
+              ...isErrors,
+              username: {
+                error: true,
+                details: "Username Exsists !",
+              },
+            });
+          }
+          console.log(result.data);
+        });
+    }
   };
 
-  const HandleUserNameUpdateDebounce = useCallback(Debounce(handleUsernameChange), []);
+  const HandleUserNameUpdateDebounce = useCallback(
+    Debounce(handleUsernameChange),
+    []
+  );
 
   return (
     <div>
@@ -99,6 +139,7 @@ function signup() {
                   </label>
                   <Input
                     // value={formData.userName}
+                    id={"username-field"}
                     type={"text"}
                     color={usernameInputColor}
                     focusColor={usernameInputFocusColor}
@@ -107,7 +148,7 @@ function signup() {
                   <div style={{ height: ".3rem" }}>
                     {isErrors.username.error ? (
                       <span className="text-xs text-red-400 ml-2 mb:2">
-                        isErrors.username.details
+                        {isErrors.username.details}
                       </span>
                     ) : (
                       <span></span>

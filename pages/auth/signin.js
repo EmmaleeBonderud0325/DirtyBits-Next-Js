@@ -3,7 +3,7 @@ import Link from "next/link";
 import GoogleLogin from "react-google-login";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
 
-import Input from "../../components/Input";
+import Input from "../../components/input";
 import { validate } from "email-validator";
 import {AiFillGithub} from 'react-icons/ai'
 import {FcGoogle} from 'react-icons/fc'

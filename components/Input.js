@@ -9,6 +9,7 @@ function Input({
   color,
   focusColor,
   onchangeFunction,
+  id,
 }) {
   return (
     <input
@@ -16,6 +17,7 @@ function Input({
       placeholder={placeholder}
       type={type}
       value={value}
+      id={id}
       onChange={(e) => onchangeFunction(e)}
     />
   );
