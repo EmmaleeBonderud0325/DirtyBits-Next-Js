@@ -29,7 +29,7 @@ function signin() {
     : "border-white-400";
   const emailInputFocusColor = isError.email.error
     ? "border-red-300"
-    : "border-custom-yellow";
+    : 'border-custom-yellow2'
   const emailLabelColor = isError.email.error
     ? "text-red-700"
     : "text-gray-700";
@@ -39,7 +39,7 @@ function signin() {
     : "border-white-400";
   const passwordInputFocusColor = isError.password.error
     ? "border-red-300"
-    : "border-custom-yellow";
+    : 'border-custom-yellow2'
   const passwordLabelColor = isError.password.error
     ? "text-red-700"
     : "text-gray-700";
@@ -188,7 +188,7 @@ function signin() {
                   </label>
                   <div className={`w-full rounded-lg flex`}>
                     <input
-                      className={`w-full px-4 py-2 border ${passwordInputColor} focus:${passwordInputFocusColor} focus:outline-none rounded-lg`}
+                      className={`w-full px-4 py-2 border ${passwordInputColor} focus:border-custom-yellow focus:outline-none rounded-lg`}
                       type={showPassword ? "text" : "password"}
                       value={formData.password}
                       placeholder="Password"

@@ -2,13 +2,10 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
-import router, { Router, useRouter } from 'next/router'
+import {useRouter } from 'next/router'
 import Link from 'next/link'
 
 import LoginButton from "./loginButton";
-
-
-
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
