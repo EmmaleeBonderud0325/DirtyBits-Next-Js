@@ -67,8 +67,14 @@ function signup() {
 
   return (
     <div>
-      <div class="bg-no-repeat bg-cover bg-center relative">
-        <div class="absolute bg-gradient-to-b from-black to-black opacity-75 inset-0 z-0"></div>
+      <div class="bg-no-repeat bg-cover bg-center relative overflow-hidden">
+      <div class="absolute w-60 h-60 rounded-xl bg-custom-yellow2 -top-5 -left-16 z-0 transform rotate-45 hidden md:block">
+        </div>
+        <div class="absolute w-48 h-48 rounded-xl bg-custom-yellow2 -bottom-10 transform rotate-12 hidden md:block">
+        </div>
+        <div class="w-40 h-40 absolute bg-custom-yellow2 rounded-full top-0 right-12 hidden md:block"></div>
+        <div class="w-20 h-40 absolute bg-custom-yellow2 rounded-full bottom-20 right-10 transform rotate-45 hidden md:block"></div>
+        <div class="absolute md:bg-gradient-to-b from-black to-black opacity-75 inset-0 z-0"></div>
         <div class="min-h-screen sm:flex sm:flex-row mx-0 justify-center">
           <div class="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
             <div class="self-start hidden lg:flex flex-col  text-white">

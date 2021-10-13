@@ -120,10 +120,16 @@ function signin() {
   return (
     <>
       <div
-        className="bg-no-repeat bg-cover bg-center relative"
-        style={{ background: "url('')" }}
+        className="bg-no-repeat bg-cover bg-center relative overflow-hidden"
       >
-        <div className="absolute bg-gradient-to-b from-black to-black opacity-75 inset-0 z-0"></div>
+        <div class="absolute w-60 h-60 rounded-xl bg-custom-yellow2 -top-5 -left-16 z-0 transform rotate-45 hidden md:block">
+        </div>
+        <div class="absolute w-48 h-48 rounded-xl bg-custom-yellow2 -bottom-10 transform rotate-12 hidden md:block">
+        </div>
+        <div class="w-40 h-40 absolute bg-custom-yellow2 rounded-full top-0 right-12 hidden md:block"></div>
+        <div class="w-20 h-40 absolute bg-custom-yellow2 rounded-full bottom-20 right-10 transform rotate-45 hidden md:block"></div>
+
+        <div className="absolute md:bg-gradient-to-b from-black to-black opacity-75 inset-0 z-0"></div>
         <div className="min-h-screen sm:flex sm:flex-row mx-0 justify-center">
           <div className="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
             <div className="self-start hidden lg:flex flex-col  text-white">
@@ -242,12 +248,13 @@ function signin() {
                     </label>
                   </div>
                   <div className="text-sm">
-                    <a
-                      href="#"
-                      className="text-indigo-400 text-xs hover:text-black"
-                    >
-                      Forgot your password?
-                    </a>
+                    <Link  href="/auth/changePassword">
+                      <a                       
+                        className="text-indigo-400 text-xs hover:text-black"
+                      >
+                        Forgot your password?
+                      </a>
+                    </Link>
                   </div>
                 </div>
                 <div>
@@ -296,6 +303,7 @@ function signin() {
               </div>
             </div>
           </div>
+       
         </div>
       </div>
     </>
