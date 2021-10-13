@@ -275,7 +275,7 @@ function signin() {
                       <button
                         onClick={renderProps.onClick}
                         disabled={renderProps.disabled}
-                        class="mt-3 w-full flex justify-center rounded-full bg-black px-4 p-3 font-semibold text-white inline-flex items-center space-x-2 rounded"
+                        class="mt-3 w-full flex justify-center rounded-full bg-black px-4 p-3 font-semibold text-white items-center space-x-2"
                       >
                         <FcGoogle/>
                         <span>Sign In </span>
@@ -285,7 +285,7 @@ function signin() {
                     onFailure={responseGoogleFailure}
                     cookiePolicy={"single_host_origin"}
                   />
-                    <button class="mt-3 w-full flex justify-center rounded-full bg-black px-4 p-3 font-semibold text-white inline-flex items-center space-x-2 rounded">
+                    <button class="mt-3 w-full flex justify-center rounded-full bg-black px-4 p-3 font-semibold text-white items-center space-x-2">
                       <AiFillGithub />
                     <span>Sign In </span>
                   </button>
