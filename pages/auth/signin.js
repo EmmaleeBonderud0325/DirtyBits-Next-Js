@@ -14,7 +14,7 @@ function signin() {
     password: "",
     remeberMe: false,
   });
-
+  
   let [showPassword, setShowPassword] = useState(false);
 
   let [isError, setIsError] = useState({
@@ -22,6 +22,8 @@ function signin() {
     password: { error: false, details: "" },
   });
 
+  const [isDisabled, setIsDisabled] = useState(false)
+  
   const emailInputColor = isError.email.error
     ? "border-red-300"
     : "border-white-400";
@@ -105,9 +107,12 @@ function signin() {
   };
 
   const submitLoginForm = () => {
+    setIsDisabled(true)
     const isValid = validateFormData();
     if (isValid) {
       console.log(formData);
+    }else {
+      setIsDisabled(false)
     }
     return;
   };
@@ -194,12 +199,12 @@ function signin() {
                     {showPassword ? (
                       <EyeIcon
                         onClick={() => setShowPassword(false)}
-                        className="cursor-pointer h-5 w-5 -ml-10 mt-2"
+                        className="cursor-pointer h-5 w-5 -ml-10 mt-2 text-black"
                       />
                     ) : (
                       <EyeOffIcon
                         onClick={() => setShowPassword(true)}
-                        className="cursor-pointer h-5 w-5 -ml-10 mt-2"
+                        className="cursor-pointer h-5 w-5 -ml-10 mt-2 text-black"
                       />
                     )}
                   </div>
@@ -247,13 +252,16 @@ function signin() {
                 </div>
                 <div>
                   <button
+                    disabled = {isDisabled ? true : false}
                     type="submit"
                     onClick={submitLoginForm}
-                    className="w-full flex justify-center bg-custom-yellow2 hover:bg-custom-yellow text-gray-100 p-3  rounded-full tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
+                    className={`w-full flex justify-center bg-custom-yellow2 hover:bg-custom-yellow text-gray-100 p-3  rounded-full tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500
+                      ${isDisabled && 'opacity-50 cursor-not-allowed'}
+                    `}
                   >
                     Sign In
                   </button>
-
+                    
                   <GoogleLogin
                     clientId="64402702960-mlmnvge26bhhdf6ghgrt6viqbqhv0610.apps.googleusercontent.com"
                     render={(renderProps) => (
@@ -271,7 +279,7 @@ function signin() {
                     cookiePolicy={"single_host_origin"}
                   />
                     <button class="mt-3 w-full flex justify-center rounded-full bg-black px-4 p-3 font-semibold text-white inline-flex items-center space-x-2 rounded">
-                      <AiFillGithub/>
+                      <AiFillGithub />
                     <span>Sign In </span>
                   </button>
                 </div>
