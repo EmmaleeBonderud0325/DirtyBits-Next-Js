@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import Link from "next/link";
 import GoogleLogin from "react-google-login";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
+import { validate } from "email-validator";
+import { AiFillGithub } from "react-icons/ai";
+import { FcGoogle } from "react-icons/fc";
 
 import Input from "../../components/input";
-import { validate } from "email-validator";
-import {AiFillGithub} from 'react-icons/ai'
-import {FcGoogle} from 'react-icons/fc'
 
 function signin() {
   let [formData, setFormData] = useState({
@@ -14,7 +14,7 @@ function signin() {
     password: "",
     remeberMe: false,
   });
-  
+
   let [showPassword, setShowPassword] = useState(false);
 
   let [isError, setIsError] = useState({
@@ -22,8 +22,8 @@ function signin() {
     password: { error: false, details: "" },
   });
 
-  const [isDisabled, setIsDisabled] = useState(false)
-  
+  const [isDisabled, setIsDisabled] = useState(false);
+
   const emailInputColor = isError.email.error
     ? "border-red-300"
     : "border-white-400";
@@ -107,12 +107,12 @@ function signin() {
   };
 
   const submitLoginForm = () => {
-    setIsDisabled(true)
+    setIsDisabled(true);
     const isValid = validateFormData();
     if (isValid) {
       console.log(formData);
-    }else {
-      setIsDisabled(false)
+    } else {
+      setIsDisabled(false);
     }
     return;
   };
@@ -166,6 +166,7 @@ function signin() {
                     value={formData.email}
                     color={emailInputColor}
                     focusColor={emailInputFocusColor}
+                    id={"none"}
                     onchangeFunction={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
@@ -188,7 +189,7 @@ function signin() {
                   </label>
                   <div className={`w-full rounded-lg flex`}>
                     <input
-                      className={`w-full px-4 py-2 border ${passwordInputColor} focus:${passwordInputFocusColor} focus:outline-none rounded-lg`}
+                      className={`w-full px-4 py-2 border text-black ${passwordInputColor} focus:${passwordInputFocusColor} focus:outline-none rounded-lg`}
                       type={showPassword ? "text" : "password"}
                       value={formData.password}
                       placeholder="Password"
@@ -252,25 +253,25 @@ function signin() {
                 </div>
                 <div>
                   <button
-                    disabled = {isDisabled ? true : false}
+                    disabled={isDisabled ? true : false}
                     type="submit"
                     onClick={submitLoginForm}
                     className={`w-full flex justify-center bg-custom-yellow2 hover:bg-custom-yellow text-gray-100 p-3  rounded-full tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500
-                      ${isDisabled && 'opacity-50 cursor-not-allowed'}
+                      ${isDisabled && "opacity-50 cursor-not-allowed"}
                     `}
                   >
                     Sign In
                   </button>
-                    
+
                   <GoogleLogin
                     clientId="64402702960-mlmnvge26bhhdf6ghgrt6viqbqhv0610.apps.googleusercontent.com"
                     render={(renderProps) => (
                       <button
                         onClick={renderProps.onClick}
                         disabled={renderProps.disabled}
-                        class="mt-3 w-full flex justify-center rounded-full bg-black px-4 p-3 font-semibold text-white inline-flex items-center space-x-2 rounded"
+                        className="mt-3 w-full flex justify-center rounded-full bg-black px-4 p-3 font-semibold text-white inline-flex items-center space-x-2 rounded"
                       >
-                        <FcGoogle/>
+                        <FcGoogle />
                         <span>Sign In </span>
                       </button>
                     )}
@@ -278,8 +279,8 @@ function signin() {
                     onFailure={responseGoogleFailure}
                     cookiePolicy={"single_host_origin"}
                   />
-                    <button class="mt-3 w-full flex justify-center rounded-full bg-black px-4 p-3 font-semibold text-white inline-flex items-center space-x-2 rounded">
-                      <AiFillGithub />
+                  <button className="mt-3 w-full flex justify-center rounded-full bg-black px-4 p-3 font-semibold text-white inline-flex items-center space-x-2 rounded">
+                    <AiFillGithub />
                     <span>Sign In </span>
                   </button>
                 </div>

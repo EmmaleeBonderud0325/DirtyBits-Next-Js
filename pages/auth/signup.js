@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import Link from "next/link";
-import { validateUserName } from "../../components/api/apis";
+import { validateUserName, validateEmail } from "../../components/api/apis";
+import { validate } from "email-validator";
 
 import Debounce from "../../components/Helper/Debounce";
 import Input from "../../components/input";
@@ -17,10 +18,6 @@ function signup() {
     password: { error: false, details: "" },
   });
 
-  let [usernameInputFocusColor, setUsernameInputFocusColor] = useState(
-    "border-custom-yellow"
-  );
-
   const emailInputColor = isErrors.email.error
     ? "border-red-300"
     : "border-white-400";
@@ -34,6 +31,9 @@ function signup() {
   const usernameInputColor = isErrors.username.error
     ? "border-red-300"
     : "border-white-400";
+  const usernameInputFocusColor = isErrors.username.error
+    ? "border-red-300"
+    : "border-custom-yellow";
   const usernameLabelColor = isErrors.username.error
     ? "text-red-700"
     : "text-gray-700";
@@ -58,13 +58,11 @@ function signup() {
     remeberMe: false,
   });
 
-  console.log(formData);
+  // console.log(formData);
 
   const handleUsernameChange = async () => {
-    console.log("called");
-    const username = document.getElementById("username-field").value;
+    const username = document.getElementById("username-field-signup").value;
     if (username.length < 5) {
-      setUsernameInputFocusColor("border-green-300");
       setIsErrors({
         ...isErrors,
         username: {
@@ -73,30 +71,33 @@ function signup() {
         },
       });
     } else {
-      await validateUserName
-        .post("/", { username: username })
-        .then((result) => {
-          const data = result.data;
-          if (data.success) {
-            setIsErrors({
-              ...isErrors,
-              username: {
-                error: false,
-                details: "",
-              },
-            });
-            setUsernameInputFocusColor("border-green-400");
-          } else {
-            setIsErrors({
-              ...isErrors,
-              username: {
-                error: true,
-                details: "Username Exsists !",
-              },
-            });
-          }
-          console.log(result.data);
-        });
+      try {
+        await validateUserName
+          .post("/", { username: username })
+          .then((result) => {
+            const data = result.data;
+            if (data.success) {
+              setIsErrors({
+                ...isErrors,
+                username: {
+                  error: false,
+                  details: "",
+                },
+              });
+            } else {
+              setIsErrors({
+                ...isErrors,
+                username: {
+                  error: true,
+                  details: "Username Exsists !",
+                },
+              });
+            }
+            console.log(result.data);
+          });
+      } catch (e) {
+        console.error("Auth Server Error!");
+      }
     }
   };
 
@@ -105,41 +106,87 @@ function signup() {
     []
   );
 
+  const handleEmailChange = async () => {
+    const email = document.getElementById("email-field-signup").value;
+    if (!validate(email)) {
+      setIsErrors({
+        ...isErrors,
+        email: {
+          error: true,
+          details: "Invalid email !",
+        },
+      });
+    } else {
+      try {
+        await validateEmail.post("/", { email: email }).then((result) => {
+          const data = result.data;
+          if (data.success) {
+            setIsErrors({
+              ...isErrors,
+              email: {
+                error: false,
+                details: "",
+              },
+            });
+          } else {
+            setIsErrors({
+              ...isErrors,
+              email: {
+                error: true,
+                details: "Email Exsists !",
+              },
+            });
+          }
+          console.log(result.data);
+        });
+      } catch (e) {
+        console.error("Auth Server Error!");
+      }
+    }
+  };
+
+  const HandleEmailUpdateDebounce = useCallback(
+    Debounce(handleEmailChange),
+    []
+  );
+
   return (
     <div>
-      <div class="bg-no-repeat bg-cover bg-center relative">
-        <div class="absolute bg-gradient-to-b from-black to-black opacity-75 inset-0 z-0"></div>
-        <div class="min-h-screen sm:flex sm:flex-row mx-0 justify-center">
-          <div class="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
-            <div class="self-start hidden lg:flex flex-col  text-white">
-              <img src="" class="mb-3" />
-              <h1 class="mb-3 font-bold text-5xl">
+      <div className="bg-no-repeat bg-cover bg-center relative">
+        <div className="absolute bg-gradient-to-b from-black to-black opacity-75 inset-0 z-0"></div>
+        <div className="min-h-screen sm:flex sm:flex-row mx-0 justify-center">
+          <div className="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
+            <div className="self-start hidden lg:flex flex-col  text-white">
+              <img src="" className="mb-3" />
+              <h1 className="mb-3 font-bold text-5xl">
                 Hello Welcome to{" "}
                 <span className="text-custom-yellow">DirtyBits</span>
               </h1>
-              <p class="pr-3">
+              <p className="pr-3">
                 Lorem ipsum is placeholder text commonly used in the graphic,
                 print, and publishing industries for previewing layouts and
                 visual mockups
               </p>
             </div>
           </div>
-          <div class="flex justify-center self-center  z-10">
-            <div class="p-12 bg-white mx-auto rounded-2xl w-100 ">
-              <div class="mb-4">
-                <h3 class="font-semibold text-2xl text-gray-800">Sign Up </h3>
-                <p class="text-gray-500">Please sign in to your account.</p>
+          <div className="flex justify-center self-center  z-10">
+            <div className="p-12 bg-white mx-auto rounded-2xl w-100 ">
+              <div className="mb-4">
+                <h3 className="font-semibold text-2xl text-gray-800">
+                  Sign Up{" "}
+                </h3>
+                <p className="text-gray-500">Please sign in to your account.</p>
               </div>
-              <div class="space-y-5">
-                <div class="space-y-2">
+              <div className="space-y-5">
+                <div className="space-y-2">
                   <label
-                    class={`text-sm font-medium ${usernameLabelColor} tracking-wide`}
+                    className={`text-sm font-medium ${usernameLabelColor} tracking-wide`}
                   >
                     Username
                   </label>
                   <Input
                     // value={formData.userName}
-                    id={"username-field"}
+                    id={"username-field-signup"}
                     type={"text"}
                     color={usernameInputColor}
                     focusColor={usernameInputFocusColor}
@@ -155,9 +202,9 @@ function signup() {
                     )}
                   </div>
                 </div>
-                <div class="space-y-2">
+                <div className="space-y-2">
                   <label
-                    class={`text-sm font-medium ${labelColor} tracking-wide`}
+                    className={`text-sm font-medium ${labelColor} tracking-wide`}
                   >
                     Firstname
                   </label>
@@ -166,14 +213,15 @@ function signup() {
                     type={"text"}
                     color={inputColor}
                     focusColor={inputFocusColor}
+                    id={"none"}
                     onchangeFunction={(e) =>
                       setFormData({ ...formData, firstName: e.target.value })
                     }
                   />
                 </div>
-                <div class="space-y-2">
+                <div className="space-y-2">
                   <label
-                    class={`text-sm font-medium ${labelColor} tracking-wide`}
+                    className={`text-sm font-medium ${labelColor} tracking-wide`}
                   >
                     Lastname
                   </label>
@@ -182,31 +230,30 @@ function signup() {
                     type={"text"}
                     color={inputColor}
                     focusColor={inputFocusColor}
+                    id={"none"}
                     onchangeFunction={(e) =>
                       setFormData({ ...formData, lastName: e.target.value })
                     }
                   />
                 </div>
-                <div class="space-y-2">
+                <div className="space-y-2">
                   <label
-                    class={`text-sm font-medium ${emailLabelColor} tracking-wide`}
+                    className={`text-sm font-medium ${emailLabelColor} tracking-wide`}
                   >
                     Email
                   </label>
                   <Input
-                    value={formData.email}
                     placeholder={"@gmail.com"}
                     type={"email"}
                     color={emailInputColor}
                     focusColor={emailInputFocusColor}
-                    onchangeFunction={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
-                    }
+                    id={"email-field-signup"}
+                    onchangeFunction={HandleEmailUpdateDebounce}
                   />
                   <div style={{ height: ".3rem" }}>
                     {isErrors.email.error ? (
                       <span className="text-xs text-red-400 ml-2 mb:2">
-                        isErrors.email.details
+                        {isErrors.email.details}
                       </span>
                     ) : (
                       <span></span>
@@ -224,6 +271,7 @@ function signup() {
                     type={"password"}
                     color={passwordInputColor}
                     focusColor={passwordInputFocusColor}
+                    id={"none"}
                     onchangeFunction={(e) =>
                       setFormData({ ...formData, password: e.target.value })
                     }
@@ -238,9 +286,9 @@ function signup() {
                     )}
                   </div>
                 </div>
-                <div class="space-y-2">
+                <div className="space-y-2">
                   <label
-                    class={`text-sm font-medium ${passwordLabelColor} tracking-wide`}
+                    className={`text-sm font-medium ${passwordLabelColor} tracking-wide`}
                   >
                     Confirm Password
                   </label>
@@ -249,6 +297,7 @@ function signup() {
                     type={"password"}
                     color={passwordInputColor}
                     focusColor={passwordInputFocusColor}
+                    id={"none"}
                     onchangeFunction={(e) =>
                       setFormData({
                         ...formData,
@@ -266,8 +315,8 @@ function signup() {
                     )}
                   </div>
                 </div>
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
                     <input
                       id="remember_me"
                       name="remember_me"
@@ -278,17 +327,17 @@ function signup() {
                         })
                       }
                       type="checkbox"
-                      class="h-4 w-4 bg-blue-500 focus:ring-blue-400 border-gray-300 rounded"
+                      className="h-4 w-4 bg-blue-500 focus:ring-blue-400 border-gray-300 rounded"
                     />
                     <label
                       for="remember_me"
-                      class="ml-2 block text-sm text-gray-800"
+                      className="ml-2 block text-sm text-gray-800"
                     >
                       Remember me
                     </label>
                   </div>
-                  <div class="text-sm">
-                    <a href="#" class="text-black hover:text-custom-yellow">
+                  <div className="text-sm">
+                    <a href="#" className="text-black hover:text-custom-yellow">
                       Forgot your password?
                     </a>
                   </div>
@@ -296,17 +345,19 @@ function signup() {
                 <div>
                   <button
                     type="submit"
-                    class="w-full flex justify-center bg-custom-yellow2  hover:bg-custom-yellow text-gray-100 p-3  rounded-full tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
+                    className="w-full flex justify-center bg-custom-yellow2  hover:bg-custom-yellow text-gray-100 p-3  rounded-full tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
                   >
                     Register
                   </button>
                 </div>
               </div>
-              <div class="pt-5 text-center text-gray-400 text-xs">
+              <div className="pt-5 text-center text-gray-400 text-xs">
                 <span>
                   Already have an account ?{" "}
                   <Link href="/auth/signin">
-                    <a class="text-black hover:text-custom-yellow">Sign In</a>
+                    <a className="text-black hover:text-custom-yellow">
+                      Sign In
+                    </a>
                   </Link>
                 </span>
               </div>
