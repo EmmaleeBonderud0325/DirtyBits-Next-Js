@@ -120,7 +120,7 @@ function signin() {
   return (
     <>
       <div
-        className="bg-no-repeat bg-cover bg-center relative overflow-hidden"
+        className="bg-no-repeat bg-cover bg-center relative"
       >
         <div class="absolute w-60 h-60 rounded-xl bg-custom-yellow2 -top-5 -left-16 z-0 transform rotate-45 hidden md:block">
         </div>
@@ -129,7 +129,7 @@ function signin() {
         <div class="w-40 h-40 absolute bg-custom-yellow2 rounded-full top-0 right-12 hidden md:block"></div>
         <div class="w-20 h-40 absolute bg-custom-yellow2 rounded-full bottom-20 right-10 transform rotate-45 hidden md:block"></div>
 
-        <div className="absolute md:bg-gradient-to-b from-black to-black opacity-75 inset-0 z-0"></div>
+        <div className="absolute md:bg-gradient-to-b from-black to-black opacity-75 lg:inset-0 z-0"></div>
         <div className="min-h-screen sm:flex sm:flex-row mx-0 justify-center">
           <div className="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
             <div className="self-start hidden lg:flex flex-col  text-white">
@@ -150,7 +150,7 @@ function signin() {
             </div>
           </div>
           <div className="flex justify-center self-center  z-10">
-            <div className="p-12 bg-white mx-auto rounded-2xl w-100 ">
+            <div className="p-12 lg:p-16 bg-white mx-auto rounded-2xl w-100 ">
               <div className="mb-4">
                 <h3 className="font-semibold text-2xl text-gray-800">
                   Sign In{" "}
@@ -194,7 +194,7 @@ function signin() {
                   </label>
                   <div className={`w-full rounded-lg flex`}>
                     <input
-                      className={`w-full px-4 py-2 border ${passwordInputColor} focus:border-custom-yellow focus:outline-none rounded-lg`}
+                      className={`w-full px-4 py-2 border ${passwordInputColor} focus:border-custom-yellow focus:outline-none rounded-lg text-black`}
                       type={showPassword ? "text" : "password"}
                       value={formData.password}
                       placeholder="Password"

@@ -74,7 +74,7 @@ function signup() {
         </div>
         <div class="w-40 h-40 absolute bg-custom-yellow2 rounded-full top-0 right-12 hidden md:block"></div>
         <div class="w-20 h-40 absolute bg-custom-yellow2 rounded-full bottom-20 right-10 transform rotate-45 hidden md:block"></div>
-        <div class="absolute md:bg-gradient-to-b from-black to-black opacity-75 inset-0 z-0"></div>
+        <div class="absolute md:bg-gradient-to-b from-black to-black opacity-75 lg:inset-0 z-0"></div>
         <div class="min-h-screen sm:flex sm:flex-row mx-0 justify-center">
           <div class="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
             <div class="self-start hidden lg:flex flex-col  text-white">
@@ -90,8 +90,8 @@ function signup() {
               </p>
             </div>
           </div>
-          <div class="flex justify-center self-center  z-10">
-            <div class="p-12 bg-white mx-auto rounded-2xl w-100 ">
+          <div class="flex items-center justify-center self-center  z-10">
+            <div class="p-5 lg:p-12 bg-white mx-auto rounded-2xl w-100 ">
               <div class="mb-4">
                 <h3 class="font-semibold text-2xl text-gray-800">Sign Up </h3>
                 <p class="text-gray-500">Please sign in to your account.</p>
