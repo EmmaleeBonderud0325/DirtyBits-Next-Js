@@ -1,5 +1,7 @@
 import React from "react";
 
+const onchangeFunction = () => {};
+
 function Input({
   type,
   value,
