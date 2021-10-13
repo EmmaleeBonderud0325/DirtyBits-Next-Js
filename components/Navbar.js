@@ -5,7 +5,7 @@ import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import {useRouter } from 'next/router'
 import Link from 'next/link'
 
-import LoginButton from "./loginButton";
+import LoginButton from "./LoginButton";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");

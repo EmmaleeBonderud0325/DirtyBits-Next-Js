@@ -1,7 +1,7 @@
 import hero from '../public/cartoon1.jpeg'
 import Image from 'next/image'
 import Typewriter from 'typewriter-effect';
-import Feature from './feature';
+import Feature from './Features';
 
 
 export default function Example() {
