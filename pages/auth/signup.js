@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import Input from '../../components/Input'
+import Input from '../../components/input'
 
 function signup() {
   const isError = true;

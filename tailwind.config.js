@@ -1,4 +1,5 @@
 module.exports = {
+    mode: 'jit',
     purge: ['./pages/**/*.js', './styles/**/*.css', './components/**/*.js'],
     future: {
       removeDeprecatedGapUtilities: true,

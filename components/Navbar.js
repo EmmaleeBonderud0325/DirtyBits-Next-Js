@@ -2,23 +2,28 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
+import router, { Router, useRouter } from 'next/router'
+import Link from 'next/link'
 
-import LoginButton from "./LoginButton";
+import LoginButton from "./loginButton";
 
-const navigation = [
-  { name: "Home", href: "#", current: true },
-  { name: "Compete", href: "#", current: false },
-  { name: "Practice", href: "#", current: false },
-  { name: "Leaderboard", href: "#", current: false },
-  { name: "Blogs", href: "#", current: false },
-];
+
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Example() {
-  const isLoggedIn = false;
+  const router = useRouter()
+  const isLoggedIn = true; 
+  const navigation = [
+    { name: "Home", href: '/' , current: router.pathname === '/' ? true : false},
+    { name: "Compete", href: "/compete", current: router.pathname === '/compete' ? true : false },
+    { name: "Practice", href: "/practice", current: router.pathname === '/practice' ? true : false },
+    { name: "Leaderboard", href:'/leaderboard', current: router.pathname === '/leaderboard' ? true : false  },
+    { name: "Blogs", href: '/blogs' , current: router.pathname === '/blogs' ? true : false},
+  ];
   return (
     <div style={{ position: "absolute" }}>
       <Disclosure as="nav" className="bg-transparent-800 w-screen">
@@ -53,19 +58,19 @@ export default function Example() {
                   <div className="hidden sm:block sm:ml-6">
                     <div className="flex space-x-4">
                       {navigation.map((item) => (
-                        <a
-                          key={item.name}
-                          href={item.href}
-                          className={classNames(
-                            item.current
-                              ? "bg-custom-yellow text-white"
-                              : "text-gray-300 hover:bg-custom-yellow hover:text-white",
-                            "px-3 py-2 rounded-md text-sm font-medium"
-                          )}
-                          aria-current={item.current ? "page" : undefined}
-                        >
-                          {item.name}
-                        </a>
+                        <Link key={item.name} href={item.href}>
+                          <a                            
+                            className={classNames(
+                              item.current
+                                ? "bg-custom-yellow text-white"
+                                : "text-gray-300 hover:bg-custom-yellow hover:text-white",
+                              "px-3 py-2 rounded-md text-sm font-medium"
+                            )}
+                            aria-current={item.current ? "page" : undefined}
+                          >
+                            {item.name}
+                          </a>
+                        </Link>
                       ))}
                     </div>
                   </div>
@@ -87,10 +92,10 @@ export default function Example() {
                           <span className="sr-only">Open user menu</span>
                           <img
                             className="h-10 w-10 rounded-full"
-                            src="https://lh3.googleusercontent.com/ogw/ADea4I5wIPGFJSysHMWa6CyMkW0ABbNxUasYYCCG2pZhpQ=s32-c-mo"
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEQKASvktw8z6UeZ_lqqo01vP22M7Zca9EIw&usqp=CAU"
                             alt=""
                           />
-                          <span className="text-white px-2 pt-1.5 pr-3 text-base">
+                          <span className="text-white px-2 pt-1.5 pr-3 text-base hidden sm:block">
                             Mohit Bisht
                           </span>
                         </Menu.Button>
@@ -157,19 +162,20 @@ export default function Example() {
             <Disclosure.Panel className="sm:hidden">
               <div className="px-2 pt-2 pb-3 space-y-1">
                 {navigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className={classNames(
-                      item.current
-                        ? "bg-gray-900 text-white"
-                        : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                      "block px-3 py-2 rounded-md text-base font-medium"
-                    )}
-                    aria-current={item.current ? "page" : undefined}
-                  >
-                    {item.name}
-                  </a>
+                  <Link key={item.name} href={item.href}>
+                    <a
+                      
+                      className={classNames(
+                        item.current
+                          ? "bg-custom-yellow text-white"
+                          : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                        "block px-3 py-2 rounded-md text-base font-medium"
+                      )}
+                      aria-current={item.current ? "page" : undefined}
+                    >
+                      {item.name}
+                    </a>
+                  </Link>
                 ))}
               </div>
             </Disclosure.Panel>
