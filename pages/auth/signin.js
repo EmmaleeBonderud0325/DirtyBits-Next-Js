@@ -120,7 +120,7 @@ function signin() {
   return (
     <>
       <div
-        className="bg-no-repeat bg-cover bg-center relative"
+        className="bg-no-repeat bg-cover bg-center relative overflow-hidden"
       >
         <div class="absolute w-60 h-60 rounded-xl bg-custom-yellow2 -top-5 -left-16 z-0 transform rotate-45 hidden md:block">
         </div>
