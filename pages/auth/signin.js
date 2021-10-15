@@ -9,7 +9,7 @@ import Cookies from "js-cookie";
 import { connect, useDispatch } from "react-redux";
 import { updateUserinfo } from "../../redux/Actions";
 
-import Input from "../../components/input";
+import Input from "../../components/Input";
 import { signinApi } from "../../components/api/apis";
 import Parsetoken from "../../components/Helper/Parsetoken";
 
