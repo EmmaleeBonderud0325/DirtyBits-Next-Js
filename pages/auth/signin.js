@@ -5,11 +5,16 @@ import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
 import { validate } from "email-validator";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
+import Cookies from "js-cookie";
+import { connect, useDispatch } from "react-redux";
+import { updateUserinfo } from "../../redux/Actions";
 
 import Input from "../../components/input";
 import { signinApi } from "../../components/api/apis";
+import Parsetoken from "../../components/Helper/Parsetoken";
 
 function signin() {
+  const dispatch = useDispatch();
   let [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -87,19 +92,51 @@ function signin() {
     console.log("failed");
   };
 
+  const postAuthentication = (tokens) => {
+    const { access, refresh } = tokens;
+    const data = Parsetoken(access);
+    if (data.is_verified) {
+      Cookies.set("access", access);
+      Cookies.set("refresh", refresh, { expires: 14 });
+      dispatch(
+        updateUserinfo({
+          is_logged_in: true,
+          email: data.user_mail,
+          first_name: data.first_name,
+          last_name: data.last_name,
+          username: data.username,
+        })
+      );
+    } else {
+      setIsError({
+        ...isError,
+        email: { error: true, details: "" },
+        password: { error: true, details: "Account not verified !" },
+      });
+    }
+  };
+
   const submitLoginForm = async (e) => {
     e.preventDefault();
     setIsDisabled(true);
+    setIsError({
+      email: { error: false, details: "" },
+      password: { error: false, details: "" },
+    });
     const isValid = validateFormData();
     if (isValid) {
-      console.log(formData);
       try {
         await signinApi
           .post("/", formData)
           .then((result) => {
-            console.log(result.data);
+            postAuthentication(result.data);
           })
-          .catch(() => {
+          .catch((result) => {
+            setIsError({
+              ...isError,
+              email: { error: true, details: "" },
+              password: { error: true, details: "Invalid Credentials !" },
+            });
             console.error("Invalid Credentials !");
           });
       } catch (e) {
@@ -296,7 +333,13 @@ function signin() {
   );
 }
 
-export default signin;
+const mapStateToProps = (state) => {
+  return {
+    userInfo: state.userInfo,
+  };
+};
+
+export default connect(mapStateToProps, { updateUserinfo })(signin);
 
 signin.getLayout = function PageLayout(page) {
   return <>{page}</>;

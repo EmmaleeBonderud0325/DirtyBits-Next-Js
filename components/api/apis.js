@@ -17,3 +17,7 @@ export const createUser = axios.create({
 export const signinApi = axios.create({
   baseURL: BASE_URL + "auth/authenticate",
 });
+
+export const refreshTokenApi = axios.create({
+  baseURL: BASE_URL + "auth/refresh",
+});
