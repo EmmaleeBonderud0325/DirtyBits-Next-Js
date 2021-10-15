@@ -8,7 +8,7 @@ import {
 import { validate } from "email-validator";
 
 import Debounce from "../../components/Helper/Debounce";
-import Input from "../../components/input";
+import Input from "../../components/Input";
 
 function signup() {
   const isError = false;
