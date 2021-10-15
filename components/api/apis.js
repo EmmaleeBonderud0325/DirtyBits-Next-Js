@@ -9,3 +9,11 @@ export const validateUserName = axios.create({
 export const validateEmail = axios.create({
   baseURL: BASE_URL + "auth/" + "existEmail",
 });
+
+export const createUser = axios.create({
+  baseURL: BASE_URL + "auth/register",
+});
+
+export const signinApi = axios.create({
+  baseURL: BASE_URL + "auth/authenticate",
+});

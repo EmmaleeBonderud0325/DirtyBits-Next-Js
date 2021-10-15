@@ -7,6 +7,7 @@ import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 
 import Input from "../../components/input";
+import { signinApi } from "../../components/api/apis";
 
 function signin() {
   let [formData, setFormData] = useState({
@@ -53,16 +54,6 @@ function signin() {
           password: { error: true, details: "Password can't be empty !" },
         });
         return false;
-      } else if (formData.password.length < 8) {
-        setIsError({
-          ...isError,
-          email: { error: false, details: "" },
-          password: {
-            error: true,
-            details: "Password must have atleast 8 characters !",
-          },
-        });
-        return false;
       } else {
         setIsError({
           email: { error: false, details: "" },
@@ -76,16 +67,6 @@ function signin() {
           ...isError,
           email: { error: true, details: "Invalid Email !" },
           password: { error: true, details: "Password can't be empty !" },
-        });
-        return false;
-      } else if (formData.password.length < 8) {
-        setIsError({
-          ...isError,
-          email: { error: true, details: "Invalid Email !" },
-          password: {
-            error: true,
-            details: "Password must have atleast 8 characters !",
-          },
         });
         return false;
       } else {
@@ -106,14 +87,26 @@ function signin() {
     console.log("failed");
   };
 
-  const submitLoginForm = () => {
+  const submitLoginForm = async (e) => {
+    e.preventDefault();
     setIsDisabled(true);
     const isValid = validateFormData();
     if (isValid) {
       console.log(formData);
-    } else {
-      setIsDisabled(false);
+      try {
+        await signinApi
+          .post("/", formData)
+          .then((result) => {
+            console.log(result.data);
+          })
+          .catch(() => {
+            console.error("Invalid Credentials !");
+          });
+      } catch (e) {
+        console.error("Server Error !");
+      }
     }
+    setIsDisabled(false);
     return;
   };
 
@@ -255,7 +248,7 @@ function signin() {
                   <button
                     disabled={isDisabled ? true : false}
                     type="submit"
-                    onClick={submitLoginForm}
+                    onClick={(e) => submitLoginForm(e)}
                     className={`w-full flex justify-center bg-custom-yellow2 hover:bg-custom-yellow text-gray-100 p-3  rounded-full tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500
                       ${isDisabled && "opacity-50 cursor-not-allowed"}
                     `}
