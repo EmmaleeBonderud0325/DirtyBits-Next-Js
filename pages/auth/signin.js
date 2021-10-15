@@ -7,7 +7,7 @@ import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import Cookies from "js-cookie";
 import { connect, useDispatch } from "react-redux";
-import { updateUserinfo } from "../../redux/Actions";
+import { updateUserinfo } from "../../redux/actions";
 
 import Input from "../../components/Input";
 import { signinApi } from "../../components/api/apis";
