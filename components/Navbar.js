@@ -2,24 +2,44 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
-import {useRouter } from 'next/router'
-import Link from 'next/link'
+import router, { Router, useRouter } from "next/router";
+import Link from "next/link";
 
-import LoginButton from "./LoginButton";
+import LoginButton from "./loginButton";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Example() {
-  const router = useRouter()
-  const isLoggedIn = true; 
+  const router = useRouter();
+  const isLoggedIn = false;
   const navigation = [
-    { name: "Home", href: '/' , current: router.pathname === '/' ? true : false},
-    { name: "Compete", href: "/compete", current: router.pathname === '/compete' ? true : false },
-    { name: "Practice", href: "/practice", current: router.pathname === '/practice' ? true : false },
-    { name: "Leaderboard", href:'/leaderboard', current: router.pathname === '/leaderboard' ? true : false  },
-    { name: "Blogs", href: '/blogs' , current: router.pathname === '/blogs' ? true : false},
+    {
+      name: "Home",
+      href: "/",
+      current: router.pathname === "/" ? true : false,
+    },
+    {
+      name: "Compete",
+      href: "/compete",
+      current: router.pathname === "/compete" ? true : false,
+    },
+    {
+      name: "Practice",
+      href: "/practice",
+      current: router.pathname === "/practice" ? true : false,
+    },
+    {
+      name: "Leaderboard",
+      href: "/leaderboard",
+      current: router.pathname === "/leaderboard" ? true : false,
+    },
+    {
+      name: "Blogs",
+      href: "/blogs",
+      current: router.pathname === "/blogs" ? true : false,
+    },
   ];
   return (
     <div style={{ position: "absolute" }}>
@@ -56,7 +76,7 @@ export default function Example() {
                     <div className="flex space-x-4">
                       {navigation.map((item) => (
                         <Link key={item.name} href={item.href}>
-                          <a                            
+                          <a
                             className={classNames(
                               item.current
                                 ? "bg-custom-yellow text-white"
@@ -161,7 +181,6 @@ export default function Example() {
                 {navigation.map((item) => (
                   <Link key={item.name} href={item.href}>
                     <a
-                      
                       className={classNames(
                         item.current
                           ? "bg-custom-yellow text-white"

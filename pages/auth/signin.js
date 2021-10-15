@@ -2,19 +2,25 @@ import React, { useState } from "react";
 import Link from "next/link";
 import GoogleLogin from "react-google-login";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
-
-import Input from "../../components/Input";
 import { validate } from "email-validator";
-import {AiFillGithub} from 'react-icons/ai'
-import {FcGoogle} from 'react-icons/fc'
+import { AiFillGithub } from "react-icons/ai";
+import { FcGoogle } from "react-icons/fc";
+import Cookies from "js-cookie";
+import { connect, useDispatch } from "react-redux";
+import { updateUserinfo } from "../../redux/Actions";
+
+import Input from "../../components/input";
+import { signinApi } from "../../components/api/apis";
+import Parsetoken from "../../components/Helper/Parsetoken";
 
 function signin() {
+  const dispatch = useDispatch();
   let [formData, setFormData] = useState({
     email: "",
     password: "",
     remeberMe: false,
   });
-  
+
   let [showPassword, setShowPassword] = useState(false);
 
   let [isError, setIsError] = useState({
@@ -22,8 +28,8 @@ function signin() {
     password: { error: false, details: "" },
   });
 
-  const [isDisabled, setIsDisabled] = useState(false)
-  
+  const [isDisabled, setIsDisabled] = useState(false);
+
   const emailInputColor = isError.email.error
     ? "border-red-300"
     : "border-white-400";
@@ -53,16 +59,6 @@ function signin() {
           password: { error: true, details: "Password can't be empty !" },
         });
         return false;
-      } else if (formData.password.length < 8) {
-        setIsError({
-          ...isError,
-          email: { error: false, details: "" },
-          password: {
-            error: true,
-            details: "Password must have atleast 8 characters !",
-          },
-        });
-        return false;
       } else {
         setIsError({
           email: { error: false, details: "" },
@@ -76,16 +72,6 @@ function signin() {
           ...isError,
           email: { error: true, details: "Invalid Email !" },
           password: { error: true, details: "Password can't be empty !" },
-        });
-        return false;
-      } else if (formData.password.length < 8) {
-        setIsError({
-          ...isError,
-          email: { error: true, details: "Invalid Email !" },
-          password: {
-            error: true,
-            details: "Password must have atleast 8 characters !",
-          },
         });
         return false;
       } else {
@@ -106,14 +92,58 @@ function signin() {
     console.log("failed");
   };
 
-  const submitLoginForm = () => {
-    setIsDisabled(true)
+  const postAuthentication = (tokens) => {
+    const { access, refresh } = tokens;
+    const data = Parsetoken(access);
+    if (data.is_verified) {
+      Cookies.set("access", access);
+      Cookies.set("refresh", refresh, { expires: 14 });
+      dispatch(
+        updateUserinfo({
+          is_logged_in: true,
+          email: data.user_mail,
+          first_name: data.first_name,
+          last_name: data.last_name,
+          username: data.username,
+        })
+      );
+    } else {
+      setIsError({
+        ...isError,
+        email: { error: true, details: "" },
+        password: { error: true, details: "Account not verified !" },
+      });
+    }
+  };
+
+  const submitLoginForm = async (e) => {
+    e.preventDefault();
+    setIsDisabled(true);
+    setIsError({
+      email: { error: false, details: "" },
+      password: { error: false, details: "" },
+    });
     const isValid = validateFormData();
     if (isValid) {
-      console.log(formData);
-    }else {
-      setIsDisabled(false)
+      try {
+        await signinApi
+          .post("/", formData)
+          .then((result) => {
+            postAuthentication(result.data);
+          })
+          .catch((result) => {
+            setIsError({
+              ...isError,
+              email: { error: true, details: "" },
+              password: { error: true, details: "Invalid Credentials !" },
+            });
+            console.error("Invalid Credentials !");
+          });
+      } catch (e) {
+        console.error("Server Error !");
+      }
     }
+    setIsDisabled(false);
     return;
   };
 
@@ -172,6 +202,7 @@ function signin() {
                     value={formData.email}
                     color={emailInputColor}
                     focusColor={emailInputFocusColor}
+                    id={"none"}
                     onchangeFunction={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
@@ -194,7 +225,7 @@ function signin() {
                   </label>
                   <div className={`w-full rounded-lg flex`}>
                     <input
-                      className={`w-full px-4 py-2 border ${passwordInputColor} focus:border-custom-yellow focus:outline-none rounded-lg text-black`}
+                      className={`w-full px-4 py-2 border text-black ${passwordInputColor} focus:${passwordInputFocusColor} focus:outline-none rounded-lg`}
                       type={showPassword ? "text" : "password"}
                       value={formData.password}
                       placeholder="Password"
@@ -259,16 +290,16 @@ function signin() {
                 </div>
                 <div>
                   <button
-                    disabled = {isDisabled ? true : false}
+                    disabled={isDisabled ? true : false}
                     type="submit"
-                    onClick={submitLoginForm}
+                    onClick={(e) => submitLoginForm(e)}
                     className={`w-full flex justify-center bg-custom-yellow2 hover:bg-custom-yellow text-gray-100 p-3  rounded-full tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500
-                      ${isDisabled && 'opacity-50 cursor-not-allowed'}
+                      ${isDisabled && "opacity-50 cursor-not-allowed"}
                     `}
                   >
                     Sign In
                   </button>
-                    
+
                   <GoogleLogin
                     clientId="64402702960-mlmnvge26bhhdf6ghgrt6viqbqhv0610.apps.googleusercontent.com"
                     render={(renderProps) => (
@@ -277,7 +308,7 @@ function signin() {
                         disabled={renderProps.disabled}
                         class="mt-3 w-full flex justify-center rounded-full bg-black px-4 p-3 font-semibold text-white items-center space-x-2"
                       >
-                        <FcGoogle/>
+                        <FcGoogle />
                         <span>Sign In </span>
                       </button>
                     )}
@@ -310,7 +341,13 @@ function signin() {
   );
 }
 
-export default signin;
+const mapStateToProps = (state) => {
+  return {
+    userInfo: state.userInfo,
+  };
+};
+
+export default connect(mapStateToProps, { updateUserinfo })(signin);
 
 signin.getLayout = function PageLayout(page) {
   return <>{page}</>;
