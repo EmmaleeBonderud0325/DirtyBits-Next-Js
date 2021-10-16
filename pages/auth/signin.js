@@ -107,7 +107,7 @@ function signin() {
   };
 
   const responseGoogleFailure = () => {
-    console.log("failed");
+    console.error("Google Authentication failed !");
   };
 
   const postAuthentication = (tokens) => {
