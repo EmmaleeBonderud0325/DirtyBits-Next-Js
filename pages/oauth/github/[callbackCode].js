@@ -21,7 +21,24 @@ export const getServerSideProps = async (context) => {
     }
   );
 
-  console.log(response.data);
+  var urlParams;
+  const decodeParams = () => {
+    var match,
+      pl = /\+/g, // Regex for replacing addition symbol with a space
+      search = /([^&=]+)=?([^&]*)/g,
+      decode = function (s) {
+        return decodeURIComponent(s.replace(pl, " "));
+      },
+      query = response.data;
+
+    urlParams = {};
+    while ((match = search.exec(query)))
+      urlParams[decode(match[1])] = decode(match[2]);
+  };
+
+  decodeParams();
+  console.log(urlParams["access_token"]);
+  //post access token
   return {
     redirect: {
       destination: context.query.state,
