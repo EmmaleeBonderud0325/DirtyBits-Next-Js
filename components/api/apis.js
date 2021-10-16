@@ -1,7 +1,7 @@
 import axios from "axios";
 
+const BASE_URL = "https://db-auth.herokuapp.com/";
 // const BASE_URL = "http://localhost:8000/";
-const BASE_URL = "https://03f9-111-125-197-86.ngrok.io/";
 
 export const validateUserName = axios.create({
   baseURL: BASE_URL + "auth/" + "existUsername",
