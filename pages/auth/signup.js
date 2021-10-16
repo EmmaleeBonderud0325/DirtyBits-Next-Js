@@ -1,14 +1,19 @@
 import React, { useState, useCallback } from "react";
 import Link from "next/link";
+import {ToastContainer, toast} from 'react-toastify'
+import { validate } from "email-validator";
+import { useRouter } from "next/router";
+
 import {
   validateUserName,
   validateEmail,
   createUser,
 } from "../../components/api/apis";
-import { validate } from "email-validator";
-
+import 'react-toastify/dist/ReactToastify.min.css';
 import Debounce from "../../components/Helper/Debounce";
 import Input from "../../components/Input";
+import Modal from '../../components/Modal'
+
 
 function signup() {
   const isError = false;
@@ -16,6 +21,12 @@ function signup() {
   const inputFocusColor = isError ? "border-red-300" : "border-custom-yellow";
   const labelColor = isError ? "text-red-700" : "text-gray-700";
 
+  const notifyError = () => toast.error("Try Again", {
+    position: toast.POSITION.TOP_RIGHT
+  });
+
+  const router = useRouter()
+  
   let [isErrors, setIsErrors] = useState({
     username: { error: false, details: "" },
     firstname: { error: false, details: "" },
@@ -302,15 +313,31 @@ function signup() {
       password: password,
     };
     try {
-      await createUser
-        .post("/", sendData)
-        .then((result) => {
-          console.log(result.data);
-        })
-        .catch(() => {
-          console.error("Registeration Failed !");
-        });
-    } catch (e) {
+      // await createUser
+      //   .post("/", sendData)
+      //   .then((result) => {
+      //     notifySuccess()
+      //   })
+      //   .catch(() => {
+      //     notifyError()
+      //     console.error("Registeration Failed !");
+      //   });
+      toast.promise(
+        createUser.post('/', sendData),
+        {
+          pending: 'Signing you up...',
+          success: 'Redirecting soon...',
+          error: 'Try Again'
+        }
+      ).then((result) => {
+          if(result.status === 201){
+            setTimeout(() => 
+              router.push('/auth/registered')
+            ,2000)           
+          }
+      })
+    }catch (e) {
+      notifyError()
       console.error("Server Error !");
     }
     console.log("All Good");
@@ -318,6 +345,7 @@ function signup() {
 
   return (
     <div>
+      <ToastContainer theme="dark"/>
       <div class="bg-no-repeat bg-cover bg-center relative overflow-hidden">
       <div class="absolute w-60 h-60 rounded-xl bg-custom-yellow2 -top-5 -left-16 z-0 transform rotate-45 hidden md:block">
         </div>
