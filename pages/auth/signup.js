@@ -3,15 +3,31 @@ import Link from "next/link";
 import { validate } from "email-validator";
 
 import Debounce from "../../components/Helper/Debounce";
-import Input from "../../components/input";
+import Input from "../../components/Input";
+import { ToastContainer, toast } from "react-toastify";
+import { useRouter } from "next/router";
+
 import {
   validateUserName,
   validateEmail,
   createUser,
 } from "../../components/api/apis";
+import "react-toastify/dist/ReactToastify.min.css";
+import Modal from "../../components/Modal";
 
 function signup() {
-  
+  const isError = false;
+  const inputColor = isError ? "border-red-300" : "border-white-400";
+  const inputFocusColor = isError ? "border-red-300" : "border-custom-yellow";
+  const labelColor = isError ? "text-red-700" : "text-gray-700";
+
+  const notifyError = () =>
+    toast.error("Try Again", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+
+  const router = useRouter();
+
   let [isErrors, setIsErrors] = useState({
     username: { error: false, details: "" },
     firstname: { error: false, details: "" },
@@ -303,29 +319,46 @@ function signup() {
       password: password,
     };
     try {
-      await createUser
-        .post("/", sendData)
-        .then((result) => {
-          console.log(result.data);
-          console.log("Registration Successfull !");
+      // await createUser
+      //   .post("/", sendData)
+      //   .then((result) => {
+      //     notifySuccess()
+      //   })
+      //   .catch(() => {
+      //     notifyError()
+      //     console.error("Registeration Failed !");
+      //   });
+      toast
+        .promise(createUser.post("/", sendData), {
+          pending: "Signing you up...",
+          success: "Redirecting soon...",
+          error: "Try Again",
         })
-        .catch(() => {
-          console.error("Registeration Failed !");
+        .then((result) => {
+          if (result.status === 201) {
+            setTimeout(() => router.push("/auth/registered"), 2000);
+          }
         });
     } catch (e) {
+      notifyError();
       console.error("Server Error !");
     }
   };
 
   return (
     <div>
-      <div className="bg-no-repeat bg-cover bg-center relative">
-        <div className="absolute bg-gradient-to-b from-black to-black opacity-75 inset-0 z-0"></div>
-        <div className="min-h-screen sm:flex sm:flex-row mx-0 justify-center">
-          <div className="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
-            <div className="self-start hidden lg:flex flex-col  text-white">
-              <img src="" className="mb-3" />
-              <h1 className="mb-3 font-bold text-5xl">
+      <ToastContainer theme="dark" />
+      <div class="bg-no-repeat bg-cover bg-center relative overflow-hidden">
+        <div class="absolute w-60 h-60 rounded-xl bg-custom-yellow2 -top-5 -left-16 z-0 transform rotate-45 hidden md:block"></div>
+        <div class="absolute w-48 h-48 rounded-xl bg-custom-yellow2 -bottom-10 transform rotate-12 hidden md:block"></div>
+        <div class="w-40 h-40 absolute bg-custom-yellow2 rounded-full top-0 right-12 hidden md:block"></div>
+        <div class="w-20 h-40 absolute bg-custom-yellow2 rounded-full bottom-20 right-10 transform rotate-45 hidden md:block"></div>
+        <div class="absolute md:bg-gradient-to-b from-black to-black opacity-75 lg:inset-0 z-0"></div>
+        <div class="min-h-screen sm:flex sm:flex-row mx-0 justify-center">
+          <div class="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
+            <div class="self-start hidden lg:flex flex-col  text-white">
+              <img src="" class="mb-3" />
+              <h1 class="mb-3 font-bold text-5xl">
                 Hello Welcome to{" "}
                 <span className="text-custom-yellow">DirtyBits</span>
               </h1>
@@ -336,13 +369,11 @@ function signup() {
               </p>
             </div>
           </div>
-          <div className="flex justify-center self-center  z-10">
-            <div className="p-12 bg-white mx-auto rounded-2xl w-100 ">
-              <div className="mb-4">
-                <h3 className="font-semibold text-2xl text-gray-800">
-                  Sign Up{" "}
-                </h3>
-                <p className="text-gray-500">Please sign in to your account.</p>
+          <div class="flex items-center justify-center self-center  z-10">
+            <div class="p-5 lg:p-12 bg-white mx-auto rounded-2xl w-100 ">
+              <div class="mb-4">
+                <h3 class="font-semibold text-2xl text-gray-800">Sign Up </h3>
+                <p class="text-gray-500">Please sign in to your account.</p>
               </div>
               <div className="space-y-5">
                 <div className="space-y-2">

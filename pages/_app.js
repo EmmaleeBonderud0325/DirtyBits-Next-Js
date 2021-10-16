@@ -1,8 +1,7 @@
-import { wrapper } from "../redux/store";
-
-import "../styles/index.css";
-import Navbar from "../components/navbar";
-import Footer from "../components/footer";
+import '../styles/index.css'
+import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
+import {wrapper} from '../redux/store'
 
 function MyApp({ Component, pageProps }) {
   if (Component.getLayout) {

@@ -7,7 +7,7 @@ import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import Cookies from "js-cookie";
 import { connect, useDispatch } from "react-redux";
-import { updateUserinfo } from "../../redux/Actions";
+import { updateUserinfo } from "../../redux/actions";
 
 import Input from "../../components/input";
 import { signinApi, googleLoginApi } from "../../components/api/apis";
@@ -35,7 +35,7 @@ function signin() {
     : "border-white-400";
   const emailInputFocusColor = isError.email.error
     ? "border-red-300"
-    : "border-custom-yellow";
+    : 'border-custom-yellow2'
   const emailLabelColor = isError.email.error
     ? "text-red-700"
     : "text-gray-700";
@@ -45,7 +45,7 @@ function signin() {
     : "border-white-400";
   const passwordInputFocusColor = isError.password.error
     ? "border-red-300"
-    : "border-custom-yellow";
+    : 'border-custom-yellow2'
   const passwordLabelColor = isError.password.error
     ? "text-red-700"
     : "text-gray-700";
@@ -175,10 +175,16 @@ function signin() {
   return (
     <>
       <div
-        className="bg-no-repeat bg-cover bg-center relative"
-        style={{ background: "url('')" }}
+        className="bg-no-repeat bg-cover bg-center relative overflow-hidden"
       >
-        <div className="absolute bg-gradient-to-b from-black to-black opacity-75 inset-0 z-0"></div>
+        <div class="absolute w-60 h-60 rounded-xl bg-custom-yellow2 -top-5 -left-16 z-0 transform rotate-45 hidden md:block">
+        </div>
+        <div class="absolute w-48 h-48 rounded-xl bg-custom-yellow2 -bottom-10 transform rotate-12 hidden md:block">
+        </div>
+        <div class="w-40 h-40 absolute bg-custom-yellow2 rounded-full top-0 right-12 hidden md:block"></div>
+        <div class="w-20 h-40 absolute bg-custom-yellow2 rounded-full bottom-20 right-10 transform rotate-45 hidden md:block"></div>
+
+        <div className="absolute md:bg-gradient-to-b from-black to-black opacity-75 lg:inset-0 z-0"></div>
         <div className="min-h-screen sm:flex sm:flex-row mx-0 justify-center">
           <div className="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
             <div className="self-start hidden lg:flex flex-col  text-white">
@@ -199,7 +205,7 @@ function signin() {
             </div>
           </div>
           <div className="flex justify-center self-center  z-10">
-            <div className="p-12 bg-white mx-auto rounded-2xl w-100 ">
+            <div className="p-12 lg:p-16 bg-white mx-auto rounded-2xl w-100 ">
               <div className="mb-4">
                 <h3 className="font-semibold text-2xl text-gray-800">
                   Sign In{" "}
@@ -298,12 +304,13 @@ function signin() {
                     </label>
                   </div>
                   <div className="text-sm">
-                    <a
-                      href="#"
-                      className="text-indigo-400 text-xs hover:text-black"
-                    >
-                      Forgot your password?
-                    </a>
+                    <Link  href="/auth/changePassword">
+                      <a                       
+                        className="text-indigo-400 text-xs hover:text-black"
+                      >
+                        Forgot your password?
+                      </a>
+                    </Link>
                   </div>
                 </div>
                 <div>
@@ -324,7 +331,7 @@ function signin() {
                       <button
                         onClick={renderProps.onClick}
                         disabled={renderProps.disabled}
-                        className="mt-3 w-full flex justify-center rounded-full bg-black px-4 p-3 font-semibold text-white inline-flex items-center space-x-2 rounded"
+                        class="mt-3 w-full flex justify-center rounded-full bg-black px-4 p-3 font-semibold text-white items-center space-x-2"
                       >
                         <FcGoogle />
                         <span>Sign In </span>
@@ -334,8 +341,8 @@ function signin() {
                     onFailure={responseGoogleFailure}
                     cookiePolicy={"single_host_origin"}
                   />
-                  <button className="mt-3 w-full flex justify-center rounded-full bg-black px-4 p-3 font-semibold text-white inline-flex items-center space-x-2 rounded">
-                    <AiFillGithub />
+                    <button class="mt-3 w-full flex justify-center rounded-full bg-black px-4 p-3 font-semibold text-white items-center space-x-2">
+                      <AiFillGithub />
                     <span>Sign In </span>
                   </button>
                 </div>
@@ -352,6 +359,7 @@ function signin() {
               </div>
             </div>
           </div>
+       
         </div>
       </div>
     </>
@@ -361,7 +369,6 @@ function signin() {
 signin.getLayout = function PageLayout(page) {
   return <>{page}</>;
 };
-
 const mapStateToProps = (state) => {
   return {
     userInfo: state.userInfo,

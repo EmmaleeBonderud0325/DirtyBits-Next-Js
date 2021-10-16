@@ -26,3 +26,7 @@ export const refreshTokenApi = axios.create({
 export const googleLoginApi = axios.create({
   baseURL: BASE_URL + "auth/google",
 });
+
+export const verifyVerificationCode = axios.create({
+  baseURL: BASE_URL + "auth/verifyUser",
+});
