@@ -333,6 +333,10 @@ function signin() {
   );
 }
 
+signin.getLayout = function PageLayout(page) {
+  return <>{page}</>;
+};
+
 const mapStateToProps = (state) => {
   return {
     userInfo: state.userInfo,
@@ -341,6 +345,3 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, { updateUserinfo })(signin);
 
-signin.getLayout = function PageLayout(page) {
-  return <>{page}</>;
-};
