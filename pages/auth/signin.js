@@ -85,7 +85,8 @@ function signin() {
   };
 
   const responseGoogleSuccess = async (data) => {
-    await googleLoginApi
+    try {
+      await googleLoginApi
       .post("/", { auth_token: data["tokenId"] })
       .then((result) => {
         const { access, refresh } = result.data;
@@ -101,9 +102,15 @@ function signin() {
               last_name: data.last_name,
               username: data.username,
             })
-          );
-        }
-      });
+            );
+          }
+        })
+        .catch(() => {
+          console.error("Bad Request !");
+        });
+      }catch(e){
+        console.log("Server Error !")
+      }
   };
 
   const responseGoogleFailure = () => {
@@ -149,7 +156,7 @@ function signin() {
           .then((result) => {
             postAuthentication(result.data);
           })
-          .catch((result) => {
+          .catch(() => {
             setIsError({
               ...isError,
               email: { error: true, details: "" },

@@ -6,6 +6,10 @@ const Gettoken = async (refresh_token) => {
     const result = await refreshTokenApi.post("/", {
       refresh: refresh_token,
     });
+    if (result.status !== 200) {
+      console.error("Token Error !");
+      return false;
+    }
     const { access, refresh } = result.data;
     Cookies.set("access", access);
     Cookies.set("refresh", refresh, { expires: 14 });

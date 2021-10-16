@@ -1,21 +1,17 @@
 import React, { useState, useCallback } from "react";
 import Link from "next/link";
+import { validate } from "email-validator";
+
+import Debounce from "../../components/Helper/Debounce";
+import Input from "../../components/input";
 import {
   validateUserName,
   validateEmail,
   createUser,
 } from "../../components/api/apis";
-import { validate } from "email-validator";
-
-import Debounce from "../../components/Helper/Debounce";
-import Input from "../../components/input";
 
 function signup() {
-  const isError = false;
-  const inputColor = isError ? "border-red-300" : "border-white-400";
-  const inputFocusColor = isError ? "border-red-300" : "border-custom-yellow";
-  const labelColor = isError ? "text-red-700" : "text-gray-700";
-
+  
   let [isErrors, setIsErrors] = useState({
     username: { error: false, details: "" },
     firstname: { error: false, details: "" },
@@ -106,6 +102,10 @@ function signup() {
     } else {
       try {
         const res = await validateUserName.post("/", { username: username });
+        if (res.status !== 200) {
+          console.error("Bad Request !");
+          return true;
+        }
         const data = res.data;
         if (data.success) {
           var stateData = { ...isErrors };
@@ -138,18 +138,19 @@ function signup() {
     const email = document.getElementById("email-field-signup").value;
     if (!validate(email)) {
       var stateData = { ...isErrors };
-      console.log(stateData);
       stateData.email = { error: true, details: "Invalid Email !" };
       setIsErrors(stateData);
     } else {
       try {
         const res = await validateEmail.post("/", { email: email });
+        if (res.status !== 200) {
+          console.error("Bad Request !");
+          return true;
+        }
         const data = res.data;
         if (data.success) {
           var stateData = { ...isErrors };
-          console.log(stateData);
           stateData.email = { error: false, details: "" };
-          console.log(stateData);
           setIsErrors(stateData);
           return true;
         } else {
@@ -306,6 +307,7 @@ function signup() {
         .post("/", sendData)
         .then((result) => {
           console.log(result.data);
+          console.log("Registration Successfull !");
         })
         .catch(() => {
           console.error("Registeration Failed !");
@@ -313,7 +315,6 @@ function signup() {
     } catch (e) {
       console.error("Server Error !");
     }
-    console.log("All Good");
   };
 
   return (
@@ -369,15 +370,15 @@ function signup() {
                 </div>
                 <div className="space-y-2">
                   <label
-                    className={`text-sm font-medium ${labelColor} tracking-wide`}
+                    className={`text-sm font-medium ${firstnameLabelColor} tracking-wide`}
                   >
                     Firstname
                   </label>
                   <Input
                     value={formData.firstName}
                     type={"text"}
-                    color={inputColor}
-                    focusColor={inputFocusColor}
+                    color={firstnameInputColor}
+                    focusColor={firstnameInputFocusColor}
                     id={"none"}
                     onchangeFunction={(e) =>
                       setFormData({ ...formData, firstName: e.target.value })
@@ -395,15 +396,15 @@ function signup() {
                 </div>
                 <div className="space-y-2">
                   <label
-                    className={`text-sm font-medium ${labelColor} tracking-wide`}
+                    className={`text-sm font-medium ${lastnameLabelColor} tracking-wide`}
                   >
                     Lastname
                   </label>
                   <Input
                     value={formData.lastName}
                     type={"text"}
-                    color={inputColor}
-                    focusColor={inputFocusColor}
+                    color={lastnameInputColor}
+                    focusColor={lastnameInputFocusColor}
                     id={"none"}
                     onchangeFunction={(e) =>
                       setFormData({ ...formData, lastName: e.target.value })
@@ -494,7 +495,7 @@ function signup() {
                     <input
                       id="remember_me"
                       name="remember_me"
-                      onChange={(e) =>
+                      onChange={() =>
                         setFormData({
                           ...formData,
                           remeberMe: !formData.remeberMe,
