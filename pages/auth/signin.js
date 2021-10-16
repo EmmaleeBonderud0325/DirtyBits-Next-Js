@@ -8,12 +8,12 @@ import { FcGoogle } from "react-icons/fc";
 import Cookies from "js-cookie";
 import { connect, useDispatch } from "react-redux";
 import { updateUserinfo } from "../../redux/actions";
-import Head from 'next/head'
+import Head from "next/head";
 
 import Input from "../../components/Input";
 import { signinApi, googleLoginApi } from "../../components/api/apis";
 import Parsetoken from "../../components/Helper/Parsetoken";
-import OAuth2Login from 'react-simple-oauth2-login';
+import OAuth2Login from "react-simple-oauth2-login";
 
 function signin() {
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ function signin() {
     : "border-white-400";
   const emailInputFocusColor = isError.email.error
     ? "border-red-300"
-    : 'border-custom-yellow2'
+    : "border-custom-yellow2";
   const emailLabelColor = isError.email.error
     ? "text-red-700"
     : "text-gray-700";
@@ -47,7 +47,7 @@ function signin() {
     : "border-white-400";
   const passwordInputFocusColor = isError.password.error
     ? "border-red-300"
-    : 'border-custom-yellow2'
+    : "border-custom-yellow2";
   const passwordLabelColor = isError.password.error
     ? "text-red-700"
     : "text-gray-700";
@@ -89,30 +89,30 @@ function signin() {
   const responseGoogleSuccess = async (data) => {
     try {
       await googleLoginApi
-      .post("/", { auth_token: data["tokenId"] })
-      .then((result) => {
-        const { access, refresh } = result.data;
-        const data = Parsetoken(access);
-        if (data.is_verified) {
-          Cookies.set("access", access);
-          Cookies.set("refresh", refresh, { expires: 14 });
-          dispatch(
-            updateUserinfo({
-              is_logged_in: true,
-              email: data.user_mail,
-              first_name: data.first_name,
-              last_name: data.last_name,
-              username: data.username,
-            })
+        .post("/", { auth_token: data["tokenId"] })
+        .then((result) => {
+          const { access, refresh } = result.data;
+          const data = Parsetoken(access);
+          if (data.is_verified) {
+            Cookies.set("access", access);
+            Cookies.set("refresh", refresh, { expires: 14 });
+            dispatch(
+              updateUserinfo({
+                is_logged_in: true,
+                email: data.user_mail,
+                first_name: data.first_name,
+                last_name: data.last_name,
+                username: data.username,
+              })
             );
           }
         })
         .catch(() => {
           console.error("Bad Request !");
         });
-      }catch(e){
-        console.log("Server Error !")
-      }
+    } catch (e) {
+      console.log("Server Error !");
+    }
   };
 
   const responseGoogleFailure = () => {
@@ -175,24 +175,20 @@ function signin() {
   };
 
   const onSuccess = (data) => {
-    console.log('data', data)
-  }
+    console.log("data", data);
+  };
 
   const onFailure = () => {
-    console.log('failure')
-  }
+    console.log("failure");
+  };
   return (
     <>
       <Head>
         <title>Sign In to DirtyBits</title>
       </Head>
-      <div
-        className="bg-no-repeat bg-cover bg-center relative overflow-hidden"
-      >
-        <div className="absolute w-60 h-60 rounded-xl bg-custom-yellow2 -top-5 -left-16 z-0 transform rotate-45 hidden md:block">
-        </div>
-        <div className="absolute w-48 h-48 rounded-xl bg-custom-yellow2 -bottom-10 transform rotate-12 hidden md:block">
-        </div>
+      <div className="bg-no-repeat bg-cover bg-center relative overflow-hidden">
+        <div className="absolute w-60 h-60 rounded-xl bg-custom-yellow2 -top-5 -left-16 z-0 transform rotate-45 hidden md:block"></div>
+        <div className="absolute w-48 h-48 rounded-xl bg-custom-yellow2 -bottom-10 transform rotate-12 hidden md:block"></div>
         <div className="w-40 h-40 absolute bg-custom-yellow2 rounded-full top-0 right-12 hidden md:block"></div>
         <div className="w-20 h-40 absolute bg-custom-yellow2 rounded-full bottom-20 right-10 transform rotate-45 hidden md:block"></div>
 
@@ -316,10 +312,8 @@ function signin() {
                     </label>
                   </div>
                   <div className="text-sm">
-                    <Link  href="/auth/changePassword">
-                      <a                       
-                        className="text-indigo-400 text-xs hover:text-black"
-                      >
+                    <Link href="/auth/changePassword">
+                      <a className="text-indigo-400 text-xs hover:text-black">
                         Forgot your password?
                       </a>
                     </Link>
@@ -353,19 +347,27 @@ function signin() {
                     onFailure={responseGoogleFailure}
                     cookiePolicy={"single_host_origin"}
                   />
-                   <OAuth2Login
-                      authorizationUrl="https://github.com/login/oauth/authorize"
-                      responseType="token"
-                      clientId="fe9ab7d5c6d4b5d39cdb"
-                      redirectUri="http://localhost:3000/oauth/github/callback"
-                      onSuccess={onSuccess}
-                      onFailure={onFailure}
-                      isCrossOrigin={true}
+                  <OAuth2Login
+                    authorizationUrl="https://github.com/login/oauth/authorize"
+                    responseType="token"
+                    clientId="fe9ab7d5c6d4b5d39cdb"
+                    redirectUri="http://localhost:3000/oauth/github/callback"
+                    state={
+                      typeof window !== "undefined" ? window.location.href : ""
+                    }
+                    onSuccess={onSuccess}
+                    onFailure={onFailure}
+                    render={(renderProps) => (
+                      <button
+                        className="mt-3 w-full flex justify-center rounded-full bg-black px-4 p-3 font-semibold text-white items-center space-x-2"
+                        onClick={renderProps.onClick}
+                        disabled={renderProps.disabled}
+                      >
+                        <AiFillGithub />
+                        <span>Sign In </span>
+                      </button>
+                    )}
                   />
-                    {/* <button className="mt-3 w-full flex justify-center rounded-full bg-black px-4 p-3 font-semibold text-white items-center space-x-2">
-                      <AiFillGithub />
-                    <span>Sign In </span>
-                  </button> */}
                 </div>
               </div>
               <div className="pt-5 text-center text-gray-400 text-xs">
@@ -380,7 +382,6 @@ function signin() {
               </div>
             </div>
           </div>
-       
         </div>
       </div>
     </>
