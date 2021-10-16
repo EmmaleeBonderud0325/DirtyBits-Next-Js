@@ -1,10 +1,14 @@
 import React from 'react'
 import Modal from '../../components/Modal'
+import Head from 'next/head'
 
 function registered() {
     return (
         <div>
-            <Modal title={"Registered Succesfully"} content={'A verfication e-mail has been sent to your registered email address'}/>
+            <Head>
+                <title>Register</title>
+            </Head>
+            <Modal verify={true} title={"Registered Succesfully"} content={'A verfication e-mail has been sent to your registered email address'}/>
         </div>
     )
 }

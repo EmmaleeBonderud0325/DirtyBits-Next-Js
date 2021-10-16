@@ -8,9 +8,10 @@ import { FcGoogle } from "react-icons/fc";
 import Cookies from "js-cookie";
 import { connect, useDispatch } from "react-redux";
 import { updateUserinfo } from "../../redux/actions";
+import Head from 'next/head'
 
 import Input from "../../components/Input";
-import { signinApi } from "../../components/api/apis";
+import { signinApi, googleLoginApi } from "../../components/api/apis";
 import Parsetoken from "../../components/Helper/Parsetoken";
 
 function signin() {
@@ -84,12 +85,37 @@ function signin() {
     }
   };
 
-  const responseGoogleSuccess = (data) => {
-    console.log("success", data);
+  const responseGoogleSuccess = async (data) => {
+    try {
+      await googleLoginApi
+      .post("/", { auth_token: data["tokenId"] })
+      .then((result) => {
+        const { access, refresh } = result.data;
+        const data = Parsetoken(access);
+        if (data.is_verified) {
+          Cookies.set("access", access);
+          Cookies.set("refresh", refresh, { expires: 14 });
+          dispatch(
+            updateUserinfo({
+              is_logged_in: true,
+              email: data.user_mail,
+              first_name: data.first_name,
+              last_name: data.last_name,
+              username: data.username,
+            })
+            );
+          }
+        })
+        .catch(() => {
+          console.error("Bad Request !");
+        });
+      }catch(e){
+        console.log("Server Error !")
+      }
   };
 
   const responseGoogleFailure = () => {
-    console.log("failed");
+    console.error("Google Authentication failed !");
   };
 
   const postAuthentication = (tokens) => {
@@ -131,7 +157,7 @@ function signin() {
           .then((result) => {
             postAuthentication(result.data);
           })
-          .catch((result) => {
+          .catch(() => {
             setIsError({
               ...isError,
               email: { error: true, details: "" },
@@ -149,6 +175,9 @@ function signin() {
 
   return (
     <>
+      <Head>
+        <title>Sign In to DirtyBits</title>
+      </Head>
       <div
         className="bg-no-repeat bg-cover bg-center relative overflow-hidden"
       >
@@ -351,4 +380,3 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, { updateUserinfo })(signin);
-

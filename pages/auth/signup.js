@@ -12,8 +12,7 @@ import {
 import 'react-toastify/dist/ReactToastify.min.css';
 import Debounce from "../../components/Helper/Debounce";
 import Input from "../../components/Input";
-import Modal from '../../components/Modal'
-
+import Head from 'next/head'
 
 function signup() {
   const isError = false;
@@ -117,6 +116,10 @@ function signup() {
     } else {
       try {
         const res = await validateUserName.post("/", { username: username });
+        if (res.status !== 200) {
+          console.error("Bad Request !");
+          return true;
+        }
         const data = res.data;
         if (data.success) {
           var stateData = { ...isErrors };
@@ -149,18 +152,19 @@ function signup() {
     const email = document.getElementById("email-field-signup").value;
     if (!validate(email)) {
       var stateData = { ...isErrors };
-      console.log(stateData);
       stateData.email = { error: true, details: "Invalid Email !" };
       setIsErrors(stateData);
     } else {
       try {
         const res = await validateEmail.post("/", { email: email });
+        if (res.status !== 200) {
+          console.error("Bad Request !");
+          return true;
+        }
         const data = res.data;
         if (data.success) {
           var stateData = { ...isErrors };
-          console.log(stateData);
           stateData.email = { error: false, details: "" };
-          console.log(stateData);
           setIsErrors(stateData);
           return true;
         } else {
@@ -340,11 +344,13 @@ function signup() {
       notifyError()
       console.error("Server Error !");
     }
-    console.log("All Good");
   };
 
   return (
     <div>
+        <Head>
+          <title>Sign Up to DirtyBits</title>
+        </Head>
       <ToastContainer theme="dark"/>
       <div class="bg-no-repeat bg-cover bg-center relative overflow-hidden">
       <div class="absolute w-60 h-60 rounded-xl bg-custom-yellow2 -top-5 -left-16 z-0 transform rotate-45 hidden md:block">
@@ -401,15 +407,15 @@ function signup() {
                 </div>
                 <div className="space-y-2">
                   <label
-                    className={`text-sm font-medium ${labelColor} tracking-wide`}
+                    className={`text-sm font-medium ${firstnameLabelColor} tracking-wide`}
                   >
                     Firstname
                   </label>
                   <Input
                     value={formData.firstName}
                     type={"text"}
-                    color={inputColor}
-                    focusColor={inputFocusColor}
+                    color={firstnameInputColor}
+                    focusColor={firstnameInputFocusColor}
                     id={"none"}
                     onchangeFunction={(e) =>
                       setFormData({ ...formData, firstName: e.target.value })
@@ -427,15 +433,15 @@ function signup() {
                 </div>
                 <div className="space-y-2">
                   <label
-                    className={`text-sm font-medium ${labelColor} tracking-wide`}
+                    className={`text-sm font-medium ${lastnameLabelColor} tracking-wide`}
                   >
                     Lastname
                   </label>
                   <Input
                     value={formData.lastName}
                     type={"text"}
-                    color={inputColor}
-                    focusColor={inputFocusColor}
+                    color={lastnameInputColor}
+                    focusColor={lastnameInputFocusColor}
                     id={"none"}
                     onchangeFunction={(e) =>
                       setFormData({ ...formData, lastName: e.target.value })
@@ -526,7 +532,7 @@ function signup() {
                     <input
                       id="remember_me"
                       name="remember_me"
-                      onChange={(e) =>
+                      onChange={() =>
                         setFormData({
                           ...formData,
                           remeberMe: !formData.remeberMe,

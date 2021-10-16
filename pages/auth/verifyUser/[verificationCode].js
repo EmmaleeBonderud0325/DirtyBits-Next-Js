@@ -1,7 +1,7 @@
 import React from 'react'
 import Modal from '../../../components/Modal'
 import {verifyVerificationCode} from '../../../components/api/apis'
-// import axios from 'axios'
+import Head from 'next/head'
 
 function CodeVerify(props) {
     console.log(props.message)
@@ -14,6 +14,9 @@ function CodeVerify(props) {
     
     return (
         <div>
+            <Head>
+                <title>Verification Status</title>
+            </Head>
             <Modal verify={isVerified} title={'Verification Status'} content={props.message}/>
         </div>
     )
