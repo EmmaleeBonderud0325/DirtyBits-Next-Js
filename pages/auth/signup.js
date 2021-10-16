@@ -1,7 +1,15 @@
 import React, { useState, useCallback } from "react";
 import Link from "next/link";
+<<<<<<< HEAD
 import {ToastContainer, toast} from 'react-toastify'
 import { validate } from "email-validator";
+=======
+import { validate } from "email-validator";
+
+import Debounce from "../../components/Helper/Debounce";
+import Input from "../../components/Input";
+import { ToastContainer, toast } from "react-toastify";
+>>>>>>> 4cc0966c5675151ab95715440a648bb6f849d3dc
 import { useRouter } from "next/router";
 
 import {
@@ -9,10 +17,15 @@ import {
   validateEmail,
   createUser,
 } from "../../components/api/apis";
+<<<<<<< HEAD
 import 'react-toastify/dist/ReactToastify.min.css';
 import Debounce from "../../components/Helper/Debounce";
 import Input from "../../components/Input";
 import Head from 'next/head'
+=======
+import "react-toastify/dist/ReactToastify.min.css";
+import Modal from "../../components/Modal";
+>>>>>>> 4cc0966c5675151ab95715440a648bb6f849d3dc
 
 function signup() {
   const isError = false;
@@ -20,12 +33,18 @@ function signup() {
   const inputFocusColor = isError ? "border-red-300" : "border-custom-yellow";
   const labelColor = isError ? "text-red-700" : "text-gray-700";
 
-  const notifyError = () => toast.error("Try Again", {
-    position: toast.POSITION.TOP_RIGHT
-  });
+  const notifyError = () =>
+    toast.error("Try Again", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
 
+  const router = useRouter();
+
+<<<<<<< HEAD
   const router = useRouter()
   
+=======
+>>>>>>> 4cc0966c5675151ab95715440a648bb6f849d3dc
   let [isErrors, setIsErrors] = useState({
     username: { error: false, details: "" },
     firstname: { error: false, details: "" },
@@ -326,18 +345,15 @@ function signup() {
       //     notifyError()
       //     console.error("Registeration Failed !");
       //   });
-      toast.promise(
-        createUser.post('/', sendData),
-        {
-          pending: 'Signing you up...',
-          success: 'Redirecting soon...',
-          error: 'Try Again'
-        }
-      ).then((result) => {
-          if(result.status === 201){
-            setTimeout(() => 
-              router.push('/auth/registered')
-            ,2000)           
+      toast
+        .promise(createUser.post("/", sendData), {
+          pending: "Signing you up...",
+          success: "Redirecting soon...",
+          error: "Try Again",
+        })
+        .then((result) => {
+          if (result.status === 201) {
+            setTimeout(() => router.push("/auth/registered"), 2000);
           }
       })
     }catch (e) {
@@ -353,10 +369,8 @@ function signup() {
         </Head>
       <ToastContainer theme="dark"/>
       <div class="bg-no-repeat bg-cover bg-center relative overflow-hidden">
-      <div class="absolute w-60 h-60 rounded-xl bg-custom-yellow2 -top-5 -left-16 z-0 transform rotate-45 hidden md:block">
-        </div>
-        <div class="absolute w-48 h-48 rounded-xl bg-custom-yellow2 -bottom-10 transform rotate-12 hidden md:block">
-        </div>
+        <div class="absolute w-60 h-60 rounded-xl bg-custom-yellow2 -top-5 -left-16 z-0 transform rotate-45 hidden md:block"></div>
+        <div class="absolute w-48 h-48 rounded-xl bg-custom-yellow2 -bottom-10 transform rotate-12 hidden md:block"></div>
         <div class="w-40 h-40 absolute bg-custom-yellow2 rounded-full top-0 right-12 hidden md:block"></div>
         <div class="w-20 h-40 absolute bg-custom-yellow2 rounded-full bottom-20 right-10 transform rotate-45 hidden md:block"></div>
         <div class="absolute md:bg-gradient-to-b from-black to-black opacity-75 lg:inset-0 z-0"></div>

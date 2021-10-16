@@ -13,6 +13,7 @@ import Head from 'next/head'
 import Input from "../../components/Input";
 import { signinApi, googleLoginApi } from "../../components/api/apis";
 import Parsetoken from "../../components/Helper/Parsetoken";
+import OAuth2Login from 'react-simple-oauth2-login';
 
 function signin() {
   const dispatch = useDispatch();
@@ -173,6 +174,13 @@ function signin() {
     return;
   };
 
+  const onSuccess = (data) => {
+    console.log('data', data)
+  }
+
+  const onFailure = () => {
+    console.log('failure')
+  }
   return (
     <>
       <Head>
@@ -181,12 +189,12 @@ function signin() {
       <div
         className="bg-no-repeat bg-cover bg-center relative overflow-hidden"
       >
-        <div class="absolute w-60 h-60 rounded-xl bg-custom-yellow2 -top-5 -left-16 z-0 transform rotate-45 hidden md:block">
+        <div className="absolute w-60 h-60 rounded-xl bg-custom-yellow2 -top-5 -left-16 z-0 transform rotate-45 hidden md:block">
         </div>
-        <div class="absolute w-48 h-48 rounded-xl bg-custom-yellow2 -bottom-10 transform rotate-12 hidden md:block">
+        <div className="absolute w-48 h-48 rounded-xl bg-custom-yellow2 -bottom-10 transform rotate-12 hidden md:block">
         </div>
-        <div class="w-40 h-40 absolute bg-custom-yellow2 rounded-full top-0 right-12 hidden md:block"></div>
-        <div class="w-20 h-40 absolute bg-custom-yellow2 rounded-full bottom-20 right-10 transform rotate-45 hidden md:block"></div>
+        <div className="w-40 h-40 absolute bg-custom-yellow2 rounded-full top-0 right-12 hidden md:block"></div>
+        <div className="w-20 h-40 absolute bg-custom-yellow2 rounded-full bottom-20 right-10 transform rotate-45 hidden md:block"></div>
 
         <div className="absolute md:bg-gradient-to-b from-black to-black opacity-75 lg:inset-0 z-0"></div>
         <div className="min-h-screen sm:flex sm:flex-row mx-0 justify-center">
@@ -301,7 +309,7 @@ function signin() {
                       className="h-4 w-4 bg-blue-500 focus:ring-blue-400 border-gray-300 rounded"
                     />
                     <label
-                      for="remember_me"
+                      htmlFor="remember_me"
                       className="ml-2 block text-sm text-gray-800"
                     >
                       Remember me
@@ -335,7 +343,7 @@ function signin() {
                       <button
                         onClick={renderProps.onClick}
                         disabled={renderProps.disabled}
-                        class="mt-3 w-full flex justify-center rounded-full bg-black px-4 p-3 font-semibold text-white items-center space-x-2"
+                        className="mt-3 w-full flex justify-center rounded-full bg-black px-4 p-3 font-semibold text-white items-center space-x-2"
                       >
                         <FcGoogle />
                         <span>Sign In </span>
@@ -345,10 +353,19 @@ function signin() {
                     onFailure={responseGoogleFailure}
                     cookiePolicy={"single_host_origin"}
                   />
-                    <button class="mt-3 w-full flex justify-center rounded-full bg-black px-4 p-3 font-semibold text-white items-center space-x-2">
+                   <OAuth2Login
+                      authorizationUrl="https://github.com/login/oauth/authorize"
+                      responseType="token"
+                      clientId="fe9ab7d5c6d4b5d39cdb"
+                      redirectUri="http://localhost:3000/oauth/github/callback"
+                      onSuccess={onSuccess}
+                      onFailure={onFailure}
+                      isCrossOrigin={true}
+                  />
+                    {/* <button className="mt-3 w-full flex justify-center rounded-full bg-black px-4 p-3 font-semibold text-white items-center space-x-2">
                       <AiFillGithub />
                     <span>Sign In </span>
-                  </button>
+                  </button> */}
                 </div>
               </div>
               <div className="pt-5 text-center text-gray-400 text-xs">

@@ -15,12 +15,16 @@ const initial_state = {
 let refresh_token = Cookies.get("refresh");
 if (refresh_token) {
   if (Gettoken(refresh_token)) {
-    const data = Parsetoken(Cookies.get("access"));
-    initial_state.is_logged_in = true;
-    initial_state.email = data.user_mail;
-    initial_state.first_name = data.first_name;
-    initial_state.last_name = data.last_name;
-    initial_state.username = data.username;
+    try {
+      const data = Parsetoken(Cookies.get("access"));
+      initial_state.is_logged_in = true;
+      initial_state.email = data.user_mail;
+      initial_state.first_name = data.first_name;
+      initial_state.last_name = data.last_name;
+      initial_state.username = data.username;
+    } catch (e) {
+      console.error("Parsing Error !");
+    }
   }
 }
 
