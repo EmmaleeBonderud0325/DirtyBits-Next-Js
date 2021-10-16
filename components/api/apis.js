@@ -22,3 +22,7 @@ export const signinApi = axios.create({
 export const refreshTokenApi = axios.create({
   baseURL: BASE_URL + "auth/refresh",
 });
+
+export const googleLoginApi = axios.create({
+  baseURL: BASE_URL + "auth/google",
+});

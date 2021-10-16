@@ -10,7 +10,7 @@ import { connect, useDispatch } from "react-redux";
 import { updateUserinfo } from "../../redux/Actions";
 
 import Input from "../../components/input";
-import { signinApi } from "../../components/api/apis";
+import { signinApi, googleLoginApi } from "../../components/api/apis";
 import Parsetoken from "../../components/Helper/Parsetoken";
 
 function signin() {
@@ -84,8 +84,26 @@ function signin() {
     }
   };
 
-  const responseGoogleSuccess = (data) => {
-    console.log("success", data);
+  const responseGoogleSuccess = async (data) => {
+    await googleLoginApi
+      .post("/", { auth_token: data["tokenId"] })
+      .then((result) => {
+        const { access, refresh } = result.data;
+        const data = Parsetoken(access);
+        if (data.is_verified) {
+          Cookies.set("access", access);
+          Cookies.set("refresh", refresh, { expires: 14 });
+          dispatch(
+            updateUserinfo({
+              is_logged_in: true,
+              email: data.user_mail,
+              first_name: data.first_name,
+              last_name: data.last_name,
+              username: data.username,
+            })
+          );
+        }
+      });
   };
 
   const responseGoogleFailure = () => {
@@ -344,4 +362,3 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, { updateUserinfo })(signin);
-
