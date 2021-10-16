@@ -22,3 +22,7 @@ export const signinApi = axios.create({
 export const refreshTokenApi = axios.create({
   baseURL: BASE_URL + "auth/refresh",
 });
+
+export const verifyVerificationCode = axios.create({
+  baseURL: BASE_URL + "auth/verifyUser"
+})

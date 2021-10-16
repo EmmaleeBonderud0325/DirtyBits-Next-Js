@@ -4,7 +4,7 @@ import Modal from '../../components/Modal'
 function registered() {
     return (
         <div>
-            <Modal/>
+            <Modal title={"Registered Succesfully"} content={'A verfication e-mail has been sent to your registered email address'}/>
         </div>
     )
 }
