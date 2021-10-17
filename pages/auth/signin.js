@@ -358,6 +358,7 @@ function signin() {
                     scope={"user:email"}
                     onSuccess={onSuccess}
                     onFailure={onFailure}
+                    extraParams={{ prompt: "consent" }}
                     render={(renderProps) => (
                       <button
                         className="mt-3 w-full flex justify-center rounded-full bg-black px-4 p-3 font-semibold text-white items-center space-x-2"

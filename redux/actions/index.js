@@ -1,4 +1,5 @@
 import { updateUserData } from "../types";
+import Cookies from "js-cookie";
 
 export const updateUserinfo = (newState) => {
   return {
