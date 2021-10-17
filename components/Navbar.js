@@ -1,19 +1,24 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import router, { Router, useRouter } from "next/router";
 import Link from "next/link";
+import Image from 'next/image'
+import {connect, useDispatch} from 'react-redux'
 
 import LoginButton from "./LoginButton";
+import Cookies from "js-cookie";
+import { updateUserinfo } from "../redux/actions";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example() {
+function Navbar({userInfo}) {
   const router = useRouter();
-  const isLoggedIn = false;
+  const dispatch = useDispatch();
+  const isLoggedIn = userInfo.is_logged_in;
   const navigation = [
     {
       name: "Home",
@@ -41,6 +46,19 @@ export default function Example() {
       current: router.pathname === "/blogs" ? true : false,
     },
   ];
+  // useEffect(() => console.log('props', userInfo.is_logged_in))
+  const signOutUser = () => {
+    Cookies.remove('access')
+    Cookies.remove('refresh')
+    dispatch(updateUserinfo({
+      is_logged_in: false,
+      email: "",
+      first_name: "",
+      last_name: "",
+      username: "",
+    }))
+  }
+
   return (
     <div style={{ position: "absolute" }}>
       <Disclosure as="nav" className="bg-transparent-800 w-screen">
@@ -113,7 +131,7 @@ export default function Example() {
                             alt=""
                           />
                           <span className="text-white px-2 pt-1.5 pr-3 text-base hidden sm:block">
-                            Mohit Bisht
+                            {userInfo.username}
                           </span>
                         </Menu.Button>
                       </div>
@@ -157,6 +175,7 @@ export default function Example() {
                             {({ active }) => (
                               <a
                                 href="#"
+                                onClick={signOutUser}
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"
@@ -201,3 +220,11 @@ export default function Example() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    userInfo: state.userData,
+  };
+};
+
+export default connect(mapStateToProps, {})(Navbar);

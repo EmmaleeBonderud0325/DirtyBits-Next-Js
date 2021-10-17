@@ -27,6 +27,10 @@ export const googleLoginApi = axios.create({
   baseURL: BASE_URL + "auth/google",
 });
 
+export const githubLoginApi = axios.create({
+  baseURL: BASE_URL + "auth/github",
+});
+
 export const changePass = axios.create({
   baseURL: BASE_URL + "auth/changepassmail",
 });
