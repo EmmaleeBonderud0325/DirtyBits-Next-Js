@@ -14,7 +14,6 @@ import { updateUserinfo } from "../../redux/actions";
 import Input from "../../components/Input";
 import { signinApi, googleLoginApi } from "../../components/api/apis";
 import Parsetoken from "../../components/Helper/Parsetoken";
-import OAuth2Login from "react-simple-oauth2-login";
 
 function signin() {
   const dispatch = useDispatch();
@@ -179,13 +178,6 @@ function signin() {
     return;
   };
 
-  const onSuccess = (data) => {
-    console.log("data", data);
-  };
-
-  const onFailure = () => {
-    console.log("failure");
-  };
   return (
     <>
       <Head>
@@ -352,30 +344,12 @@ function signin() {
                     onFailure={responseGoogleFailure}
                     cookiePolicy={"single_host_origin"}
                   />
-                  <OAuth2Login
-                    authorizationUrl="https://github.com/login/oauth/authorize"
-                    responseType="token"
-                    clientId={process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}
-                    redirectUri="http://localhost:3000/oauth/github/callback"
-                    state={
-                      typeof window !== "undefined" ? window.location.href : ""
-                    }
-                    scope={"user:email"}
-                    onSuccess={onSuccess}
-                    onFailure={onFailure}
-                    extraParams={{ prompt: "consent" }}
-                    render={(renderProps) => (
                       <button
                         className="mt-3 w-full flex justify-center rounded-full bg-black px-4 p-3 font-semibold text-white items-center space-x-2"
-                        onClick={renderProps.onClick}
-                        disabled={renderProps.disabled}
                       >
                         <AiFillGithub />
                         <span>Sign In </span>
                       </button>
-                    )}
-                    // isCrossOrigin={true}
-                  />
                 </div>
               </div>
               <div className="pt-5 text-center text-gray-400 text-xs">
