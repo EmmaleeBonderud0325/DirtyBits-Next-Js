@@ -1,6 +1,5 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
-import { createWrapper } from "next-redux-wrapper";
 import reducers from "./reducers";
 
 const middleware = [thunk];
@@ -12,6 +11,4 @@ const composeEnhancers =
 
 const enhancer = composeEnhancers(applyMiddleware(...middleware));
 
-const makeStore = () => createStore(reducers, enhancer);
-
-export const wrapper = createWrapper(makeStore);
+export const store = createStore(reducers, enhancer);

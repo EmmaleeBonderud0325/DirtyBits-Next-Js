@@ -1,7 +1,9 @@
-import '../styles/index.css'
-import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
-import {wrapper} from '../redux/store'
+import { createWrapper } from "next-redux-wrapper";
+
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import { store } from "../redux/store";
+import "../styles/index.css";
 
 function MyApp({ Component, pageProps }) {
   if (Component.getLayout) {
@@ -15,5 +17,8 @@ function MyApp({ Component, pageProps }) {
     </>
   );
 }
+
+const makeStore = () => store;
+const wrapper = createWrapper(makeStore);
 
 export default wrapper.withRedux(MyApp);
