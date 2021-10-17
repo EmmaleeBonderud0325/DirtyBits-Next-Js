@@ -28,8 +28,6 @@ function signup() {
 
   const router = useRouter();
 
-  const router = useRouter()
-  
   let [isErrors, setIsErrors] = useState({
     username: { error: false, details: "" },
     firstname: { error: false, details: "" },
