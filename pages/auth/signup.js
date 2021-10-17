@@ -1,22 +1,19 @@
 import React, { useState, useCallback } from "react";
 import Link from "next/link";
 import { validate } from "email-validator";
-
-import Debounce from "../../components/Helper/Debounce";
-import Input from "../../components/Input";
+import Head from 'next/head'
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/router";
+import 'react-toastify/dist/ReactToastify.min.css';
 
+
+import Input from "../../components/Input";
 import {
   validateUserName,
   validateEmail,
   createUser,
 } from "../../components/api/apis";
-import 'react-toastify/dist/ReactToastify.min.css';
 import Debounce from "../../components/Helper/Debounce";
-import Input from "../../components/Input";
-import Head from 'next/head'
-import "react-toastify/dist/ReactToastify.min.css";
 
 function signup() {
   const isError = false;
