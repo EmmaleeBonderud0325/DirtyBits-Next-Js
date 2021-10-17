@@ -1,15 +1,10 @@
 import React, { useState, useCallback } from "react";
 import Link from "next/link";
-<<<<<<< HEAD
-import {ToastContainer, toast} from 'react-toastify'
-import { validate } from "email-validator";
-=======
 import { validate } from "email-validator";
 
 import Debounce from "../../components/Helper/Debounce";
 import Input from "../../components/Input";
 import { ToastContainer, toast } from "react-toastify";
->>>>>>> 4cc0966c5675151ab95715440a648bb6f849d3dc
 import { useRouter } from "next/router";
 
 import {
@@ -17,15 +12,11 @@ import {
   validateEmail,
   createUser,
 } from "../../components/api/apis";
-<<<<<<< HEAD
 import 'react-toastify/dist/ReactToastify.min.css';
 import Debounce from "../../components/Helper/Debounce";
 import Input from "../../components/Input";
 import Head from 'next/head'
-=======
 import "react-toastify/dist/ReactToastify.min.css";
-import Modal from "../../components/Modal";
->>>>>>> 4cc0966c5675151ab95715440a648bb6f849d3dc
 
 function signup() {
   const isError = false;
@@ -40,11 +31,8 @@ function signup() {
 
   const router = useRouter();
 
-<<<<<<< HEAD
   const router = useRouter()
   
-=======
->>>>>>> 4cc0966c5675151ab95715440a648bb6f849d3dc
   let [isErrors, setIsErrors] = useState({
     username: { error: false, details: "" },
     firstname: { error: false, details: "" },
