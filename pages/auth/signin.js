@@ -355,6 +355,7 @@ function signin() {
                     state={
                       typeof window !== "undefined" ? window.location.href : ""
                     }
+                    scope={"user:email"}
                     onSuccess={onSuccess}
                     onFailure={onFailure}
                     render={(renderProps) => (

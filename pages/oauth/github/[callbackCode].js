@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { githubLoginApi } from "../../../components/api/apis";
 
 function GitHubCallback() {
   return (
@@ -18,27 +19,23 @@ export const getServerSideProps = async (context) => {
       client_id: "fe9ab7d5c6d4b5d39cdb",
       code,
       client_secret: "3e37e78d5b01ab5d11352020ec8f83e26975d36e",
+    },
+    {
+      headers: {
+        Accept: "application/json",
+      },
     }
   );
+  console.log(response.data);
+  const access_token = response.data["access_token"];
 
-  var urlParams;
-  const decodeParams = () => {
-    var match,
-      pl = /\+/g, // Regex for replacing addition symbol with a space
-      search = /([^&=]+)=?([^&]*)/g,
-      decode = function (s) {
-        return decodeURIComponent(s.replace(pl, " "));
-      },
-      query = response.data;
-
-    urlParams = {};
-    while ((match = search.exec(query)))
-      urlParams[decode(match[1])] = decode(match[2]);
-  };
-
-  decodeParams();
-  console.log(urlParams["access_token"]);
   //post access token
+  await githubLoginApi
+    .post("/", { auth_token: access_token })
+    .then((result) => {
+      console.log(result.data);
+    });
+
   return {
     redirect: {
       destination: context.query.state,
