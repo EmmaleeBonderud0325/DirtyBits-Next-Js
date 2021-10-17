@@ -7,9 +7,10 @@ import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import Cookies from "js-cookie";
 import { connect, useDispatch } from "react-redux";
-import { updateUserinfo } from "../../redux/actions";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
+import { updateUserinfo } from "../../redux/actions";
 import Input from "../../components/Input";
 import { signinApi, googleLoginApi } from "../../components/api/apis";
 import Parsetoken from "../../components/Helper/Parsetoken";
@@ -17,6 +18,7 @@ import OAuth2Login from "react-simple-oauth2-login";
 
 function signin() {
   const dispatch = useDispatch();
+  const router = useRouter();
   let [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -32,6 +34,8 @@ function signin() {
 
   const [isDisabled, setIsDisabled] = useState(false);
 
+  
+  
   const emailInputColor = isError.email.error
     ? "border-red-300"
     : "border-white-400";
@@ -105,6 +109,7 @@ function signin() {
                 username: data.username,
               })
             );
+            router.push('/')
           }
         })
         .catch(() => {
@@ -332,7 +337,7 @@ function signin() {
                   </button>
 
                   <GoogleLogin
-                    clientId="64402702960-mlmnvge26bhhdf6ghgrt6viqbqhv0610.apps.googleusercontent.com"
+                    clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
                     render={(renderProps) => (
                       <button
                         onClick={renderProps.onClick}
@@ -350,7 +355,7 @@ function signin() {
                   <OAuth2Login
                     authorizationUrl="https://github.com/login/oauth/authorize"
                     responseType="token"
-                    clientId="fe9ab7d5c6d4b5d39cdb"
+                    clientId={process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}
                     redirectUri="http://localhost:3000/oauth/github/callback"
                     state={
                       typeof window !== "undefined" ? window.location.href : ""
@@ -367,6 +372,7 @@ function signin() {
                         <span>Sign In </span>
                       </button>
                     )}
+                    // isCrossOrigin={true}
                   />
                 </div>
               </div>

@@ -3,8 +3,8 @@ import Link from "next/link";
 import { validate } from "email-validator";
 import Head from 'next/head'
 import { ToastContainer, toast } from "react-toastify";
-import { useRouter } from "next/router";
 import 'react-toastify/dist/ReactToastify.min.css';
+import { useRouter } from "next/router";
 
 
 import Input from "../../components/Input";
