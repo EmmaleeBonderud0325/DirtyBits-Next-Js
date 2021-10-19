@@ -60,8 +60,8 @@ function Navbar({userInfo}) {
   }
 
   return (
-    <div className="">
-      <Disclosure as="nav" className="bg-transparent-800 w-screen">
+    <div className="sticky top-0 z-50">
+      <Disclosure as="nav" className="bg-black border-b-1 border-gray-500 w-screen">
         {({ open }) => (
           <>
             <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -161,13 +161,13 @@ function Navbar({userInfo}) {
                           <Menu.Item>
                             {({ active }) => (
                               <a
-                                href="#"
+                                href="/addproblems"
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"
                                 )}
                               >
-                                Settings
+                                Add Problem
                               </a>
                             )}
                           </Menu.Item>
