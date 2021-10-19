@@ -60,7 +60,7 @@ function Navbar({userInfo}) {
   }
 
   return (
-    <div style={{ position: "absolute" }}>
+    <div className="">
       <Disclosure as="nav" className="bg-transparent-800 w-screen">
         {({ open }) => (
           <>
