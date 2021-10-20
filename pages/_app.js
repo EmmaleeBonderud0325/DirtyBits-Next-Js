@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps }) {
     <>
       <Navbar fixedHeader={fixedTop} bg={background} />
       <Component {...pageProps} />
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
