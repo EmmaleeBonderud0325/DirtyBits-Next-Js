@@ -12,12 +12,11 @@ function classNames(...classes) {
 
 function Dropdown(props) {
   const dispatch = useDispatch();
-  const [value, setValue] = React.useState("Levels");
   return (
     <Menu as="div" className="w-full relative inline-block text-left">
       <div>
         <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
-          {props.problemData.problem_level}
+          {props.levelData}
           <ChevronDownIcon
             className="-mr-1 h-5 w-5 ml-auto"
             aria-hidden="true"
@@ -84,7 +83,7 @@ function Dropdown(props) {
 
 const mapStateToProps = (state) => {
   return {
-    problemData: state.addProblemData,
+    levelData: state.addProblemData.problem_level,
   };
 };
 
