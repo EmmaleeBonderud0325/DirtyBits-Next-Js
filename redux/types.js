@@ -1,1 +1,9 @@
 export const updateUserData = "UPDATE_USER_DATA";
+export const updateTitle = "UPDATE_TITLE";
+export const updateDescription = "UPDATE_DESCRIPTION";
+export const updateStatement = "UPDATE_PROBLEM_STATEMENT";
+export const updateInputFormat = "UPDATE_INPUT_FORMAT";
+export const updateConstraints = "UPDATE_CONSTRAINTS";
+export const updateOutputFormat = "UPDATE_OUTPUT_FORMAT";
+export const updateLevel = "UPDATE_PROBLEM_LEVEL";
+export const updateTags = "UPDATE_PROBLEM_TAGS";

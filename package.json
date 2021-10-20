@@ -15,6 +15,7 @@
     "@heroicons/react": "^1.0.4",
     "@mui/icons-material": "^5.0.3",
     "@mui/material": "^5.0.3",
+    "@tinymce/tinymce-react": "^3.13.0",
     "axios": "^0.23.0",
     "dompurify": "^2.3.3",
     "draft-convert": "^2.1.12",

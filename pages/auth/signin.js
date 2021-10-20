@@ -33,8 +33,6 @@ function signin() {
 
   const [isDisabled, setIsDisabled] = useState(false);
 
-  
-  
   const emailInputColor = isError.email.error
     ? "border-red-300"
     : "border-white-400";
@@ -108,7 +106,7 @@ function signin() {
                 username: data.username,
               })
             );
-            router.push('/')
+            router.push("/");
           }
         })
         .catch(() => {
@@ -138,6 +136,7 @@ function signin() {
           username: data.username,
         })
       );
+      router.push("/");
     } else {
       setIsError({
         ...isError,
@@ -344,12 +343,10 @@ function signin() {
                     onFailure={responseGoogleFailure}
                     cookiePolicy={"single_host_origin"}
                   />
-                      <button
-                        className="mt-3 w-full flex justify-center rounded-full bg-black px-4 p-3 font-semibold text-white items-center space-x-2"
-                      >
-                        <AiFillGithub />
-                        <span>Sign In </span>
-                      </button>
+                  <button className="mt-3 w-full flex justify-center rounded-full bg-black px-4 p-3 font-semibold text-white items-center space-x-2">
+                    <AiFillGithub />
+                    <span>Sign In </span>
+                  </button>
                 </div>
               </div>
               <div className="pt-5 text-center text-gray-400 text-xs">
