@@ -12,7 +12,6 @@ import {
   updateProblemInputFormat,
   updateProblemContraints,
   updateProblemOutputFormat,
-  updateProblemLevel,
   updateProblemTags,
 } from "../redux/actions";
 
@@ -33,10 +32,6 @@ function addproblems(props) {
 
   const HandleOutputFormatUpdate = (data) => {
     dispatch(updateProblemOutputFormat(data));
-  };
-
-  const handleLevelChange = (e) => {
-    dispatch(updateProblemLevel(e.target.value));
   };
 
   return (
@@ -123,6 +118,5 @@ export default connect(mapStateToProps, {
   updateProblemInputFormat,
   updateProblemContraints,
   updateProblemOutputFormat,
-  updateProblemLevel,
   updateProblemTags,
 })(addproblems);

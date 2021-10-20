@@ -8,6 +8,12 @@ import {
   updateTitle,
   updateUserData,
   updateTags,
+  FirstNameError,
+  LastNameError,
+  UsernameError,
+  EmailError,
+  PasswordError,
+  ConfirmPasswordError,
 } from "../types";
 
 export const updateUserinfo = (newState) => {
@@ -69,6 +75,47 @@ export const updateProblemLevel = (newState) => {
 export const updateProblemTags = (newState) => {
   return {
     type: updateTags,
+    payload: newState,
+  };
+};
+
+export const updateFirstNameError = (newState) => {
+  return {
+    type: FirstNameError,
+    payload: newState,
+  };
+};
+
+export const updateLastNameError = (newState) => {
+  return {
+    type: LastNameError,
+    payload: newState,
+  };
+};
+
+export const updateUsernameError = (newState) => {
+  return {
+    type: UsernameError,
+    payload: newState,
+  };
+};
+
+export const updateEmailError = (newState) => {
+  return {
+    type: EmailError,
+    payload: newState,
+  };
+};
+
+export const updatePasswordError = (newState) => {
+  return {
+    type: PasswordError,
+    payload: newState,
+  };
+};
+export const updateConfirmPasswordError = (newState) => {
+  return {
+    type: ConfirmPasswordError,
     payload: newState,
   };
 };
