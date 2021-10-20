@@ -12,11 +12,13 @@ function classNames(...classes) {
 
 function Dropdown(props) {
   const dispatch = useDispatch();
+  const {fieldValues} = props;
   return (
     <Menu as="div" className="w-full relative inline-block text-left">
       <div>
-        <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
-          {props.levelData}
+        <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-800 shadow-sm px-4 py-2 bg-black text-sm font-medium text-white  focus:outline-none focus:ring-2 focus:ring-offset-2">
+          {/* {props.levelData} */}
+          {props.fieldName}
           <ChevronDownIcon
             className="-mr-1 h-5 w-5 ml-auto"
             aria-hidden="true"
@@ -44,7 +46,7 @@ function Dropdown(props) {
                     "block px-4 py-2 text-sm cursor-pointer"
                   )}
                 >
-                  Easy
+                  {fieldValues[0]}
                 </a>
               )}
             </Menu.Item>
@@ -57,7 +59,7 @@ function Dropdown(props) {
                     "block px-4 py-2 text-sm cursor-pointer"
                   )}
                 >
-                  Medium
+                  {fieldValues[1]}
                 </a>
               )}
             </Menu.Item>
@@ -70,7 +72,7 @@ function Dropdown(props) {
                     "block px-4 py-2 text-sm cursor-pointer"
                   )}
                 >
-                  Hard
+                  {fieldValues[2]}
                 </a>
               )}
             </Menu.Item>
@@ -88,3 +90,7 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, { updateProblemLevel })(Dropdown);
+
+
+
+// inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500
