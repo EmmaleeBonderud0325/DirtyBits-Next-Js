@@ -66,6 +66,7 @@ function addproblems(props) {
               onChange={(e) =>
                 dispatch(updateProblemDescription(e.target.value))
               }
+              rows="6"
             />
           </div>
           <div className="space-y-3">
