@@ -329,7 +329,7 @@ function signup(props) {
             </div>
           </div>
           <div class="flex items-center justify-center self-center  z-10">
-            <div class="p-5 lg:p-12 bg-white mx-auto rounded-2xl w-100 ">
+            <div class="p-5 md:p-9 bg-white mx-auto rounded-2xl w-100 -mt-14 mb-4 lg:m-0 md:m-0">
               <div class="mb-4">
                 <h3 class="font-semibold text-2xl text-gray-800">Sign Up </h3>
                 <p class="text-gray-500">Please sign in to your account.</p>
@@ -537,6 +537,10 @@ function signup(props) {
   );
 }
 
+signup.getLayout = function PageLayout(page) {
+  return <>{page}</>;
+};
+
 const mapStateToProps = (state) => {
   return {
     isErrors: state.signupErrors,
@@ -552,6 +556,3 @@ export default connect(mapStateToProps, {
   updateConfirmPasswordError,
 })(signup);
 
-signup.getLayout = function PageLayout(page) {
-  return <>{page}</>;
-};
