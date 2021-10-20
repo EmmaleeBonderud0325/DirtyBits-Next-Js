@@ -1,11 +1,11 @@
 import React, { useState, useCallback } from "react";
 import Link from "next/link";
 import { validate } from "email-validator";
-import Head from 'next/head'
+import Head from "next/head";
 import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.min.css';
+import "react-toastify/dist/ReactToastify.min.css";
 import { useRouter } from "next/router";
-
+import { connect, useDispatch } from "react-redux";
 
 import Input from "../../components/Input";
 import {
@@ -14,13 +14,17 @@ import {
   createUser,
 } from "../../components/api/apis";
 import Debounce from "../../components/Helper/Debounce";
+import {
+  updateFirstNameError,
+  updateLastNameError,
+  updateUsernameError,
+  updateEmailError,
+  updatePasswordError,
+  updateConfirmPasswordError,
+} from "../../redux/actions";
 
-function signup() {
-  const isError = false;
-  const inputColor = isError ? "border-red-300" : "border-white-400";
-  const inputFocusColor = isError ? "border-red-300" : "border-custom-yellow";
-  const labelColor = isError ? "text-red-700" : "text-gray-700";
-
+function signup(props) {
+  const dispatch = useDispatch();
   const notifyError = () =>
     toast.error("Try Again", {
       position: toast.POSITION.TOP_RIGHT,
@@ -28,74 +32,65 @@ function signup() {
 
   const router = useRouter();
 
-  let [isErrors, setIsErrors] = useState({
-    username: { error: false, details: "" },
-    firstname: { error: false, details: "" },
-    lastname: { error: false, details: "" },
-    email: { error: false, details: "" },
-    password: { error: false, details: "" },
-    confirmPassword: { error: false, details: "" },
-  });
-
   const [isDisabled, setIsDisabled] = useState(false);
 
-  const emailInputColor = isErrors.email.error
+  const emailInputColor = props.isErrors.email.error
     ? "border-red-300"
     : "border-white-400";
-  const emailInputFocusColor = isErrors.email.error
+  const emailInputFocusColor = props.isErrors.email.error
     ? "border-red-300"
     : "border-custom-yellow";
-  const emailLabelColor = isErrors.email.error
+  const emailLabelColor = props.isErrors.email.error
     ? "text-red-700"
     : "text-gray-700";
 
-  const firstnameInputColor = isErrors.firstname.error
+  const firstnameInputColor = props.isErrors.firstname.error
     ? "border-red-300"
     : "border-white-400";
-  const firstnameInputFocusColor = isErrors.firstname.error
+  const firstnameInputFocusColor = props.isErrors.firstname.error
     ? "border-red-300"
     : "border-custom-yellow";
-  const firstnameLabelColor = isErrors.firstname.error
+  const firstnameLabelColor = props.isErrors.firstname.error
     ? "text-red-700"
     : "text-gray-700";
 
-  const lastnameInputColor = isErrors.lastname.error
+  const lastnameInputColor = props.isErrors.lastname.error
     ? "border-red-300"
     : "border-white-400";
-  const lastnameInputFocusColor = isErrors.lastname.error
+  const lastnameInputFocusColor = props.isErrors.lastname.error
     ? "border-red-300"
     : "border-custom-yellow";
-  const lastnameLabelColor = isErrors.lastname.error
+  const lastnameLabelColor = props.isErrors.lastname.error
     ? "text-red-700"
     : "text-gray-700";
 
-  const usernameInputColor = isErrors.username.error
+  const usernameInputColor = props.isErrors.username.error
     ? "border-red-300"
     : "border-white-400";
-  const usernameInputFocusColor = isErrors.username.error
+  const usernameInputFocusColor = props.isErrors.username.error
     ? "border-red-300"
     : "border-custom-yellow";
-  const usernameLabelColor = isErrors.username.error
+  const usernameLabelColor = props.isErrors.username.error
     ? "text-red-700"
     : "text-gray-700";
 
-  const passwordInputColor = isErrors.password.error
+  const passwordInputColor = props.isErrors.password.error
     ? "border-red-300"
     : "border-white-400";
-  const passwordInputFocusColor = isErrors.password.error
+  const passwordInputFocusColor = props.isErrors.password.error
     ? "border-red-300"
     : "border-custom-yellow";
-  const passwordLabelColor = isErrors.password.error
+  const passwordLabelColor = props.isErrors.password.error
     ? "text-red-700"
     : "text-gray-700";
 
-  const confirmPasswordInputColor = isErrors.confirmPassword.error
+  const confirmPasswordInputColor = props.isErrors.confirmPassword.error
     ? "border-red-300"
     : "border-white-400";
-  const confirmPasswordInputFocusColor = isErrors.confirmPassword.error
+  const confirmPasswordInputFocusColor = props.isErrors.confirmPassword.error
     ? "border-red-300"
     : "border-custom-yellow";
-  const confirmPasswordLabelColor = isErrors.confirmPassword.error
+  const confirmPasswordLabelColor = props.isErrors.confirmPassword.error
     ? "text-red-700"
     : "text-gray-700";
 
@@ -108,13 +103,12 @@ function signup() {
   const handleUsernameChange = async () => {
     const username = document.getElementById("username-field-signup").value;
     if (username.length < 5) {
-      setIsErrors({
-        ...isErrors,
-        username: {
+      dispatch(
+        updateUsernameError({
           error: true,
           details: "Username should have atleast 5 characters !",
-        },
-      });
+        })
+      );
     } else {
       try {
         const res = await validateUserName.post("/", { username: username });
@@ -124,17 +118,20 @@ function signup() {
         }
         const data = res.data;
         if (data.success) {
-          var stateData = { ...isErrors };
-          stateData.username = { error: false, details: "" };
-          setIsErrors(stateData);
+          dispatch(
+            updateUsernameError({
+              error: false,
+              details: "",
+            })
+          );
           return true;
         } else {
-          var stateData = { ...isErrors };
-          stateData.username = {
-            error: true,
-            details: "Username Exsists !",
-          };
-          setIsErrors(stateData);
+          dispatch(
+            updateUsernameError({
+              error: true,
+              details: "Username Exsists !",
+            })
+          );
           return false;
         }
       } catch (e) {
@@ -150,12 +147,9 @@ function signup() {
   );
 
   const handleEmailChange = async () => {
-    console.log(isErrors);
     const email = document.getElementById("email-field-signup").value;
     if (!validate(email)) {
-      var stateData = { ...isErrors };
-      stateData.email = { error: true, details: "Invalid Email !" };
-      setIsErrors(stateData);
+      dispatch(updateEmailError({ error: true, details: "Invalid Email !" }));
     } else {
       try {
         const res = await validateEmail.post("/", { email: email });
@@ -165,14 +159,13 @@ function signup() {
         }
         const data = res.data;
         if (data.success) {
-          var stateData = { ...isErrors };
-          stateData.email = { error: false, details: "" };
-          setIsErrors(stateData);
+          dispatch(updateEmailError({ error: false, details: "" }));
           return true;
         } else {
-          var stateData = { ...isErrors };
-          stateData.email = { error: true, details: "Email Exists !" };
-          setIsErrors(stateData);
+          dispatch(
+            updateEmailError({ error: true, details: "Email Exists !" })
+          );
+
           return false;
         }
       } catch (e) {
@@ -190,22 +183,20 @@ function signup() {
   const handlePasswordChange = () => {
     const password = document.getElementById("password-field-signup").value;
     if (password.length < 8) {
-      setIsErrors({
-        ...isErrors,
-        password: {
+      dispatch(
+        updatePasswordError({
           error: true,
           details: "Password must have atleast 8 characters !",
-        },
-      });
+        })
+      );
       return false;
     } else {
-      setIsErrors({
-        ...isErrors,
-        password: {
+      dispatch(
+        updatePasswordError({
           error: false,
           details: "",
-        },
-      });
+        })
+      );
       return true;
     }
   };
@@ -220,34 +211,30 @@ function signup() {
     const confirmPassword = document.getElementById(
       "confirmpassword-field-signup"
     ).value;
-    console.log(password, confirmPassword);
     if (confirmPassword.length < 8) {
-      setIsErrors({
-        ...isErrors,
-        confirmPassword: {
+      dispatch(
+        updateConfirmPasswordError({
           error: true,
           details: "Password must have atleast 8 characters !",
-        },
-      });
+        })
+      );
       return false;
     } else {
       if (confirmPassword !== password) {
-        setIsErrors({
-          ...isErrors,
-          confirmPassword: {
+        dispatch(
+          updateConfirmPasswordError({
             error: true,
             details: "Passwords do not Match !",
-          },
-        });
+          })
+        );
         return false;
       } else {
-        setIsErrors({
-          ...isErrors,
-          confirmPassword: {
+        dispatch(
+          updateConfirmPasswordError({
             error: false,
             details: "",
-          },
-        });
+          })
+        );
         return true;
       }
     }
@@ -260,57 +247,35 @@ function signup() {
 
   const submitSignupForm = async (e) => {
     e.preventDefault();
-    setIsErrors({
-      ...isErrors,
-      username: { error: false, details: "" },
-      firstname: { error: false, details: "" },
-      lastname: { error: false, details: "" },
-      email: { error: false, details: "" },
-      password: { error: false, details: "" },
-      confirmPassword: { error: false, details: "" },
-    });
+    if (formData.firstName.length === 0) {
+      dispatch(
+        updateFirstNameError({ error: true, details: "First Name is required" })
+      );
+      return;
+    } else {
+      dispatch(updateFirstNameError({ error: false, details: "" }));
+    }
+    if (formData.lastName.length === 0) {
+      dispatch(
+        updateLastNameError({ error: true, details: "Last Name is required" })
+      );
+      return;
+    } else {
+      dispatch(updateFirstNameError({ error: false, details: "" }));
+    }
+    let flag = false;
+    for (const obj in props.isErrors) {
+      flag = flag || props.isErrors[obj].error;
+    }
+    if (flag) {
+      return;
+    }
     const username = document.getElementById("username-field-signup").value;
     const email = document.getElementById("email-field-signup").value;
     const password = document.getElementById("password-field-signup").value;
     const confirmPassword = document.getElementById(
       "confirmpassword-field-signup"
     ).value;
-    console.log(username, email, password, confirmPassword);
-    const usernameValid = await handleUsernameChange();
-    if (!usernameValid) {
-      return;
-    }
-    if (formData.firstName.length === 0) {
-      setIsErrors({
-        ...isErrors,
-        firstname: { error: true, details: "First Name is required" },
-      });
-      return;
-    } else {
-      setIsErrors({
-        ...isErrors,
-        firstname: { error: false, details: "" },
-      });
-    }
-    if (formData.lastName.length === 0) {
-      setIsErrors({
-        ...isErrors,
-        lastname: { error: true, details: "Last Name is required" },
-      });
-      return;
-    } else {
-      setIsErrors({
-        ...isErrors,
-        lastname: { error: false, details: "" },
-      });
-    }
-    const emailValid = await handleEmailChange();
-    if (!emailValid) {
-      return;
-    }
-    if (!handleConfirmPasswordChange()) {
-      return;
-    }
     const sendData = {
       first_name: formData.firstName,
       last_name: formData.lastName,
@@ -319,15 +284,6 @@ function signup() {
       password: password,
     };
     try {
-      // await createUser
-      //   .post("/", sendData)
-      //   .then((result) => {
-      //     notifySuccess()
-      //   })
-      //   .catch(() => {
-      //     notifyError()
-      //     console.error("Registeration Failed !");
-      //   });
       toast
         .promise(createUser.post("/", sendData), {
           pending: "Signing you up...",
@@ -338,19 +294,19 @@ function signup() {
           if (result.status === 201) {
             setTimeout(() => router.push("/auth/registered"), 2000);
           }
-      })
-    }catch (e) {
-      notifyError()
+        });
+    } catch (e) {
+      notifyError();
       console.error("Server Error !");
     }
   };
 
   return (
     <div>
-        <Head>
-          <title>Sign Up to DirtyBits</title>
-        </Head>
-      <ToastContainer theme="dark"/>
+      <Head>
+        <title>Sign Up to DirtyBits</title>
+      </Head>
+      <ToastContainer theme="dark" />
       <div class="bg-no-repeat bg-cover bg-center relative overflow-hidden">
         <div class="absolute w-60 h-60 rounded-xl bg-custom-yellow2 -top-5 -left-16 z-0 transform rotate-45 hidden md:block"></div>
         <div class="absolute w-48 h-48 rounded-xl bg-custom-yellow2 -bottom-10 transform rotate-12 hidden md:block"></div>
@@ -393,9 +349,9 @@ function signup() {
                     onchangeFunction={HandleUserNameUpdateDebounce}
                   />
                   <div style={{ height: ".3rem" }}>
-                    {isErrors.username.error ? (
+                    {props.isErrors.username.error ? (
                       <span className="text-xs text-red-400 ml-2 mb:2">
-                        {isErrors.username.details}
+                        {props.isErrors.username.details}
                       </span>
                     ) : (
                       <span></span>
@@ -419,9 +375,9 @@ function signup() {
                     }
                   />
                   <div style={{ height: ".3rem" }}>
-                    {isErrors.firstname.error ? (
+                    {props.isErrors.firstname.error ? (
                       <span className="text-xs text-red-400 ml-2 mb:2">
-                        {isErrors.firstname.details}
+                        {props.isErrors.firstname.details}
                       </span>
                     ) : (
                       <span></span>
@@ -445,9 +401,9 @@ function signup() {
                     }
                   />
                   <div style={{ height: ".3rem" }}>
-                    {isErrors.lastname.error ? (
+                    {props.isErrors.lastname.error ? (
                       <span className="text-xs text-red-400 ml-2 mb:2">
-                        {isErrors.lastname.details}
+                        {props.isErrors.lastname.details}
                       </span>
                     ) : (
                       <span></span>
@@ -469,9 +425,9 @@ function signup() {
                     onchangeFunction={HandleEmailUpdateDebounce}
                   />
                   <div style={{ height: ".3rem" }}>
-                    {isErrors.email.error ? (
+                    {props.isErrors.email.error ? (
                       <span className="text-xs text-red-400 ml-2 mb:2">
-                        {isErrors.email.details}
+                        {props.isErrors.email.details}
                       </span>
                     ) : (
                       <span></span>
@@ -492,9 +448,9 @@ function signup() {
                     onchangeFunction={HandlePasswordUpdateDebounce}
                   />
                   <div style={{ height: ".3rem" }}>
-                    {isErrors.password.error ? (
+                    {props.isErrors.password.error ? (
                       <span className="text-xs text-red-400 ml-2 mb:2">
-                        {isErrors.password.details}
+                        {props.isErrors.password.details}
                       </span>
                     ) : (
                       <span></span>
@@ -515,9 +471,9 @@ function signup() {
                     onchangeFunction={HandleConfirmPasswordUpdateDebounce}
                   />
                   <div style={{ height: ".3rem" }}>
-                    {isErrors.confirmPassword.error ? (
+                    {props.isErrors.confirmPassword.error ? (
                       <span className="text-xs text-red-400 ml-2 mb:2">
-                        {isErrors.confirmPassword.details}
+                        {props.isErrors.confirmPassword.details}
                       </span>
                     ) : (
                       <span></span>
@@ -581,7 +537,20 @@ function signup() {
   );
 }
 
-export default signup;
+const mapStateToProps = (state) => {
+  return {
+    isErrors: state.signupErrors,
+  };
+};
+
+export default connect(mapStateToProps, {
+  updateEmailError,
+  updateFirstNameError,
+  updateLastNameError,
+  updateUsernameError,
+  updatePasswordError,
+  updateConfirmPasswordError,
+})(signup);
 
 signup.getLayout = function PageLayout(page) {
   return <>{page}</>;
