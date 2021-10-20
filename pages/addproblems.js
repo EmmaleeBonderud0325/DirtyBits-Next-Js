@@ -16,6 +16,9 @@ import {
   updateProblemTags,
 } from "../redux/actions";
 
+import Table from '../components/Table'
+
+
 function addproblems(props) {
   const dispatch = useDispatch();
 
@@ -105,6 +108,7 @@ function addproblems(props) {
             </button>
           </div>
         </form>
+        <Table/>
       </div>
     </div>
   );
