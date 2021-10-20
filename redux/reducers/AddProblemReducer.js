@@ -16,7 +16,7 @@ let initial = {
   input_format: "",
   constraints: "",
   output_format: "",
-  problem_level: "",
+  problem_level: "Level",
   tags: [],
 };
 

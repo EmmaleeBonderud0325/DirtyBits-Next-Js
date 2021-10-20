@@ -1,20 +1,27 @@
-import React from 'react'
-import { Fragment } from 'react'
-import { Menu, Transition } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/solid'
+import React from "react";
+import { Fragment } from "react";
+import { Menu, Transition } from "@headlessui/react";
+import { ChevronDownIcon } from "@heroicons/react/solid";
+import { connect, useDispatch } from "react-redux";
+
+import { updateProblemLevel } from "../redux/actions";
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ");
 }
 
-export default function Dropdown() {
-  const [value, setValue] = React.useState('Levels')
+function Dropdown(props) {
+  const dispatch = useDispatch();
+  const [value, setValue] = React.useState("Levels");
   return (
     <Menu as="div" className="w-full relative inline-block text-left">
       <div>
         <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
-          {value}
-          <ChevronDownIcon className="-mr-1 h-5 w-5 ml-auto" aria-hidden="true" />
+          {props.problemData.problem_level}
+          <ChevronDownIcon
+            className="-mr-1 h-5 w-5 ml-auto"
+            aria-hidden="true"
+          />
         </Menu.Button>
       </div>
 
@@ -32,10 +39,10 @@ export default function Dropdown() {
             <Menu.Item>
               {({ active }) => (
                 <a
-                  onClick={() => setValue('Easy')}
+                  onClick={() => dispatch(updateProblemLevel("Easy"))}
                   className={classNames(
-                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm cursor-pointer'
+                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                    "block px-4 py-2 text-sm cursor-pointer"
                   )}
                 >
                   Easy
@@ -45,10 +52,10 @@ export default function Dropdown() {
             <Menu.Item>
               {({ active }) => (
                 <a
-                  onClick={() => setValue('Medium')}
+                  onClick={() => dispatch(updateProblemLevel("Medium"))}
                   className={classNames(
-                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm cursor-pointer'
+                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                    "block px-4 py-2 text-sm cursor-pointer"
                   )}
                 >
                   Medium
@@ -58,10 +65,10 @@ export default function Dropdown() {
             <Menu.Item>
               {({ active }) => (
                 <a
-                  onClick={() => setValue('Hard')}
+                  onClick={() => dispatch(updateProblemLevel("Hard"))}
                   className={classNames(
-                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm cursor-pointer'
+                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                    "block px-4 py-2 text-sm cursor-pointer"
                   )}
                 >
                   Hard
@@ -72,5 +79,13 @@ export default function Dropdown() {
         </Menu.Items>
       </Transition>
     </Menu>
-  )
+  );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    problemData: state.addProblemData,
+  };
+};
+
+export default connect(mapStateToProps, { updateProblemLevel })(Dropdown);
