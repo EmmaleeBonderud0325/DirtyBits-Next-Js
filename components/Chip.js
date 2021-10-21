@@ -8,20 +8,13 @@ const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));
 
-export default function ChipsArray() {
-  const [chipData, setChipData] = React.useState([
-    { key: 0, label: 'Angular' },
-    { key: 1, label: 'jQuery' },
-    { key: 2, label: 'Polymer' },
-    { key: 3, label: 'React' },
-    { key: 4, label: 'Vue.js' },
-  ]);
+export default function ChipsArray(props) {
+  const [chipData, setChipData] = React.useState(props.value);
 
   const handleDelete = (chipToDelete) => () => {
-    setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+    setChipData((chips) => chips.filter((chip) => chip.id !== chipToDelete.id));
 };
 
-    console.log(chipData)
   return (
     <Paper
       sx={{
@@ -38,11 +31,11 @@ export default function ChipsArray() {
         let icon;
 
         return (
-          <ListItem key={data.key}>
+          <ListItem key={data.id}>
             <Chip
             color="warning"
               icon={icon}
-              label={data.label}
+              label={data.name}
               onDelete={handleDelete(data)}
               onClick={() => console.log('You clicked the Chip.')}
             />
