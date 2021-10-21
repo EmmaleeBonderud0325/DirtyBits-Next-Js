@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import { ArrowForward } from "@mui/icons-material";
 import { connect, useDispatch } from "react-redux";
 
@@ -14,9 +14,7 @@ import {
   updateProblemOutputFormat,
   updateProblemTags,
 } from "../redux/actions";
-
-import Table from '../components/Table'
-
+import axios from "axios";
 
 function addproblems(props) {
   const dispatch = useDispatch();
@@ -36,7 +34,7 @@ function addproblems(props) {
   const HandleOutputFormatUpdate = (data) => {
     dispatch(updateProblemOutputFormat(data));
   };
-
+  console.log('tags', props.tags.results)
   return (
     <div className="lg:container m-auto">
       <div className="lg:pl-36 p-5 space-y-14">
@@ -89,11 +87,11 @@ function addproblems(props) {
           </div>
           <div className="space-y-3">
             <label className="text-lg lg:text-2xl ml-1">Level</label>
-            <Dropdown />
+            <Dropdown fieldName={"Difficulty"} fieldValues={['Easy', 'Medium', 'Hard']} bg={'bg-white'} textColor={'text-black'} />
           </div>
           <div className="space-y-3">
             <label className="text-lg lg:text-2xl ml-1">Tags</label>
-            <Chip />
+            <Chip value={props.tags.results}/>
           </div>
           <div className="flex justify-center items-center ">
             <button className="font-bold bg-custom-yellow2 rounded-full px-5 py-2 outline-none border-none hover:bg-custom-yellow transition ease-out">
@@ -104,7 +102,6 @@ function addproblems(props) {
             </button>
           </div>
         </form>
-        <Table/>
       </div>
     </div>
   );
@@ -116,7 +113,18 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {
+  export const getServerSideProps = async (ctx) => {
+    const response = await axios.get('https://db-code.herokuapp.com/problems/getTagListCreateProblem/');
+    console.log('tags', response.data);
+
+    return {
+      props: {
+        tags: response.data,
+      }
+    }
+  }
+
+export default memo(connect(mapStateToProps, {
   updateProblemTitle,
   updateProblemStatement,
   updateProblemDescription,
@@ -124,4 +132,4 @@ export default connect(mapStateToProps, {
   updateProblemContraints,
   updateProblemOutputFormat,
   updateProblemTags,
-})(addproblems);
+})(addproblems));
