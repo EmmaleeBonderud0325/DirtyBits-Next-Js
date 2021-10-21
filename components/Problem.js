@@ -34,9 +34,8 @@ function Problem() {
             </div>
             {/* DROPDOWN SECITONS FOR DIFFICULTY , STATUS, TAGS */}
             <div className="flex space-x-2">
-                <Dropdown fieldName={"Difficulty"} fieldValues={['Easy', 'Medium', 'Hard']}/>
-                <Dropdown fieldName={"Status"} fieldValues={['ToDo', 'Solved', 'Attempted']}/>
-                {/* <Dropdown fieldName={"Tags"} fieldValues={['ToDo', 'Solved', 'Attempted']}/> */}
+                <Dropdown textColor={'text-white'} fieldName={"Difficulty"} fieldValues={['Easy', 'Medium', 'Hard']} bg={'bg-black'}/>
+                <Dropdown textColor={'text-white'} fieldName={"Status"} fieldValues={['ToDo', 'Solved', 'Attempted']} bg={'bg-black'} />
             </div>
                <Tag />
 
