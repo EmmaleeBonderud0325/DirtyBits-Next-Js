@@ -1,13 +1,12 @@
-import React, {memo} from "react";
+import React, { memo } from "react";
 import { ArrowForward } from "@mui/icons-material";
 import { connect, useDispatch } from "react-redux";
 
 import TextEditor from "../components/TextEditor";
 import Dropdown from "../components/Dropdown";
-import Chip from "../components/Chip";
 import {
   updateProblemTitle,
-  updateProblemDescription,
+  updateProblemNote,
   updateProblemStatement,
   updateProblemInputFormat,
   updateProblemContraints,
@@ -15,6 +14,10 @@ import {
   updateProblemTags,
 } from "../redux/actions";
 import axios from "axios";
+import MultiSelect from "../components/MultiSelect";
+import { AddProblem } from "../components/api/apis";
+import Cookies from "js-cookie";
+import Gettoken from "../components/Helper/Gettoken";
 
 function addproblems(props) {
   const dispatch = useDispatch();
@@ -34,7 +37,29 @@ function addproblems(props) {
   const HandleOutputFormatUpdate = (data) => {
     dispatch(updateProblemOutputFormat(data));
   };
-  console.log('tags', props.tags.results)
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(props.problemData);
+    await Gettoken(Cookies.get("refresh"));
+    await AddProblem.post(
+      "/",
+      { data: props.problemData },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "JWT " + Cookies.get("access"),
+        },
+      }
+    )
+      .then((result) => {
+        console.log(result.data);
+      })
+      .catch(() => {
+        console.log("error");
+      });
+  };
+
   return (
     <div className="lg:container m-auto">
       <div className="lg:pl-36 p-5 space-y-14">
@@ -55,23 +80,19 @@ function addproblems(props) {
           </div>
           <div className="space-y-3">
             <label className="text-lg lg:text-2xl ml-1">
-              Problem Description
-            </label>
-            <textarea
-              className="w-full text-base px-4 py-2 text-black focus:text-base border border-gray-400 rounded-lg focus:outline-none focus:border-custom-yellow"
-              placeholder="Write a short description of the problem ..."
-              value={props.problemData.description}
-              onChange={(e) =>
-                dispatch(updateProblemDescription(e.target.value))
-              }
-              rows="6"
-            />
-          </div>
-          <div className="space-y-3">
-            <label className="text-lg lg:text-2xl ml-1">
               Problem Statement
             </label>
             <TextEditor dispatch={HandleProblemStatementUpdate} />
+          </div>
+          <div className="space-y-3">
+            <label className="text-lg lg:text-2xl ml-1">Note</label>
+            <textarea
+              className="w-full text-base px-4 py-2 text-black focus:text-base border border-gray-400 rounded-lg focus:outline-none focus:border-custom-yellow"
+              placeholder="Write a short description of the problem ..."
+              value={props.problemData.note}
+              onChange={(e) => dispatch(updateProblemNote(e.target.value))}
+              rows="4"
+            />
           </div>
           <div className="space-y-3">
             <label className="text-lg lg:text-2xl ml-1">Input Format</label>
@@ -87,14 +108,22 @@ function addproblems(props) {
           </div>
           <div className="space-y-3">
             <label className="text-lg lg:text-2xl ml-1">Level</label>
-            <Dropdown fieldName={"Difficulty"} fieldValues={['Easy', 'Medium', 'Hard']} bg={'bg-white'} textColor={'text-black'} />
+            <Dropdown
+              fieldName={"Difficulty"}
+              fieldValues={["Easy", "Medium", "Hard"]}
+              bg={"bg-white"}
+              textColor={"text-black"}
+            />
           </div>
           <div className="space-y-3">
             <label className="text-lg lg:text-2xl ml-1">Tags</label>
-            <Chip value={props.tags.results}/>
+            <MultiSelect value={props.tags} />
           </div>
           <div className="flex justify-center items-center ">
-            <button className="font-bold bg-custom-yellow2 rounded-full px-5 py-2 outline-none border-none hover:bg-custom-yellow transition ease-out">
+            <button
+              className="font-bold bg-custom-yellow2 rounded-full px-5 py-2 outline-none border-none hover:bg-custom-yellow transition ease-out"
+              onClick={(e) => handleSubmit(e)}
+            >
               Add Test Case
               <span className="ml-1">
                 <ArrowForward />
@@ -113,23 +142,34 @@ const mapStateToProps = (state) => {
   };
 };
 
-  export const getServerSideProps = async (ctx) => {
-    const response = await axios.get('https://db-code.herokuapp.com/problems/getTagListCreateProblem/');
-    console.log('tags', response.data);
-
-    return {
-      props: {
-        tags: response.data,
-      }
-    }
+export const getServerSideProps = async (ctx) => {
+  const response = await axios.get(
+    "https://db-code.herokuapp.com/problems/getTagListCreateProblem/"
+  );
+  const parseData = response.data.results;
+  let colourOptions = [];
+  for (const data in parseData) {
+    let tempData = {};
+    tempData["value"] = parseData[data].id;
+    tempData["label"] = parseData[data].name;
+    tempData["color"] = "#4C0F89";
+    colourOptions.push(tempData);
   }
+  return {
+    props: {
+      tags: colourOptions,
+    },
+  };
+};
 
-export default memo(connect(mapStateToProps, {
-  updateProblemTitle,
-  updateProblemStatement,
-  updateProblemDescription,
-  updateProblemInputFormat,
-  updateProblemContraints,
-  updateProblemOutputFormat,
-  updateProblemTags,
-})(addproblems));
+export default memo(
+  connect(mapStateToProps, {
+    updateProblemTitle,
+    updateProblemStatement,
+    updateProblemNote,
+    updateProblemInputFormat,
+    updateProblemContraints,
+    updateProblemOutputFormat,
+    updateProblemTags,
+  })(addproblems)
+);

@@ -19,6 +19,12 @@
   }
 }
 
+/* @layer base {
+  body {
+    @apply bg-[#6653FF] text-gray-300;
+  }
+} */
+
 @layer components {
 }
 

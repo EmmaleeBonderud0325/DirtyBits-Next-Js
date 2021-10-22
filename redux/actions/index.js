@@ -1,6 +1,6 @@
 import {
   updateConstraints,
-  updateDescription,
+  updateNote,
   updateInputFormat,
   updateOutputFormat,
   updateLevel,
@@ -30,9 +30,9 @@ export const updateProblemTitle = (newState) => {
   };
 };
 
-export const updateProblemDescription = (newState) => {
+export const updateProblemNote = (newState) => {
   return {
-    type: updateDescription,
+    type: updateNote,
     payload: newState,
   };
 };
