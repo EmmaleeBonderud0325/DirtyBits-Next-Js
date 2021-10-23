@@ -555,4 +555,3 @@ export default connect(mapStateToProps, {
   updatePasswordError,
   updateConfirmPasswordError,
 })(signup);
-

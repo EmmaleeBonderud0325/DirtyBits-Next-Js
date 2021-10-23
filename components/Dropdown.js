@@ -12,13 +12,20 @@ function classNames(...classes) {
 
 function Dropdown(props) {
   const dispatch = useDispatch();
-  const {fieldValues} = props;
+  const { fieldValues } = props;
+  const mapping = {
+    Difficulty: "Difficulty",
+    E: "Easy",
+    M: "Medium",
+    H: "Hard",
+  };
   return (
     <Menu as="div" className="w-full relative inline-block text-left">
       <div>
-        <Menu.Button className={`inline-flex justify-center w-full rounded-md border border-gray-800 shadow-sm px-4 py-2 ${props.bg} text-sm font-medium ${props.textColor}  focus:outline-none focus:ring-2 focus:ring-offset-2`}>
-          {/* {props.levelData} */}
-          {props.fieldName}
+        <Menu.Button
+          className={`inline-flex justify-center w-full rounded-md border border-gray-800 shadow-sm px-4 py-2 ${props.bg} text-sm font-medium ${props.textColor}  focus:outline-none focus:ring-2 focus:ring-offset-2`}
+        >
+          {mapping[props.levelData]}
           <ChevronDownIcon
             className="-mr-1 h-5 w-5 ml-auto"
             aria-hidden="true"
@@ -40,7 +47,7 @@ function Dropdown(props) {
             <Menu.Item>
               {({ active }) => (
                 <a
-                  onClick={() => dispatch(updateProblemLevel("Easy"))}
+                  onClick={() => dispatch(updateProblemLevel("E"))}
                   className={classNames(
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                     "block px-4 py-2 text-sm cursor-pointer"
@@ -53,7 +60,7 @@ function Dropdown(props) {
             <Menu.Item>
               {({ active }) => (
                 <a
-                  onClick={() => dispatch(updateProblemLevel("Medium"))}
+                  onClick={() => dispatch(updateProblemLevel("M"))}
                   className={classNames(
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                     "block px-4 py-2 text-sm cursor-pointer"
@@ -66,7 +73,7 @@ function Dropdown(props) {
             <Menu.Item>
               {({ active }) => (
                 <a
-                  onClick={() => dispatch(updateProblemLevel("Hard"))}
+                  onClick={() => dispatch(updateProblemLevel("H"))}
                   className={classNames(
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                     "block px-4 py-2 text-sm cursor-pointer"
@@ -90,7 +97,3 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, { updateProblemLevel })(Dropdown);
-
-
-
-// inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500

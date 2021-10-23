@@ -104,6 +104,7 @@ function signin() {
                 first_name: data.first_name,
                 last_name: data.last_name,
                 username: data.username,
+                profile_pic: data.profile_pic,
               })
             );
             router.push("/");
@@ -134,6 +135,7 @@ function signin() {
           first_name: data.first_name,
           last_name: data.last_name,
           username: data.username,
+          profile_pic: data.profile_pic,
         })
       );
       router.push("/");

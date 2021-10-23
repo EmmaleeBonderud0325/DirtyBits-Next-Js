@@ -1,6 +1,6 @@
 import {
   updateConstraints,
-  updateDescription,
+  updateNote,
   updateInputFormat,
   updateOutputFormat,
   updateLevel,
@@ -11,8 +11,8 @@ import {
 
 let initial = {
   title: "",
-  description: "",
   problem_statement: "",
+  note: "",
   input_format: "",
   constraints: "",
   output_format: "",
@@ -24,8 +24,8 @@ export const AddProblemReducer = (state = initial, action) => {
   switch (action.type) {
     case updateTitle:
       return { ...state, title: action.payload };
-    case updateDescription:
-      return { ...state, description: action.payload };
+    case updateNote:
+      return { ...state, note: action.payload };
     case updateStatement:
       return { ...state, problem_statement: action.payload };
     case updateInputFormat:
