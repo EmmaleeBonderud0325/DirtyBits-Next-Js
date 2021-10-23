@@ -77,3 +77,9 @@ html::-webkit-scrollbar-thumb {
     transform: translateY(-10px);
   }
 }
+
+.filepond--root,
+.filepond--root .filepond--drop-label {
+  width: 200px;
+  border-radius: 50%;
+}
