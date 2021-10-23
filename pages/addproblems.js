@@ -1,6 +1,8 @@
 import React, {memo} from "react";
 import { ArrowForward } from "@mui/icons-material";
 import { connect, useDispatch } from "react-redux";
+import Upload from '../components/Upload/Upload'
+import { CloudUploadOutlined } from '@mui/icons-material'
 
 import TextEditor from "../components/TextEditor";
 import Dropdown from "../components/Dropdown";
@@ -19,6 +21,8 @@ import axios from "axios";
 function addproblems(props) {
   const dispatch = useDispatch();
 
+  const [step, setStep] = React.useState(1);
+  
   const HandleProblemStatementUpdate = (data) => {
     dispatch(updateProblemStatement(data));
   };
@@ -34,9 +38,11 @@ function addproblems(props) {
   const HandleOutputFormatUpdate = (data) => {
     dispatch(updateProblemOutputFormat(data));
   };
-  console.log('tags', props.tags.results)
-  return (
-    <div className="lg:container m-auto">
+
+  let problemMarkup = []
+  if(step === 1) {
+    problemMarkup = (
+      <div className="lg:container m-auto">
       <div className="lg:pl-36 p-5 space-y-14">
         <h1 className="text-center text-4xl lg:text-[3rem] lg:text-left">
           Add Problems
@@ -104,6 +110,44 @@ function addproblems(props) {
         </form>
       </div>
     </div>
+    )
+  } else if(step === 2) {
+    <div className="lg:container m-auto">
+            <div className="lg:pl-36 p-5 space-y-14">
+                <h1 className="text-center text-4xl lg:text-[3rem] lg:text-left">
+                    Add Problems <CloudUploadOutlined className="text-[5rem]"/>
+                </h1>
+                <hr/>
+                <button className="rounded-full bg-custom-yellow2 py-2 px-2 ">Add Test Case</button>
+                <div className="bg-black p-4 space-y-3 rounded-2xl">
+                    <h1 className="text-3xl">Test Case 1</h1>
+                    <p>Input</p>
+                    <Upload />
+                    <p>Output</p>
+                    <Upload />
+                </div>               
+                <div className="bg-black p-4 space-y-3">
+                    <h1 className="text-3xl">Test Case 2</h1>
+                    <p>Input</p>
+                    <Upload />
+                    <p>Output</p>
+                    <Upload />
+                </div>               
+                <div className="bg-black p-4 space-y-3">
+                    <h1 className="text-3xl">Test Case 3</h1>
+                    <p>Input</p>
+                    <Upload />
+                    <p>Output</p>
+                    <Upload />
+                </div>               
+                
+            </div>
+        </div>
+  }
+
+  
+  return (
+    {problemMarkup}
   );
 }
 
