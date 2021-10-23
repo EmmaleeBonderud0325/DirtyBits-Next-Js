@@ -1,4 +1,3 @@
-/* This example requires Tailwind CSS v2.0+ */
 import { Fragment, useEffect } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
@@ -129,7 +128,7 @@ function Navbar({ userInfo, bg, fixedHeader }) {
                           <span className="sr-only">Open user menu</span>
                           <img
                             className="h-10 w-10 rounded-full"
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEQKASvktw8z6UeZ_lqqo01vP22M7Zca9EIw&usqp=CAU"
+                            src={userInfo.profile_pic}
                             alt=""
                           />
                           <span className="text-white px-2 pt-1.5 pr-3 text-base hidden sm:block">

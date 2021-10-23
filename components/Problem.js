@@ -1,7 +1,6 @@
 import { SearchOutlined } from "@mui/icons-material";
 import { useState } from "react";
 import Dropdown from "../components/Dropdown";
-import Chip from "../components/Chip";
 import Tag from "../components/Tag";
 
 function Problem() {
