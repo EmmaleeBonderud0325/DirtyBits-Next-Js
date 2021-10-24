@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@emotion/react": "^11.4.1",
+    "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
     "@headlessui/react": "^1.4.1",
     "@heroicons/react": "^1.0.4",
@@ -25,6 +25,7 @@
     "filepond": "^4.30.3",
     "filepond-plugin-image-exif-orientation": "^1.0.11",
     "filepond-plugin-image-preview": "^4.6.10",
+    "framer-motion": "^4.1.17",
     "js-cookie": "^3.0.1",
     "jwt-decode": "^3.1.2",
     "next": "11.1.2",
