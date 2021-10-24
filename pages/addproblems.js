@@ -1,6 +1,8 @@
 import React, { memo } from "react";
 import { ArrowForward } from "@mui/icons-material";
 import { connect, useDispatch } from "react-redux";
+import Upload from '../components/Upload/Upload'
+import { CloudUploadOutlined } from '@mui/icons-material'
 
 import TextEditor from "../components/TextEditor";
 import Dropdown from "../components/Dropdown";
@@ -22,6 +24,8 @@ import Gettoken from "../components/Helper/Gettoken";
 function addproblems(props) {
   const dispatch = useDispatch();
 
+  const [step, setStep] = React.useState(2);
+  
   const HandleProblemStatementUpdate = (data) => {
     dispatch(updateProblemStatement(data));
   };
@@ -54,13 +58,16 @@ function addproblems(props) {
     )
       .then((result) => {
         console.log(result.data);
+        setStep(2);
       })
       .catch(() => {
         console.log("error");
       });
   };
 
-  return (
+  let problemMarkup;
+  if(step === 1) {
+    problemMarkup = (
     <div className="lg:container m-auto">
       <div className="lg:pl-36 p-5 space-y-14">
         <h1 className="text-center text-4xl lg:text-[3rem] lg:text-left">
@@ -133,9 +140,39 @@ function addproblems(props) {
         </form>
       </div>
     </div>
-  );
-}
+    )
+  } else if(step === 2) {
+    problemMarkup = ( 
+    <div className="lg:container m-auto">
+                <div className="lg:pl-36 p-5 space-y-14">
+                    <h1 className="text-center text-4xl lg:text-[3rem] lg:text-left">
+                        Add Problems <CloudUploadOutlined className="text-[5rem]"/>
+                    </h1>
+                    <hr/>
+                    <button className="rounded-full bg-custom-yellow2 py-2 px-2 ">Add Test Case</button>
 
+                    <div className="bg-black p-4 space-y-3 rounded-2xl">
+                        <h1 className="text-3xl">Test Case 1</h1>
+                        <div className="lg:flex lg:justify-center lg:space-x-16">
+                          <p>Input</p>
+                          <Upload />
+                          <span className="hidden md:block border-l-4 border-white"/>
+                          <p>Output</p>
+                          <Upload />
+                        </div>
+                    </div>               
+                    
+                </div>
+            </div>
+    )
+  }
+
+    return (
+      <>
+        {problemMarkup}
+      </>
+    )
+}
 const mapStateToProps = (state) => {
   return {
     problemData: state.addProblemData,
