@@ -6,6 +6,9 @@ module.exports = {
       purgeLayersByDefault: true,
     },
     darkMode: 'class',
+    plugins: [
+      require('tailwind-scrollbar-hide')
+    ],
     theme: {
       extend: {
         colors: {

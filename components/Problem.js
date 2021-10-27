@@ -1,7 +1,7 @@
 import { SearchOutlined } from "@mui/icons-material";
 import { useState } from "react";
 import Dropdown from "../components/Dropdown";
-import Tag from "../components/Tag";
+import Topics from '../components/Blog/Topics'
 
 function Problem() {
   const values = [
@@ -16,14 +16,14 @@ function Problem() {
   ];
   const [value, setValue] = useState();
   return (
-    <div className="space-y-5 container p-10 mx-auto max-w-screen-xl">
-      <h1 className="text-5xl">Problem List</h1>
+    <div className="space-y-8 container p-10 mx-auto max-w-screen-xl">
+      <h1 className="lg:text-5xl text-3xl font-extrabold">Problem <span className="text-custom-bg">List</span></h1>
       <hr />
-      <div className="flex space-x-4 overflow-x-scroll">
+      <div className="flex space-x-4 overflow-x-scroll lg:scrollbar-hide">
         {values.map((value) => {
           return (
-            <div className="flex flex-col">
-              <button className="text-base rounded-xl bg-black px-4 py-1 hover:scale-125 transition-all ease-out">
+            <div className="flex flex-col items-center justify-center">
+              <button className="text-base rounded-xl bg-gray-800 px-2 lg:px-4 lg:py-1 hover:scale-125 transition-all ease-out">
                 {value}
               </button>
             </div>
@@ -33,18 +33,18 @@ function Problem() {
       <div className="flex space-x-3">
         <form
           onSubmit={() => {}}
-          className="p-[.2rem] flex border-none rounded-xl focus:outline-none bg-black items-center max-w-screen-2xl"
+          className="p-[.2rem] flex border-none rounded-xl focus:outline-none bg-gray-800 items-center max-w-screen-2xl"
         >
           <input
             type="text"
-            className="bg-black outline-none text-white p-2 rounded-xl w-full"
+            className="bg-gray-800 outline-none text-white p-2 rounded-xl w-full"
             placeholder="Search"
             value={value}
             onChange={(e) => setValue(e.target.value)}
           />
           <SearchOutlined />
         </form>
-        <button type="submit" className="rounded-full  bg-black px-6 py-1">
+        <button type="submit" className="rounded-full  bg-gray-800 px-6 py-1">
           Search
         </button>
       </div>
@@ -63,7 +63,14 @@ function Problem() {
           bg={"bg-black"}
         />
       </div>
-      <Tag />
+      
+      <div className="flex">
+        
+        <Topics/>
+
+      </div>
+
+      
     </div>
   );
 }

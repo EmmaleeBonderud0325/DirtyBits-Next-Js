@@ -81,8 +81,8 @@ html::-webkit-scrollbar-thumb {
   }
 }
 
-.filepond--root,
+/* .filepond--root,
 .filepond--root .filepond--drop-label {
   width: 200px;
   border-radius: 50%;
-}
+} */
