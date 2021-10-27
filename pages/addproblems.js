@@ -19,16 +19,17 @@ import {
 } from "../redux/actions";
 import axios from "axios";
 import MultiSelect from "../components/MultiSelect";
-import { AddProblem } from "../components/api/apis";
+import { AddProblem, uploadTestCases } from "../components/api/apis";
 import Cookies from "js-cookie";
 import Gettoken from "../components/Helper/Gettoken";
-import { XCircleIcon } from "@heroicons/react/solid";
 
 function addproblems(props) {
   const dispatch = useDispatch();
 
+  let [step, setStep] = useState(2);
   let [customTestCases, changeCustomTestCases] = useState([{ id: uuid() }]);
   let [testCases, changeTestCases] = useState([{ id: uuid() }]);
+  let [probId, setProbId] = useState(null);
 
   const addNewFileInputSC = (e) => {
     e.preventDefault();
@@ -77,7 +78,7 @@ function addproblems(props) {
       <div className="overflow-hidden bg-black w-full p-4 space-y-3 rounded-2xl border border-custom-bg">
         <h1 className="lg:text-3xl font-bold">Test Case - {idx + 1}</h1>
         <div className="each-custom space-y-2" id={n.id}>
-           <div className="lg:flex justify-center lg:space-x-10">
+          <div className="lg:flex justify-center lg:space-x-10">
             <div className="lg:space-x-6 ">
               <label className="text-lg font-bold">Input</label>
               <input type="file" id={sci} accept=".txt"></input>
@@ -89,13 +90,9 @@ function addproblems(props) {
             </div>
           </div>
           <div className="add-tc-close-icon">
-            <i
-              className="large close icon"
-              id={n.id}
-              onClick={(e) => deleteFileSC(e)}
-            >
-              <XCircleIcon height="30" width="30"/>
-            </i>
+            <div id={n.id} onClick={(e) => deleteFileSC(e)}>
+              X
+            </div>
           </div>
         </div>
       </div>
@@ -109,7 +106,7 @@ function addproblems(props) {
       <div className="overflow-hidden bg-black p-4 space-y-3 rounded-2xl border border-custom-bg">
         <h1 className="text-3xl">Test Case - {idx + 1}</h1>
         <div className="each-custom" id={n.id}>
-        <div className="lg:flex justify-center lg:space-x-10">
+          <div className="lg:flex justify-center lg:space-x-10">
             <div className="lg:space-x-6 ">
               <label className="text-lg font-bold">Input</label>
               <input type="file" id={tci} accept=".txt"></input>
@@ -121,20 +118,51 @@ function addproblems(props) {
             </div>
           </div>
           <div className="add-tc-close-icon">
-            <i
-              className="large close icon"
-              id={n.id}
-              onClick={(e) => deleteFileTC(e)}
-            >
-              <XCircleIcon height="30" width="30"/>
-            </i>
+            <div id={n.id} onClick={(e) => deleteFileTC(e)}>
+              X
+            </div>
           </div>
         </div>
       </div>
     );
   });
 
-  const [step, setStep] = React.useState(2);
+  const postData = async (data) => {
+    await uploadTestCases
+      .post("/", data)
+      .then((result) => {
+        console.log(result.status);
+      })
+      .catch(() => {
+        console.log("error");
+      });
+  };
+
+  const submitted = (e) => {
+    e.preventDefault();
+    const data = new FormData();
+    data.append("probId", probId);
+    for (var i = 0; i < customTestCases.length; i++) {
+      const input_file = document.getElementById(
+        "sc-" + customTestCases[i].id + "-i"
+      ).files[0];
+      const output_file = document.getElementById(
+        "sc-" + customTestCases[i].id + "-o"
+      ).files[0];
+      data.append("sc-input" + (i + 1), input_file);
+      data.append("sc-output" + (i + 1), output_file);
+    }
+    for (var i = 0; i < testCases.length; i++) {
+      const input_file = document.getElementById("tc-" + testCases[i].id + "-i")
+        .files[0];
+      const output_file = document.getElementById(
+        "tc-" + testCases[i].id + "-o"
+      ).files[0];
+      data.append("tc-input" + (i + 1), input_file);
+      data.append("tc-output" + (i + 1), output_file);
+    }
+    postData(data);
+  };
 
   const HandleProblemStatementUpdate = (data) => {
     dispatch(updateProblemStatement(data));
@@ -168,6 +196,7 @@ function addproblems(props) {
     )
       .then((result) => {
         console.log(result.data);
+        setProbId(result.data["id"]);
         setStep(2);
       })
       .catch(() => {
@@ -256,7 +285,8 @@ function addproblems(props) {
       <div className="lg:container m-auto">
         <div className="lg:pl-36 p-5 space-y-14">
           <h1 className="font-extrabold text-center text-4xl lg:text-[3rem] lg:text-left">
-            Add <span className="text-custom-bg">Problems</span> <CloudUploadOutlined className="text-[5rem]" />
+            Add <span className="text-custom-bg">Problems</span>{" "}
+            <CloudUploadOutlined className="text-[5rem]" />
           </h1>
           <hr />
           <h3 className="font-bold text-center text-2xl lg:text-[2rem] lg:text-left">
@@ -269,20 +299,6 @@ function addproblems(props) {
           >
             Add{" "}
           </button>
-          {/* <button className="rounded-full bg-custom-yellow2 py-2 px-2 ">
-            Add Test Case
-          </button> */}
-
-          {/* <div className="bg-black p-4 space-y-3 rounded-2xl">
-            <h1 className="text-3xl">Test Case 1</h1>
-            <div className="lg:flex lg:justify-center lg:space-x-16">
-              <p>Input</p>
-              <Upload />
-              <span className="hidden md:block border-l-4 border-white" />
-              <p>Output</p>
-              <Upload />
-            </div>
-          </div> */}
           <h3 className="font-bold text-center text-2xl lg:text-[2rem] lg:text-left">
             Test Cases
           </h3>
@@ -293,6 +309,14 @@ function addproblems(props) {
           >
             Add{" "}
           </button>
+          <div>
+            <button
+              class="ui right floated button btn-purple"
+              onClick={submitted}
+            >
+              Upload Test Cases{" "}
+            </button>
+          </div>
         </div>
       </div>
     );

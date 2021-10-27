@@ -45,3 +45,7 @@ export const verifyVerificationCode = axios.create({
 export const AddProblem = axios.create({
   baseURL: PROBLEM_URL + "problems/addProblem",
 });
+
+export const uploadTestCases = axios.create({
+  baseURL: PROBLEM_URL + "problems/uploadTC",
+});
