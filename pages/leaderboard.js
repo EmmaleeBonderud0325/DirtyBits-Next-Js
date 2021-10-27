@@ -7,7 +7,7 @@ function leaderboard() {
       <Head>
         <title>Leaderboard</title>
       </Head>
-      <h1 className="m-auto">Leaderboard Page</h1>
+      <h1 className="m-auto">Leaderboard</h1>
     </div>
   );
 }
