@@ -12,7 +12,8 @@ module.exports = {
           'custom-yellow':'#FB7A16',
           'custom-yellow2': '#FF6663',
           'custom-maroon' : '#410B3B',
-          'custom-background': '#06202A'
+          'custom-background': '#06202A',
+          'custom-bg': '#AB61F7'
         }
       },
     },  

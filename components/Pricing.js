@@ -4,7 +4,7 @@ import React from "react";
 function Pricing() {
   return (
     <div className="hidden lg:block">
-      <body class="font-sans bg-[#06202A]">
+      <body class="font-sans">
         <div class="min-h-screen flex justify-center items-center">
           <div class="">
             <div class="text-center font-semibold">

@@ -15,7 +15,7 @@
 
 @layer base {
   body {
-    @apply bg-[#06202A] text-gray-300;
+    @apply bg-[#060F1E] text-gray-300;
   }
 }
 
@@ -26,6 +26,9 @@
 } */
 
 @layer components {
+  .btn-purple {
+    @apply bg-custom-bg px-10 rounded-full py-2 font-extrabold hover:bg-purple-600 transition-all ease-out;
+  }
 }
 
 * {

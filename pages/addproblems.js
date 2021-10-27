@@ -22,6 +22,7 @@ import MultiSelect from "../components/MultiSelect";
 import { AddProblem } from "../components/api/apis";
 import Cookies from "js-cookie";
 import Gettoken from "../components/Helper/Gettoken";
+import { XCircleIcon } from "@heroicons/react/solid";
 
 function addproblems(props) {
   const dispatch = useDispatch();
@@ -73,16 +74,19 @@ function addproblems(props) {
     const sci = "sc-" + n.id + "-i";
     const sco = "sc-" + n.id + "-o";
     return (
-      <div className="bg-black p-4 space-y-3 rounded-2xl">
-        <h1 className="text-3xl">Test Case - {idx + 1}</h1>
-        <div className="each-custom" id={n.id}>
-          <div>
-            <label>Input</label>
-            <input type="file" id={sci} accept=".txt"></input>
-          </div>
-          <div>
-            <label>Output</label>
-            <input type="file" id={sco} accept=".txt"></input>
+      <div className="overflow-hidden bg-black w-full p-4 space-y-3 rounded-2xl border border-custom-bg">
+        <h1 className="lg:text-3xl font-bold">Test Case - {idx + 1}</h1>
+        <div className="each-custom space-y-2" id={n.id}>
+           <div className="lg:flex justify-center lg:space-x-10">
+            <div className="lg:space-x-6 ">
+              <label className="text-lg font-bold">Input</label>
+              <input type="file" id={sci} accept=".txt"></input>
+            </div>
+            <span className="border-r-2 border-custom-bg hidden lg:block"></span>
+            <div className="lg:space-x-6 border-custom-bg">
+              <label className="text-lg font-bold">Output</label>
+              <input type="file" id={sco} accept=".txt"></input>
+            </div>
           </div>
           <div className="add-tc-close-icon">
             <i
@@ -90,7 +94,7 @@ function addproblems(props) {
               id={n.id}
               onClick={(e) => deleteFileSC(e)}
             >
-              close
+              <XCircleIcon height="30" width="30"/>
             </i>
           </div>
         </div>
@@ -102,16 +106,19 @@ function addproblems(props) {
     const tci = "tc-" + n.id + "-i";
     const tco = "tc-" + n.id + "-o";
     return (
-      <div className="bg-black p-4 space-y-3 rounded-2xl">
+      <div className="overflow-hidden bg-black p-4 space-y-3 rounded-2xl border border-custom-bg">
         <h1 className="text-3xl">Test Case - {idx + 1}</h1>
         <div className="each-custom" id={n.id}>
-          <div>
-            <label>Input</label>
-            <input type="file" id={tci} accept=".txt"></input>
-          </div>
-          <div>
-            <label>Output</label>
-            <input type="file" id={tco} accept=".txt"></input>
+        <div className="lg:flex justify-center lg:space-x-10">
+            <div className="lg:space-x-6 ">
+              <label className="text-lg font-bold">Input</label>
+              <input type="file" id={tci} accept=".txt"></input>
+            </div>
+            <span className="border-r-2 border-custom-bg hidden lg:block"></span>
+            <div className="lg:space-x-6 border-custom-bg">
+              <label className="text-lg font-bold">Output</label>
+              <input type="file" id={tco} accept=".txt"></input>
+            </div>
           </div>
           <div className="add-tc-close-icon">
             <i
@@ -119,7 +126,7 @@ function addproblems(props) {
               id={n.id}
               onClick={(e) => deleteFileTC(e)}
             >
-              close
+              <XCircleIcon height="30" width="30"/>
             </i>
           </div>
         </div>
@@ -173,8 +180,8 @@ function addproblems(props) {
     problemMarkup = (
       <div className="lg:container m-auto">
         <div className="lg:pl-36 p-5 space-y-14">
-          <h1 className="text-center text-4xl lg:text-[3rem] lg:text-left">
-            Add Problems
+          <h1 className="text-center font-extrabold text-4xl lg:text-[3rem] lg:text-left">
+            Add <span className="text-custom-bg">Problems</span>
           </h1>
           <hr />
           <form className="space-y-5">
@@ -248,16 +255,16 @@ function addproblems(props) {
     problemMarkup = (
       <div className="lg:container m-auto">
         <div className="lg:pl-36 p-5 space-y-14">
-          <h1 className="text-center text-4xl lg:text-[3rem] lg:text-left">
-            Add Problems <CloudUploadOutlined className="text-[5rem]" />
+          <h1 className="font-extrabold text-center text-4xl lg:text-[3rem] lg:text-left">
+            Add <span className="text-custom-bg">Problems</span> <CloudUploadOutlined className="text-[5rem]" />
           </h1>
           <hr />
-          <h3 className="text-center text-2xl lg:text-[2rem] lg:text-left">
+          <h3 className="font-bold text-center text-2xl lg:text-[2rem] lg:text-left">
             Sample Test Cases
           </h3>
           {renderListSC}
           <button
-            class="ui right floated button"
+            class="ui right floated button btn-purple"
             onClick={(e) => addNewFileInputSC(e)}
           >
             Add{" "}
@@ -276,12 +283,12 @@ function addproblems(props) {
               <Upload />
             </div>
           </div> */}
-          <h3 className="text-center text-2xl lg:text-[2rem] lg:text-left">
+          <h3 className="font-bold text-center text-2xl lg:text-[2rem] lg:text-left">
             Test Cases
           </h3>
           {renderListTC}
           <button
-            class="ui right floated button"
+            class="ui right floated button btn-purple"
             onClick={(e) => addNewFileInputTC(e)}
           >
             Add{" "}

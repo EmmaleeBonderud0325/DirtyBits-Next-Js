@@ -126,10 +126,12 @@ function Navbar({ userInfo, bg, fixedHeader }) {
                       <div>
                         <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                           <span className="sr-only">Open user menu</span>
-                          <img
+                          <Image
                             className="h-10 w-10 rounded-full"
                             src={userInfo.profile_pic}
-                            alt=""
+                            alt="profilePic"
+                            height="40"
+                            width="40"
                           />
                           <span className="text-white px-2 pt-1.5 pr-3 text-base hidden sm:block">
                             {userInfo.username}

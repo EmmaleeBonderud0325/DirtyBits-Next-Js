@@ -3,7 +3,7 @@ import Link from "next/link";
 import GoogleLogin from "react-google-login";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
 import { validate } from "email-validator";
-import { AiFillGithub } from "react-icons/ai";
+import { AiFillGithub, AiOutlineConsoleSql } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import Cookies from "js-cookie";
 import { connect, useDispatch } from "react-redux";
@@ -94,6 +94,7 @@ function signin() {
         .then((result) => {
           const { access, refresh } = result.data;
           const data = Parsetoken(access);
+          console.log('data', data)
           if (data.is_verified) {
             Cookies.set("access", access);
             Cookies.set("refresh", refresh, { expires: 14 });
