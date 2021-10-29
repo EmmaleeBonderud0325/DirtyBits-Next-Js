@@ -2,6 +2,12 @@ import { SearchOutlined } from "@mui/icons-material";
 import { useState } from "react";
 import Dropdown from "../components/Dropdown";
 import Topics from '../components/Blog/Topics'
+import {motion} from 'framer-motion'
+
+const variants = {
+  visible: { opacity: 1 },
+  hidden: { opacity: 0 },
+}
 
 function Problem() {
   const values = [
@@ -17,8 +23,12 @@ function Problem() {
   const [value, setValue] = useState();
   return (
     <div className="space-y-8 container p-10 mx-auto max-w-screen-xl">
+      <motion.div animate={{ y: [20, 0, 0] }}>
       <h1 className="lg:text-5xl text-3xl font-extrabold">Problem <span className="text-custom-bg">List</span></h1>
+      </motion.div>
       <hr />
+
+      <motion.div  initial="hidden" animate="visible" variants={variants} >
       <div className="flex space-x-4 overflow-x-scroll lg:scrollbar-hide">
         {values.map((value) => {
           return (
@@ -30,6 +40,10 @@ function Problem() {
           );
         })}
       </div>
+      </motion.div>
+      
+      {/* SEARCH BAR */}
+      <motion.div  initial="hidden" animate="visible" variants={variants} >
       <div className="flex space-x-3">
         <form
           onSubmit={() => {}}
@@ -48,6 +62,8 @@ function Problem() {
           Search
         </button>
       </div>
+      </motion.div>
+
       {/* DROPDOWN SECITONS FOR DIFFICULTY , STATUS, TAGS */}
       <div className="flex space-x-2">
         <Dropdown
@@ -69,7 +85,7 @@ function Problem() {
         <Topics/>
 
       </div>
-
+      
       
     </div>
   );
