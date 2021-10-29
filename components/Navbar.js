@@ -165,8 +165,7 @@ function Navbar({ userInfo, bg, fixedHeader }) {
                           </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
-                              <Link href="/addproblems">
-                                <a
+                                <a href="/addproblems"
                                   className={classNames(
                                     active ? "bg-gray-100" : "",
                                     "block px-4 py-2 text-sm text-gray-700"
@@ -174,13 +173,12 @@ function Navbar({ userInfo, bg, fixedHeader }) {
                                 >
                                   Add Problem
                                 </a>
-                              </Link>
                             )}
                           </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
                               <a
-                                href="#"
+                                href="/"
                                 onClick={signOutUser}
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
