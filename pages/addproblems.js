@@ -1,10 +1,14 @@
 import React, { memo, useState } from "react";
 import { ArrowForward } from "@mui/icons-material";
-import { connect, useDispatch } from "react-redux";
-import Upload from "../components/Upload/Upload";
+import {useDispatch, useSelector } from "react-redux";
 import _ from "lodash";
 import { CloudUploadOutlined } from "@mui/icons-material";
 import uuid from "react-uuid";
+import axios from "axios";
+import Cookies from "js-cookie";
+import Head from 'next/head'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 
 import TextEditor from "../components/TextEditor";
 import Dropdown from "../components/Dropdown";
@@ -17,16 +21,14 @@ import {
   updateProblemOutputFormat,
   updateProblemTags,
 } from "../redux/actions";
-import axios from "axios";
 import MultiSelect from "../components/MultiSelect";
 import { AddProblem, uploadTestCases } from "../components/api/apis";
-import Cookies from "js-cookie";
 import Gettoken from "../components/Helper/Gettoken";
 
 function addproblems(props) {
+  const problemData = useSelector(state => state.addProblemData)
   const dispatch = useDispatch();
-
-  let [step, setStep] = useState(2);
+  let [step, setStep] = useState(1);
   let [customTestCases, changeCustomTestCases] = useState([{ id: uuid() }]);
   let [testCases, changeTestCases] = useState([{ id: uuid() }]);
   let [probId, setProbId] = useState(null);
@@ -127,15 +129,32 @@ function addproblems(props) {
     );
   });
 
+  // const postData = async (data) => {
+  //   await uploadTestCases
+  //     .post("/", data)
+  //     .then((result) => {
+  //       console.log(result.status);
+  //     })
+  //     .catch(() => {
+  //       console.log("error");
+  //     });
+  // };
   const postData = async (data) => {
-    await uploadTestCases
-      .post("/", data)
-      .then((result) => {
-        console.log(result.status);
+    try {
+      toast.promise(uploadTestCases.post('/', data), {
+        pending: 'Uploading ...',
+        success: '✔️ Uploaded Successfully',
+        error: '❌ Upload error try again'
       })
-      .catch(() => {
-        console.log("error");
-      });
+      .then(result => {
+        if(result.status === 200){
+          setStep(1)
+        }
+      })
+
+    }catch(err){
+      console.log('Error', err.message)
+    }
   };
 
   const submitted = (e) => {
@@ -182,11 +201,11 @@ function addproblems(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(props.problemData);
+    console.log(problemData);
     await Gettoken(Cookies.get("refresh"));
     await AddProblem.post(
       "/",
-      { data: props.problemData },
+      { data: problemData },
       {
         headers: {
           "Content-Type": "application/json",
@@ -207,6 +226,8 @@ function addproblems(props) {
   let problemMarkup;
   if (step === 1) {
     problemMarkup = (
+      <>
+      <Head><title>Add Problem</title></Head>
       <div className="lg:container m-auto">
         <div className="lg:pl-36 p-5 space-y-14">
           <h1 className="text-center font-extrabold text-4xl lg:text-[3rem] lg:text-left">
@@ -220,7 +241,7 @@ function addproblems(props) {
                 className="w-full text-base px-4 py-2 text-black focus:text-base border border-gray-400 rounded-lg focus:outline-none focus:border-custom-yellow"
                 placeholder="Title"
                 type="text"
-                value={props.problemData.title}
+                value={problemData.title}
                 onChange={(e) => dispatch(updateProblemTitle(e.target.value))}
               />
             </div>
@@ -235,7 +256,7 @@ function addproblems(props) {
               <textarea
                 className="w-full text-base px-4 py-2 text-black focus:text-base border border-gray-400 rounded-lg focus:outline-none focus:border-custom-yellow"
                 placeholder="Write a short description of the problem ..."
-                value={props.problemData.note}
+                value={problemData.note}
                 onChange={(e) => dispatch(updateProblemNote(e.target.value))}
                 rows="4"
               />
@@ -267,7 +288,7 @@ function addproblems(props) {
             </div>
             <div className="flex justify-center items-center ">
               <button
-                className="font-bold bg-custom-yellow2 rounded-full px-5 py-2 outline-none border-none hover:bg-custom-yellow transition ease-out"
+                className="btn-purple"
                 onClick={(e) => handleSubmit(e)}
               >
                 Add Test Case
@@ -279,9 +300,12 @@ function addproblems(props) {
           </form>
         </div>
       </div>
+      </>
     );
   } else if (step === 2) {
     problemMarkup = (
+      <>
+      <Head><title>Add Test Cases</title></Head>
       <div className="lg:container m-auto">
         <div className="lg:pl-36 p-5 space-y-14">
           <h1 className="font-extrabold text-center text-4xl lg:text-[3rem] lg:text-left">
@@ -294,7 +318,7 @@ function addproblems(props) {
           </h3>
           {renderListSC}
           <button
-            class="ui right floated button btn-purple"
+            className="ui right floated button btn-purple"
             onClick={(e) => addNewFileInputSC(e)}
           >
             Add{" "}
@@ -304,14 +328,14 @@ function addproblems(props) {
           </h3>
           {renderListTC}
           <button
-            class="ui right floated button btn-purple"
+            className="ui right floated button btn-purple"
             onClick={(e) => addNewFileInputTC(e)}
           >
             Add{" "}
           </button>
           <div>
             <button
-              class="ui right floated button btn-purple"
+              className="ui right floated button btn-purple"
               onClick={submitted}
             >
               Upload Test Cases{" "}
@@ -319,16 +343,20 @@ function addproblems(props) {
           </div>
         </div>
       </div>
+      </>
     );
   }
 
-  return <>{problemMarkup}</>;
+  return <>
+  <ToastContainer theme="dark" />
+  {problemMarkup
+  }</>;
 }
-const mapStateToProps = (state) => {
-  return {
-    problemData: state.addProblemData,
-  };
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     problemData: state.addProblemData,
+//   };
+// };
 
 export const getServerSideProps = async (ctx) => {
   const response = await axios.get(
@@ -350,14 +378,16 @@ export const getServerSideProps = async (ctx) => {
   };
 };
 
-export default memo(
-  connect(mapStateToProps, {
-    updateProblemTitle,
-    updateProblemStatement,
-    updateProblemNote,
-    updateProblemInputFormat,
-    updateProblemContraints,
-    updateProblemOutputFormat,
-    updateProblemTags,
-  })(addproblems)
-);
+export default addproblems;
+
+// export default memo(
+//   connect(mapStateToProps, {
+//     updateProblemTitle,
+//     updateProblemStatement,
+//     updateProblemNote,
+//     updateProblemInputFormat,
+//     updateProblemContraints,
+//     updateProblemOutputFormat,
+//     updateProblemTags,
+//   })(addproblems)
+// );
