@@ -3,6 +3,7 @@ import { useState } from "react";
 import Dropdown from "../components/Dropdown";
 import Topics from '../components/Blog/Topics'
 import {motion} from 'framer-motion'
+import Table from '../components/Table'
 
 const variants = {
   visible: { opacity: 1 },
@@ -80,8 +81,8 @@ function Problem() {
         />
       </div>
       
-      <div className="flex">
-        
+      <div className="flex justify-between">
+        <Table/>
         <Topics/>
 
       </div>
