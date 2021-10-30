@@ -20,7 +20,7 @@ function Dropdown(props) {
     H: "Hard",
   };
   return (
-    <Menu as="div" className="w-full relative inline-block text-left">
+    <Menu as="div" className="lg:w-1/5 relative inline-block text-left">
       <div>
         <Menu.Button
           className={`inline-flex justify-center w-full rounded-md border border-gray-800 shadow-sm px-4 py-2 ${props.bg} text-sm font-medium ${props.textColor}  focus:outline-none focus:ring-2 focus:ring-offset-2`}
