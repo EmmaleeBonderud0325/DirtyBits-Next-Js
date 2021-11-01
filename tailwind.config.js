@@ -1,3 +1,5 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 module.exports = {
     mode: 'jit',
     purge: ['./pages/**/*.js', './styles/**/*.css', './components/**/*.js'],
@@ -10,6 +12,10 @@ module.exports = {
       require('tailwind-scrollbar-hide')
     ],
     theme: {
+      screens: {
+        'xs': '630px',
+        ...defaultTheme.screens,
+      },
       extend: {
         colors: {
           'custom-yellow':'#FB7A16',
