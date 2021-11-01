@@ -1,7 +1,6 @@
 import { SearchOutlined } from "@mui/icons-material";
 import { useState } from "react";
 import Dropdown from "../components/Dropdown";
-import Topics from '../components/Blog/Topics'
 import {motion} from 'framer-motion'
 import Table from '../components/Table'
 
@@ -10,7 +9,7 @@ const variants = {
   hidden: { opacity: 0 },
 }
 
-function Problem() {
+function Problem({problemList}) {
   const values = [
     "Array",
     "Object",
@@ -22,6 +21,7 @@ function Problem() {
     "Null",
   ];
   const [value, setValue] = useState();
+
   return (
     <div className="space-y-8 container p-10 mx-auto max-w-screen-xl">
       <motion.div animate={{ y: [20, 0, 0] }}>
@@ -30,7 +30,7 @@ function Problem() {
       <hr />
 
       <motion.div  initial="hidden" animate="visible" variants={variants} >
-      <div className="flex space-x-4 overflow-x-scroll lg:scrollbar-hide">
+      <div className="flex sm:w-3/4 xs:w-full space-x-4 overflow-x-scroll scrollbar-hide">
         {values.map((value) => {
           return (
             <div className="flex flex-col items-center justify-center">
@@ -82,8 +82,7 @@ function Problem() {
       </div>
       
       <div className="flex justify-between">
-        <Table/>
-        <Topics/>
+        <Table list={problemList}/>
 
       </div>
       
@@ -91,5 +90,4 @@ function Problem() {
     </div>
   );
 }
-
 export default Problem;
