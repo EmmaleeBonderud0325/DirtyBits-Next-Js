@@ -6,6 +6,7 @@ const BASE_URL = "https://db-auth.herokuapp.com/";
 const PROBLEM_URL = "https://db-code.herokuapp.com/";
 // const PROBLEM_URL = "http://localhost:8000/";
 
+
 export const validateUserName = axios.create({
   baseURL: BASE_URL + "auth/" + "existUsername",
 });
@@ -49,3 +50,7 @@ export const AddProblem = axios.create({
 export const uploadTestCases = axios.create({
   baseURL: PROBLEM_URL + "problems/uploadTC",
 });
+
+export const getProblemsList = axios.create({
+  baseURL: PROBLEM_URL + "problems/getProblemsList"
+})
