@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import Head from "next/head";
 
-// const WebSocket = require("ws");
-
 function leaderboard() {
   useEffect(() => {
     var socket = new WebSocket("ws://db-code.herokuapp.com/ws/runcode/10/");
