@@ -3,6 +3,7 @@ import React from 'react'
 function Table({list}) {
     let problemLevel;
     let problemColor;
+    let status;
     let problemMarkup = (
       list.map((problem, idx) => {
         switch(problem.problem_level){
@@ -19,13 +20,24 @@ function Table({list}) {
               problemColor = 'text-red-500'
               break;
         }
+        switch(problem.solved){
+          case 'Unsolved':
+              status = '➖'
+              break;
+          case 'Solved':
+              status = '✔️'
+              break;
+          case 'Attempted':
+              status = '❓'
+              break;
+        } 
         return (
           <tr key={problem.id} className="hover:bg-grey-lighter">
-          <td className="table-data">{idx+1}.{problem.title}</td>
+          <td className="table-data">{idx+1} . {problem.title}</td>
           <td className="py-4 px-6 border-b border-grey-light">
             <a href="#" className={` ${problemColor} font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark`}>{problemLevel}</a>
           </td>
-          <td className="table-data">➖</td>
+          <td className="table-data">{status}</td>
         </tr>
         )
       })
