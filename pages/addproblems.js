@@ -1,12 +1,12 @@
 import React, { memo, useState } from "react";
 import { ArrowForward } from "@mui/icons-material";
-import {useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import _ from "lodash";
 import { CloudUploadOutlined } from "@mui/icons-material";
 import uuid from "react-uuid";
 import axios from "axios";
 import Cookies from "js-cookie";
-import Head from 'next/head'
+import Head from "next/head";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 
@@ -26,7 +26,7 @@ import { AddProblem, uploadTestCases } from "../components/api/apis";
 import Gettoken from "../components/Helper/Gettoken";
 
 function addproblems(props) {
-  const problemData = useSelector(state => state.addProblemData)
+  const problemData = useSelector((state) => state.addProblemData);
   const dispatch = useDispatch();
   let [step, setStep] = useState(1);
   let [customTestCases, changeCustomTestCases] = useState([{ id: uuid() }]);
@@ -141,25 +141,27 @@ function addproblems(props) {
   // };
   const postData = async (data) => {
     try {
-      toast.promise(uploadTestCases.post('/', data), {
-        pending: 'Uploading ...',
-        success: '✔️ Uploaded Successfully',
-        error: '❌ Upload error try again'
-      })
-      .then(result => {
-        if(result.status === 200){
-          setStep(1)
-        }
-      })
-
-    }catch(err){
-      console.log('Error', err.message)
+      toast
+        .promise(uploadTestCases.post("/", data), {
+          pending: "Uploading ...",
+          success: "✔️ Uploaded Successfully",
+          error: "❌ Upload error try again",
+        })
+        .then((result) => {
+          if (result.status === 200) {
+            setStep(1);
+          }
+        });
+    } catch (err) {
+      console.log("Error", err.message);
     }
   };
 
   const submitted = (e) => {
     e.preventDefault();
     const data = new FormData();
+    data.append("custom_test_cases", customTestCases.length);
+    data.append("test_cases", testCases.length);
     data.append("probId", probId);
     for (var i = 0; i < customTestCases.length; i++) {
       const input_file = document.getElementById(
@@ -227,130 +229,137 @@ function addproblems(props) {
   if (step === 1) {
     problemMarkup = (
       <>
-      <Head><title>Add Problem</title></Head>
-      <div className="lg:container m-auto">
-        <div className="lg:pl-36 p-5 space-y-14">
-          <h1 className="text-center font-extrabold text-4xl lg:text-[3rem] lg:text-left">
-            Add <span className="text-custom-bg">Problems</span>
-          </h1>
-          <hr />
-          <form className="space-y-5">
-            <div className="space-y-3">
-              <label className="text-lg lg:text-2xl ml-1">Problem Title</label>
-              <input
-                className="w-full text-base px-4 py-2 text-black focus:text-base border border-gray-400 rounded-lg focus:outline-none focus:border-custom-yellow"
-                placeholder="Title"
-                type="text"
-                value={problemData.title}
-                onChange={(e) => dispatch(updateProblemTitle(e.target.value))}
-              />
-            </div>
-            <div className="space-y-3">
-              <label className="text-lg lg:text-2xl ml-1">
-                Problem Statement
-              </label>
-              <TextEditor dispatch={HandleProblemStatementUpdate} />
-            </div>
-            <div className="space-y-3">
-              <label className="text-lg lg:text-2xl ml-1">Note</label>
-              <textarea
-                className="w-full text-base px-4 py-2 text-black focus:text-base border border-gray-400 rounded-lg focus:outline-none focus:border-custom-yellow"
-                placeholder="Write a short description of the problem ..."
-                value={problemData.note}
-                onChange={(e) => dispatch(updateProblemNote(e.target.value))}
-                rows="4"
-              />
-            </div>
-            <div className="space-y-3">
-              <label className="text-lg lg:text-2xl ml-1">Input Format</label>
-              <TextEditor dispatch={HandleInputFormatUpdate} />
-            </div>
-            <div className="space-y-3">
-              <label className="text-lg lg:text-2xl ml-1">Constraints</label>
-              <TextEditor dispatch={HandleConstraintsUpdate} />
-            </div>
-            <div className="space-y-3">
-              <label className="text-lg lg:text-2xl ml-1">Output Format</label>
-              <TextEditor dispatch={HandleOutputFormatUpdate} />
-            </div>
-            <div className="space-y-3">
-              <label className="text-lg lg:text-2xl ml-1">Level</label>
-              <Dropdown
-                fieldName={"Difficulty"}
-                fieldValues={["Easy", "Medium", "Hard"]}
-                bg={"bg-white"}
-                textColor={"text-black"}
-              />
-            </div>
-            <div className="space-y-3">
-              <label className="text-lg lg:text-2xl ml-1">Tags</label>
-              <MultiSelect value={props.tags} />
-            </div>
-            <div className="flex justify-center items-center ">
-              <button
-                className="btn-purple"
-                onClick={(e) => handleSubmit(e)}
-              >
-                Add Test Case
-                <span className="ml-1">
-                  <ArrowForward />
-                </span>
-              </button>
-            </div>
-          </form>
+        <Head>
+          <title>Add Problem</title>
+        </Head>
+        <div className="lg:container m-auto">
+          <div className="lg:pl-36 p-5 space-y-14">
+            <h1 className="text-center font-extrabold text-4xl lg:text-[3rem] lg:text-left">
+              Add <span className="text-custom-bg">Problems</span>
+            </h1>
+            <hr />
+            <form className="space-y-5">
+              <div className="space-y-3">
+                <label className="text-lg lg:text-2xl ml-1">
+                  Problem Title
+                </label>
+                <input
+                  className="w-full text-base px-4 py-2 text-black focus:text-base border border-gray-400 rounded-lg focus:outline-none focus:border-custom-yellow"
+                  placeholder="Title"
+                  type="text"
+                  value={problemData.title}
+                  onChange={(e) => dispatch(updateProblemTitle(e.target.value))}
+                />
+              </div>
+              <div className="space-y-3">
+                <label className="text-lg lg:text-2xl ml-1">
+                  Problem Statement
+                </label>
+                <TextEditor dispatch={HandleProblemStatementUpdate} />
+              </div>
+              <div className="space-y-3">
+                <label className="text-lg lg:text-2xl ml-1">Note</label>
+                <textarea
+                  className="w-full text-base px-4 py-2 text-black focus:text-base border border-gray-400 rounded-lg focus:outline-none focus:border-custom-yellow"
+                  placeholder="Write a short description of the problem ..."
+                  value={problemData.note}
+                  onChange={(e) => dispatch(updateProblemNote(e.target.value))}
+                  rows="4"
+                />
+              </div>
+              <div className="space-y-3">
+                <label className="text-lg lg:text-2xl ml-1">Input Format</label>
+                <TextEditor dispatch={HandleInputFormatUpdate} />
+              </div>
+              <div className="space-y-3">
+                <label className="text-lg lg:text-2xl ml-1">Constraints</label>
+                <TextEditor dispatch={HandleConstraintsUpdate} />
+              </div>
+              <div className="space-y-3">
+                <label className="text-lg lg:text-2xl ml-1">
+                  Output Format
+                </label>
+                <TextEditor dispatch={HandleOutputFormatUpdate} />
+              </div>
+              <div className="space-y-3">
+                <label className="text-lg lg:text-2xl ml-1">Level</label>
+                <Dropdown
+                  fieldName={"Difficulty"}
+                  fieldValues={["Easy", "Medium", "Hard"]}
+                  bg={"bg-white"}
+                  textColor={"text-black"}
+                />
+              </div>
+              <div className="space-y-3">
+                <label className="text-lg lg:text-2xl ml-1">Tags</label>
+                <MultiSelect value={props.tags} />
+              </div>
+              <div className="flex justify-center items-center ">
+                <button className="btn-purple" onClick={(e) => handleSubmit(e)}>
+                  Add Test Case
+                  <span className="ml-1">
+                    <ArrowForward />
+                  </span>
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
       </>
     );
   } else if (step === 2) {
     problemMarkup = (
       <>
-      <Head><title>Add Test Cases</title></Head>
-      <div className="lg:container m-auto">
-        <div className="lg:pl-36 p-5 space-y-14">
-          <h1 className="font-extrabold text-center text-4xl lg:text-[3rem] lg:text-left">
-            Add <span className="text-custom-bg">Problems</span>{" "}
-            <CloudUploadOutlined className="text-[5rem]" />
-          </h1>
-          <hr />
-          <h3 className="font-bold text-center text-2xl lg:text-[2rem] lg:text-left">
-            Sample Test Cases
-          </h3>
-          {renderListSC}
-          <button
-            className="ui right floated button btn-purple"
-            onClick={(e) => addNewFileInputSC(e)}
-          >
-            Add{" "}
-          </button>
-          <h3 className="font-bold text-center text-2xl lg:text-[2rem] lg:text-left">
-            Test Cases
-          </h3>
-          {renderListTC}
-          <button
-            className="ui right floated button btn-purple"
-            onClick={(e) => addNewFileInputTC(e)}
-          >
-            Add{" "}
-          </button>
-          <div>
+        <Head>
+          <title>Add Test Cases</title>
+        </Head>
+        <div className="lg:container m-auto">
+          <div className="lg:pl-36 p-5 space-y-14">
+            <h1 className="font-extrabold text-center text-4xl lg:text-[3rem] lg:text-left">
+              Add <span className="text-custom-bg">Problems</span>{" "}
+              <CloudUploadOutlined className="text-[5rem]" />
+            </h1>
+            <hr />
+            <h3 className="font-bold text-center text-2xl lg:text-[2rem] lg:text-left">
+              Sample Test Cases
+            </h3>
+            {renderListSC}
             <button
               className="ui right floated button btn-purple"
-              onClick={submitted}
+              onClick={(e) => addNewFileInputSC(e)}
             >
-              Upload Test Cases{" "}
+              Add{" "}
             </button>
+            <h3 className="font-bold text-center text-2xl lg:text-[2rem] lg:text-left">
+              Test Cases
+            </h3>
+            {renderListTC}
+            <button
+              className="ui right floated button btn-purple"
+              onClick={(e) => addNewFileInputTC(e)}
+            >
+              Add{" "}
+            </button>
+            <div>
+              <button
+                className="ui right floated button btn-purple"
+                onClick={submitted}
+              >
+                Upload Test Cases{" "}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
       </>
     );
   }
 
-  return <>
-  <ToastContainer theme="dark" />
-  {problemMarkup
-  }</>;
+  return (
+    <>
+      <ToastContainer theme="dark" />
+      {problemMarkup}
+    </>
+  );
 }
 // const mapStateToProps = (state) => {
 //   return {
