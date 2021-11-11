@@ -81,11 +81,10 @@ function Problem({problemList}) {
         />
       </div>
       
-      <div className="flex justify-between">
+      <div className="flex flex-col">
         <Table list={problemList}/>
-
       </div>
-      
+     
       
     </div>
   );
