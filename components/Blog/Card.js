@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 
 function Card() {
     return (
@@ -14,8 +15,8 @@ function Card() {
                     Tempora expedita dicta totam aspernatur doloremque. Excepturi iste iusto eos enim
                     reprehenderit nisi, accusamus delectus nihil quis facere in modi ratione libero!</p>
             </div>
-            <div class="flex items-center justify-between mt-4"><a href="#"
-                    class="text-blue-500 hover:underline">Read more</a>
+            <div class="flex items-center justify-between mt-4"><Link href="/blogs/myDetail"><a 
+                    class="text-blue-500 hover:underline">Read more</a></Link>
                 <div>
                   <a href="#" class="flex items-center">
                     <img
