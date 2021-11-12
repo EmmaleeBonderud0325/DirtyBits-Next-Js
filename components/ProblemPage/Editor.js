@@ -1,74 +1,158 @@
 import React, { useState } from "react";
-import { Controlled as CodeMirror } from "react-codemirror2";
+// import { Controlled as CodeMirror } from "react-codemirror2";
 import { base64_decode, base64_encode, download } from "./Helper2";
 
-import "codemirror/lib/codemirror.css";
-import "./Editor.module.css";
+// import dynamic from "next/dynamic";
+// const CodeMirror = dynamic(
+//   async () => {
+//     import("codemirror/mode/javascript/javascript");
+//     return import("react-codemirror2").then((mod) => mod.Controlled);
+//   },
+//   { ssr: false }
+// );
 
-import "codemirror/theme/ayu-mirage.css";
-import "codemirror/theme/base16-dark.css";
-import "codemirror/theme/base16-light.css";
-import "codemirror/theme/bespin.css";
-import "codemirror/theme/dracula.css";
-import "codemirror/theme/duotone-light.css";
-import "codemirror/theme/eclipse.css";
-import "codemirror/theme/elegant.css";
-import "codemirror/theme/gruvbox-dark.css";
-import "codemirror/theme/hopscotch.css";
-import "codemirror/theme/icecoder.css";
-import "codemirror/theme/idea.css";
-import "codemirror/theme/lucario.css";
-import "codemirror/theme/material-darker.css";
-import "codemirror/theme/material-palenight.css";
-import "codemirror/theme/material.css";
-import "codemirror/theme/mbo.css";
-import "codemirror/theme/mdn-like.css";
-import "codemirror/theme/monokai.css";
-import "codemirror/theme/moxer.css";
-import "codemirror/theme/neat.css";
-import "codemirror/theme/neo.css";
-import "codemirror/theme/oceanic-next.css";
-import "codemirror/theme/panda-syntax.css";
-import "codemirror/theme/railscasts.css";
-import "codemirror/theme/rubyblue.css";
-import "codemirror/theme/seti.css";
-import "codemirror/theme/shadowfox.css";
-import "codemirror/theme/ssms.css";
-import "codemirror/theme/the-matrix.css";
-import "codemirror/theme/tomorrow-night-eighties.css";
-import "codemirror/theme/ttcn.css";
-import "codemirror/theme/xq-light.css";
+let CodeMirror = null;
+if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
+  CodeMirror = require("react-codemirror2").Controlled;
+  require("codemirror/mode/yaml/yaml");
+  require("codemirror/mode/dockerfile/dockerfile");
 
-// Languages
-import "codemirror/mode/clojure/clojure";
-import "codemirror/mode/go/go";
-import "codemirror/mode/haskell/haskell";
-import "codemirror/mode/javascript/javascript";
-import "codemirror/mode/pascal/pascal";
-import "codemirror/mode/perl/perl";
-import "codemirror/mode/php/php";
-import "codemirror/mode/python/python";
-import "codemirror/mode/r/r";
-import "codemirror/mode/ruby/ruby";
-import "codemirror/mode/rust/rust";
-import "codemirror/mode/swift/swift";
+  require("codemirror/lib/codemirror.css");
+  require("./Editor.module.css");
 
-// Addons
-import "codemirror/addon/hint/show-hint";
-import "codemirror/addon/hint/javascript-hint";
-import "codemirror/addon/hint/show-hint.css";
-import "codemirror/addon/edit/closebrackets";
-import "codemirror/addon/edit/closetag";
-import "codemirror/addon/fold/foldcode";
-import "codemirror/addon/fold/foldgutter";
-import "codemirror/addon/fold/brace-fold";
-import "codemirror/addon/fold/comment-fold";
-import "codemirror/addon/display/placeholder";
-import "codemirror/addon/display/fullscreen";
-import "codemirror/addon/search/match-highlighter";
-import "codemirror/addon/display/fullscreen.css";
-import "codemirror/addon/fold/foldgutter.css";
-import "codemirror/keymap/sublime";
+  require("codemirror/theme/ayu-mirage.css");
+  require("codemirror/theme/base16-dark.css");
+  require("codemirror/theme/base16-light.css");
+  require("codemirror/theme/bespin.css");
+  require("codemirror/theme/dracula.css");
+  require("codemirror/theme/duotone-light.css");
+  require("codemirror/theme/eclipse.css");
+  require("codemirror/theme/elegant.css");
+  require("codemirror/theme/gruvbox-dark.css");
+  require("codemirror/theme/hopscotch.css");
+  require("codemirror/theme/icecoder.css");
+  require("codemirror/theme/idea.css");
+  require("codemirror/theme/lucario.css");
+  require("codemirror/theme/material-darker.css");
+  require("codemirror/theme/material-palenight.css");
+  require("codemirror/theme/material.css");
+  require("codemirror/theme/mbo.css");
+  require("codemirror/theme/mdn-like.css");
+  require("codemirror/theme/monokai.css");
+  require("codemirror/theme/moxer.css");
+  require("codemirror/theme/neat.css");
+  require("codemirror/theme/neo.css");
+  require("codemirror/theme/oceanic-next.css");
+  require("codemirror/theme/panda-syntax.css");
+  require("codemirror/theme/railscasts.css");
+  require("codemirror/theme/rubyblue.css");
+  require("codemirror/theme/seti.css");
+  require("codemirror/theme/shadowfox.css");
+  require("codemirror/theme/ssms.css");
+  require("codemirror/theme/the-matrix.css");
+  require("codemirror/theme/tomorrow-night-eighties.css");
+  require("codemirror/theme/ttcn.css");
+  require("codemirror/theme/xq-light.css");
+
+  // Languages
+  require("codemirror/mode/clojure/clojure");
+  require("codemirror/mode/go/go");
+  require("codemirror/mode/haskell/haskell");
+  require("codemirror/mode/javascript/javascript");
+  require("codemirror/mode/pascal/pascal");
+  require("codemirror/mode/perl/perl");
+  require("codemirror/mode/php/php");
+  require("codemirror/mode/python/python");
+  require("codemirror/mode/r/r");
+  require("codemirror/mode/ruby/ruby");
+  require("codemirror/mode/rust/rust");
+  require("codemirror/mode/swift/swift");
+
+  // Addons
+  require("codemirror/addon/hint/show-hint");
+  require("codemirror/addon/hint/javascript-hint");
+  require("codemirror/addon/hint/show-hint.css");
+  require("codemirror/addon/edit/closebrackets");
+  require("codemirror/addon/edit/closetag");
+  require("codemirror/addon/fold/foldcode");
+  require("codemirror/addon/fold/foldgutter");
+  require("codemirror/addon/fold/brace-fold");
+  require("codemirror/addon/fold/comment-fold");
+  require("codemirror/addon/display/placeholder");
+  require("codemirror/addon/display/fullscreen");
+  require("codemirror/addon/search/match-highlighter");
+  require("codemirror/addon/display/fullscreen.css");
+  require("codemirror/addon/fold/foldgutter.css");
+  require("codemirror/keymap/sublime");
+}
+
+// import "codemirror/lib/codemirror.css";
+//   import "./Editor.module.css";
+
+//   import "codemirror/theme/ayu-mirage.css";
+//   import "codemirror/theme/base16-dark.css";
+//   import "codemirror/theme/base16-light.css";
+//   import "codemirror/theme/bespin.css";
+//   import "codemirror/theme/dracula.css";
+//   import "codemirror/theme/duotone-light.css";
+//   import "codemirror/theme/eclipse.css";
+//   import "codemirror/theme/elegant.css";
+//   import "codemirror/theme/gruvbox-dark.css";
+//   import "codemirror/theme/hopscotch.css";
+//   import "codemirror/theme/icecoder.css";
+//   import "codemirror/theme/idea.css";
+//   import "codemirror/theme/lucario.css";
+//   import "codemirror/theme/material-darker.css";
+//   import "codemirror/theme/material-palenight.css";
+//   import "codemirror/theme/material.css";
+//   import "codemirror/theme/mbo.css";
+//   import "codemirror/theme/mdn-like.css";
+//   import "codemirror/theme/monokai.css";
+//   import "codemirror/theme/moxer.css";
+//   import "codemirror/theme/neat.css";
+//   import "codemirror/theme/neo.css";
+//   import "codemirror/theme/oceanic-next.css";
+//   import "codemirror/theme/panda-syntax.css";
+//   import "codemirror/theme/railscasts.css";
+//   import "codemirror/theme/rubyblue.css";
+//   import "codemirror/theme/seti.css";
+//   import "codemirror/theme/shadowfox.css";
+//   import "codemirror/theme/ssms.css";
+//   import "codemirror/theme/the-matrix.css";
+//   import "codemirror/theme/tomorrow-night-eighties.css";
+//   import "codemirror/theme/ttcn.css";
+//   import "codemirror/theme/xq-light.css";
+
+//   // Languages
+//   import "codemirror/mode/clojure/clojure";
+//   import "codemirror/mode/go/go";
+//   import "codemirror/mode/haskell/haskell";
+//   import "codemirror/mode/javascript/javascript";
+//   import "codemirror/mode/pascal/pascal";
+//   import "codemirror/mode/perl/perl";
+//   import "codemirror/mode/php/php";
+//   import "codemirror/mode/python/python";
+//   import "codemirror/mode/r/r";
+//   import "codemirror/mode/ruby/ruby";
+//   import "codemirror/mode/rust/rust";
+//   import "codemirror/mode/swift/swift";
+
+//   // Addons
+//   import "codemirror/addon/hint/show-hint";
+//   import "codemirror/addon/hint/javascript-hint";
+//   import "codemirror/addon/hint/show-hint.css";
+//   import "codemirror/addon/edit/closebrackets";
+//   import "codemirror/addon/edit/closetag";
+//   import "codemirror/addon/fold/foldcode";
+//   import "codemirror/addon/fold/foldgutter";
+//   import "codemirror/addon/fold/brace-fold";
+//   import "codemirror/addon/fold/comment-fold";
+//   import "codemirror/addon/display/placeholder";
+//   import "codemirror/addon/display/fullscreen";
+//   import "codemirror/addon/search/match-highlighter";
+//   import "codemirror/addon/display/fullscreen.css";
+//   import "codemirror/addon/fold/foldgutter.css";
+//   import "codemirror/keymap/sublime";
 // import { runCode } from "../App/Apis";
 
 const jsonData = require("./data.json");
@@ -288,16 +372,18 @@ function Editor() {
           </button>
         </div>
       </div>
-      <CodeMirror
-        className="my-code-editor"
-        value={editorValue}
-        options={options}
-        onBeforeChange={(editor, data, value) => changeCode(value)}
-        //   onChange={(editor, data, value) => changeCode(value)}
-        // onKeyUp={(editor, event) => {
-        //   handleKeyUp(editor, event);
-        // }}
-      />
+      {CodeMirror && (
+        <CodeMirror
+          className="my-code-editor"
+          value={editorValue}
+          options={options}
+          onBeforeChange={(editor, data, value) => changeCode(value)}
+          //   onChange={(editor, data, value) => changeCode(value)}
+          // onKeyUp={(editor, event) => {
+          //   handleKeyUp(editor, event);
+          // }}
+        />
+      )}
       <div className="editor-options-container">
         <div className="left-side-editor-buttons">
           <button
