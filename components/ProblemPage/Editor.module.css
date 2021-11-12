@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap");
+.my-code-editor {
+  font-family: "Roboto Mono", monospace;
+  font-size: 17px;
+  width: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.CodeMirror {
+  min-height: 500px;
+  width: 100%;
+}
+
+.cm-matchhighlight {
+  background: #4b4949 !important;
+  opacity: 5;
+}
+
+.custom-test-checkbox {
+  margin-left: 2rem;
+  cursor: pointer !important;
+}
+
+.in-out-button-container {
+  padding-top: 1rem;
+  padding-left: 2rem;
+}
+/*# sourceMappingURL=Editor.module.css.map */
