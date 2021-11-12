@@ -34,10 +34,11 @@ function PanelContainer() {
     </div>
   );
   const PanelB = () => (
-    <div
+    <div 
       style={{
         display: "flex",
         flexGrow: 1,
+        flexDirection:'column',
       }}
     >
       <Editor />
