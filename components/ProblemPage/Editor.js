@@ -10,6 +10,12 @@ import { base64_decode, base64_encode, download } from "./Helper2";
 //   },
 //   { ssr: false }
 // );
+import {MdSaveAlt} from 'react-icons/md'
+import {AiOutlineUpload} from 'react-icons/ai'
+import {BsCloudArrowUp} from 'react-icons/bs'
+import {VscRunAll} from 'react-icons/vsc'
+import {BiRefresh} from 'react-icons/bi'
+
 
 let CodeMirror = null;
 if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
@@ -200,7 +206,7 @@ function Editor() {
 
   const renderThemeList = jsonData.theme.map((item) => {
     if (currTheme.value !== item.value) {
-      return <option value={item.value}>{item.label}</option>;
+      return <option className="" value={item.value}>{item.label}</option>;
     }
     return <></>;
   });
@@ -296,7 +302,7 @@ function Editor() {
     foldcode: true,
     lineNumbers: true,
     autoRefresh: true,
-    viewportMargin: Infinity,
+    viewportMargin: 1,
     highlightSelectionMatches: {
       minChars: 2,
       style: "matchhighlight",
@@ -335,71 +341,72 @@ function Editor() {
   };
 
   return (
-    <div className="problem-page-right-container">
-      <div className="dropdown-container">
+    <div className="problem-page-right-container p-5">
+      <div className="dropdown-container flex justify-around p-10 ">
         <div>
-          <label>Theme : </label>
+          <label className="font-semibold">Theme : </label>
           <select
-            class="ui search dropdown"
+            class="border border-gray-700 hover:border-custom-bg rounded-full text-white h-10 pl-5 pr-10 bg-gray-800 focus:outline-none appearance-none transition-all ease-out scrollbar-hide"
             onChange={(e) => handleThemeChange(e)}
           >
-            <option value={currTheme.value}>{currTheme.label}</option>
+            <option className="" value={currTheme.value}>{currTheme.label}</option>
             {renderThemeList}
           </select>
         </div>
         <div>
-          <label>Language : </label>
+          <label className="font-semibold">Language : </label>
           <select
-            class="ui search dropdown"
+            class="border border-gray-700 hover:border-custom-bg rounded-full text-white h-10 pl-5 pr-10 bg-gray-800 focus:outline-none appearance-none transition-all ease-out"
             onChange={(e) => handleLangChange(e)}
           >
             <option value={currLang.value}>{currLang.label}</option>
             {renderLangList}
           </select>
         </div>
-        <div className="ui small basic icon buttons editor-icons-container">
+        <div className="ui small basic icon buttons editor-icons-container space-x-4 text-xl">
           <button class="ui button">
-            <i class="save icon"></i>
+            <MdSaveAlt/>
           </button>
           <button class="ui button">
-            <i class="upload icon"></i>
+            <AiOutlineUpload/>
           </button>
           <button
             class="ui button"
             onClick={() => download("code" + currLang.ext, editorValue)}
           >
-            <i class="download icon"></i>
+            <BsCloudArrowUp/>
           </button>
         </div>
       </div>
-      {CodeMirror && (
-        <CodeMirror
-          className="my-code-editor"
-          value={editorValue}
-          options={options}
-          onBeforeChange={(editor, data, value) => changeCode(value)}
-          //   onChange={(editor, data, value) => changeCode(value)}
-          // onKeyUp={(editor, event) => {
-          //   handleKeyUp(editor, event);
-          // }}
-        />
-      )}
-      <div className="editor-options-container">
-        <div className="left-side-editor-buttons">
+        {CodeMirror && (
+          <CodeMirror
+            className="my-code-editor text-base"
+            value={editorValue}
+            options={options}
+            onBeforeChange={(editor, data, value) => changeCode(value)}
+            //   onChange={(editor, data, value) => changeCode(value)}
+            // onKeyUp={(editor, event) => {
+            //   handleKeyUp(editor, event);
+            // }}
+          />
+        )}
+      <div className="editor-options-container mt-10 flex space-x-5 justify-between items-center">
+        <div className="flex items-center space-x-5">
           <button
-            className="ui labeled icon right float button"
+            className="flex items-center space-x-2 bg-custom-bg hover:bg-[#7220c4] transition-all ease-out p-2 px-8 rounded-lg"
             onClick={handleCompileCode}
           >
-            <i className="file alternate icon"></i>
-            Compile
+             <BiRefresh className="text-lg"/>
+            <span>Compile</span>
           </button>
           <button
-            className="ui right float right labeled icon button"
+            className="flex items-center space-x-2 bg-custom-bg hover:bg-[#7220c4] transition-all ease-out p-2 px-8  rounded-lg"
             onClick={handleRunCode}
           >
-            <i className="play icon"></i>
-            Run
+            <VscRunAll/>
+            <span>Run</span>
           </button>
+        </div>
           <div
             class="ui toggle checkbox custom-test-checkbox"
             onClick={handeCustomInput}
@@ -407,14 +414,14 @@ function Editor() {
             <input type="checkbox" name="public" checked={customInput} />
             <label>Custom Input</label>
           </div>
-        </div>
         <div className="right-side-editor-buttons">
           <button
-            className="ui right float right labeled icon button"
+            className=" flex items-center space-x-2 bg-custom-bg hover:bg-[#7220c4] transition-all ease-out p-2 px-8  rounded-lg"
             onClick={handleSubmitCode}
           >
-            <i className="paper plane icon"></i>
-            Submit
+
+             <VscRunAll/>
+            <span>Submit</span>
           </button>
         </div>
       </div>
@@ -436,16 +443,18 @@ function Editor() {
       </div>
       <div className="ui form input-area">
         {showMode ? (
-          <div class="field">
+          <div class="field form-textarea mt-1 block w-full">
             <textarea
+              className="w-3/6"
               rows="4"
+              cols="20"
               value={inputValue}
               onChange={(e) => changeInputValue(e.target.value)}
               spellcheck="false"
             ></textarea>
           </div>
         ) : (
-          <div className="field">
+          <div className="field w-full">
             <textarea
               rows="4"
               value={outputValue}
