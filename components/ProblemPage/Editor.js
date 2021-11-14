@@ -233,7 +233,7 @@ function Editor() {
   const handleSubmitCode = async () => {
     const encoded_mail = Encodemail("server@gmail.com");
     var socket = new WebSocket(
-      `ws://localhost:8000/ws/runcode/${encoded_mail}/`
+      `ws://db-code.herokuapp.com/ws/runcode/${encoded_mail}/`
     );
     socket.onopen = async function (e) {
       console.log("opened");
@@ -252,6 +252,9 @@ function Editor() {
       //   console.log(data["text"]);
       // }
       console.log(data["text"]);
+    };
+    socket.onclose = function (e) {
+      console.log("closed");
     };
   };
 
@@ -314,11 +317,11 @@ function Editor() {
 
   return (
     <div className="problem-page-right-container p-5">
-      <div className="dropdown-container flex justify-around p-10 ">
+      <div className="dropdown-container flex justify-around pb-4 ">
         <div>
           <label className="font-semibold">Theme : </label>
           <select
-            class="border border-gray-700 hover:border-custom-bg rounded-full text-white h-10 pl-5 pr-10 bg-gray-800 focus:outline-none appearance-none transition-all ease-out scrollbar-hide"
+            class="border border-gray-700 hover:border-custom-bg rounded-full text-white h-10 ml-2 pl-5 pr-10 bg-gray-800 focus:outline-none appearance-none transition-all ease-out scrollbar-hide"
             onChange={(e) => handleThemeChange(e)}
           >
             <option className="" value={currTheme.value}>
@@ -330,7 +333,7 @@ function Editor() {
         <div>
           <label className="font-semibold">Language : </label>
           <select
-            class="border border-gray-700 hover:border-custom-bg rounded-full text-white h-10 pl-5 pr-10 bg-gray-800 focus:outline-none appearance-none transition-all ease-out"
+            class="border border-gray-700 hover:border-custom-bg rounded-full text-white h-10 ml-2 pl-5 pr-10 bg-gray-800 focus:outline-none appearance-none transition-all ease-out"
             onChange={(e) => handleLangChange(e)}
           >
             <option value={currLang.value}>{currLang.label}</option>

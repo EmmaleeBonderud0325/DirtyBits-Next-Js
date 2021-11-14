@@ -57,9 +57,9 @@ export const getProblemsList = axios.create({
 });
 
 export const runCode = axios.create({
-  baseURL: running_Code_URL + "core/compilecode",
+  baseURL: PROBLEM_URL + "core/compilecode",
 });
 
 export const submitCode = axios.create({
-  baseURL: running_Code_URL + "core/runcode",
+  baseURL: PROBLEM_URL + "core/runcode",
 });
