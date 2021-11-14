@@ -7,7 +7,7 @@ import PanelManager, {
 import Tabs from "./Tabs";
 import Editor from "./ProblemPage/Editor";
 
-function PanelContainer() {
+const  PanelContainer = () => {
   const EXAMPLE_PANEL_DATA = [
     {
       data: {
@@ -33,7 +33,7 @@ function PanelContainer() {
       <Tabs />
     </div>
   );
-  const PanelB = () => (
+  const PanelB = React.useCallback(() => (
     <div 
       style={{
         display: "flex",
@@ -43,8 +43,11 @@ function PanelContainer() {
     >
       <Editor />
     </div>
-  );
+  ));
   const [panelData, setPanelData] = useState(EXAMPLE_PANEL_DATA);
+
+  console.log('panel rendered')
+  
   return (
     <div>
       <span

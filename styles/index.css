@@ -15,7 +15,7 @@
 
 @layer base {
   body {
-    @apply bg-[#060F1E] text-gray-300;
+    @apply bg-[#060F1E] text-gray-300 !important;
   }
 }
 

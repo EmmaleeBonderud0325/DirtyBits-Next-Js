@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 // import { Controlled as CodeMirror } from "react-codemirror2";
 import { base64_decode, base64_encode, download } from "./Helper2";
 
@@ -12,9 +12,50 @@ import { base64_decode, base64_encode, download } from "./Helper2";
 // );
 import {MdSaveAlt} from 'react-icons/md'
 import {AiOutlineUpload} from 'react-icons/ai'
-import {BsCloudArrowUp} from 'react-icons/bs'
+import {BsCloudArrowUp, BsTerminal} from 'react-icons/bs'
 import {VscRunAll} from 'react-icons/vsc'
 import {BiRefresh} from 'react-icons/bi'
+import {Button, Switch, Tooltip, Drawer, } from 'antd'
+
+import * as React from 'react';
+import PropTypes from 'prop-types';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
 
 
 let CodeMirror = null;
@@ -163,7 +204,7 @@ if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
 
 const jsonData = require("./data.json");
 
-function Editor() {
+const Editor = () => {
   let [editorValue, changeEditorValue] = useState(
     "#include<iostream>\nusing namespace std;\n\nint main(){\n\n\treturn 0;\n}"
   );
@@ -182,16 +223,24 @@ function Editor() {
   let [inputValue, changeInputValue] = useState("");
   let [outputValue, changeOutputValue] = useState("");
   let [showMode, changeShowMode] = useState(true);
+  const [showConsole, setShowConsole] = useState(false);
   let [inputBtnClass, setInputBtnClass] = useState(
     "positive ui left attached button"
   );
   let [outputBtnClass, setOutputBtnClass] = useState(
     "right attached ui button"
   );
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   const changeCode = (data) => {
     changeEditorValue(data);
   };
+  console.log('editor rendered')
+
 
   // const handleKeyUp = (editor, event) => {
   //   if (editor.state.completionActive) {
@@ -341,7 +390,7 @@ function Editor() {
   };
 
   return (
-    <div className="problem-page-right-container p-5">
+    <div className="problem-page-right-container p-2 ">
       <div className="dropdown-container flex justify-around p-10 ">
         <div>
           <label className="font-semibold">Theme : </label>
@@ -363,20 +412,30 @@ function Editor() {
             {renderLangList}
           </select>
         </div>
-        <div className="ui small basic icon buttons editor-icons-container space-x-4 text-xl">
-          <button class="ui button">
-            <MdSaveAlt/>
-          </button>
-          <button class="ui button">
-            <AiOutlineUpload/>
-          </button>
-          <button
-            class="ui button"
-            onClick={() => download("code" + currLang.ext, editorValue)}
-          >
-            <BsCloudArrowUp/>
-          </button>
+      
+        {/* TOP RIGHT ICONS */}
+        <div className="space-x-1 flex">
+          
+          <Tooltip className="bg-none" placement="top" title="Save">
+            <Button ghost style={{border:'none', fontSize:20}}>
+              <MdSaveAlt/>
+            </Button>
+          </Tooltip>
+
+          <Tooltip className="bg-none" placement="top" title="Upload">
+            <Button ghost style={{border:'none', fontSize:20}}>
+              <AiOutlineUpload/>
+            </Button>
+          </Tooltip>
+
+          <Tooltip className="bg-none" placement="top" title="Download Code">
+            <Button onClick={() => download("code" + currLang.ext, editorValue)} ghost style={{border:'none', fontSize:20}}>
+              <BsCloudArrowUp/>
+            </Button>
+          </Tooltip>
+
         </div>
+
       </div>
         {CodeMirror && (
           <CodeMirror
@@ -408,10 +467,15 @@ function Editor() {
           </button>
         </div>
           <div
-            class="ui toggle checkbox custom-test-checkbox"
             onClick={handeCustomInput}
+            className="space-x-2"
           >
-            <input type="checkbox" name="public" checked={customInput} />
+            {/* <input type="checkbox" name="public" checked={customInput} /> */}
+            <Switch
+              defaultChecked
+              style={{backgroundColor: "#7220c4", color: "#fff"}}
+              checked={customInput}
+            />
             <label>Custom Input</label>
           </div>
         <div className="right-side-editor-buttons">
@@ -425,48 +489,70 @@ function Editor() {
           </button>
         </div>
       </div>
-      <div className="in-out-button-container">
+      {/* <div className="flex p-4 justify-evenly">
         <button
-          className={inputBtnClass}
+          // className={inputBtnClass}
+          className="flex items-center space-x-2 bg-custom-bg hover:bg-[#7220c4] transition-all ease-out p-2 px-8  rounded-lg"
           id="input-btn"
           onClick={(e) => handleShowMode(e)}
         >
           Input
         </button>
         <button
-          className={outputBtnClass}
+          // className={outputBtnClass}
+          className="flex items-center space-x-2 bg-custom-bg hover:bg-[#7220c4] transition-all ease-out p-2 px-8  rounded-lg"
           id="output-btn"
           onClick={(e) => handleShowMode(e)}
         >
           Output
         </button>
+      </div> */}
+
+      <div className="cursor-pointer mt-10 text-xl flex items-center">
+        <BsTerminal onClick={() => setShowConsole(!showConsole)}/><span className="ml-2 text-sm">Console</span>
       </div>
-      <div className="ui form input-area">
-        {showMode ? (
-          <div class="field form-textarea mt-1 block w-full">
-            <textarea
-              className="w-3/6"
-              rows="4"
-              cols="20"
-              value={inputValue}
-              onChange={(e) => changeInputValue(e.target.value)}
-              spellcheck="false"
-            ></textarea>
-          </div>
-        ) : (
-          <div className="field w-full">
-            <textarea
-              rows="4"
-              value={outputValue}
-              disabled={false}
-              spellcheck="false"
-              readOnly={true}
-            ></textarea>
-          </div>
-        )}
-      </div>
+
+        {
+          showConsole && (
+            <div className="absolute bottom-0 w-full transition-all ease-in-out duration-75">       
+        <Box sx={{ width: '100%',}}>
+   <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+     <Tabs value={value} textColor="inherit" indicatorColor="secondary" onChange={handleChange} aria-label="basic tabs example">
+       <Tab onClick={(e) => handleShowMode(e)} label="Input" {...a11yProps(0)} />
+       <Tab onClick={(e) => handleShowMode(e)} label="Ouput" {...a11yProps(1)} />
+     </Tabs>
+   </Box>
+   <TabPanel value={value} index={0}>
+             <textarea
+            className="w-3/6 bg-gray-800 outline-none rounded-lg p-1 text-lg"
+            rows="4"
+            id="input-btn"
+            cols="20"
+            value={inputValue}
+            onChange={(e) => changeInputValue(e.target.value)}
+            spellcheck="false"
+          ></textarea>
+   </TabPanel>
+   
+   <TabPanel value={value} index={1}>
+             <textarea
+           className="w-full bg-gray-800 outline-none rounded-lg p-1 text-lg"
+           rows="4"
+           id="output-btn"
+           value={outputValue}
+           disabled={false}
+           spellcheck="false"
+           readOnly={true}
+         ></textarea>
+   </TabPanel>
+ </Box>
+   </div>
+          )
+        }
+        
+      
     </div>
   );
 }
 
-export default Editor;
+export default React.memo(Editor);

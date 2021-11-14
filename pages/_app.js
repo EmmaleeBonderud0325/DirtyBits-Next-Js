@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import { store } from "../redux/store";
 import "../styles/index.css";
 import { useRouter } from "next/router";
+import 'antd/dist/antd.css';
 
 function MyApp({ Component, pageProps }) {
   if (Component.getLayout) {

@@ -3,6 +3,7 @@ import { useState } from "react";
 import Dropdown from "../components/Dropdown";
 import {motion} from 'framer-motion'
 import Table from '../components/Table'
+import { Pagination } from "antd";
 
 const variants = {
   visible: { opacity: 1 },
@@ -25,7 +26,7 @@ function Problem({problemList}) {
   return (
     <div className="space-y-8 container p-10 mx-auto max-w-screen-xl">
       <motion.div animate={{ y: [20, 0, 0] }}>
-      <h1 className="lg:text-5xl text-3xl font-extrabold">Problem <span className="text-custom-bg">List</span></h1>
+      <h1 className="lg:text-5xl text-3xl font-extrabold text-white">Problem <span className="text-custom-bg">List</span></h1>
       </motion.div>
       <hr />
 

@@ -196,11 +196,11 @@ function signin() {
           <div className="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
             <div className="self-start hidden lg:flex flex-col  text-white">
               <img src="" className="mb-3" />
-              <h1 className="mb-3 font-bold text-5xl">
+              <h1 className="mb-3 font-bold text-5xl text-white">
                 Hello Welcome to{" "}
-                <span className="text-custom-yellow">
+                <span >
                   <Link href="/">
-                    <a>DirtyBits</a>
+                    <a className="text-custom-yellow">DirtyBits</a>
                   </Link>
                 </span>
               </h1>
