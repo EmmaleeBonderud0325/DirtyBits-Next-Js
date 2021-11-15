@@ -38,7 +38,7 @@ function a11yProps(index) {
   };
 }
 
-export default function BasicTabs() {
+export default function BasicTabs({questionData}) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -46,7 +46,7 @@ export default function BasicTabs() {
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '100%', height:'100vh' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} textColor="inherit" indicatorColor="secondary" onChange={handleChange} aria-label="basic tabs example">
           <Tab label="Problem" {...a11yProps(0)} />
@@ -56,59 +56,30 @@ export default function BasicTabs() {
       </Box>
       <TabPanel value={value} index={0}>
         <div className="space-y-5 transition-all ease-in-out">
-        <p className="font-semibold text-lg">Given a square matrix, calculate the absolute difference between the sums of its diagonals.
+          {/* PROBLEM DIFFICULTY */}
+          <p className="bg-green-600 inline px-3 py-1 rounded-xl ">Easy</p>
+          {/* PROBLEM TITLE */}
+        <p className="font-medium text-lg text-[#a1acc0]">
+          <span>1. </span>{questionData.title}
+        </p>
+          {/* PROBLEM DESCRIPTION */}
+          <p className="text-[#57647C] leading-8">
+            {questionData.problem_statement} 
+          </p>
 
-For example, the square matrix  is shown below:</p>
-        <p>The left-to-right diagonal = . The right to left diagonal = . Their absolute difference is .
+          <div className="text-white select-none">
+            {/* SAMPLE TEST CASES INPUT */}
+            <h3 className="text-white font-semibold">Sample Test Cases</h3>
+            <h2 className="text-[#57647C]">Input</h2>
+            <p className="text-[#57647C]">1) fasd</p>
+            <p className="text-[#57647C]">2) 1231</p>
 
-Function description
-
-Complete the  function in the editor below.
-
-diagonalDifference takes the following parameter:
-
-int arr[n][m]: an array of integers
-Return
-
-int: the absolute diagonal difference
-Input Format
-
-The first line contains a single integer, , the number of rows and columns in the square matrix .
-Each of the next  lines describes a row, , and consists of  space-separated integers .
-
-Constraints
-
-Output Format
-
-Return the absolute difference between the sums of the matrix's two diagonals as a single integer.
-
-Sample Input
-
-3
-11 2 4
-4 5 6
-10 8 -12
-Sample Output
-
-15
-Explanation
-
-The primary diagonal is:
-
-11
-   5
-     -12
-Sum across the primary diagonal: 11 + 5 - 12 = 4
-
-The secondary diagonal is:
-
-     4
-   5
-10
-Sum across the secondary diagonal: 4 + 5 + 10 = 19
-Difference: |4 - 19| = 15
-
-Note: |x| is the absolute value of x</p>
+            {/* SAMPLE OUTPUT */}
+            <h3 className="text-white font-semibold">Sample Test Cases</h3>
+            <h2 className="text-[#57647C]">Output</h2>
+            <p className="text-[#57647C]">1) fasd</p>
+            <p className="text-[#57647C]"> 2) 1231</p>
+          </div>
         </div>
         
       </TabPanel>

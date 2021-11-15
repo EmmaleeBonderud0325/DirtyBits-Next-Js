@@ -53,3 +53,7 @@ export const uploadTestCases = axios.create({
 export const getProblemsList = axios.create({
   baseURL: PROBLEM_URL + "problems/getProblemsList",
 });
+
+export const getProblem = axios.create({
+  baseURL: PROBLEM_URL + "problems/getProblem",
+})

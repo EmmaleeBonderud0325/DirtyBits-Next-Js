@@ -87,13 +87,94 @@ html::-webkit-scrollbar-thumb {
   }
 }
 
-/* #heading {
-  background: linear-gradient(to bottom, #ff00cc, #333399);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-} */
-/* .filepond--root,
-.filepond--root .filepond--drop-label {
-  width: 200px;
-  border-radius: 50%;
-} */
+.Resizer {
+  background: #000;
+  opacity: 0.2;
+  z-index: 1;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding;
+  background-clip: padding-box;
+}
+
+.Resizer:hover {
+  -webkit-transition: all 2s ease;
+  transition: all 2s ease;
+}
+
+.Resizer.horizontal {
+  height: 11px;
+  margin: -5px 0;
+  border-top: 5px solid rgba(255, 255, 255, 0);
+  border-bottom: 5px solid rgba(255, 255, 255, 0);
+  cursor: row-resize;
+  width: 100%;
+}
+
+.Resizer.horizontal:hover {
+  border-top: 5px solid rgba(224, 36, 36, 0.89);
+  border-bottom: 5px solid rgba(228, 21, 21, 0.774);
+}
+
+.Resizer.vertical {
+  width: 11px;
+  margin: 0 -5px;
+  border-left: 5px solid rgb(245, 240, 240);
+  border-right: 5px solid rgba(243, 241, 241, 0.945);
+  cursor: col-resize;
+}
+
+.Resizer.vertical:hover {
+  border-left: 5px solid rgba(65, 17, 197, 0.5);
+  border-right: 5px solid rgba(62, 22, 172, 0.5);
+}
+.Resizer.disabled {
+  cursor: not-allowed;
+}
+.Resizer.disabled:hover {
+  border-color: transparent;
+}
+
+/* OUTPUT LOADER */
+
+.loader {
+  width: 4.8px;
+  height: 4.8px;
+  display: block;
+  margin: 50px auto;
+  position: relative;
+  border-radius: 4px;
+  color: #fff;
+  background: currentColor;
+  box-sizing: border-box;
+  animation: animloader 0.3s 0.3s linear infinite alternate;
+}
+.loader::after,
+.loader::before {
+  content: "";
+  box-sizing: border-box;
+  width: 4.8px;
+  height: 4.8px;
+  border-radius: 4px;
+  background: currentColor;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 15px;
+  animation: animloader 0.3s 0.45s linear infinite alternate;
+}
+.loader::after {
+  top: -15px;
+  animation-delay: 0s;
+}
+
+@keyframes animloader {
+  0% {
+    width: 4.8px;
+  }
+  100% {
+    width: 48px;
+  }
+}

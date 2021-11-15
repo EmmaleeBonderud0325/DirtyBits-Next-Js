@@ -390,8 +390,8 @@ const Editor = () => {
   };
 
   return (
-    <div className="problem-page-right-container p-2 ">
-      <div className="dropdown-container flex justify-around p-10 ">
+    <div className="problem-page-right-container p-2">
+      <div className="dropdown-container flex justify-around p-10">
         <div>
           <label className="font-semibold">Theme : </label>
           <select
@@ -437,7 +437,8 @@ const Editor = () => {
         </div>
 
       </div>
-        {CodeMirror && (
+      <div>
+      {CodeMirror && (
           <CodeMirror
             className="my-code-editor text-base"
             value={editorValue}
@@ -449,7 +450,9 @@ const Editor = () => {
             // }}
           />
         )}
-      <div className="editor-options-container mt-10 flex space-x-5 justify-between items-center">
+      </div>
+       
+      <div className="editor-options-container mt-10 flex space-x-5 justify-between items-center p-2">
         <div className="flex items-center space-x-5">
           <button
             className="flex items-center space-x-2 bg-custom-bg hover:bg-[#7220c4] transition-all ease-out p-2 px-8 rounded-lg"
@@ -508,13 +511,13 @@ const Editor = () => {
         </button>
       </div> */}
 
-      <div className="cursor-pointer mt-10 text-xl flex items-center">
+      <div className="cursor-pointer mt-10 text-xl flex items-center p-2">
         <BsTerminal onClick={() => setShowConsole(!showConsole)}/><span className="ml-2 text-sm">Console</span>
       </div>
 
         {
           showConsole && (
-            <div className="absolute bottom-0 w-full transition-all ease-in-out duration-75">       
+            <div className="relative bottom-0 w-full transition-all ease-in-out duration-75 p-2">       
         <Box sx={{ width: '100%',}}>
    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
      <Tabs value={value} textColor="inherit" indicatorColor="secondary" onChange={handleChange} aria-label="basic tabs example">
@@ -524,10 +527,10 @@ const Editor = () => {
    </Box>
    <TabPanel value={value} index={0}>
              <textarea
-            className="w-3/6 bg-gray-800 outline-none rounded-lg p-1 text-lg"
-            rows="4"
+            className="w-full bg-gray-800 outline-none rounded-lg p-1 text-lg"
+            rows="6"
             id="input-btn"
-            cols="20"
+            placeholder="Custom Input here"
             value={inputValue}
             onChange={(e) => changeInputValue(e.target.value)}
             spellcheck="false"
@@ -535,15 +538,16 @@ const Editor = () => {
    </TabPanel>
    
    <TabPanel value={value} index={1}>
-             <textarea
+             {/* <textarea
            className="w-full bg-gray-800 outline-none rounded-lg p-1 text-lg"
-           rows="4"
+           rows="6"
            id="output-btn"
            value={outputValue}
            disabled={false}
            spellcheck="false"
-           readOnly={true}
-         ></textarea>
+          //  readOnly={true}
+         ></textarea> */}
+         <span className="loader"></span>
    </TabPanel>
  </Box>
    </div>

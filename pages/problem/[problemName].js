@@ -1,11 +1,34 @@
-import Panel from '../../components/Panel'
+import axios from 'axios';
+import Panel2 from '../../components/ProblemPage/Panel2'
+import {getProblem} from '../../components/api/apis'
+import Head from 'next/head'
 
-function ProblemView() {
+function ProblemView({data}) {
+    console.log('data', data)
     return (
-        <div>
-            <Panel/>
-        </div>
+        <>
+            <Head>
+                <title>New Year Chaos</title>
+            </Head>
+            <div>
+                <Panel2 question={data}/>
+            </div>
+        </>
     )
 }
 
 export default ProblemView;
+
+export const getServerSideProps = async (ctx) => {
+    const {data} = await getProblem.post('/', {
+        id: "5"
+    })
+
+    console.log(data)
+
+    return {
+        props: {
+            data
+        }
+    }
+}
