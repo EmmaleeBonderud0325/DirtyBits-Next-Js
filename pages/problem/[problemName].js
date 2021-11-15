@@ -21,7 +21,7 @@ export default ProblemView;
 
 export const getServerSideProps = async (ctx) => {
     const {data} = await getProblem.post('/', {
-        id: "5"
+        id: "6"
     })
 
     console.log(data)

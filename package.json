@@ -38,6 +38,7 @@
     "react-dom": "17.0.2",
     "react-draft-wysiwyg": "^1.14.7",
     "react-google-login": "^5.2.2",
+    "react-html-parser": "^2.0.2",
     "react-icons": "^4.3.1",
     "react-panel-system": "^1.0.3",
     "react-redux": "^7.2.5",

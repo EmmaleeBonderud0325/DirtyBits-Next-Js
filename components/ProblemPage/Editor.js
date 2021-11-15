@@ -133,80 +133,16 @@ if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
   require("codemirror/keymap/sublime");
 }
 
-// import "codemirror/lib/codemirror.css";
-//   import "./Editor.module.css";
-
-//   import "codemirror/theme/ayu-mirage.css";
-//   import "codemirror/theme/base16-dark.css";
-//   import "codemirror/theme/base16-light.css";
-//   import "codemirror/theme/bespin.css";
-//   import "codemirror/theme/dracula.css";
-//   import "codemirror/theme/duotone-light.css";
-//   import "codemirror/theme/eclipse.css";
-//   import "codemirror/theme/elegant.css";
-//   import "codemirror/theme/gruvbox-dark.css";
-//   import "codemirror/theme/hopscotch.css";
-//   import "codemirror/theme/icecoder.css";
-//   import "codemirror/theme/idea.css";
-//   import "codemirror/theme/lucario.css";
-//   import "codemirror/theme/material-darker.css";
-//   import "codemirror/theme/material-palenight.css";
-//   import "codemirror/theme/material.css";
-//   import "codemirror/theme/mbo.css";
-//   import "codemirror/theme/mdn-like.css";
-//   import "codemirror/theme/monokai.css";
-//   import "codemirror/theme/moxer.css";
-//   import "codemirror/theme/neat.css";
-//   import "codemirror/theme/neo.css";
-//   import "codemirror/theme/oceanic-next.css";
-//   import "codemirror/theme/panda-syntax.css";
-//   import "codemirror/theme/railscasts.css";
-//   import "codemirror/theme/rubyblue.css";
-//   import "codemirror/theme/seti.css";
-//   import "codemirror/theme/shadowfox.css";
-//   import "codemirror/theme/ssms.css";
-//   import "codemirror/theme/the-matrix.css";
-//   import "codemirror/theme/tomorrow-night-eighties.css";
-//   import "codemirror/theme/ttcn.css";
-//   import "codemirror/theme/xq-light.css";
-
-//   // Languages
-//   import "codemirror/mode/clojure/clojure";
-//   import "codemirror/mode/go/go";
-//   import "codemirror/mode/haskell/haskell";
-//   import "codemirror/mode/javascript/javascript";
-//   import "codemirror/mode/pascal/pascal";
-//   import "codemirror/mode/perl/perl";
-//   import "codemirror/mode/php/php";
-//   import "codemirror/mode/python/python";
-//   import "codemirror/mode/r/r";
-//   import "codemirror/mode/ruby/ruby";
-//   import "codemirror/mode/rust/rust";
-//   import "codemirror/mode/swift/swift";
-
-//   // Addons
-//   import "codemirror/addon/hint/show-hint";
-//   import "codemirror/addon/hint/javascript-hint";
-//   import "codemirror/addon/hint/show-hint.css";
-//   import "codemirror/addon/edit/closebrackets";
-//   import "codemirror/addon/edit/closetag";
-//   import "codemirror/addon/fold/foldcode";
-//   import "codemirror/addon/fold/foldgutter";
-//   import "codemirror/addon/fold/brace-fold";
-//   import "codemirror/addon/fold/comment-fold";
-//   import "codemirror/addon/display/placeholder";
-//   import "codemirror/addon/display/fullscreen";
-//   import "codemirror/addon/search/match-highlighter";
-//   import "codemirror/addon/display/fullscreen.css";
-//   import "codemirror/addon/fold/foldgutter.css";
-//   import "codemirror/keymap/sublime";
-// import { runCode } from "../App/Apis";
+import { runCode, submitCode } from "../api/apis";
+import Cookies from "js-cookie";
+import Gettoken from "../Helper/Gettoken";
+import Encodemail from "../Helper/Encodemail";
 
 const jsonData = require("./data.json");
 
 const Editor = () => {
   let [editorValue, changeEditorValue] = useState(
-    "#include<iostream>\nusing namespace std;\n\nint main(){\n\n\treturn 0;\n}"
+    "#include<iostream>\nusing namespace std;\n\nint main(){\n\n  return 0;\n}"
   );
   let [currTheme, setCurrTheme] = useState({
     label: "Dracula",
@@ -255,7 +191,11 @@ const Editor = () => {
 
   const renderThemeList = jsonData.theme.map((item) => {
     if (currTheme.value !== item.value) {
-      return <option className="" value={item.value}>{item.label}</option>;
+      return (
+        <option className="" value={item.value}>
+          {item.label}
+        </option>
+      );
     }
     return <></>;
   });
@@ -300,12 +240,22 @@ const Editor = () => {
 
   const handleRunCode = async () => {
     console.log(editorValue, currLang.label, inputValue);
+    await Gettoken(Cookies.get("refresh"));
     await runCode
-      .post("/", {
-        code: base64_encode(editorValue),
-        lang: currLang.label,
-        input: base64_encode(inputValue),
-      })
+      .post(
+        "/",
+        {
+          code: base64_encode(editorValue),
+          lang: currLang.label,
+          input: base64_encode(inputValue),
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `JWT ${Cookies.get("access")}`,
+          },
+        }
+      )
       .then((result) => {
         changeShowMode(false);
         setInputBtnClass("ui left attached button");
@@ -330,7 +280,33 @@ const Editor = () => {
       });
   };
 
-  const handleSubmitCode = async () => {};
+  const handleSubmitCode = async () => {
+    const encoded_mail = Encodemail("server@gmail.com");
+    var socket = new WebSocket(
+      `ws://db-code.herokuapp.com/ws/runcode/${encoded_mail}/`
+    );
+    socket.onopen = async function (e) {
+      console.log("opened");
+      await submitCode.post("/", {
+        problem_Id: 5,
+        language: currLang.label,
+        code: base64_encode(editorValue),
+      });
+    };
+    socket.onmessage = async function (e) {
+      var data = JSON.parse(e.data);
+      // if (data["text"] !== "passed" && data["text"] !== "failed") {
+      //   var metadata = JSON.parse(data["text"])[0];
+      //   displayOut(metadata.fields);
+      // } else {
+      //   console.log(data["text"]);
+      // }
+      console.log(data["text"]);
+    };
+    socket.onclose = function (e) {
+      console.log("closed");
+    };
+  };
 
   let options = {
     mode: currLang.value,
@@ -395,17 +371,19 @@ const Editor = () => {
         <div>
           <label className="font-semibold">Theme : </label>
           <select
-            class="border border-gray-700 hover:border-custom-bg rounded-full text-white h-10 pl-5 pr-10 bg-gray-800 focus:outline-none appearance-none transition-all ease-out scrollbar-hide"
+            class="border border-gray-700 hover:border-custom-bg rounded-full text-white h-10 ml-2 pl-5 pr-10 bg-gray-800 focus:outline-none appearance-none transition-all ease-out scrollbar-hide"
             onChange={(e) => handleThemeChange(e)}
           >
-            <option className="" value={currTheme.value}>{currTheme.label}</option>
+            <option className="" value={currTheme.value}>
+              {currTheme.label}
+            </option>
             {renderThemeList}
           </select>
         </div>
         <div>
           <label className="font-semibold">Language : </label>
           <select
-            class="border border-gray-700 hover:border-custom-bg rounded-full text-white h-10 pl-5 pr-10 bg-gray-800 focus:outline-none appearance-none transition-all ease-out"
+            class="border border-gray-700 hover:border-custom-bg rounded-full text-white h-10 ml-2 pl-5 pr-10 bg-gray-800 focus:outline-none appearance-none transition-all ease-out"
             onChange={(e) => handleLangChange(e)}
           >
             <option value={currLang.value}>{currLang.label}</option>
@@ -458,14 +436,14 @@ const Editor = () => {
             className="flex items-center space-x-2 bg-custom-bg hover:bg-[#7220c4] transition-all ease-out p-2 px-8 rounded-lg"
             onClick={handleCompileCode}
           >
-             <BiRefresh className="text-lg"/>
+            <BiRefresh className="text-lg" />
             <span>Compile</span>
           </button>
           <button
             className="flex items-center space-x-2 bg-custom-bg hover:bg-[#7220c4] transition-all ease-out p-2 px-8  rounded-lg"
             onClick={handleRunCode}
           >
-            <VscRunAll/>
+            <VscRunAll />
             <span>Run</span>
           </button>
         </div>
@@ -486,8 +464,7 @@ const Editor = () => {
             className=" flex items-center space-x-2 bg-custom-bg hover:bg-[#7220c4] transition-all ease-out p-2 px-8  rounded-lg"
             onClick={handleSubmitCode}
           >
-
-             <VscRunAll/>
+            <VscRunAll />
             <span>Submit</span>
           </button>
         </div>
