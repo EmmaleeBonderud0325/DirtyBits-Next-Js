@@ -1,16 +1,18 @@
 import { SearchOutlined } from "@mui/icons-material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Dropdown from "../components/Dropdown";
-import {motion} from 'framer-motion'
-import Table from '../components/Table'
+import { motion } from "framer-motion";
+import Table from "../components/Table";
 import { Pagination } from "antd";
+import { connect } from "react-redux";
+import { updateProblemsStatus } from "../redux/actions";
 
 const variants = {
   visible: { opacity: 1 },
   hidden: { opacity: 0 },
-}
+};
 
-function Problem({problemList}) {
+function Problem(props) {
   const values = [
     "Array",
     "Object",
@@ -26,44 +28,46 @@ function Problem({problemList}) {
   return (
     <div className="space-y-8 container p-10 mx-auto max-w-screen-xl">
       <motion.div animate={{ y: [20, 0, 0] }}>
-      <h1 className="lg:text-5xl text-3xl font-extrabold text-white">Problem <span className="text-custom-bg">List</span></h1>
+        <h1 className="lg:text-5xl text-3xl font-extrabold text-white">
+          Problem <span className="text-custom-bg">List</span>
+        </h1>
       </motion.div>
       <hr />
 
-      <motion.div  initial="hidden" animate="visible" variants={variants} >
-      <div className="flex sm:w-3/4 xs:w-full space-x-4 overflow-x-scroll scrollbar-hide">
-        {values.map((value) => {
-          return (
-            <div className="flex flex-col items-center justify-center">
-              <button className="text-base rounded-xl bg-gray-800 px-2 lg:px-4 lg:py-1 hover:scale-125 transition-all ease-out">
-                {value}
-              </button>
-            </div>
-          );
-        })}
-      </div>
+      <motion.div initial="hidden" animate="visible" variants={variants}>
+        <div className="flex sm:w-3/4 xs:w-full space-x-4 overflow-x-scroll scrollbar-hide">
+          {values.map((value) => {
+            return (
+              <div className="flex flex-col items-center justify-center">
+                <button className="text-base rounded-xl bg-gray-800 px-2 lg:px-4 lg:py-1 hover:scale-125 transition-all ease-out">
+                  {value}
+                </button>
+              </div>
+            );
+          })}
+        </div>
       </motion.div>
-      
+
       {/* SEARCH BAR */}
-      <motion.div  initial="hidden" animate="visible" variants={variants} >
-      <div className="flex space-x-3">
-        <form
-          onSubmit={() => {}}
-          className="p-[.2rem] flex border-none rounded-xl focus:outline-none bg-gray-800 items-center max-w-screen-2xl"
-        >
-          <input
-            type="text"
-            className="bg-gray-800 outline-none text-white p-2 rounded-xl w-full"
-            placeholder="Search"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-          />
-          <SearchOutlined />
-        </form>
-        <button type="submit" className="rounded-full  bg-gray-800 px-6 py-1">
-          Search
-        </button>
-      </div>
+      <motion.div initial="hidden" animate="visible" variants={variants}>
+        <div className="flex space-x-3">
+          <form
+            onSubmit={() => {}}
+            className="p-[.2rem] flex border-none rounded-xl focus:outline-none bg-gray-800 items-center max-w-screen-2xl"
+          >
+            <input
+              type="text"
+              className="bg-gray-800 outline-none text-white p-2 rounded-xl w-full"
+              placeholder="Search"
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+            />
+            <SearchOutlined />
+          </form>
+          <button type="submit" className="rounded-full  bg-gray-800 px-6 py-1">
+            Search
+          </button>
+        </div>
       </motion.div>
 
       {/* DROPDOWN SECITONS FOR DIFFICULTY , STATUS, TAGS */}
@@ -81,13 +85,18 @@ function Problem({problemList}) {
           bg={"bg-black"}
         />
       </div>
-      
+
       <div className="flex flex-col">
-        <Table list={problemList}/>
+        <Table list={props.problemList} />
       </div>
-     
-      
     </div>
   );
 }
-export default Problem;
+
+const mapStateToprops = (state) => {
+  return {
+    problemList: state.problemList,
+  };
+};
+
+export default connect(mapStateToprops, { updateProblemsStatus })(Problem);

@@ -39,6 +39,6 @@ export const AddProblemReducer = (state = initial, action) => {
     case updateTags:
       return { ...state, tags: action.payload };
     default:
-      return initial;
+      return state;
   }
 };

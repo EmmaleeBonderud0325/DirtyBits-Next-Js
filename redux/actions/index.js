@@ -1,3 +1,4 @@
+import { getProblemsList } from "../../components/api/apis";
 import {
   updateConstraints,
   updateNote,
@@ -14,7 +15,10 @@ import {
   EmailError,
   PasswordError,
   ConfirmPasswordError,
+  UpdateProblemList,
 } from "../types";
+
+import { Updateproblemsstatus } from "../../components/Helper/Updateproblemsstatus";
 
 export const updateUserinfo = (newState) => {
   return {
@@ -113,9 +117,33 @@ export const updatePasswordError = (newState) => {
     payload: newState,
   };
 };
+
 export const updateConfirmPasswordError = (newState) => {
   return {
     type: ConfirmPasswordError,
     payload: newState,
   };
+};
+
+export const updateProblemList = (newState) => {
+  return {
+    type: UpdateProblemList,
+    payload: newState,
+  };
+};
+
+export const updateProblemsStatus = () => async (dispatch, getState) => {
+  let state = getState();
+  const data = await Updateproblemsstatus(state.problemList);
+  dispatch(updateProblemList(data));
+};
+
+export const getProblems = () => async (dispatch, getState) => {
+  try {
+    const result = await getProblemsList.post("/");
+    dispatch(updateProblemList(result.data));
+    dispatch(updateProblemsStatus());
+  } catch {
+    console.error("Server Error in Problems List Fetching");
+  }
 };

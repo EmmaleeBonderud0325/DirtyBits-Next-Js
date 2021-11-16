@@ -13,3 +13,4 @@ export const UsernameError = "USERNAME_ERROR";
 export const EmailError = "EMAIL_ERROR";
 export const PasswordError = "PASSWORD_ERROR";
 export const ConfirmPasswordError = "CONFIRM_PASSWORD_ERROR";
+export const UpdateProblemList = "UPDATE_PROBLEM_LIST"
