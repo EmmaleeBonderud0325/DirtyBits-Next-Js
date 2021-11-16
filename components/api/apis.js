@@ -58,7 +58,7 @@ export const getProblemsList = axios.create({
 
 export const getProblem = axios.create({
   baseURL: PROBLEM_URL + "problems/getProblem",
-})
+});
 
 export const runCode = axios.create({
   baseURL: PROBLEM_URL + "core/compilecode",

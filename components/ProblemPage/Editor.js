@@ -1,28 +1,19 @@
 import { useState } from "react";
-// import { Controlled as CodeMirror } from "react-codemirror2";
 import { base64_decode, base64_encode, download } from "./Helper2";
 
-// import dynamic from "next/dynamic";
-// const CodeMirror = dynamic(
-//   async () => {
-//     import("codemirror/mode/javascript/javascript");
-//     return import("react-codemirror2").then((mod) => mod.Controlled);
-//   },
-//   { ssr: false }
-// );
-import {MdSaveAlt} from 'react-icons/md'
-import {AiOutlineUpload} from 'react-icons/ai'
-import {BsCloudArrowUp, BsTerminal} from 'react-icons/bs'
-import {VscRunAll} from 'react-icons/vsc'
-import {BiRefresh} from 'react-icons/bi'
-import {Button, Switch, Tooltip, Drawer, } from 'antd'
+import { MdSaveAlt } from "react-icons/md";
+import { AiOutlineUpload } from "react-icons/ai";
+import { BsCloudArrowUp, BsTerminal } from "react-icons/bs";
+import { VscRunAll } from "react-icons/vsc";
+import { BiRefresh } from "react-icons/bi";
+import { Button, Switch, Tooltip, Drawer } from "antd";
 
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import * as React from "react";
+import PropTypes from "prop-types";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -53,10 +44,9 @@ TabPanel.propTypes = {
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-
 
 let CodeMirror = null;
 if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
@@ -175,8 +165,7 @@ const Editor = () => {
   const changeCode = (data) => {
     changeEditorValue(data);
   };
-  console.log('editor rendered')
-
+  console.log("editor rendered");
 
   // const handleKeyUp = (editor, event) => {
   //   if (editor.state.completionActive) {
@@ -390,33 +379,34 @@ const Editor = () => {
             {renderLangList}
           </select>
         </div>
-      
+
         {/* TOP RIGHT ICONS */}
         <div className="space-x-1 flex">
-          
           <Tooltip className="bg-none" placement="top" title="Save">
-            <Button ghost style={{border:'none', fontSize:20}}>
-              <MdSaveAlt/>
+            <Button ghost style={{ border: "none", fontSize: 20 }}>
+              <MdSaveAlt />
             </Button>
           </Tooltip>
 
           <Tooltip className="bg-none" placement="top" title="Upload">
-            <Button ghost style={{border:'none', fontSize:20}}>
-              <AiOutlineUpload/>
+            <Button ghost style={{ border: "none", fontSize: 20 }}>
+              <AiOutlineUpload />
             </Button>
           </Tooltip>
 
           <Tooltip className="bg-none" placement="top" title="Download Code">
-            <Button onClick={() => download("code" + currLang.ext, editorValue)} ghost style={{border:'none', fontSize:20}}>
-              <BsCloudArrowUp/>
+            <Button
+              onClick={() => download("code" + currLang.ext, editorValue)}
+              ghost
+              style={{ border: "none", fontSize: 20 }}
+            >
+              <BsCloudArrowUp />
             </Button>
           </Tooltip>
-
         </div>
-
       </div>
       <div>
-      {CodeMirror && (
+        {CodeMirror && (
           <CodeMirror
             className="my-code-editor text-base"
             value={editorValue}
@@ -429,7 +419,7 @@ const Editor = () => {
           />
         )}
       </div>
-       
+
       <div className="editor-options-container mt-10 flex space-x-5 justify-between items-center p-2">
         <div className="flex items-center space-x-5">
           <button
@@ -447,18 +437,15 @@ const Editor = () => {
             <span>Run</span>
           </button>
         </div>
-          <div
-            onClick={handeCustomInput}
-            className="space-x-2"
-          >
-            {/* <input type="checkbox" name="public" checked={customInput} /> */}
-            <Switch
-              defaultChecked
-              style={{backgroundColor: "#7220c4", color: "#fff"}}
-              checked={customInput}
-            />
-            <label>Custom Input</label>
-          </div>
+        <div onClick={handeCustomInput} className="space-x-2">
+          {/* <input type="checkbox" name="public" checked={customInput} /> */}
+          <Switch
+            defaultChecked
+            style={{ backgroundColor: "#7220c4", color: "#fff" }}
+            checked={customInput}
+          />
+          <label>Custom Input</label>
+        </div>
         <div className="right-side-editor-buttons">
           <button
             className=" flex items-center space-x-2 bg-custom-bg hover:bg-[#7220c4] transition-all ease-out p-2 px-8  rounded-lg"
@@ -489,33 +476,47 @@ const Editor = () => {
       </div> */}
 
       <div className="cursor-pointer mt-10 text-xl flex items-center p-2">
-        <BsTerminal onClick={() => setShowConsole(!showConsole)}/><span className="ml-2 text-sm">Console</span>
+        <BsTerminal onClick={() => setShowConsole(!showConsole)} />
+        <span className="ml-2 text-sm">Console</span>
       </div>
 
-        {
-          showConsole && (
-            <div className="relative bottom-0 w-full transition-all ease-in-out duration-75 p-2">       
-        <Box sx={{ width: '100%',}}>
-   <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-     <Tabs value={value} textColor="inherit" indicatorColor="secondary" onChange={handleChange} aria-label="basic tabs example">
-       <Tab onClick={(e) => handleShowMode(e)} label="Input" {...a11yProps(0)} />
-       <Tab onClick={(e) => handleShowMode(e)} label="Ouput" {...a11yProps(1)} />
-     </Tabs>
-   </Box>
-   <TabPanel value={value} index={0}>
-             <textarea
-            className="w-full bg-gray-800 outline-none rounded-lg p-1 text-lg"
-            rows="6"
-            id="input-btn"
-            placeholder="Custom Input here"
-            value={inputValue}
-            onChange={(e) => changeInputValue(e.target.value)}
-            spellcheck="false"
-          ></textarea>
-   </TabPanel>
-   
-   <TabPanel value={value} index={1}>
-             {/* <textarea
+      {showConsole && (
+        <div className="relative bottom-0 w-full transition-all ease-in-out duration-75 p-2">
+          <Box sx={{ width: "100%" }}>
+            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <Tabs
+                value={value}
+                textColor="inherit"
+                indicatorColor="secondary"
+                onChange={handleChange}
+                aria-label="basic tabs example"
+              >
+                <Tab
+                  onClick={(e) => handleShowMode(e)}
+                  label="Input"
+                  {...a11yProps(0)}
+                />
+                <Tab
+                  onClick={(e) => handleShowMode(e)}
+                  label="Ouput"
+                  {...a11yProps(1)}
+                />
+              </Tabs>
+            </Box>
+            <TabPanel value={value} index={0}>
+              <textarea
+                className="w-full bg-gray-800 outline-none rounded-lg p-1 text-lg"
+                rows="6"
+                id="input-btn"
+                placeholder="Custom Input here"
+                value={inputValue}
+                onChange={(e) => changeInputValue(e.target.value)}
+                spellcheck="false"
+              ></textarea>
+            </TabPanel>
+
+            <TabPanel value={value} index={1}>
+              {/* <textarea
            className="w-full bg-gray-800 outline-none rounded-lg p-1 text-lg"
            rows="6"
            id="output-btn"
@@ -524,16 +525,13 @@ const Editor = () => {
            spellcheck="false"
           //  readOnly={true}
          ></textarea> */}
-         <span className="loader"></span>
-   </TabPanel>
- </Box>
-   </div>
-          )
-        }
-        
-      
+              <span className="loader"></span>
+            </TabPanel>
+          </Box>
+        </div>
+      )}
     </div>
   );
-}
+};
 
 export default React.memo(Editor);
