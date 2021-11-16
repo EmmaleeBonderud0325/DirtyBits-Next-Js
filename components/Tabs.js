@@ -5,7 +5,6 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import ReactHtmlParser from "react-html-parser";
-import axios from 'axios';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -42,7 +41,8 @@ function a11yProps(index) {
 
 export default function BasicTabs({questionData}) {
   const [value, setValue] = React.useState(0);
-  const [testCases, setTestCases] = React.useState();
+  const [inputTestCases, setInputTestCases] = React.useState([]);
+  const [outputTestCases, setOutputTestCases] = React.useState();
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -64,21 +64,36 @@ export default function BasicTabs({questionData}) {
       break;
   }
 
-  const handleTestCases = () => {
+  const handleInputTestCases = () => {
+    console.log('inside')
     let storedText;
     for(let i = 1; i <= questionData.sample_Tc; i++){
-      fetch(`https://res.cloudinary.com/hhikcz56h/raw/upload/v1636969572/TestCases/6/sc-input${i}.txt`)
+      fetch(`https://res.cloudinary.com/hhikcz56h/raw/upload/v1636969572/TestCases/7/sc-input${i}.txt`)
     .then(function(response) {
       response.text().then(function(text) {
         storedText = text;
         console.log(storedText);
-        setTestCases(prevState => prevState, storedText.toString());
+
+        return <pre>{storedText}</pre>;
       });
-    });
+    })
+    }
+  }
+  const handleOutputTestCases = () => {
+    console.log('inside')
+    let storedText;
+    for(let i = 1; i <= questionData.sample_Tc; i++){
+      fetch(`https://res.cloudinary.com/hhikcz56h/raw/upload/v1636969572/TestCases/7/sc-output${i}.txt`)
+    .then(function(response) {
+      response.text().then(function(text) {
+        storedText = text;
+        console.log(storedText);
+        // setOutputTestCases(storedText.toString());
+      });
+    })
     }
   }
 
-  console.log('test', testCases)
   return (
     <Box sx={{ width: '100%', height:'100vh' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -91,6 +106,12 @@ export default function BasicTabs({questionData}) {
       <TabPanel value={value} index={0}>
         <div className="space-y-5 transition-all ease-in-out">
           
+          {/* PROBLEM TITLE */}
+
+          <p className="font-medium text-lg text-[#a1acc0]">
+            <span>{questionData.id}. </span>{questionData.title}
+          </p>
+
           {/* PROBLEM DIFFICULTY */}
           
           <div className="flex items-center space-x-5">
@@ -100,11 +121,6 @@ export default function BasicTabs({questionData}) {
             <p className="text-xs">Accuracy. {questionData.accuracy}%</p>
           </div>
           
-          {/* PROBLEM TITLE */}
-
-          <p className="font-medium text-lg text-[#a1acc0]">
-            <span>{questionData.id}. </span>{questionData.title}
-          </p>
           
           {/* PROBLEM DESCRIPTION */}
           
@@ -128,8 +144,12 @@ export default function BasicTabs({questionData}) {
             )}
 
             {/* SAMEPLE INPUT TEST CASES */}
-            <h2 className="text-white">Sample Input Test Cases</h2>
-            <p>{handleTestCases()} {testCases}</p>
+            <h2 className="text-white">Sample Test Cases</h2>
+            <pre className="select-none">{handleInputTestCases()}{inputTestCases}</pre>
+
+            {/* SAMEPLE OUTPUT TEST CASES */}
+            <h2 className="text-white">Sample Test Cases</h2>
+            <pre className="select-none">{handleOutputTestCases()}{outputTestCases}</pre>
 
             {/* CONSTRAINTS */}
             <h2 className="text-white">Constraints:</h2>

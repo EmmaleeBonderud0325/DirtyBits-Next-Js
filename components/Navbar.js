@@ -94,7 +94,7 @@ function Navbar({ userInfo, bg, fixedHeader }) {
                   <div className="hidden sm:block sm:ml-6">
                     <div className="flex space-x-4">
                       {navigation.map((item) => (
-                        <Link key={item.name} href={item.href}>
+                        // <Link key={item.name} href={item.href}>
                           <a
                             className={classNames(
                               item.current
@@ -103,10 +103,12 @@ function Navbar({ userInfo, bg, fixedHeader }) {
                               "px-3 py-2 rounded-md text-sm font-medium"
                             )}
                             aria-current={item.current ? "page" : undefined}
+                            href={item.href}
+                            key={item.name}
                           >
                             {item.name}
                           </a>
-                        </Link>
+                        // </Link>
                       ))}
                     </div>
                   </div>
