@@ -1,9 +1,11 @@
-import React from 'react'
+import TableLoader from './TableLoader';
 
 function Table({list}) {
     let problemLevel;
     let problemColor;
     let status;
+
+    console.log('list', list)
     let problemMarkup = (
       list.map((problem, idx) => {
         switch(problem.problem_level){
@@ -55,7 +57,7 @@ function Table({list}) {
         </tr>
       </thead>
       <tbody>
-        {problemMarkup}     
+        {list.length > 0 ? problemMarkup : <TableLoader />}
       </tbody>
     </table>
   </div>
