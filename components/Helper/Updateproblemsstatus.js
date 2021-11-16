@@ -1,6 +1,7 @@
 import Cookies from "js-cookie";
 import Gettoken from "./Gettoken";
 import { getProblemsStatus } from "../api/apis";
+import cloneDeep from "lodash/cloneDeep";
 
 export const Updateproblemsstatus = async (data) => {
   let refresh_token = Cookies.get("refresh");
@@ -21,7 +22,7 @@ export const Updateproblemsstatus = async (data) => {
         headers: headers,
       }
     );
-    let oldState = data;
+    let oldState = cloneDeep(data);
     for (let i = 0; i < oldState.length; i++) {
       var curr = oldState[i].id;
       for (let j = 0; j < response.data.length; j++) {
