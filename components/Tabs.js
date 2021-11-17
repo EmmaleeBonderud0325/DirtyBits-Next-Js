@@ -5,6 +5,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import ReactHtmlParser from "react-html-parser";
+import {useEffect} from 'react'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -42,7 +43,7 @@ function a11yProps(index) {
 export default function BasicTabs({questionData}) {
   const [value, setValue] = React.useState(0);
   const [inputTestCases, setInputTestCases] = React.useState([]);
-  const [outputTestCases, setOutputTestCases] = React.useState();
+  const [outputTestCases, setOutputTestCases] = React.useState([]);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -64,36 +65,40 @@ export default function BasicTabs({questionData}) {
       break;
   }
 
-  const handleInputTestCases = () => {
-    console.log('inside')
-    let storedText;
-    for(let i = 1; i <= questionData.sample_Tc; i++){
-      fetch(`https://res.cloudinary.com/hhikcz56h/raw/upload/v1636969572/TestCases/7/sc-input${i}.txt`)
-    .then(function(response) {
-      response.text().then(function(text) {
-        storedText = text;
-        console.log(storedText);
-
-        return <pre>{storedText}</pre>;
-      });
-    })
+  useEffect(() => {
+    function inputTC() {
+      let storedText;
+      for(let i = 1; i <= questionData.sample_Tc; i++){
+        fetch(`https://res.cloudinary.com/hhikcz56h/raw/upload/v1636969572/TestCases/7/sc-input${i}.txt`)
+        .then(function(response) {
+          response.text().then(function(text) {
+            storedText = text;
+            
+            setInputTestCases([storedText])
+          });
+        })
+      }
     }
-  }
-  const handleOutputTestCases = () => {
-    console.log('inside')
-    let storedText;
-    for(let i = 1; i <= questionData.sample_Tc; i++){
-      fetch(`https://res.cloudinary.com/hhikcz56h/raw/upload/v1636969572/TestCases/7/sc-output${i}.txt`)
-    .then(function(response) {
-      response.text().then(function(text) {
-        storedText = text;
-        console.log(storedText);
-        // setOutputTestCases(storedText.toString());
-      });
-    })
-    }
-  }
+    inputTC()
+    function outputTc(){
+      let storedText;
+      for(let i = 1; i <= questionData.sample_Tc; i++){
+        fetch(`https://res.cloudinary.com/hhikcz56h/raw/upload/v1636969572/TestCases/7/sc-output${i}.txt`)
+        .then(function(response) {
+          response.text().then(function(text) {
+            storedText = text;            
+            
+            setOutputTestCases([storedText])
+          });
+        })
+      }
+    }    
+    outputTc()
+  }, [])
 
+
+  console.log('inputTcdss', inputTestCases)
+  console.log('outputTcd', outputTestCases)
   return (
     <Box sx={{ width: '100%', height:'100vh' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -130,7 +135,7 @@ export default function BasicTabs({questionData}) {
           
           {/* PROBLEM NOTE IF ANY */}
             {questionData.note && <p>Note: {questionData.note}</p>}
-
+        
           {/* INPUT FORMAT */}
             <h2 className="text-white">Input Format</h2>
             {questionData.input_format && (            
@@ -145,11 +150,15 @@ export default function BasicTabs({questionData}) {
 
             {/* SAMEPLE INPUT TEST CASES */}
             <h2 className="text-white">Sample Test Cases</h2>
-            <pre className="select-none">{handleInputTestCases()}{inputTestCases}</pre>
+            <div className="select-none bg-gray-700 rounded-xl p-2">{inputTestCases.map(val => (
+              <pre>{val}</pre>
+            ))}</div>
 
             {/* SAMEPLE OUTPUT TEST CASES */}
             <h2 className="text-white">Sample Test Cases</h2>
-            <pre className="select-none">{handleOutputTestCases()}{outputTestCases}</pre>
+            <div className="select-none bg-gray-700 rounded-xl p-2">{outputTestCases.map(val => (
+              <pre>{val}</pre>
+            ))}</div>
 
             {/* CONSTRAINTS */}
             <h2 className="text-white">Constraints:</h2>

@@ -61,10 +61,7 @@ function Table({ list }) {
               <th className="table-heading">Status</th>
             </tr>
           </thead>
-          <tbody>
-            {/* {list.length > 0 ? problemMarkup : <TableLoader />} */}
-            <TableLoader />
-          </tbody>
+          <tbody>{list.length > 0 ? problemMarkup : <TableLoader />}</tbody>
         </table>
       </div>
     </div>
