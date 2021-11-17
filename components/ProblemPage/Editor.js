@@ -165,7 +165,6 @@ const Editor = () => {
   const changeCode = (data) => {
     changeEditorValue(data);
   };
-  console.log("editor rendered");
 
   // const handleKeyUp = (editor, event) => {
   //   if (editor.state.completionActive) {
