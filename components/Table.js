@@ -37,7 +37,7 @@ function Table({list}) {
           <tr key={problem.id} className="hover:bg-grey-lighter">
           <td className="table-data">{idx+1} . {problem.title}</td>
           <td className="py-4 px-6 border-b border-grey-light">
-            <a href="#" className={` ${problemColor} font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark`}>{problemLevel}</a>
+            <a href={`/problem/${problem.title}`} className={` ${problemColor} font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark`}>{problemLevel}</a>
           </td>
           <td className="table-data">{status}</td>
         </tr>
