@@ -5,8 +5,8 @@ import { MdSaveAlt } from "react-icons/md";
 import { AiOutlineUpload } from "react-icons/ai";
 import { BsCloudArrowUp, BsTerminal } from "react-icons/bs";
 import { VscRunAll } from "react-icons/vsc";
-import { BiRefresh } from "react-icons/bi";
 import { Button, Switch, Tooltip, Drawer } from "antd";
+import {RiSendPlaneFill} from 'react-icons/ri'
 
 import * as React from "react";
 import PropTypes from "prop-types";
@@ -147,7 +147,7 @@ const Editor = () => {
 
   let [customInput, setCustomInput] = useState(false);
   let [inputValue, changeInputValue] = useState("");
-  let [outputValue, changeOutputValue] = useState("");
+  let [outputValue, changeOutputValue] = useState("You must run your code first.");
   let [showMode, changeShowMode] = useState(true);
   const [showConsole, setShowConsole] = useState(false);
   let [inputBtnClass, setInputBtnClass] = useState(
@@ -420,37 +420,47 @@ const Editor = () => {
       </div>
 
       <div className="editor-options-container mt-10 flex space-x-5 justify-between items-center p-2">
-        <div className="flex items-center space-x-5">
+        {/* <div className="flex items-center space-x-5">
           <button
             className="flex items-center space-x-2 bg-custom-bg hover:bg-[#7220c4] transition-all ease-out p-2 px-8 rounded-lg"
             onClick={handleCompileCode}
           >
             <BiRefresh className="text-lg" />
-            <span>Compile</span>
+            <span className="font-semibold">Compile</span>
           </button>
           <button
-            className="flex items-center space-x-2 bg-custom-bg hover:bg-[#7220c4] transition-all ease-out p-2 px-8  rounded-lg"
+            className="flex items-center space-x-2 bg-custom-bg hover:bg-[#7220c4] transition-all ease-out p-2 px-5  rounded-lg"
             onClick={handleRunCode}
           >
             <VscRunAll />
             <span>Run</span>
           </button>
-        </div>
-        <div onClick={handeCustomInput} className="space-x-2">
-          {/* <input type="checkbox" name="public" checked={customInput} /> */}
+        </div> */}
+        {/* <div onClick={handeCustomInput} className="space-x-2">
           <Switch
             defaultChecked
             style={{ backgroundColor: "#7220c4", color: "#fff" }}
             checked={customInput}
           />
           <label>Custom Input</label>
+        </div> */} 
+        <div className="cursor-pointer text-xl flex items-center p-2">
+          <BsTerminal onClick={() => setShowConsole(!showConsole)} />
+          <span className="ml-2 text-sm">Console</span>
         </div>
-        <div className="right-side-editor-buttons">
+        <div className="flex space-x-3">
+        <button
+            className="group flex items-center space-x-2 bg-[#7220c4] hover:bg-[#6406c2] transition-all ease-out p-2 px-5  rounded-lg"
+            onClick={handleRunCode}
+          >
+            <VscRunAll className="text-lg group-hover:animate-bounce"/>
+            <span>Run</span>
+          </button>
           <button
-            className=" flex items-center space-x-2 bg-custom-bg hover:bg-[#7220c4] transition-all ease-out p-2 px-8  rounded-lg"
+            className="group flex items-center space-x-2 bg-[#7220c4] hover:bg-[#6406c2] transition-all ease-out p-2 px-8  rounded-lg"
             onClick={handleSubmitCode}
           >
-            <VscRunAll />
+            <RiSendPlaneFill className="text-lg group-hover:rotate-45 transition-all ease-in-out"/>
             <span>Submit</span>
           </button>
         </div>
@@ -474,10 +484,10 @@ const Editor = () => {
         </button>
       </div> */}
 
-      <div className="cursor-pointer mt-10 text-xl flex items-center p-2">
+      {/* <div className="cursor-pointer mt-10 text-xl flex items-center p-2">
         <BsTerminal onClick={() => setShowConsole(!showConsole)} />
         <span className="ml-2 text-sm">Console</span>
-      </div>
+      </div> */}
 
       {showConsole && (
         <div className="relative bottom-0 w-full transition-all ease-in-out duration-75 p-2">
@@ -525,6 +535,7 @@ const Editor = () => {
           //  readOnly={true}
          ></textarea> */}
               <span className="loader"></span>
+              <p className="text-center font-bold">{outputValue}</p>
             </TabPanel>
           </Box>
         </div>
