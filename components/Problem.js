@@ -25,6 +25,15 @@ function Problem(props) {
   ];
   const [value, setValue] = useState();
 
+
+  
+  const fetchQuestions = (e) => {
+    e.preventDefault()
+    setValue(e.target.value)
+    console.log('input value', value)
+    console.log('send request')
+  }
+
   return (
     <div className="space-y-8 container p-10 mx-auto max-w-screen-xl">
       <motion.div animate={{ y: [20, 0, 0] }}>
@@ -57,16 +66,16 @@ function Problem(props) {
           >
             <input
               type="text"
-              className="bg-gray-800 outline-none text-white p-2 rounded-xl w-full"
+              className="bg-gray-800 outline-none text-white p-2 rounded-xl w-full caret-custom-bg"
               placeholder="Search"
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(e) => fetchQuestions(e)}
             />
             <SearchOutlined />
           </form>
-          <button type="submit" className="rounded-full  bg-gray-800 px-6 py-1">
+          {/* <button type="submit" className="rounded-xl  bg-gray-800 px-6 py-1">
             Search
-          </button>
+          </button> */}
         </div>
       </motion.div>
 
