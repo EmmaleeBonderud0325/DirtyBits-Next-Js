@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import ReactHtmlParser from "react-html-parser";
 import { useEffect } from "react";
+import {AiOutlineDislike, AiOutlineLike, AiFillSignal} from 'react-icons/ai'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -44,6 +45,8 @@ export default function BasicTabs({ questionData }) {
   const [value, setValue] = React.useState(0);
   const [inputTestCases, setInputTestCases] = React.useState([]);
   const [outputTestCases, setOutputTestCases] = React.useState([]);
+  const [upVote, setUpVote] = React.useState(0)
+  const [downVote, setDownVote] = React.useState(0)
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -67,9 +70,9 @@ export default function BasicTabs({ questionData }) {
 
   const GetInputTestCases = async () => {
     var inputTestCases = [];
-    for (let i = 1; i <= 3; i++) {
+    for (let i = 1; i <= questionData.sample_Tc; i++) {
       const result = fetch(
-        `https://res.cloudinary.com/hhikcz56h/raw/upload/v1636969572/TestCases/7/sc-input${i}.txt`
+        `https://res.cloudinary.com/hhikcz56h/raw/upload/v1636969572/TestCases/${questionData.id}/sc-input${i}.txt`
       ).then((response) => {
         return response.text();
       });
@@ -83,9 +86,9 @@ export default function BasicTabs({ questionData }) {
 
   const GetOutputTestCases = async () => {
     var outputTestCases = [];
-    for (let i = 1; i <= 3; i++) {
+    for (let i = 1; i <= questionData.sample_Tc; i++) {
       const result = fetch(
-        `https://res.cloudinary.com/hhikcz56h/raw/upload/v1636969572/TestCases/7/sc-output${i}.txt`
+        `https://res.cloudinary.com/hhikcz56h/raw/upload/v1636969572/TestCases/${questionData.id}/sc-output${i}.txt`
       ).then((response) => {
         return response.text();
       });
@@ -105,6 +108,20 @@ export default function BasicTabs({ questionData }) {
   useEffect(() => {
     getTestCases();
   }, []);
+
+  const upVoteHandler = () => {
+    setUpVote(prev => prev + 1)
+    if(downVote > 0){
+      setDownVote(prev => prev - 1)
+    }
+  }
+
+  const downVoteHandler = () => {
+    setDownVote(prev => prev + 1)
+    if(upVote > 0){
+      setUpVote(prev => prev - 1)
+    }
+  }
 
   console.log("inputTcdss", inputTestCases);
   console.log("outputTcd", outputTestCases);
@@ -138,10 +155,22 @@ export default function BasicTabs({ questionData }) {
           {/* PROBLEM DIFFICULTY */}
 
           <div className="flex items-center space-x-5">
-            <p className={`${color} inline px-3 py-1 rounded-xl`}>{level}</p>
-            <p className="text-xs">UpVotes. {questionData.up_votes}</p>
-            <p className="text-xs">DownVotes. {questionData.down_votes}</p>
-            <p className="text-xs">Accuracy. {questionData.accuracy}%</p>
+            <p className={`${color} text-sm inline px-3 py-1 rounded-xl`}>{level}</p>
+
+            <div onClick={upVoteHandler} className="flex items-center space-x-1 cursor-pointer">
+              <p><AiOutlineLike/></p>
+              <p className="text-xs">UpVotes. {upVote}</p>
+            </div>
+
+            <div onClick={downVoteHandler} className="flex items-center space-x-1 cursor-pointer">
+              <p><AiOutlineDislike/></p>
+              <p className="text-xs">DownVotes. {downVote}</p>
+            </div>
+
+            <div className="flex items-center space-x-1">
+              <p><AiFillSignal/></p>
+              <p className="text-xs">Accuracy. {questionData.accuracy}%</p>
+            </div>           
           </div>
 
           {/* PROBLEM DESCRIPTION */}
