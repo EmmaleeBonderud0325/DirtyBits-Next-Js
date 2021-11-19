@@ -11,14 +11,15 @@ function Panel2({ question }) {
         minSize={300}
         maxSize={1200}
         defaultSize={900}
-        style={{ height: "93%" }}
+        style={{ height: "100vh",}}
+        className="scrollbar-hide"
         // defaultSize={parseInt(localStorage.getItem('splitPos'), 10)}
         // onChange={(size) => localStorage.setItem('splitPos', size)}
       >
         <Pane className="scrollbar-hide" style={{ overflowY: "scroll" }}>
           <Tabs questionData={question} />
         </Pane>
-        <Pane>
+        <Pane className="scrollbar-hide" style={{overflowY:'scroll'}}>
           <Editor />
         </Pane>
       </SplitPane>

@@ -8,7 +8,7 @@ function ProblemView({data}) {
     return (
         <>
             <Head>
-                <title>New Year Chaos</title>
+                <title>{data.title}</title>
             </Head>
             <div>
                 <Panel2 question={data}/>
@@ -16,6 +16,10 @@ function ProblemView({data}) {
         </>
     )
 }
+
+ProblemView.getLayout = function PageLayout(page) {
+    return <>{page}</>;
+};
 
 export default ProblemView;
 
