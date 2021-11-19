@@ -6,7 +6,7 @@ import { AiOutlineUpload } from "react-icons/ai";
 import { BsCloudArrowUp, BsTerminal } from "react-icons/bs";
 import { VscRunAll } from "react-icons/vsc";
 import { Button, Switch, Tooltip, Drawer } from "antd";
-import {RiSendPlaneFill} from 'react-icons/ri'
+import { RiSendPlaneFill } from "react-icons/ri";
 
 import * as React from "react";
 import PropTypes from "prop-types";
@@ -123,7 +123,7 @@ if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
   require("codemirror/keymap/sublime");
 }
 
-import { runCode, submitCode } from "../api/apis";
+import { runCode, runTestCases, submitCode } from "../api/apis";
 import Cookies from "js-cookie";
 import Gettoken from "../Helper/Gettoken";
 import Encodemail from "../Helper/Encodemail";
@@ -147,7 +147,9 @@ const Editor = () => {
 
   let [customInput, setCustomInput] = useState(false);
   let [inputValue, changeInputValue] = useState("");
-  let [outputValue, changeOutputValue] = useState("You must run your code first.");
+  let [outputValue, changeOutputValue] = useState(
+    "You must run your code first."
+  );
   let [showMode, changeShowMode] = useState(true);
   const [showConsole, setShowConsole] = useState(false);
   let [inputBtnClass, setInputBtnClass] = useState(
@@ -229,13 +231,13 @@ const Editor = () => {
   const handleRunCode = async () => {
     console.log(editorValue, currLang.label, inputValue);
     await Gettoken(Cookies.get("refresh"));
-    await runCode
+    await runTestCases
       .post(
         "/",
         {
+          problem_Id: 5,
           code: base64_encode(editorValue),
-          lang: currLang.label,
-          input: base64_encode(inputValue),
+          language: currLang.label,
         },
         {
           headers: {
@@ -245,24 +247,24 @@ const Editor = () => {
         }
       )
       .then((result) => {
-        changeShowMode(false);
-        setInputBtnClass("ui left attached button");
-        setOutputBtnClass("positive right attached ui button");
-        if (result.data["status"]["description"] === "Compilation Error") {
-          changeOutputValue(
-            result.data["status"]["description"] +
-              "\n\n" +
-              base64_decode(result.data["compile_output"])
-          );
-        } else if (
-          result.data["stdout"] &&
-          result.data["status"]["description"] === "Accepted"
-        ) {
-          changeOutputValue(base64_decode(result.data["stdout"]));
-        } else {
-          changeOutputValue(result.data["status"]["description"]);
-        }
-        console.log(result.data["status"]["description"]);
+        // changeShowMode(false);
+        // setInputBtnClass("ui left attached button");
+        // setOutputBtnClass("positive right attached ui button");
+        // if (result.data["status"]["description"] === "Compilation Error") {
+        //   changeOutputValue(
+        //     result.data["status"]["description"] +
+        //       "\n\n" +
+        //       base64_decode(result.data["compile_output"])
+        //   );
+        // } else if (
+        //   result.data["stdout"] &&
+        //   result.data["status"]["description"] === "Accepted"
+        // ) {
+        //   changeOutputValue(base64_decode(result.data["stdout"]));
+        // } else {
+        //   changeOutputValue(result.data["status"]["description"]);
+        // }
+        // console.log(result.data["status"]["description"]);
         console.log(result.data);
         // console.log(base64_decode(result.data["compile_output"]));
       });
@@ -443,24 +445,24 @@ const Editor = () => {
             checked={customInput}
           />
           <label>Custom Input</label>
-        </div> */} 
+        </div> */}
         <div className="cursor-pointer text-xl flex items-center p-2">
           <BsTerminal onClick={() => setShowConsole(!showConsole)} />
           <span className="ml-2 text-sm">Console</span>
         </div>
         <div className="flex space-x-3">
-        <button
+          <button
             className="group flex items-center space-x-2 bg-[#7220c4] hover:bg-[#6406c2] transition-all ease-out p-2 px-5  rounded-lg"
             onClick={handleRunCode}
           >
-            <VscRunAll className="text-lg group-hover:animate-bounce"/>
+            <VscRunAll className="text-lg group-hover:animate-bounce" />
             <span>Run</span>
           </button>
           <button
             className="group flex items-center space-x-2 bg-[#7220c4] hover:bg-[#6406c2] transition-all ease-out p-2 px-8  rounded-lg"
             onClick={handleSubmitCode}
           >
-            <RiSendPlaneFill className="text-lg group-hover:rotate-45 transition-all ease-in-out"/>
+            <RiSendPlaneFill className="text-lg group-hover:rotate-45 transition-all ease-in-out" />
             <span>Submit</span>
           </button>
         </div>
