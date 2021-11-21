@@ -130,7 +130,7 @@ import Encodemail from "../Helper/Encodemail";
 
 const jsonData = require("./data.json");
 
-const Editor = () => {
+const Editor = ({id}) => {
   let [editorValue, changeEditorValue] = useState(
     "#include<iostream>\nusing namespace std;\n\nint main(){\n\n  return 0;\n}"
   );
@@ -167,6 +167,8 @@ const Editor = () => {
   const changeCode = (data) => {
     changeEditorValue(data);
   };
+
+  console.log('id', id)
 
   // const handleKeyUp = (editor, event) => {
   //   if (editor.state.completionActive) {
@@ -235,7 +237,7 @@ const Editor = () => {
       .post(
         "/",
         {
-          problem_Id: 5,
+          problem_Id: id,
           code: base64_encode(editorValue),
           language: currLang.label,
         },
@@ -278,7 +280,7 @@ const Editor = () => {
     socket.onopen = async function (e) {
       console.log("opened");
       await submitCode.post("/", {
-        problem_Id: 5,
+        problem_Id: id,
         language: currLang.label,
         code: base64_encode(editorValue),
       });

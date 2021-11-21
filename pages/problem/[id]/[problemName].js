@@ -3,7 +3,7 @@ import Panel2 from '../../../components/ProblemPage/Panel2'
 import {getProblem} from '../../../components/api/apis'
 import Head from 'next/head'
 
-function ProblemView({data}) {
+function ProblemView({data, id}) {
     console.log('data', data)
     return (
         <>
@@ -11,7 +11,7 @@ function ProblemView({data}) {
                 <title>{data.title}</title>
             </Head>
             <div>
-                <Panel2 question={data}/>
+                <Panel2 id={id} question={data}/>
             </div>
         </>
     )
@@ -35,7 +35,8 @@ export const getServerSideProps = async (ctx) => {
 
     return {
         props: {
-            data
+            data,
+            id: ctx.query.id
         }
     }
 }

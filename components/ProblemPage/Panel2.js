@@ -3,7 +3,7 @@ import SplitPane, { Pane } from "react-split-pane";
 import Editor from "./Editor";
 import Tabs from "../Tabs";
 
-function Panel2({ question }) {
+function Panel2({ question, id }) {
   return (
     <div>
       <SplitPane
@@ -20,7 +20,7 @@ function Panel2({ question }) {
           <Tabs questionData={question} />
         </Pane>
         <Pane className="scrollbar-hide" style={{overflowY:'scroll'}}>
-          <Editor />
+          <Editor id={id}/>
         </Pane>
       </SplitPane>
     </div>

@@ -73,5 +73,5 @@ export const submitCode = axios.create({
 });
 
 export const runTestCases = axios.create({
-  baseURL: running_Code_URL + "core/runtests",
+  baseURL: PROBLEM_URL + "core/runtests",
 });
