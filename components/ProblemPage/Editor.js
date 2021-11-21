@@ -161,6 +161,7 @@ const Editor = ({ id }) => {
   let [outputBtnClass, setOutputBtnClass] = useState(
     "right attached ui button"
   );
+  let [showLoader, setShowLoader] = useState(false);
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -240,6 +241,9 @@ const Editor = ({ id }) => {
       console.error("Login Required !!");
       return;
     }
+    setShowLoader(true);
+    setShowConsole(true);
+
     await Gettoken(Cookies.get("refresh"));
     await runTestCases
       .post(
@@ -257,9 +261,11 @@ const Editor = ({ id }) => {
         }
       )
       .then((result) => {
+        setShowLoader(false);
+
         if (result.data["status"] !== "Accepted") {
           changeOutputValue(
-            result.data["status"] + "\n\n" + result.data["error"]
+            result.data["status"] + "\n" + result.data["error"]
           );
         } else {
           changeOutputValue(result.data["status"]);
@@ -638,8 +644,9 @@ const Editor = ({ id }) => {
            spellcheck="false"
           //  readOnly={true}
          ></textarea> */}
-              <span className="loader"></span>
-              <p className="text-center font-bold">{outputValue}</p>
+              {showLoader ? <span className="loader"></span> : <span></span>}
+              {/* <span className="loader"></span> */}
+              <pre className="text-left font-bold">{outputValue}</pre>
             </TabPanel>
           </Box>
         </div>

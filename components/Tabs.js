@@ -145,6 +145,8 @@ function BasicTabs({ questionData }) {
 
   useEffect(() => {
     getTestCases();
+    setUpVote(questionData.up_votes);
+    setDownVote(questionData.down_votes);
     getUpvoteDownvote();
   }, []);
 
