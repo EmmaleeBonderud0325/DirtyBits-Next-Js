@@ -130,7 +130,7 @@ import Encodemail from "../Helper/Encodemail";
 
 const jsonData = require("./data.json");
 
-const Editor = ({id}) => {
+const Editor = ({ id }) => {
   let [editorValue, changeEditorValue] = useState(
     "#include<iostream>\nusing namespace std;\n\nint main(){\n\n  return 0;\n}"
   );
@@ -168,7 +168,7 @@ const Editor = ({id}) => {
     changeEditorValue(data);
   };
 
-  console.log('id', id)
+  console.log("id", id);
 
   // const handleKeyUp = (editor, event) => {
   //   if (editor.state.completionActive) {
@@ -256,20 +256,13 @@ const Editor = ({id}) => {
         // changeShowMode(false);
         // setInputBtnClass("ui left attached button");
         // setOutputBtnClass("positive right attached ui button");
-        // if (result.data["status"]["description"] === "Compilation Error") {
-        //   changeOutputValue(
-        //     result.data["status"]["description"] +
-        //       "\n\n" +
-        //       base64_decode(result.data["compile_output"])
-        //   );
-        // } else if (
-        //   result.data["stdout"] &&
-        //   result.data["status"]["description"] === "Accepted"
-        // ) {
-        //   changeOutputValue(base64_decode(result.data["stdout"]));
-        // } else {
-        //   changeOutputValue(result.data["status"]["description"]);
-        // }
+        if (result.data["status"] !== "Accepted") {
+          changeOutputValue(
+            result.data["status"] + "\n\n" + result.data["error"]
+          );
+        } else {
+          changeOutputValue(result.data["status"]);
+        }
         // console.log(result.data["status"]["description"]);
         console.log(result.data);
         // console.log(base64_decode(result.data["compile_output"]));
