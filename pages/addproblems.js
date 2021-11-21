@@ -20,6 +20,8 @@ import {
   updateProblemContraints,
   updateProblemOutputFormat,
   updateProblemTags,
+  updateProblemMemoryLimit,
+  updateProblemTimeLimit,
 } from "../redux/actions";
 import MultiSelect from "../components/MultiSelect";
 import { AddProblem, uploadTestCases } from "../components/api/apis";
@@ -295,16 +297,26 @@ function addproblems(props) {
                 <MultiSelect value={props.tags} />
               </div>
               <div className="space-y-3">
-                <label className="text-lg lg:text-2xl ml-1">
-                  Time Limit
-                </label>
-                <input placeholder="in seconds" type="number" className="w-full text-base px-4 py-2 text-black focus:text-base border border-gray-400 rounded-lg focus:outline-none focus:border-custom-yellow"/>
+                <label className="text-lg lg:text-2xl ml-1">Time Limit</label>
+                <input
+                  placeholder="in seconds"
+                  type="number"
+                  className="w-full text-base px-4 py-2 text-black focus:text-base border border-gray-400 rounded-lg focus:outline-none focus:border-custom-yellow"
+                  onChange={(e) =>
+                    dispatch(updateProblemTimeLimit(e.target.value))
+                  }
+                />
               </div>
               <div className="space-y-3">
-                <label className="text-lg lg:text-2xl ml-1">
-                  Memory Limit
-                </label>
-                <input placeholder="in MB" type="number" className="w-full text-base px-4 py-2 text-black focus:text-base border border-gray-400 rounded-lg focus:outline-none focus:border-custom-yellow"/>
+                <label className="text-lg lg:text-2xl ml-1">Memory Limit</label>
+                <input
+                  placeholder="in MB"
+                  type="number"
+                  className="w-full text-base px-4 py-2 text-black focus:text-base border border-gray-400 rounded-lg focus:outline-none focus:border-custom-yellow"
+                  onChange={(e) =>
+                    dispatch(updateProblemMemoryLimit(e.target.value))
+                  }
+                />
               </div>
               <div className="flex justify-center items-center ">
                 <button className="btn-purple" onClick={(e) => handleSubmit(e)}>

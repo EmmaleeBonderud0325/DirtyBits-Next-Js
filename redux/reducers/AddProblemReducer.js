@@ -7,6 +7,8 @@ import {
   updateStatement,
   updateTags,
   updateTitle,
+  updateMemoryLimit,
+  updateTimeLimit,
 } from "../types";
 
 let initial = {
@@ -18,6 +20,8 @@ let initial = {
   output_format: "",
   problem_level: "Difficulty",
   tags: [],
+  memory_Limit: null,
+  time_Limit: null,
 };
 
 export const AddProblemReducer = (state = initial, action) => {
@@ -38,6 +42,10 @@ export const AddProblemReducer = (state = initial, action) => {
       return { ...state, problem_level: action.payload };
     case updateTags:
       return { ...state, tags: action.payload };
+    case updateMemoryLimit:
+      return { ...state, memory_Limit: action.payload };
+    case updateTimeLimit:
+      return { ...state, time_Limit: action.payload };
     default:
       return state;
   }

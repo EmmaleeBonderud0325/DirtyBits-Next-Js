@@ -16,6 +16,8 @@ import {
   PasswordError,
   ConfirmPasswordError,
   UpdateProblemList,
+  updateMemoryLimit,
+  updateTimeLimit,
 } from "../types";
 
 import { Updateproblemsstatus } from "../../components/Helper/Updateproblemsstatus";
@@ -79,6 +81,20 @@ export const updateProblemLevel = (newState) => {
 export const updateProblemTags = (newState) => {
   return {
     type: updateTags,
+    payload: newState,
+  };
+};
+
+export const updateProblemMemoryLimit = (newState) => {
+  return {
+    type: updateMemoryLimit,
+    payload: newState,
+  };
+};
+
+export const updateProblemTimeLimit = (newState) => {
+  return {
+    type: updateTimeLimit,
     payload: newState,
   };
 };
