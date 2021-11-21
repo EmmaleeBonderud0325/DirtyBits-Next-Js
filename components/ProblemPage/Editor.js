@@ -230,12 +230,16 @@ const Editor = () => {
 
   const handleRunCode = async () => {
     console.log(editorValue, currLang.label, inputValue);
+    if (!Cookies.get("refresh")) {
+      console.error("Login Required !!");
+      return;
+    }
     await Gettoken(Cookies.get("refresh"));
     await runTestCases
       .post(
         "/",
         {
-          problem_Id: 5,
+          problem_Id: 6,
           code: base64_encode(editorValue),
           language: currLang.label,
         },
@@ -271,6 +275,10 @@ const Editor = () => {
   };
 
   const handleSubmitCode = async () => {
+    if (!Cookies.get("refresh")) {
+      console.error("Login Required !!");
+      return;
+    }
     const encoded_mail = Encodemail("server@gmail.com");
     var socket = new WebSocket(
       `ws://db-code.herokuapp.com/ws/runcode/${encoded_mail}/`
@@ -278,7 +286,7 @@ const Editor = () => {
     socket.onopen = async function (e) {
       console.log("opened");
       await submitCode.post("/", {
-        problem_Id: 5,
+        problem_Id: 6,
         language: currLang.label,
         code: base64_encode(editorValue),
       });
@@ -356,7 +364,10 @@ const Editor = () => {
   };
 
   return (
-    <div style={{height: "100vh"}} className="problem-page-right-container p-2">
+    <div
+      style={{ height: "100vh" }}
+      className="problem-page-right-container p-2"
+    >
       <div className="dropdown-container flex justify-around p-10">
         <div>
           <label className="font-semibold">Theme : </label>

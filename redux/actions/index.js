@@ -138,11 +138,13 @@ export const updateProblemsStatus = () => async (dispatch, getState) => {
   dispatch(updateProblemList(data));
 };
 
-export const getProblems = () => async (dispatch, getState) => {
+export const getProblems = (isLoggedin) => async (dispatch, getState) => {
   try {
     const result = await getProblemsList.post("/");
     dispatch(updateProblemList(result.data));
-    dispatch(updateProblemsStatus());
+    if (isLoggedin) {
+      dispatch(updateProblemsStatus());
+    }
   } catch {
     console.error("Server Error in Problems List Fetching");
   }
