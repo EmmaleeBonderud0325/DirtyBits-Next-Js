@@ -253,9 +253,6 @@ const Editor = ({ id }) => {
         }
       )
       .then((result) => {
-        // changeShowMode(false);
-        // setInputBtnClass("ui left attached button");
-        // setOutputBtnClass("positive right attached ui button");
         if (result.data["status"] !== "Accepted") {
           changeOutputValue(
             result.data["status"] + "\n\n" + result.data["error"]
@@ -263,9 +260,7 @@ const Editor = ({ id }) => {
         } else {
           changeOutputValue(result.data["status"]);
         }
-        // console.log(result.data["status"]["description"]);
         console.log(result.data);
-        // console.log(base64_decode(result.data["compile_output"]));
       });
   };
 
