@@ -6,9 +6,12 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import ReactHtmlParser from "react-html-parser";
 import { useEffect } from "react";
-import {AiOutlineDislike, AiOutlineLike, AiFillSignal} from 'react-icons/ai'
+import { AiOutlineDislike, AiOutlineLike, AiFillSignal } from "react-icons/ai";
 import IoTable from "./ProblemPage/IoTable";
-import {memo} from 'react'
+import { memo } from "react";
+import { getUpvoteDownvoteapi } from "./api/apis";
+import Cookies from "js-cookie";
+import Gettoken from "./Helper/Gettoken";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -47,8 +50,8 @@ function BasicTabs({ questionData }) {
   const [value, setValue] = React.useState(0);
   const [inputTestCases, setInputTestCases] = React.useState([]);
   const [outputTestCases, setOutputTestCases] = React.useState([]);
-  const [upVote, setUpVote] = React.useState(0)
-  const [downVote, setDownVote] = React.useState(0)
+  const [upVote, setUpVote] = React.useState(0);
+  const [downVote, setDownVote] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -107,26 +110,49 @@ function BasicTabs({ questionData }) {
     GetOutputTestCases();
   };
 
+  const getUpvoteDownvote = async () => {
+    if (!Cookies.get("refresh")) {
+      console.error("upvote downvote", "Login Required !!");
+      return;
+    }
+    await Gettoken(Cookies.get("refresh"));
+    await getUpvoteDownvoteapi
+      .post(
+        "/",
+        { problem_id: questionData.id },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `JWT ${Cookies.get("access")}`,
+          },
+        }
+      )
+      .then((result) => {
+        console.log(result.data);
+      });
+  };
+
   useEffect(() => {
     getTestCases();
+    getUpvoteDownvote();
   }, []);
 
   const upVoteHandler = () => {
-    setUpVote(prev => prev + 1)
-    if(downVote > 0){
-      setDownVote(prev => prev - 1)
+    setUpVote((prev) => prev + 1);
+    if (downVote > 0) {
+      setDownVote((prev) => prev - 1);
     }
-  }
+  };
 
   const downVoteHandler = () => {
-    setDownVote(prev => prev + 1)
-    if(upVote > 0){
-      setUpVote(prev => prev - 1)
+    setDownVote((prev) => prev + 1);
+    if (upVote > 0) {
+      setUpVote((prev) => prev - 1);
     }
-  }
+  };
 
   return (
-    <Box sx={{ width: "100%", height: "100vh"}} className="scrollbar-hide">
+    <Box sx={{ width: "100%", height: "100vh" }} className="scrollbar-hide">
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={value}
@@ -145,9 +171,8 @@ function BasicTabs({ questionData }) {
       </Box>
       <TabPanel value={value} index={0}>
         <div className="space-y-5 transition-all ease-in-out">
-         
           {/* PROBLEM TITLE */}
-          
+
           <p className="font-medium text-lg text-[#a1acc0]">
             <span>{questionData.id}. </span>
             {questionData.title}
@@ -156,46 +181,61 @@ function BasicTabs({ questionData }) {
           {/* PROBLEM DIFFICULTY */}
 
           <div className="flex items-center space-x-5">
-            <p className={`${color} text-sm inline px-3 py-1 rounded-xl`}>{level}</p>
+            <p className={`${color} text-sm inline px-3 py-1 rounded-xl`}>
+              {level}
+            </p>
 
-            <div onClick={upVoteHandler} className="flex items-center space-x-1 cursor-pointer">
-              <p><AiOutlineLike/></p>
+            <div
+              onClick={upVoteHandler}
+              className="flex items-center space-x-1 cursor-pointer"
+            >
+              <p>
+                <AiOutlineLike />
+              </p>
               <p className="text-xs">UpVotes. {upVote}</p>
             </div>
 
-            <div onClick={downVoteHandler} className="flex items-center space-x-1 cursor-pointer">
-              <p><AiOutlineDislike/></p>
+            <div
+              onClick={downVoteHandler}
+              className="flex items-center space-x-1 cursor-pointer"
+            >
+              <p>
+                <AiOutlineDislike />
+              </p>
               <p className="text-xs">DownVotes. {downVote}</p>
             </div>
 
             <div className="flex items-center space-x-1">
-              <p><AiFillSignal/></p>
+              <p>
+                <AiFillSignal />
+              </p>
               <p className="text-xs">Accuracy. {questionData.accuracy}%</p>
-            </div>           
+            </div>
           </div>
 
           {/* PROBLEM DESCRIPTION */}
 
           <div className="">
-           {questionData.problem_statement &&
+            {questionData.problem_statement &&
               ReactHtmlParser(questionData.problem_statement)}
           </div>
 
           {/* PROBLEM NOTE IF ANY */}
           {questionData.note && <p>Note: {questionData.note}</p>}
-          
-     
-
 
           {/* INPUT FORMAT */}
           <h2 className="text-white">Input Format</h2>
-          <pre>{questionData.input_format &&
-            ReactHtmlParser(questionData.input_format)}</pre>
+          <pre>
+            {questionData.input_format &&
+              ReactHtmlParser(questionData.input_format)}
+          </pre>
 
           {/* OUTPUT FORMAT */}
           <h2 className="text-white">Output Format</h2>
-          <pre>{questionData.output_format &&
-            ReactHtmlParser(questionData.output_format)}</pre>
+          <pre>
+            {questionData.output_format &&
+              ReactHtmlParser(questionData.output_format)}
+          </pre>
 
           {/* SAMEPLE INPUT TEST CASES */}
           <h2 className="text-white">Sample Test Cases</h2>
@@ -204,9 +244,10 @@ function BasicTabs({ questionData }) {
               <pre>{idx + 1}) <pre className="ml-10">{val}</pre></pre>
             ))}
           </div> */}
-          {inputTestCases.length > 0 && inputTestCases.map((val, idx )=> (
-            <IoTable inputData={val} outputData={outputTestCases[idx]}/>
-          ))}
+          {inputTestCases.length > 0 &&
+            inputTestCases.map((val, idx) => (
+              <IoTable inputData={val} outputData={outputTestCases[idx]} />
+            ))}
           {/* SAMEPLE OUTPUT TEST CASES */}
           {/* <h2 className="text-white">Sample Output Example</h2>
           <div className="select-none bg-gray-700 rounded-xl p-2">
@@ -217,13 +258,13 @@ function BasicTabs({ questionData }) {
 
           {/* CONSTRAINTS */}
           <h2 className="text-white">Constraints:</h2>
-          <pre>{questionData.constraints &&
-            ReactHtmlParser(questionData.constraints)}</pre>
+          <pre>
+            {questionData.constraints &&
+              ReactHtmlParser(questionData.constraints)}
+          </pre>
           <pre>Memory Limit: {questionData.memory_Limit} KB</pre>
           <pre>Time Limit: {questionData.time_Limit}s</pre>
-          
         </div>
-
       </TabPanel>
       <TabPanel value={value} index={1}>
         Submissions

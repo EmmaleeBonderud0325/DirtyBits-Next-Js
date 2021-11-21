@@ -282,7 +282,7 @@ function addproblems(props) {
                 <TextEditor dispatch={HandleOutputFormatUpdate} />
               </div>
               <div className="space-y-3">
-                <label className="text-lg lg:text-2xl ml-1">Level</label>
+                <label className="text-lg lg:text-2xl ml-1 block">Level</label>
                 <Dropdown
                   fieldName={"Difficulty"}
                   fieldValues={["Easy", "Medium", "Hard"]}
@@ -293,6 +293,18 @@ function addproblems(props) {
               <div className="space-y-3">
                 <label className="text-lg lg:text-2xl ml-1">Tags</label>
                 <MultiSelect value={props.tags} />
+              </div>
+              <div className="space-y-3">
+                <label className="text-lg lg:text-2xl ml-1">
+                  Time Limit
+                </label>
+                <input placeholder="in seconds" type="number" className="w-full text-base px-4 py-2 text-black focus:text-base border border-gray-400 rounded-lg focus:outline-none focus:border-custom-yellow"/>
+              </div>
+              <div className="space-y-3">
+                <label className="text-lg lg:text-2xl ml-1">
+                  Memory Limit
+                </label>
+                <input placeholder="in MB" type="number" className="w-full text-base px-4 py-2 text-black focus:text-base border border-gray-400 rounded-lg focus:outline-none focus:border-custom-yellow"/>
               </div>
               <div className="flex justify-center items-center ">
                 <button className="btn-purple" onClick={(e) => handleSubmit(e)}>
