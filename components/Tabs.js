@@ -7,6 +7,8 @@ import Box from "@mui/material/Box";
 import ReactHtmlParser from "react-html-parser";
 import { useEffect } from "react";
 import {AiOutlineDislike, AiOutlineLike, AiFillSignal} from 'react-icons/ai'
+import IoTable from "./ProblemPage/IoTable";
+import {memo} from 'react'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -41,7 +43,7 @@ function a11yProps(index) {
   };
 }
 
-export default function BasicTabs({ questionData }) {
+function BasicTabs({ questionData }) {
   const [value, setValue] = React.useState(0);
   const [inputTestCases, setInputTestCases] = React.useState([]);
   const [outputTestCases, setOutputTestCases] = React.useState([]);
@@ -123,10 +125,8 @@ export default function BasicTabs({ questionData }) {
     }
   }
 
-  console.log("inputTcdss", inputTestCases);
-  console.log("outputTcd", outputTestCases);
   return (
-    <Box sx={{ width: "100%", height: "100vh" }}>
+    <Box sx={{ width: "100%", height: "100vh"}} className="scrollbar-hide">
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={value}
@@ -145,8 +145,9 @@ export default function BasicTabs({ questionData }) {
       </Box>
       <TabPanel value={value} index={0}>
         <div className="space-y-5 transition-all ease-in-out">
+         
           {/* PROBLEM TITLE */}
-
+          
           <p className="font-medium text-lg text-[#a1acc0]">
             <span>{questionData.id}. </span>
             {questionData.title}
@@ -176,46 +177,53 @@ export default function BasicTabs({ questionData }) {
           {/* PROBLEM DESCRIPTION */}
 
           <div className="">
-            {questionData.problem_statement &&
+           {questionData.problem_statement &&
               ReactHtmlParser(questionData.problem_statement)}
           </div>
 
           {/* PROBLEM NOTE IF ANY */}
           {questionData.note && <p>Note: {questionData.note}</p>}
+          
+     
+
 
           {/* INPUT FORMAT */}
           <h2 className="text-white">Input Format</h2>
-          {questionData.input_format &&
-            ReactHtmlParser(questionData.input_format)}
+          <pre>{questionData.input_format &&
+            ReactHtmlParser(questionData.input_format)}</pre>
 
           {/* OUTPUT FORMAT */}
           <h2 className="text-white">Output Format</h2>
-          {questionData.output_format &&
-            ReactHtmlParser(questionData.output_format)}
+          <pre>{questionData.output_format &&
+            ReactHtmlParser(questionData.output_format)}</pre>
 
           {/* SAMEPLE INPUT TEST CASES */}
           <h2 className="text-white">Sample Test Cases</h2>
-          <div className="select-none bg-gray-700 rounded-xl p-2">
-            {inputTestCases.map((val) => (
-              <pre>{val}</pre>
+          {/* <div className="select-none bg-gray-700 rounded-xl p-2">
+            {inputTestCases.map((val, idx) => (
+              <pre>{idx + 1}) <pre className="ml-10">{val}</pre></pre>
             ))}
-          </div>
-
+          </div> */}
+          {inputTestCases.length > 0 && inputTestCases.map((val, idx )=> (
+            <IoTable inputData={val} outputData={outputTestCases[idx]}/>
+          ))}
           {/* SAMEPLE OUTPUT TEST CASES */}
-          <h2 className="text-white">Sample Test Cases</h2>
+          {/* <h2 className="text-white">Sample Output Example</h2>
           <div className="select-none bg-gray-700 rounded-xl p-2">
-            {outputTestCases.map((val) => (
-              <pre>{val}</pre>
+            {outputTestCases.map((val, idx) => (
+              <pre>{idx + 1}) {val}</pre>
             ))}
-          </div>
+          </div> */}
 
           {/* CONSTRAINTS */}
           <h2 className="text-white">Constraints:</h2>
-          {questionData.constraints &&
-            ReactHtmlParser(questionData.constraints)}
-          <p>Memory Limit: {questionData.memory_Limit} KB</p>
-          <p>Time Limit: {questionData.time_Limit}s</p>
+          <pre>{questionData.constraints &&
+            ReactHtmlParser(questionData.constraints)}</pre>
+          <pre>Memory Limit: {questionData.memory_Limit} KB</pre>
+          <pre>Time Limit: {questionData.time_Limit}s</pre>
+          
         </div>
+
       </TabPanel>
       <TabPanel value={value} index={1}>
         Submissions
@@ -226,3 +234,5 @@ export default function BasicTabs({ questionData }) {
     </Box>
   );
 }
+
+export default memo(BasicTabs);

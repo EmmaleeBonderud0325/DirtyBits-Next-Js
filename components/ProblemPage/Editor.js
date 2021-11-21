@@ -356,7 +356,7 @@ const Editor = () => {
   };
 
   return (
-    <div className="problem-page-right-container p-2">
+    <div style={{height: "100vh"}} className="problem-page-right-container p-2">
       <div className="dropdown-container flex justify-around p-10">
         <div>
           <label className="font-semibold">Theme : </label>
