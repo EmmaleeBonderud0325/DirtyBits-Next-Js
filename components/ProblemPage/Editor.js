@@ -14,6 +14,8 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import { useSelector } from "react-redux";
+import Image from "next/image";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -127,6 +129,7 @@ import { runCode, runTestCases, submitCode } from "../api/apis";
 import Cookies from "js-cookie";
 import Gettoken from "../Helper/Gettoken";
 import Encodemail from "../Helper/Encodemail";
+import { Menu, Transition } from "@headlessui/react";
 
 const jsonData = require("./data.json");
 
@@ -169,6 +172,7 @@ const Editor = ({ id }) => {
   };
 
   console.log("id", id);
+  const userInfo = useSelector((state) => state.userData);
 
   // const handleKeyUp = (editor, event) => {
   //   if (editor.state.completionActive) {
@@ -353,6 +357,24 @@ const Editor = ({ id }) => {
     console.log(e.target.id);
   };
 
+  const signOutUser = () => {
+    Cookies.remove("access");
+    Cookies.remove("refresh");
+    dispatch(
+      updateUserinfo({
+        is_logged_in: false,
+        email: "",
+        first_name: "",
+        last_name: "",
+        username: "",
+      })
+    );
+  };
+
+  console.log("user info", userInfo);
+
+  const profileImageLink = userInfo.profile_pic;
+
   return (
     <div
       style={{ height: "100vh" }}
@@ -405,6 +427,85 @@ const Editor = ({ id }) => {
               <BsCloudArrowUp />
             </Button>
           </Tooltip>
+
+          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 z-50">
+            {/* Profile dropdown */}
+            {
+              <Menu as="div" className="ml-3 relative">
+                <div>
+                  <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                    <span className="sr-only">Open user menu</span>
+                    {profileImageLink && (
+                      <Image
+                        className="rounded-full"
+                        width={40}
+                        height={40}
+                        src={profileImageLink}
+                        alt="Avatar"
+                      />
+                    )}
+                    {/* <span className="text-white px-2 pt-1.5 pr-3 text-base hidden sm:block">
+                      {userInfo.username}
+                    </span> */}
+                  </Menu.Button>
+                </div>
+                <Transition
+                  as={React.Fragment}
+                  enter="transition ease-out duration-100"
+                  enterFrom="transform opacity-0 scale-95"
+                  enterTo="transform opacity-100 scale-100"
+                  leave="transition ease-in duration-75"
+                  leaveFrom="transform opacity-100 scale-100"
+                  leaveTo="transform opacity-0 scale-95"
+                >
+                  <Menu.Items
+                    className={`origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}
+                  >
+                    <Menu.Item>
+                      {({ active }) => (
+                        <a
+                          href="#"
+                          className={classNames(
+                            active ? "bg-gray-100" : "",
+                            "block px-4 py-2 text-sm text-gray-700"
+                          )}
+                        >
+                          Your Profile
+                        </a>
+                      )}
+                    </Menu.Item>
+                    <Menu.Item>
+                      {({ active }) => (
+                        <a
+                          href="/addproblems"
+                          className={classNames(
+                            active ? "bg-gray-100" : "",
+                            "block px-4 py-2 text-sm text-gray-700"
+                          )}
+                        >
+                          Add Problem
+                        </a>
+                      )}
+                    </Menu.Item>
+                    <Menu.Item>
+                      {({ active }) => (
+                        <a
+                          href="/"
+                          onClick={signOutUser}
+                          className={classNames(
+                            active ? "bg-gray-100" : "",
+                            "block px-4 py-2 text-sm text-gray-700"
+                          )}
+                        >
+                          Sign out
+                        </a>
+                      )}
+                    </Menu.Item>
+                  </Menu.Items>
+                </Transition>
+              </Menu>
+            }
+          </div>
         </div>
       </div>
       <div>

@@ -6,7 +6,14 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import ReactHtmlParser from "react-html-parser";
 import { useEffect } from "react";
-import { AiOutlineDislike, AiOutlineLike, AiFillSignal } from "react-icons/ai";
+import {
+  AiOutlineDislike,
+  AiOutlineLike,
+  AiFillSignal,
+  AiFillLike,
+  AiFillDislike,
+  AiOutlineGlobal,
+} from "react-icons/ai";
 import IoTable from "./ProblemPage/IoTable";
 import { memo } from "react";
 import { getUpvoteDownvoteapi } from "./api/apis";
@@ -52,6 +59,8 @@ function BasicTabs({ questionData }) {
   const [outputTestCases, setOutputTestCases] = React.useState([]);
   const [upVote, setUpVote] = React.useState(0);
   const [downVote, setDownVote] = React.useState(0);
+  const [isUpVoted, setIsUpVoted] = React.useState(false);
+  const [isDownVoted, setIsDownVoted] = React.useState(false);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -128,6 +137,8 @@ function BasicTabs({ questionData }) {
         }
       )
       .then((result) => {
+        setIsUpVoted(result.data.upvote);
+        setIsDownVoted(result.data.downvote);
         console.log(result.data);
       });
   };
@@ -189,9 +200,7 @@ function BasicTabs({ questionData }) {
               onClick={upVoteHandler}
               className="flex items-center space-x-1 cursor-pointer"
             >
-              <p>
-                <AiOutlineLike />
-              </p>
+              <p>{isUpVoted ? <AiFillLike /> : <AiOutlineLike />}</p>
               <p className="text-xs">UpVotes. {upVote}</p>
             </div>
 
@@ -199,9 +208,7 @@ function BasicTabs({ questionData }) {
               onClick={downVoteHandler}
               className="flex items-center space-x-1 cursor-pointer"
             >
-              <p>
-                <AiOutlineDislike />
-              </p>
+              <p>{isDownVoted ? <AiFillDislike /> : <AiOutlineDislike />}</p>
               <p className="text-xs">DownVotes. {downVote}</p>
             </div>
 
@@ -210,6 +217,15 @@ function BasicTabs({ questionData }) {
                 <AiFillSignal />
               </p>
               <p className="text-xs">Accuracy. {questionData.accuracy}%</p>
+            </div>
+
+            <div className="flex items-center space-x-1">
+              <p>
+                <AiOutlineGlobal />
+              </p>
+              <p className="text-xs">
+                Total Submissions. {questionData.totalSubmissions}
+              </p>
             </div>
           </div>
 
