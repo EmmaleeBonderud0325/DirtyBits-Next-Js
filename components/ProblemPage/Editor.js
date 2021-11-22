@@ -133,6 +133,10 @@ import { Menu, Transition } from "@headlessui/react";
 
 const jsonData = require("./data.json");
 
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
+
 const Editor = ({ id }) => {
   let [editorValue, changeEditorValue] = useState(
     "#include<iostream>\nusing namespace std;\n\nint main(){\n\n  return 0;\n}"
@@ -226,12 +230,14 @@ const Editor = ({ id }) => {
           value: jsonData.language[i].value,
           label: jsonData.language[i].label,
           ext: jsonData.language[i].ext,
+          icon: jsonData.language[i].icon,
         });
         changeEditorValue(jsonData.language[i].pre);
         return;
       }
     }
   };
+  console.log("current lang", currLang);
 
   const handleCompileCode = async () => {};
 
@@ -411,7 +417,7 @@ const Editor = ({ id }) => {
         </div>
 
         {/* TOP RIGHT ICONS */}
-        <div className="space-x-1 flex">
+        <div className="space-x-1 flex items-center transition-all ease-in-out">
           <Tooltip className="bg-none" placement="top" title="Save">
             <Button ghost style={{ border: "none", fontSize: 20 }}>
               <MdSaveAlt />
