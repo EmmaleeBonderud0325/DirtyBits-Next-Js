@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import Dropdown from "../components/Dropdown";
 import { motion } from "framer-motion";
 import Table from "../components/Table";
-import { Pagination } from "antd";
 import { connect } from "react-redux";
 import { updateProblemsStatus } from "../redux/actions";
+import { useSelector } from "react-redux";
 
 const variants = {
   visible: { opacity: 1 },
@@ -23,17 +23,28 @@ function Problem(props) {
     "Undefined",
     "Null",
   ];
-  const [value, setValue] = useState();
+  const [value, setValue] = useState("");
 
+  const problemList = useSelector((state) => state.problemList);
 
-  
   const fetchQuestions = (e) => {
-    e.preventDefault()
-    setValue(e.target.value)
-    console.log('input value', value)
-    console.log('send request')
-  }
+    e.preventDefault();
+    setValue(e.target.value);
+  };
 
+  const filteredData = problemList.filter((val) =>
+    val.title.toLowerCase().includes(value.toLowerCase())
+  );
+
+  const questionsList = () => {
+    if (value === "") {
+      return problemList;
+    } else if (filteredData.length > 0) {
+      return filteredData;
+    } else {
+      return [];
+    }
+  };
   return (
     <div className="space-y-8 container p-10 mx-auto max-w-screen-xl">
       <motion.div animate={{ y: [20, 0, 0] }}>
@@ -96,16 +107,11 @@ function Problem(props) {
       </div>
 
       <div className="flex flex-col">
-        <Table list={props.problemList} />
+        <Table list={questionsList()} />
       </div>
     </div>
   );
 }
 
-const mapStateToprops = (state) => {
-  return {
-    problemList: state.problemList,
-  };
-};
-
-export default connect(mapStateToprops, { updateProblemsStatus })(Problem);
+// export default connect(mapStateToprops, { updateProblemsStatus })(Problem);
+export default Problem;
