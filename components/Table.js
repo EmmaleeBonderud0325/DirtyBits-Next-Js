@@ -1,5 +1,5 @@
 import TableLoader from "./TableLoader";
-import {memo} from 'react'
+import { memo } from "react";
 
 function Table({ list }) {
   let problemLevel;
@@ -36,12 +36,15 @@ function Table({ list }) {
     return (
       <tr key={problem.id}>
         <td className="table-data text-white ">
-          <a className="text-white hover:bg-blue-dark" href={`/problem/${problem.id}/${problem.title}`}>
-          {idx + 1} . {problem.title}
+          <a
+            className="text-white hover:bg-blue-dark"
+            href={`/problem/${problem.id}/${problem.title}`}
+          >
+            {idx + 1} . {problem.title}
           </a>
         </td>
         <td className="py-4 px-6 border-b border-grey-light">
-          <p           
+          <p
             className={` ${problemColor} font-bold py-1 px-3 rounded text-xs `}
           >
             {problemLevel}
@@ -63,7 +66,19 @@ function Table({ list }) {
               <th className="table-heading">Status</th>
             </tr>
           </thead>
-          <tbody>{list.length > 0 ? problemMarkup : <TableLoader />}</tbody>
+          <tbody className="">
+            {list.length > 0 ? (
+              problemMarkup
+            ) : list.length === 0 ? (
+              <div className="lg:flex lg:items-center lg:justify-center overflow-y-hidden h-80">
+                <h1 className="text-white font-extralight lg:text-4xl text-2xl  ">
+                  Not Enough data
+                </h1>
+              </div>
+            ) : (
+              <TableLoader />
+            )}
+          </tbody>
         </table>
       </div>
     </div>
