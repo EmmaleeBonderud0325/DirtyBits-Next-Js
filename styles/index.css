@@ -35,6 +35,18 @@
   .table-data {
     @apply py-4 px-6 border-b font-medium hover:text-blue-700 transition-all ease-in-out duration-100 cursor-pointer;
   }
+  .login-btn {
+    @apply py-2 px-4 shadow-md no-underline rounded-full bg-custom-yellow text-white font-sans font-semibold text-sm border-custom-yellow2 hover:text-white hover:bg-custom-yellow focus:outline-none active:shadow-none mr-2;
+  }
+  .social-login-btn {
+    @apply mt-3 w-full flex justify-center rounded-full bg-black px-4 p-3 font-semibold text-white items-center space-x-2;
+  }
+  .loginSignUp {
+    @apply bg-no-repeat bg-cover bg-center relative overflow-hidden;
+  }
+  .loginSignUpHeading {
+    @apply mb-3 font-bold text-5xl text-white;
+  }
 }
 
 * {

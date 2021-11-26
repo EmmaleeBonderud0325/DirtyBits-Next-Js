@@ -94,7 +94,7 @@ function signin() {
         .then((result) => {
           const { access, refresh } = result.data;
           const data = Parsetoken(access);
-          console.log('data', data)
+          console.log("data", data);
           if (data.is_verified) {
             Cookies.set("access", access);
             Cookies.set("refresh", refresh, { expires: 14 });
@@ -185,7 +185,7 @@ function signin() {
       <Head>
         <title>Sign In to DirtyBits</title>
       </Head>
-      <div className="bg-no-repeat bg-cover bg-center relative overflow-hidden">
+      <div className="loginSignUp">
         <div className="absolute w-60 h-60 rounded-xl bg-custom-yellow2 -top-5 -left-16 z-0 transform rotate-45 hidden md:block"></div>
         <div className="absolute w-48 h-48 rounded-xl bg-custom-yellow2 -bottom-10 transform rotate-12 hidden md:block"></div>
         <div className="w-40 h-40 absolute bg-custom-yellow2 rounded-full top-0 right-12 hidden md:block"></div>
@@ -196,19 +196,19 @@ function signin() {
           <div className="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
             <div className="self-start hidden lg:flex flex-col  text-white">
               <img src="" className="mb-3" />
-              <h1 className="mb-3 font-bold text-5xl text-white">
+              <h1 className="loginSignUpHeading">
                 Hello Welcome to{" "}
-                <span >
+                <span>
                   <Link href="/">
                     <a className="text-custom-yellow">DirtyBits</a>
                   </Link>
                 </span>
               </h1>
-              <p className="pr-3">
+              {/* <p className="pr-3">
                 Lorem ipsum is placeholder text commonly used in the graphic,
                 print, and publishing industries for previewing layouts and
                 visual mockups
-              </p>
+              </p> */}
             </div>
           </div>
           <div className="flex justify-center self-center  z-10">
@@ -323,7 +323,8 @@ function signin() {
                     disabled={isDisabled ? true : false}
                     type="submit"
                     onClick={(e) => submitLoginForm(e)}
-                    className={`w-full flex justify-center bg-custom-yellow2 hover:bg-custom-yellow text-gray-100 p-3  rounded-full tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500
+                    className={`social-login-btn bg-custom-yellow2 hover:bg-custom-yellow
+                      transition ease-in duration-500
                       ${isDisabled && "opacity-50 cursor-not-allowed"}
                     `}
                   >
@@ -336,7 +337,7 @@ function signin() {
                       <button
                         onClick={renderProps.onClick}
                         disabled={renderProps.disabled}
-                        className="mt-3 w-full flex justify-center rounded-full bg-black px-4 p-3 font-semibold text-white items-center space-x-2"
+                        className="social-login-btn"
                       >
                         <FcGoogle />
                         <span>Sign In </span>
@@ -346,7 +347,7 @@ function signin() {
                     onFailure={responseGoogleFailure}
                     cookiePolicy={"single_host_origin"}
                   />
-                  <button className="mt-3 w-full flex justify-center rounded-full bg-black px-4 p-3 font-semibold text-white items-center space-x-2">
+                  <button className="social-login-btn">
                     <AiFillGithub />
                     <span>Sign In </span>
                   </button>
