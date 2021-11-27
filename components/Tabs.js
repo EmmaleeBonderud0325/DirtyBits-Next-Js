@@ -202,7 +202,7 @@ function BasicTabs({ questionData }) {
     setIsBookmarkSet(!isBookmarkSet);
   };
 
-  console.log("render");
+  console.log("TABS COMPONENT RENDERED");
   return (
     <Box sx={{ width: "100%", height: "100vh" }} className="scrollbar-hide">
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -304,22 +304,14 @@ function BasicTabs({ questionData }) {
 
           {/* SAMEPLE INPUT TEST CASES */}
           <h2 className="text-white">Sample Test Cases</h2>
-          {/* <div className="select-none bg-gray-700 rounded-xl p-2">
-            {inputTestCases.map((val, idx) => (
-              <pre>{idx + 1}) <pre className="ml-10">{val}</pre></pre>
-            ))}
-          </div> */}
           {inputTestCases.length > 0 &&
             inputTestCases.map((val, idx) => (
-              <IoTable inputData={val} outputData={outputTestCases[idx]} />
+              <IoTable
+                key={idx}
+                inputData={val}
+                outputData={outputTestCases[idx]}
+              />
             ))}
-          {/* SAMEPLE OUTPUT TEST CASES */}
-          {/* <h2 className="text-white">Sample Output Example</h2>
-          <div className="select-none bg-gray-700 rounded-xl p-2">
-            {outputTestCases.map((val, idx) => (
-              <pre>{idx + 1}) {val}</pre>
-            ))}
-          </div> */}
 
           {/* CONSTRAINTS */}
           <h2 className="text-white">Constraints:</h2>
