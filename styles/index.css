@@ -190,3 +190,19 @@ html::-webkit-scrollbar-thumb {
     width: 48px;
   }
 }
+
+.ant-modal-footer {
+  background-color: #1b1138 !important;
+}
+.ant-modal-header {
+  background-color: #1b1138 !important;
+}
+.ant-modal-title {
+  color: white !important;
+}
+.ant-modal-content {
+  border-radius: 30% !important;
+}
+.ant-modal-close-x {
+  color: white !important;
+}
