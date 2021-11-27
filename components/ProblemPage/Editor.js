@@ -2,11 +2,13 @@ import { useState } from "react";
 import { base64_decode, base64_encode, download } from "./Helper2";
 
 import { MdSaveAlt } from "react-icons/md";
-import { AiOutlineUpload } from "react-icons/ai";
+import { AiOutlineUpload, AiFillGithub } from "react-icons/ai";
 import { BsCloudArrowUp, BsTerminal } from "react-icons/bs";
+import { MdCreate } from "react-icons/md";
 import { VscRunAll } from "react-icons/vsc";
-import { Button, Switch, Tooltip, Drawer } from "antd";
+import { Button, Tooltip, Modal } from "antd";
 import { RiSendPlaneFill } from "react-icons/ri";
+import { FcGoogle } from "react-icons/fc";
 
 import * as React from "react";
 import PropTypes from "prop-types";
@@ -16,6 +18,10 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useSelector } from "react-redux";
 import Image from "next/image";
+import GoogleLogin from "react-google-login";
+import { googleLoginApi } from "../../components/api/apis";
+import { updateUserinfo } from "../../redux/actions";
+import { useDispatch } from "react-redux";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -130,6 +136,7 @@ import Cookies from "js-cookie";
 import Gettoken from "../Helper/Gettoken";
 import Encodemail from "../Helper/Encodemail";
 import { Menu, Transition } from "@headlessui/react";
+import Parsetoken from "../Helper/Parsetoken";
 
 const jsonData = require("./data.json");
 
@@ -138,6 +145,7 @@ function classNames(...classes) {
 }
 
 const Editor = ({ id }) => {
+  const dispatch = useDispatch();
   let [editorValue, changeEditorValue] = useState(
     "#include<iostream>\nusing namespace std;\n\nint main(){\n\n  return 0;\n}"
   );
@@ -168,6 +176,8 @@ const Editor = ({ id }) => {
   let [showLoader, setShowLoader] = useState(false);
   const [value, setValue] = React.useState(0);
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -176,7 +186,6 @@ const Editor = ({ id }) => {
     changeEditorValue(data);
   };
 
-  console.log("id", id);
   const userInfo = useSelector((state) => state.userData);
 
   // const handleKeyUp = (editor, event) => {
@@ -193,7 +202,7 @@ const Editor = ({ id }) => {
   const renderThemeList = jsonData.theme.map((item) => {
     if (currTheme.value !== item.value) {
       return (
-        <option className="" value={item.value}>
+        <option key={item.label} className="" value={item.value}>
           {item.label}
         </option>
       );
@@ -203,7 +212,11 @@ const Editor = ({ id }) => {
 
   const renderLangList = jsonData.language.map((item) => {
     if (currLang.label !== item.label) {
-      return <option value={item.value}>{item.label}</option>;
+      return (
+        <option key={item.ext} value={item.value}>
+          {item.label}
+        </option>
+      );
     }
     return <></>;
   });
@@ -237,13 +250,14 @@ const Editor = ({ id }) => {
       }
     }
   };
-  console.log("current lang", currLang);
 
   const handleCompileCode = async () => {};
 
   const handleRunCode = async () => {
     console.log(editorValue, currLang.label, inputValue);
     if (!Cookies.get("refresh")) {
+      setIsModalVisible(true);
+
       console.error("Login Required !!");
       return;
     }
@@ -383,7 +397,41 @@ const Editor = ({ id }) => {
     );
   };
 
-  console.log("user info", userInfo);
+  const responseGoogleSuccess = async (data) => {
+    try {
+      await googleLoginApi
+        .post("/", { auth_token: data["tokenId"] })
+        .then((result) => {
+          const { access, refresh } = result.data;
+          const data = Parsetoken(access);
+          console.log("data", data);
+          if (data.is_verified) {
+            setIsModalVisible(false);
+            Cookies.set("access", access);
+            Cookies.set("refresh", refresh, { expires: 14 });
+            dispatch(
+              updateUserinfo({
+                is_logged_in: true,
+                email: data.user_mail,
+                first_name: data.first_name,
+                last_name: data.last_name,
+                username: data.username,
+                profile_pic: data.profile_pic,
+              })
+            );
+          }
+        })
+        .catch(() => {
+          console.error("Bad Request !");
+        });
+    } catch (e) {
+      console.log("Server Error !");
+    }
+  };
+
+  const responseGoogleFailure = () => {
+    console.error("Google Authentication failed !");
+  };
 
   const profileImageLink = userInfo.profile_pic;
 
@@ -396,7 +444,7 @@ const Editor = ({ id }) => {
         <div>
           <label className="font-semibold">Theme : </label>
           <select
-            class="border border-gray-700 hover:border-custom-bg rounded-full text-white h-10 ml-2 pl-5 pr-10 bg-gray-800 focus:outline-none appearance-none transition-all ease-out scrollbar-hide"
+            className="border border-gray-700 hover:border-custom-bg rounded-full text-white h-10 ml-2 pl-5 pr-10 bg-gray-800 focus:outline-none appearance-none transition-all ease-out scrollbar-hide"
             onChange={(e) => handleThemeChange(e)}
           >
             <option className="" value={currTheme.value}>
@@ -408,7 +456,7 @@ const Editor = ({ id }) => {
         <div>
           <label className="font-semibold">Language : </label>
           <select
-            class="border border-gray-700 hover:border-custom-bg rounded-full text-white h-10 ml-2 pl-5 pr-10 bg-gray-800 focus:outline-none appearance-none transition-all ease-out"
+            className="border border-gray-700 hover:border-custom-bg rounded-full text-white h-10 ml-2 pl-5 pr-10 bg-gray-800 focus:outline-none appearance-none transition-all ease-out"
             onChange={(e) => handleLangChange(e)}
           >
             <option value={currLang.value}>{currLang.label}</option>
@@ -453,12 +501,9 @@ const Editor = ({ id }) => {
                         width={40}
                         height={40}
                         src={profileImageLink}
-                        alt="Avatar"
+                        alt="profile pic"
                       />
                     )}
-                    {/* <span className="text-white px-2 pt-1.5 pr-3 text-base hidden sm:block">
-                      {userInfo.username}
-                    </span> */}
                   </Menu.Button>
                 </div>
                 <Transition
@@ -502,7 +547,7 @@ const Editor = ({ id }) => {
                     <Menu.Item>
                       {({ active }) => (
                         <a
-                          href="/"
+                          href="#"
                           onClick={signOutUser}
                           className={classNames(
                             active ? "bg-gray-100" : "",
@@ -581,6 +626,49 @@ const Editor = ({ id }) => {
           </button>
         </div>
       </div>
+
+      <Modal
+        title="Login or SignUp to continue..."
+        centered
+        visible={isModalVisible}
+        bodyStyle={{ background: "#1b1138" }}
+        onOk={() => setIsModalVisible(false)}
+        onCancel={() => setIsModalVisible(false)}
+        keyboard
+        cancelButtonProps={{ style: { display: "none" } }}
+        okButtonProps={{ style: { display: "none" } }}
+      >
+        <div className="flex justify-center flex-col items-center">
+          <GoogleLogin
+            clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
+            render={(renderProps) => (
+              <button
+                onClick={renderProps.onClick}
+                disabled={renderProps.disabled}
+                className="social-login-btn w-1/2 border border-white"
+              >
+                <FcGoogle />
+                <span>Login with Google</span>
+              </button>
+            )}
+            onSuccess={responseGoogleSuccess}
+            onFailure={responseGoogleFailure}
+            cookiePolicy={"single_host_origin"}
+          />
+          <button className="social-login-btn cursor-not-allowed w-1/2 border border-white">
+            <AiFillGithub />
+            <span>Login with GitHub </span>
+          </button>
+          <button className="social-login-btn bg-custom-yellow2 w-1/2 border border-white">
+            <MdCreate />
+            <span>
+              <a className="text-white hover:text-white" href="/auth/signup">
+                Sign Up
+              </a>
+            </span>
+          </button>
+        </div>
+      </Modal>
       {/* <div className="flex p-4 justify-evenly">
         <button
           // className={inputBtnClass}
