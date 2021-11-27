@@ -58,7 +58,10 @@ function Problem(props) {
         <div className="flex sm:w-3/4 xs:w-full space-x-4 overflow-x-scroll scrollbar-hide">
           {values.map((value) => {
             return (
-              <div className="flex flex-col items-center justify-center">
+              <div
+                key={value}
+                className="flex flex-col items-center justify-center"
+              >
                 <button className="text-base rounded-xl bg-gray-800 px-2 lg:px-4 lg:py-1 hover:scale-125 transition-all ease-out">
                   {value}
                 </button>
