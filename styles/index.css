@@ -203,6 +203,7 @@ html::-webkit-scrollbar-thumb {
 .ant-modal-content {
   border-radius: 30% !important;
 }
-.ant-modal-close-x {
+.ant-modal-close-x,
+.ant-statistic-title {
   color: white !important;
 }
