@@ -95,19 +95,19 @@ function Navbar({ userInfo, bg, fixedHeader }) {
                     <div className="flex space-x-4">
                       {navigation.map((item) => (
                         // <Link key={item.name} href={item.href}>
-                          <a
-                            className={classNames(
-                              item.current
-                                ? "bg-custom-yellow text-white"
-                                : "text-gray-300 hover:bg-custom-yellow hover:text-white",
-                              "px-3 py-2 rounded-md text-sm font-medium"
-                            )}
-                            aria-current={item.current ? "page" : undefined}
-                            href={item.href}
-                            key={item.name}
-                          >
-                            {item.name}
-                          </a>
+                        <a
+                          className={classNames(
+                            item.current
+                              ? "bg-custom-yellow text-white"
+                              : "text-gray-300 hover:bg-custom-yellow hover:text-white",
+                            "px-3 py-2 rounded-md text-sm font-medium"
+                          )}
+                          aria-current={item.current ? "page" : undefined}
+                          href={item.href}
+                          key={item.name}
+                        >
+                          {item.name}
+                        </a>
                         // </Link>
                       ))}
                     </div>
@@ -155,7 +155,7 @@ function Navbar({ userInfo, bg, fixedHeader }) {
                           <Menu.Item>
                             {({ active }) => (
                               <a
-                                href="#"
+                                href={`/profile/${userInfo.username}`}
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"
@@ -167,14 +167,15 @@ function Navbar({ userInfo, bg, fixedHeader }) {
                           </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
-                                <a href="/addproblems"
-                                  className={classNames(
-                                    active ? "bg-gray-100" : "",
-                                    "block px-4 py-2 text-sm text-gray-700"
-                                  )}
-                                >
-                                  Add Problem
-                                </a>
+                              <a
+                                href="/addproblems"
+                                className={classNames(
+                                  active ? "bg-gray-100" : "",
+                                  "block px-4 py-2 text-sm text-gray-700"
+                                )}
+                              >
+                                Add Problem
+                              </a>
                             )}
                           </Menu.Item>
                           <Menu.Item>
