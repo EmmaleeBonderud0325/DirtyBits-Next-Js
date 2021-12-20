@@ -55,7 +55,7 @@ export default function Example() {
                   <div className="rounded-md shadow">
                     <a
                       href="#"
-                      className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-custom-yellow hover:bg-custom-yellow2 md:py-4 md:text-lg md:px-10"
+                      className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-custom-yellow hover:bg-custom-yellow2 md:py-4 md:text-lg md:px-10 shadow-xl shadow-custom-yellow/40"
                     >
                       Explore Now
                     </a>
