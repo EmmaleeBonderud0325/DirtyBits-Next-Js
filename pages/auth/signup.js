@@ -492,7 +492,7 @@ function signup(props) {
                         })
                       }
                       type="checkbox"
-                      className="h-4 w-4 bg-blue-500 focus:ring-blue-400 border-gray-300 rounded"
+                      className="h-4 w-4 rounded accent-custom-yellow"
                     />
                     <label
                       for="remember_me"
