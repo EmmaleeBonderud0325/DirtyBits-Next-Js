@@ -6,7 +6,7 @@ function Table({ list }) {
   let problemColor;
   let status;
 
-  console.log("list", list);
+  console.log("TABLE COMPONENT RENDERED");
   let problemMarkup = list.map((problem, idx) => {
     switch (problem.problem_level) {
       case "E":
@@ -67,17 +67,7 @@ function Table({ list }) {
             </tr>
           </thead>
           <tbody className="">
-            {list.length > 0 ? (
-              problemMarkup
-            ) : list.length === 0 ? (
-              <div className="lg:flex lg:items-center lg:justify-center overflow-y-hidden h-80">
-                <h1 className="text-white font-extralight lg:text-4xl text-2xl  ">
-                  Not Enough data
-                </h1>
-              </div>
-            ) : (
-              <TableLoader />
-            )}
+            {list.length > 0 ? problemMarkup : <TableLoader />}
           </tbody>
         </table>
       </div>
