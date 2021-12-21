@@ -6,6 +6,7 @@ import Table from "../components/Table";
 import { connect } from "react-redux";
 import { updateProblemsStatus } from "../redux/actions";
 import { useSelector } from "react-redux";
+import { DiReact } from "react-icons/di";
 
 const variants = {
   visible: { opacity: 1 },
@@ -48,11 +49,31 @@ function Problem(props) {
   return (
     <div className="space-y-8 container p-10 mx-auto max-w-screen-xl">
       <motion.div animate={{ y: [20, 0, 0] }}>
-        <h1 className="lg:text-5xl text-3xl font-extrabold text-white">
+        {/* <h1 className="lg:text-5xl text-3xl font-extrabold text-white">
           Problem <span className="text-custom-bg">List</span>
-        </h1>
+        </h1> */}
+        <div className="flex gap-10">
+          <div className="space-y-3 h-40 w-40 pb-2">
+            <div className="relative flex justify-center items-center h-full w-full rounded-md bg-gradient-to-r from-cyan-500 to-blue-500">
+              <DiReact className="absolute text-9xl" />
+            </div>
+            <p className="text-white text-center">Learn React Development</p>
+          </div>
+          <div className="space-y-3 h-40 w-40 pb-2">
+            <div className="relative flex justify-center items-center h-full w-full rounded-md bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+              <DiReact className="absolute text-9xl" />
+            </div>
+            <p className="text-white text-center">Learn React Development</p>
+          </div>
+          <div className="space-y-3 h-40 w-40 pb-2">
+            <div className="relative flex justify-center items-center h-full w-full rounded-md bg-gradient-to-r from-green-400 to-green-300">
+              <DiReact className="absolute text-9xl" />
+            </div>
+            <p className="text-white text-center">Learn React Development</p>
+          </div>
+        </div>
       </motion.div>
-      <hr />
+      <hr style={{ color: "blue" }} />
 
       <motion.div initial="hidden" animate="visible" variants={variants}>
         <div className="flex sm:w-3/4 xs:w-full space-x-4 overflow-x-scroll scrollbar-hide">
