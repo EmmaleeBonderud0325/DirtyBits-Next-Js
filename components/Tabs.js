@@ -160,8 +160,10 @@ function BasicTabs({ questionData }) {
     const response = await upAndDownVoteHandler.post(
       "/",
       {
-        problem_id: questionData.id,
-        type: "upvote",
+        data: {
+          problem_id: questionData.id,
+          type: "upvote",
+        },
       },
       {
         headers: {
@@ -171,19 +173,34 @@ function BasicTabs({ questionData }) {
       }
     );
     console.log("response", response);
-    setUpVote((prev) => prev + 1);
+    setIsUpVoted(!isUpVoted);
+    isUpVoted ? setUpVote((prev) => prev - 1) : setUpVote((prev) => prev + 1);
     if (downVote > 0) {
       setDownVote((prev) => prev - 1);
     }
   };
 
   const downVoteHandler = async () => {
-    const response = await upAndDownVoteHandler.post("/", {
-      problem_id: questionData.id,
-      type: "downvote",
-    });
+    const response = await upAndDownVoteHandler.post(
+      "/",
+      {
+        data: {
+          problem_id: questionData.id,
+          type: "downvote",
+        },
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `JWT ${Cookies.get("access")}`,
+        },
+      }
+    );
     console.log("response", response);
-    setDownVote((prev) => prev + 1);
+    setIsDownVoted(!isDownVoted);
+    isDownVoted
+      ? setDownVote((prev) => prev - 1)
+      : setDownVote((prev) => prev + 1);
     if (upVote > 0) {
       setUpVote((prev) => prev - 1);
     }
