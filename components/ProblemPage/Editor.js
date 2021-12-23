@@ -25,7 +25,6 @@ import { useDispatch } from "react-redux";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -581,30 +580,6 @@ const Editor = ({ id }) => {
       </div>
 
       <div className="editor-options-container mt-10 flex space-x-5 justify-between items-center p-2">
-        {/* <div className="flex items-center space-x-5">
-          <button
-            className="flex items-center space-x-2 bg-custom-bg hover:bg-[#7220c4] transition-all ease-out p-2 px-8 rounded-lg"
-            onClick={handleCompileCode}
-          >
-            <BiRefresh className="text-lg" />
-            <span className="font-semibold">Compile</span>
-          </button>
-          <button
-            className="flex items-center space-x-2 bg-custom-bg hover:bg-[#7220c4] transition-all ease-out p-2 px-5  rounded-lg"
-            onClick={handleRunCode}
-          >
-            <VscRunAll />
-            <span>Run</span>
-          </button>
-        </div> */}
-        {/* <div onClick={handeCustomInput} className="space-x-2">
-          <Switch
-            defaultChecked
-            style={{ backgroundColor: "#7220c4", color: "#fff" }}
-            checked={customInput}
-          />
-          <label>Custom Input</label>
-        </div> */}
         <div className="cursor-pointer text-xl flex items-center p-2">
           <BsTerminal onClick={() => setShowConsole(!showConsole)} />
           <span className="ml-2 text-sm">Console</span>
@@ -669,29 +644,6 @@ const Editor = ({ id }) => {
           </button>
         </div>
       </Modal>
-      {/* <div className="flex p-4 justify-evenly">
-        <button
-          // className={inputBtnClass}
-          className="flex items-center space-x-2 bg-custom-bg hover:bg-[#7220c4] transition-all ease-out p-2 px-8  rounded-lg"
-          id="input-btn"
-          onClick={(e) => handleShowMode(e)}
-        >
-          Input
-        </button>
-        <button
-          // className={outputBtnClass}
-          className="flex items-center space-x-2 bg-custom-bg hover:bg-[#7220c4] transition-all ease-out p-2 px-8  rounded-lg"
-          id="output-btn"
-          onClick={(e) => handleShowMode(e)}
-        >
-          Output
-        </button>
-      </div> */}
-
-      {/* <div className="cursor-pointer mt-10 text-xl flex items-center p-2">
-        <BsTerminal onClick={() => setShowConsole(!showConsole)} />
-        <span className="ml-2 text-sm">Console</span>
-      </div> */}
 
       {showConsole && (
         <div className="relative bottom-0 w-full transition-all ease-in-out duration-75 p-2">
@@ -706,19 +658,27 @@ const Editor = ({ id }) => {
               >
                 <Tab
                   onClick={(e) => handleShowMode(e)}
-                  label="Input"
+                  label="Output"
                   {...a11yProps(0)}
                 />
                 <Tab
                   onClick={(e) => handleShowMode(e)}
-                  label="Ouput"
+                  label="Input"
                   {...a11yProps(1)}
                 />
               </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
+              {showLoader ? (
+                <span className="loader"></span>
+              ) : (
+                <pre className="text-left font-bold">{outputValue}</pre>
+              )}
+            </TabPanel>
+
+            <TabPanel value={value} index={1}>
               <textarea
-                className="w-full bg-gray-800 outline-none rounded-lg p-1 text-lg"
+                className="w-full placeholder:text-base placeholder:p-2 bg-gray-800 outline-none rounded-lg p-1 text-lg"
                 rows="6"
                 id="input-btn"
                 placeholder="Custom Input here"
@@ -726,21 +686,6 @@ const Editor = ({ id }) => {
                 onChange={(e) => changeInputValue(e.target.value)}
                 spellcheck="false"
               ></textarea>
-            </TabPanel>
-
-            <TabPanel value={value} index={1}>
-              {/* <textarea
-           className="w-full bg-gray-800 outline-none rounded-lg p-1 text-lg"
-           rows="6"
-           id="output-btn"
-           value={outputValue}
-           disabled={false}
-           spellcheck="false"
-          //  readOnly={true}
-         ></textarea> */}
-              {showLoader ? <span className="loader"></span> : <span></span>}
-              {/* <span className="loader"></span> */}
-              <pre className="text-left font-bold">{outputValue}</pre>
             </TabPanel>
           </Box>
         </div>
