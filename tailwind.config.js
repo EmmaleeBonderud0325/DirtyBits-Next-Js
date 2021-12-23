@@ -8,7 +8,7 @@ module.exports = {
     purgeLayersByDefault: true,
   },
   darkMode: "class",
-  plugins: [require("tailwind-scrollbar-hide"), require("daisyui")],
+  plugins: [require("tailwind-scrollbar-hide")],
   theme: {
     screens: {
       xs: "630px",
