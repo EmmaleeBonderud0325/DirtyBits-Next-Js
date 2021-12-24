@@ -6,10 +6,7 @@ import Feature from "./Features";
 export default function Example() {
   return (
     <>
-      <div
-        style={{ zIndex: -999 }}
-        className="relative bg-purple-400 h-screen w-screen customHero"
-      >
+      <div className="relative bg-purple-400 h-screen w-screen customHero -z-50">
         <div className="max-w-7xl mx-auto">
           <div className="relative z-10 pb-8 bg-black-400 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
             <svg
