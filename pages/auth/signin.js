@@ -289,7 +289,7 @@ function signin() {
                   </div>
                 </div>
                 <div className="flex items-center justify-between my-2">
-                  <div className="flex items-center">
+                  <div className="flex items-center accent-custom-yellow">
                     <input
                       id="remember_me"
                       name="remember_me"
@@ -347,9 +347,9 @@ function signin() {
                     onFailure={responseGoogleFailure}
                     cookiePolicy={"single_host_origin"}
                   />
-                  <button className="social-login-btn">
+                  <button className="social-login-btn cursor-not-allowed opacity-25">
                     <AiFillGithub />
-                    <span>Sign In </span>
+                    <span>Coming Soon...</span>
                   </button>
                 </div>
               </div>
