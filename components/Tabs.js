@@ -148,7 +148,6 @@ function BasicTabs({ questionData }) {
       .then((result) => {
         setIsUpVoted(result.data.upvote);
         setIsDownVoted(result.data.downvote);
-        console.log(result.data);
       });
   };
 
@@ -175,7 +174,6 @@ function BasicTabs({ questionData }) {
         },
       }
     );
-    console.log("response", response);
     setIsUpVoted(!isUpVoted);
     isUpVoted ? setUpVote((prev) => prev - 1) : setUpVote((prev) => prev + 1);
     if (downVote > 0) {
@@ -199,7 +197,6 @@ function BasicTabs({ questionData }) {
         },
       }
     );
-    console.log("response", response);
     setIsDownVoted(!isDownVoted);
     isDownVoted
       ? setDownVote((prev) => prev - 1)
