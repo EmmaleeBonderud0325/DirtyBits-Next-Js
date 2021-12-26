@@ -127,7 +127,8 @@ function signin() {
     const { access, refresh } = tokens;
     const data = Parsetoken(access);
     if (data.is_verified) {
-      Cookies.set("access", access);
+      var inTwentyMinutes = new Date(new Date().getTime() + 20 * 60 * 1000);
+      Cookies.set("access", access, { expires: inTwentyMinutes });
       Cookies.set("refresh", refresh, { expires: 14 });
       dispatch(
         updateUserinfo({

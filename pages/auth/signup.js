@@ -7,13 +7,15 @@ import "react-toastify/dist/ReactToastify.min.css";
 import { useRouter } from "next/router";
 import { connect, useDispatch } from "react-redux";
 
+var debounce = require("lodash.debounce");
+
 import Input from "../../components/Input";
 import {
   validateUserName,
   validateEmail,
   createUser,
 } from "../../components/api/apis";
-import Debounce from "../../components/Helper/Debounce";
+
 import {
   updateFirstNameError,
   updateLastNameError,
@@ -142,7 +144,7 @@ function signup(props) {
   };
 
   const HandleUserNameUpdateDebounce = useCallback(
-    Debounce(handleUsernameChange),
+    debounce(handleUsernameChange, 1000),
     []
   );
 
@@ -176,7 +178,7 @@ function signup(props) {
   };
 
   const HandleEmailUpdateDebounce = useCallback(
-    Debounce(handleEmailChange),
+    debounce(handleEmailChange, 1000),
     []
   );
 
@@ -202,7 +204,7 @@ function signup(props) {
   };
 
   const HandlePasswordUpdateDebounce = useCallback(
-    Debounce(handlePasswordChange),
+    debounce(handlePasswordChange, 1000),
     []
   );
 
@@ -241,7 +243,7 @@ function signup(props) {
   };
 
   const HandleConfirmPasswordUpdateDebounce = useCallback(
-    Debounce(handleConfirmPasswordChange),
+    debounce(handleConfirmPasswordChange, 1000),
     []
   );
 

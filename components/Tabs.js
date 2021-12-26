@@ -130,7 +130,10 @@ function BasicTabs({ questionData }) {
       console.error("upvote downvote", "Login Required !!");
       return;
     }
-    await Gettoken(Cookies.get("refresh"));
+    const acces_token = Cookies.get("access");
+    if (!acces_token) {
+      await Gettoken(Cookies.get("refresh"));
+    }
     await getUpvoteDownvoteapi
       .post(
         "/",
