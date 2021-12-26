@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap");
+
 @import "tailwindcss/base";
 /* Write your own custom base styles here */
 
@@ -57,6 +59,10 @@
 
 html {
   overflow-x: hidden;
+}
+
+body {
+  font-family: "Lato" !important;
 }
 
 .customHero {
