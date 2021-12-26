@@ -307,7 +307,7 @@ function signup(props) {
         <title>Sign Up to DirtyBits</title>
       </Head>
       <ToastContainer theme="dark" />
-      <div class="bg-no-repeat bg-cover bg-center relative overflow-hidden">
+      <div class="loginSignUp">
         <div class="absolute w-60 h-60 rounded-xl bg-custom-yellow2 -top-5 -left-16 z-0 transform rotate-45 hidden md:block"></div>
         <div class="absolute w-48 h-48 rounded-xl bg-custom-yellow2 -bottom-10 transform rotate-12 hidden md:block"></div>
         <div class="w-40 h-40 absolute bg-custom-yellow2 rounded-full top-0 right-12 hidden md:block"></div>
@@ -317,15 +317,15 @@ function signup(props) {
           <div class="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
             <div class="self-start hidden lg:flex flex-col  text-white">
               <img src="" class="mb-3" />
-              <h1 class="mb-3 font-bold text-5xl">
+              <h1 class="loginSignUpHeading">
                 Hello Welcome to{" "}
                 <span className="text-custom-yellow">DirtyBits</span>
               </h1>
-              <p className="pr-3">
+              {/* <p className="pr-3">
                 Lorem ipsum is placeholder text commonly used in the graphic,
                 print, and publishing industries for previewing layouts and
                 visual mockups
-              </p>
+              </p> */}
             </div>
           </div>
           <div class="flex items-center justify-center self-center  z-10">
@@ -492,7 +492,7 @@ function signup(props) {
                         })
                       }
                       type="checkbox"
-                      className="h-4 w-4 bg-blue-500 focus:ring-blue-400 border-gray-300 rounded"
+                      className="h-4 w-4 rounded accent-custom-yellow"
                     />
                     <label
                       for="remember_me"

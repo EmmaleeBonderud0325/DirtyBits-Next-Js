@@ -2,11 +2,13 @@ import { useState } from "react";
 import { base64_decode, base64_encode, download } from "./Helper2";
 
 import { MdSaveAlt } from "react-icons/md";
-import { AiOutlineUpload } from "react-icons/ai";
+import { AiOutlineUpload, AiFillGithub } from "react-icons/ai";
 import { BsCloudArrowUp, BsTerminal } from "react-icons/bs";
+import { MdCreate } from "react-icons/md";
 import { VscRunAll } from "react-icons/vsc";
-import { Button, Switch, Tooltip, Drawer } from "antd";
+import { Button, Tooltip, Modal } from "antd";
 import { RiSendPlaneFill } from "react-icons/ri";
+import { FcGoogle } from "react-icons/fc";
 
 import * as React from "react";
 import PropTypes from "prop-types";
@@ -16,10 +18,13 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useSelector } from "react-redux";
 import Image from "next/image";
+import GoogleLogin from "react-google-login";
+import { googleLoginApi } from "../../components/api/apis";
+import { updateUserinfo } from "../../redux/actions";
+import { useDispatch } from "react-redux";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -130,10 +135,16 @@ import Cookies from "js-cookie";
 import Gettoken from "../Helper/Gettoken";
 import Encodemail from "../Helper/Encodemail";
 import { Menu, Transition } from "@headlessui/react";
+import Parsetoken from "../Helper/Parsetoken";
 
 const jsonData = require("./data.json");
 
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
+
 const Editor = ({ id }) => {
+  const dispatch = useDispatch();
   let [editorValue, changeEditorValue] = useState(
     "#include<iostream>\nusing namespace std;\n\nint main(){\n\n  return 0;\n}"
   );
@@ -158,6 +169,8 @@ const Editor = ({ id }) => {
   let [showLoader, setShowLoader] = useState(false);
   const [value, setValue] = React.useState(0);
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -166,7 +179,6 @@ const Editor = ({ id }) => {
     changeEditorValue(data);
   };
 
-  console.log("id", id);
   const userInfo = useSelector((state) => state.userData);
 
   // const handleKeyUp = (editor, event) => {
@@ -183,7 +195,7 @@ const Editor = ({ id }) => {
   const renderThemeList = jsonData.theme.map((item) => {
     if (currTheme.value !== item.value) {
       return (
-        <option className="" value={item.value}>
+        <option key={item.label} className="" value={item.value}>
           {item.label}
         </option>
       );
@@ -193,7 +205,11 @@ const Editor = ({ id }) => {
 
   const renderLangList = jsonData.language.map((item) => {
     if (currLang.label !== item.label) {
-      return <option value={item.value}>{item.label}</option>;
+      return (
+        <option key={item.ext} value={item.value}>
+          {item.label}
+        </option>
+      );
     }
     return <></>;
   });
@@ -220,6 +236,7 @@ const Editor = ({ id }) => {
           value: jsonData.language[i].value,
           label: jsonData.language[i].label,
           ext: jsonData.language[i].ext,
+          icon: jsonData.language[i].icon,
         });
         changeEditorValue(jsonData.language[i].pre);
         return;
@@ -232,6 +249,8 @@ const Editor = ({ id }) => {
   const handleRunCode = async () => {
     console.log(editorValue, currLang.label, inputValue);
     if (!Cookies.get("refresh")) {
+      setIsModalVisible(true);
+
       console.error("Login Required !!");
       return;
     }
@@ -366,7 +385,41 @@ const Editor = ({ id }) => {
     );
   };
 
-  console.log("user info", userInfo);
+  const responseGoogleSuccess = async (data) => {
+    try {
+      await googleLoginApi
+        .post("/", { auth_token: data["tokenId"] })
+        .then((result) => {
+          const { access, refresh } = result.data;
+          const data = Parsetoken(access);
+          console.log("data", data);
+          if (data.is_verified) {
+            setIsModalVisible(false);
+            Cookies.set("access", access);
+            Cookies.set("refresh", refresh, { expires: 14 });
+            dispatch(
+              updateUserinfo({
+                is_logged_in: true,
+                email: data.user_mail,
+                first_name: data.first_name,
+                last_name: data.last_name,
+                username: data.username,
+                profile_pic: data.profile_pic,
+              })
+            );
+          }
+        })
+        .catch(() => {
+          console.error("Bad Request !");
+        });
+    } catch (e) {
+      console.log("Server Error !");
+    }
+  };
+
+  const responseGoogleFailure = () => {
+    console.error("Google Authentication failed !");
+  };
 
   const profileImageLink = userInfo.profile_pic;
 
@@ -379,7 +432,7 @@ const Editor = ({ id }) => {
         <div>
           <label className="font-semibold">Theme : </label>
           <select
-            class="border border-gray-700 hover:border-custom-bg rounded-full text-white h-10 ml-2 pl-5 pr-10 bg-gray-800 focus:outline-none appearance-none transition-all ease-out scrollbar-hide"
+            className="border border-gray-700 hover:border-custom-bg rounded-full text-white h-10 ml-2 pl-5 pr-10 bg-gray-800 focus:outline-none appearance-none transition-all ease-out scrollbar-hide"
             onChange={(e) => handleThemeChange(e)}
           >
             <option className="" value={currTheme.value}>
@@ -391,7 +444,7 @@ const Editor = ({ id }) => {
         <div>
           <label className="font-semibold">Language : </label>
           <select
-            class="border border-gray-700 hover:border-custom-bg rounded-full text-white h-10 ml-2 pl-5 pr-10 bg-gray-800 focus:outline-none appearance-none transition-all ease-out"
+            className="border border-gray-700 hover:border-custom-bg rounded-full text-white h-10 ml-2 pl-5 pr-10 bg-gray-800 focus:outline-none appearance-none transition-all ease-out"
             onChange={(e) => handleLangChange(e)}
           >
             <option value={currLang.value}>{currLang.label}</option>
@@ -400,7 +453,7 @@ const Editor = ({ id }) => {
         </div>
 
         {/* TOP RIGHT ICONS */}
-        <div className="space-x-1 flex">
+        <div className="space-x-1 flex items-center transition-all ease-in-out">
           <Tooltip className="bg-none" placement="top" title="Save">
             <Button ghost style={{ border: "none", fontSize: 20 }}>
               <MdSaveAlt />
@@ -436,12 +489,9 @@ const Editor = ({ id }) => {
                         width={40}
                         height={40}
                         src={profileImageLink}
-                        alt="Avatar"
+                        alt="profile pic"
                       />
                     )}
-                    {/* <span className="text-white px-2 pt-1.5 pr-3 text-base hidden sm:block">
-                      {userInfo.username}
-                    </span> */}
                   </Menu.Button>
                 </div>
                 <Transition
@@ -459,7 +509,7 @@ const Editor = ({ id }) => {
                     <Menu.Item>
                       {({ active }) => (
                         <a
-                          href="#"
+                          href="/profile/mohitbisht"
                           className={classNames(
                             active ? "bg-gray-100" : "",
                             "block px-4 py-2 text-sm text-gray-700"
@@ -485,7 +535,7 @@ const Editor = ({ id }) => {
                     <Menu.Item>
                       {({ active }) => (
                         <a
-                          href="/"
+                          href="#"
                           onClick={signOutUser}
                           className={classNames(
                             active ? "bg-gray-100" : "",
@@ -519,30 +569,6 @@ const Editor = ({ id }) => {
       </div>
 
       <div className="editor-options-container mt-10 flex space-x-5 justify-between items-center p-2">
-        {/* <div className="flex items-center space-x-5">
-          <button
-            className="flex items-center space-x-2 bg-custom-bg hover:bg-[#7220c4] transition-all ease-out p-2 px-8 rounded-lg"
-            onClick={handleCompileCode}
-          >
-            <BiRefresh className="text-lg" />
-            <span className="font-semibold">Compile</span>
-          </button>
-          <button
-            className="flex items-center space-x-2 bg-custom-bg hover:bg-[#7220c4] transition-all ease-out p-2 px-5  rounded-lg"
-            onClick={handleRunCode}
-          >
-            <VscRunAll />
-            <span>Run</span>
-          </button>
-        </div> */}
-        {/* <div onClick={handeCustomInput} className="space-x-2">
-          <Switch
-            defaultChecked
-            style={{ backgroundColor: "#7220c4", color: "#fff" }}
-            checked={customInput}
-          />
-          <label>Custom Input</label>
-        </div> */}
         <div className="cursor-pointer text-xl flex items-center p-2">
           <BsTerminal onClick={() => setShowConsole(!showConsole)} />
           <span className="ml-2 text-sm">Console</span>
@@ -564,29 +590,49 @@ const Editor = ({ id }) => {
           </button>
         </div>
       </div>
-      {/* <div className="flex p-4 justify-evenly">
-        <button
-          // className={inputBtnClass}
-          className="flex items-center space-x-2 bg-custom-bg hover:bg-[#7220c4] transition-all ease-out p-2 px-8  rounded-lg"
-          id="input-btn"
-          onClick={(e) => handleShowMode(e)}
-        >
-          Input
-        </button>
-        <button
-          // className={outputBtnClass}
-          className="flex items-center space-x-2 bg-custom-bg hover:bg-[#7220c4] transition-all ease-out p-2 px-8  rounded-lg"
-          id="output-btn"
-          onClick={(e) => handleShowMode(e)}
-        >
-          Output
-        </button>
-      </div> */}
 
-      {/* <div className="cursor-pointer mt-10 text-xl flex items-center p-2">
-        <BsTerminal onClick={() => setShowConsole(!showConsole)} />
-        <span className="ml-2 text-sm">Console</span>
-      </div> */}
+      <Modal
+        title="Login or SignUp to continue..."
+        centered
+        visible={isModalVisible}
+        bodyStyle={{ background: "#1b1138" }}
+        onOk={() => setIsModalVisible(false)}
+        onCancel={() => setIsModalVisible(false)}
+        keyboard
+        cancelButtonProps={{ style: { display: "none" } }}
+        okButtonProps={{ style: { display: "none" } }}
+      >
+        <div className="flex justify-center flex-col items-center">
+          <GoogleLogin
+            clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
+            render={(renderProps) => (
+              <button
+                onClick={renderProps.onClick}
+                disabled={renderProps.disabled}
+                className="social-login-btn w-1/2 border border-white"
+              >
+                <FcGoogle />
+                <span>Login with Google</span>
+              </button>
+            )}
+            onSuccess={responseGoogleSuccess}
+            onFailure={responseGoogleFailure}
+            cookiePolicy={"single_host_origin"}
+          />
+          <button className="social-login-btn cursor-not-allowed w-1/2 border border-white">
+            <AiFillGithub />
+            <span>Login with GitHub </span>
+          </button>
+          <button className="social-login-btn bg-custom-yellow2 w-1/2 border border-white">
+            <MdCreate />
+            <span>
+              <a className="text-white hover:text-white" href="/auth/signup">
+                Sign Up
+              </a>
+            </span>
+          </button>
+        </div>
+      </Modal>
 
       {showConsole && (
         <div className="relative bottom-0 w-full transition-all ease-in-out duration-75 p-2">
@@ -601,19 +647,27 @@ const Editor = ({ id }) => {
               >
                 <Tab
                   onClick={(e) => handleShowMode(e)}
-                  label="Input"
+                  label="Output"
                   {...a11yProps(0)}
                 />
                 <Tab
                   onClick={(e) => handleShowMode(e)}
-                  label="Ouput"
+                  label="Input"
                   {...a11yProps(1)}
                 />
               </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
+              {showLoader ? (
+                <span className="loader"></span>
+              ) : (
+                <pre className="text-left font-bold">{outputValue}</pre>
+              )}
+            </TabPanel>
+
+            <TabPanel value={value} index={1}>
               <textarea
-                className="w-full bg-gray-800 outline-none rounded-lg p-1 text-lg"
+                className="w-full placeholder:text-base placeholder:p-2 bg-gray-800 outline-none rounded-lg p-1 text-lg"
                 rows="6"
                 id="input-btn"
                 placeholder="Custom Input here"
@@ -621,21 +675,6 @@ const Editor = ({ id }) => {
                 onChange={(e) => changeInputValue(e.target.value)}
                 spellcheck="false"
               ></textarea>
-            </TabPanel>
-
-            <TabPanel value={value} index={1}>
-              {/* <textarea
-           className="w-full bg-gray-800 outline-none rounded-lg p-1 text-lg"
-           rows="6"
-           id="output-btn"
-           value={outputValue}
-           disabled={false}
-           spellcheck="false"
-          //  readOnly={true}
-         ></textarea> */}
-              {showLoader ? <span className="loader"></span> : <span></span>}
-              {/* <span className="loader"></span> */}
-              <pre className="text-left font-bold">{outputValue}</pre>
             </TabPanel>
           </Box>
         </div>

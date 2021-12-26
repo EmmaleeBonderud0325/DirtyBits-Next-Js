@@ -30,7 +30,7 @@ import Gettoken from "../components/Helper/Gettoken";
 function addproblems(props) {
   const problemData = useSelector((state) => state.addProblemData);
   const dispatch = useDispatch();
-  let [step, setStep] = useState(1);
+  let [step, setStep] = useState(2);
   let [customTestCases, changeCustomTestCases] = useState([{ id: uuid() }]);
   let [testCases, changeTestCases] = useState([{ id: uuid() }]);
   let [probId, setProbId] = useState(null);
@@ -80,7 +80,9 @@ function addproblems(props) {
     const sco = "sc-" + n.id + "-o";
     return (
       <div className="overflow-hidden bg-black w-full p-4 space-y-3 rounded-2xl border border-custom-bg">
-        <h1 className="lg:text-3xl font-bold">Test Case - {idx + 1}</h1>
+        <h1 className="lg:text-3xl text-white font-bold">
+          Test Case - {idx + 1}
+        </h1>
         <div className="each-custom space-y-2" id={n.id}>
           <div className="lg:flex justify-center lg:space-x-10">
             <div className="lg:space-x-6 ">
@@ -108,7 +110,7 @@ function addproblems(props) {
     const tco = "tc-" + n.id + "-o";
     return (
       <div className="overflow-hidden bg-black p-4 space-y-3 rounded-2xl border border-custom-bg">
-        <h1 className="text-3xl">Test Case - {idx + 1}</h1>
+        <h1 className="text-3xl text-white">Test Case - {idx + 1}</h1>
         <div className="each-custom" id={n.id}>
           <div className="lg:flex justify-center lg:space-x-10">
             <div className="lg:space-x-6 ">
@@ -131,16 +133,6 @@ function addproblems(props) {
     );
   });
 
-  // const postData = async (data) => {
-  //   await uploadTestCases
-  //     .post("/", data)
-  //     .then((result) => {
-  //       console.log(result.status);
-  //     })
-  //     .catch(() => {
-  //       console.log("error");
-  //     });
-  // };
   const postData = async (data) => {
     try {
       toast
@@ -236,7 +228,7 @@ function addproblems(props) {
         </Head>
         <div className="lg:container m-auto">
           <div className="lg:pl-36 p-5 space-y-14">
-            <h1 className="text-center font-extrabold text-4xl lg:text-[3rem] lg:text-left">
+            <h1 className="text-center text-white font-extrabold text-4xl lg:text-[3rem] lg:text-left">
               Add <span className="text-custom-bg">Problems</span>
             </h1>
             <hr />
@@ -339,12 +331,12 @@ function addproblems(props) {
         </Head>
         <div className="lg:container m-auto">
           <div className="lg:pl-36 p-5 space-y-14">
-            <h1 className="font-extrabold text-center text-4xl lg:text-[3rem] lg:text-left">
+            <h1 className="font-extrabold text-white text-center text-4xl lg:text-[3rem] lg:text-left">
               Add <span className="text-custom-bg">Problems</span>{" "}
               <CloudUploadOutlined className="text-[5rem]" />
             </h1>
             <hr />
-            <h3 className="font-bold text-center text-2xl lg:text-[2rem] lg:text-left">
+            <h3 className="font-bold text-white text-center text-2xl lg:text-[2rem] lg:text-left">
               Sample Test Cases
             </h3>
             {renderListSC}
@@ -354,7 +346,7 @@ function addproblems(props) {
             >
               Add{" "}
             </button>
-            <h3 className="font-bold text-center text-2xl lg:text-[2rem] lg:text-left">
+            <h3 className="font-bold text-white text-center text-2xl lg:text-[2rem] lg:text-left">
               Test Cases
             </h3>
             {renderListTC}

@@ -51,11 +51,13 @@
     "redux-thunk": "^2.3.0",
     "sass": "^1.43.4",
     "tailwind-scrollbar-hide": "^1.0.4",
-    "tailwindcss": "^2.2.16",
     "typewriter-effect": "^2.18.2"
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.0",
     "eslint": "8.0.0",
-    "eslint-config-next": "11.1.2"
+    "eslint-config-next": "11.1.2",
+    "postcss": "^8.4.5",
+    "tailwindcss": "^3.0.7"
   }
 }

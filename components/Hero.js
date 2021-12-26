@@ -6,10 +6,7 @@ import Feature from "./Features";
 export default function Example() {
   return (
     <>
-      <div
-        style={{ zIndex: -999 }}
-        className="relative bg-purple-400 h-screen w-screen customHero"
-      >
+      <div className="relative bg-purple-400 h-screen w-screen customHero -z-50">
         <div className="max-w-7xl mx-auto">
           <div className="relative z-10 pb-8 bg-black-400 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
             <svg
@@ -24,7 +21,7 @@ export default function Example() {
             <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
               <div className="sm:text-center lg:text-left">
                 <h1 className="text-4xl tracking-tight font-thin text-gray-900 sm:text-xs md:text-6xl">
-                  <span className="block xl:block font-semibold text-custom-yellow lg:text-5xl sm:text-xs">
+                  <span className="block xl:block font-semibold text-custom-yellow lg:text-5xl md:text-3xl">
                     <Typewriter
                       options={{ loop: true }}
                       onInit={(typewriter) => {
@@ -55,7 +52,7 @@ export default function Example() {
                   <div className="rounded-md shadow">
                     <a
                       href="#"
-                      className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-custom-yellow hover:bg-custom-yellow2 md:py-4 md:text-lg md:px-10"
+                      className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-custom-yellow hover:bg-custom-yellow2 md:py-4 md:text-lg md:px-10 shadow-xl shadow-custom-yellow/40"
                     >
                       Explore Now
                     </a>

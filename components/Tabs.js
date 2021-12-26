@@ -14,9 +14,14 @@ import {
   AiFillDislike,
   AiOutlineGlobal,
 } from "react-icons/ai";
+import { BsBookmarkCheck, BsBookmarkCheckFill } from "react-icons/bs";
 import IoTable from "./ProblemPage/IoTable";
 import { memo } from "react";
-import { getUpvoteDownvoteapi } from "./api/apis";
+import {
+  getUpvoteDownvoteapi,
+  getSubmissionsList,
+  upAndDownVoteHandler,
+} from "./api/apis";
 import Cookies from "js-cookie";
 import Gettoken from "./Helper/Gettoken";
 
@@ -61,6 +66,7 @@ function BasicTabs({ questionData }) {
   const [downVote, setDownVote] = React.useState(0);
   const [isUpVoted, setIsUpVoted] = React.useState(false);
   const [isDownVoted, setIsDownVoted] = React.useState(false);
+  const [isBookmarkSet, setIsBookmarkSet] = React.useState(false);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -150,20 +156,70 @@ function BasicTabs({ questionData }) {
     getUpvoteDownvote();
   }, []);
 
-  const upVoteHandler = () => {
-    setUpVote((prev) => prev + 1);
+  const upVoteHandler = async () => {
+    const response = await upAndDownVoteHandler.post(
+      "/",
+      {
+        data: {
+          problem_id: questionData.id,
+          type: "upvote",
+        },
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `JWT ${Cookies.get("access")}`,
+        },
+      }
+    );
+    console.log("response", response);
+    setIsUpVoted(!isUpVoted);
+    isUpVoted ? setUpVote((prev) => prev - 1) : setUpVote((prev) => prev + 1);
     if (downVote > 0) {
       setDownVote((prev) => prev - 1);
     }
   };
 
-  const downVoteHandler = () => {
-    setDownVote((prev) => prev + 1);
+  const downVoteHandler = async () => {
+    const response = await upAndDownVoteHandler.post(
+      "/",
+      {
+        data: {
+          problem_id: questionData.id,
+          type: "downvote",
+        },
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `JWT ${Cookies.get("access")}`,
+        },
+      }
+    );
+    console.log("response", response);
+    setIsDownVoted(!isDownVoted);
+    isDownVoted
+      ? setDownVote((prev) => prev - 1)
+      : setDownVote((prev) => prev + 1);
     if (upVote > 0) {
       setUpVote((prev) => prev - 1);
     }
   };
 
+  // const submissionsListHandler = async () => {
+  //   const {data} = getSubmissionsList.
+  // }
+
+  // GET THE CURRENT STATUS OF BOOKMARK FOR THE CURRENT USER
+  const getBookmarkStatus = () => {
+    // SET THE STATE OF THE BOOKMARK BASED ON THE API RESPONSE
+  };
+
+  const bookMarkHandler = () => {
+    setIsBookmarkSet(!isBookmarkSet);
+  };
+
+  console.log("TABS COMPONENT RENDERED");
   return (
     <Box sx={{ width: "100%", height: "100vh" }} className="scrollbar-hide">
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -191,6 +247,14 @@ function BasicTabs({ questionData }) {
             {questionData.title}
           </p>
 
+          {/* BOOKMARK */}
+          <div onClick={bookMarkHandler}>
+            {isBookmarkSet ? (
+              <BsBookmarkCheckFill className="text-lg" />
+            ) : (
+              <BsBookmarkCheck className="text-lg" />
+            )}
+          </div>
           {/* PROBLEM DIFFICULTY */}
 
           <div className="flex items-center space-x-5">
@@ -257,22 +321,14 @@ function BasicTabs({ questionData }) {
 
           {/* SAMEPLE INPUT TEST CASES */}
           <h2 className="text-white">Sample Test Cases</h2>
-          {/* <div className="select-none bg-gray-700 rounded-xl p-2">
-            {inputTestCases.map((val, idx) => (
-              <pre>{idx + 1}) <pre className="ml-10">{val}</pre></pre>
-            ))}
-          </div> */}
           {inputTestCases.length > 0 &&
             inputTestCases.map((val, idx) => (
-              <IoTable inputData={val} outputData={outputTestCases[idx]} />
+              <IoTable
+                key={idx}
+                inputData={val}
+                outputData={outputTestCases[idx]}
+              />
             ))}
-          {/* SAMEPLE OUTPUT TEST CASES */}
-          {/* <h2 className="text-white">Sample Output Example</h2>
-          <div className="select-none bg-gray-700 rounded-xl p-2">
-            {outputTestCases.map((val, idx) => (
-              <pre>{idx + 1}) {val}</pre>
-            ))}
-          </div> */}
 
           {/* CONSTRAINTS */}
           <h2 className="text-white">Constraints:</h2>
