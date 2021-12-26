@@ -1,7 +1,6 @@
 import hero from "../public/cartoon1.jpeg";
 import Image from "next/image";
 import Typewriter from "typewriter-effect";
-import Feature from "./Features";
 
 export default function Example() {
   return (
@@ -69,11 +68,10 @@ export default function Example() {
             alt="hero"
             width={500}
             height={500}
+            priority
+            placeholder="blur"
           />
         </div>
-      </div>
-      <div>
-        <Feature />
       </div>
     </>
   );

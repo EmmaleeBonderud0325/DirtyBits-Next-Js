@@ -2,10 +2,11 @@ import React from "react";
 import Hero from "../components/Hero";
 import Head from "next/head";
 import Pricing from "../components/Pricing";
+import Features from "../components/Features";
 
 function index() {
   return (
-    <div className="overflow-x-hidden">
+    <>
       <Head>
         <title>DirtyBits</title>
         <meta
@@ -14,8 +15,9 @@ function index() {
         ></meta>
       </Head>
       <Hero />
+      <Features />
       <Pricing />
-    </div>
+    </>
   );
 }
 
