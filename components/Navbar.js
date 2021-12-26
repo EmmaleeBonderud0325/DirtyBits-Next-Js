@@ -31,8 +31,8 @@ function Navbar({ userInfo, bg, fixedHeader }) {
     },
     {
       name: "Practice",
-      href: "/practice",
-      current: router.pathname === "/practice" ? true : false,
+      href: "/problemset",
+      current: router.pathname === "/problemset" ? true : false,
     },
     {
       name: "Leaderboard",
