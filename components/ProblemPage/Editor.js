@@ -155,12 +155,6 @@ const Editor = ({ id }) => {
   );
   let [showMode, changeShowMode] = useState(true);
   const [showConsole, setShowConsole] = useState(false);
-  let [inputBtnClass, setInputBtnClass] = useState(
-    "positive ui left attached button"
-  );
-  let [outputBtnClass, setOutputBtnClass] = useState(
-    "right attached ui button"
-  );
   let [showLoader, setShowLoader] = useState(false);
   const [value, setValue] = React.useState(0);
 
@@ -262,7 +256,6 @@ const Editor = ({ id }) => {
       )
       .then((result) => {
         setShowLoader(false);
-
         if (result.data["status"] !== "Accepted") {
           changeOutputValue(
             result.data["status"] + "\n" + result.data["error"]
@@ -351,14 +344,10 @@ const Editor = ({ id }) => {
 
   const handleShowMode = (e) => {
     const ele_id = e.target.id;
-    if (ele_id === "input-btn") {
+    if (ele_id === "simple-tab-0") {
       changeShowMode(true);
-      setInputBtnClass("positive ui left attached button");
-      setOutputBtnClass("right attached ui button");
     } else {
       changeShowMode(false);
-      setInputBtnClass("ui left attached button");
-      setOutputBtnClass("positive right attached ui button");
     }
     console.log(e.target.id);
   };
