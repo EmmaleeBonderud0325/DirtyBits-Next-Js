@@ -3,8 +3,6 @@ import { useState, useEffect } from "react";
 import Dropdown from "../components/Dropdown";
 import { motion } from "framer-motion";
 import Table from "../components/Table";
-import { connect } from "react-redux";
-import { updateProblemsStatus } from "../redux/actions";
 import { useSelector } from "react-redux";
 import { DiReact } from "react-icons/di";
 
@@ -57,19 +55,25 @@ function Problem(props) {
             <div className="relative flex justify-center items-center h-full w-full rounded-md bg-gradient-to-r from-cyan-500 to-blue-500">
               <DiReact className="absolute text-9xl" />
             </div>
-            <p className="text-white text-center">Learn React Development</p>
+            <a href="/learning/reactjs" className="text-white text-center">
+              Learn React Development
+            </a>
           </div>
           <div className="space-y-3 h-40 w-40 pb-2">
             <div className="relative flex justify-center items-center h-full w-full rounded-md bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
               <DiReact className="absolute text-9xl" />
             </div>
-            <p className="text-white text-center">Learn React Development</p>
+            <a href="/learning/reactjs" className="text-white text-center">
+              Learn React Development
+            </a>
           </div>
           <div className="space-y-3 h-40 w-40 pb-2">
             <div className="relative flex justify-center items-center h-full w-full rounded-md bg-gradient-to-r from-green-400 to-green-300">
               <DiReact className="absolute text-9xl" />
             </div>
-            <p className="text-white text-center">Learn React Development</p>
+            <a href="/learning/reactjs" className="text-white text-center">
+              Learn React Development
+            </a>
           </div>
         </div>
       </motion.div>

@@ -14,19 +14,11 @@ const Profile = () => {
         <title>{userInfo.username}</title>
       </Head>
       <h1 className="text-white font-bold text-center text-4xl mt-5">
-        User profile
+        User Dashboard
       </h1>
       <Row>
         <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            className="space-y-2"
-          >
+          <div className="space-y-2 flex flex-col justify-center items-center">
             <Image
               className="rounded-full object-contain"
               src={
@@ -34,16 +26,19 @@ const Profile = () => {
               }
               width={240}
               height={240}
+              placeholder="blur"
+              blurDataURL="https://helostatus.com/wp-content/uploads/2021/08/profile-pictures-for-WhatsApp.jpg"
             />
-            <h1 className="text-white">Mohit Singh Bisht</h1>
-            <p>bmohit980@gmail.com</p>
+            <h1 className="text-white text-2xl">Mohit Singh Bisht</h1>
+            <p className="text-base">bmohit980@gmail.com</p>
+            <p className="text-2xl">#1 Rank</p>
           </div>
         </Col>
         <Col xs={{ span: 11, offset: 1 }} flex="1">
           <div className="space-y-10">
             <Row gutter={16}>
               <Col span={12}>
-                <Card style={{ backgroundColor: "black", border: "none" }}>
+                <Card style={{ backgroundColor: "#1F2937", border: "none" }}>
                   <Statistic
                     title="Solved Questions"
                     value={11.28}
@@ -55,7 +50,12 @@ const Profile = () => {
                 </Card>
               </Col>
               <Col span={12}>
-                <Card style={{ backgroundColor: "black", border: "none" }}>
+                <Card
+                  style={{
+                    backgroundColor: "#1F2937",
+                    border: "none",
+                  }}
+                >
                   <Statistic
                     title="Attempted Questions"
                     value={9.3}
@@ -69,7 +69,7 @@ const Profile = () => {
             </Row>
             <Row gutter={16}>
               <Col span={12}>
-                <Card style={{ backgroundColor: "black", border: "none" }}>
+                <Card style={{ backgroundColor: "#1F2937", border: "none" }}>
                   <Statistic
                     title="Solved Questions"
                     value={11.28}
@@ -81,7 +81,7 @@ const Profile = () => {
                 </Card>
               </Col>
               <Col span={12}>
-                <Card style={{ backgroundColor: "black", border: "none" }}>
+                <Card style={{ backgroundColor: "#1F2937", border: "none" }}>
                   <Statistic
                     title="Attempted Questions"
                     value={9.3}
