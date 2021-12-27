@@ -23,6 +23,7 @@ import { googleLoginApi } from "../../components/api/apis";
 import { updateUserinfo } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 
+require("codemirror/lib/codemirror.css");
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
   return (
@@ -60,9 +61,6 @@ if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
   CodeMirror = require("react-codemirror2").Controlled;
   require("codemirror/mode/yaml/yaml");
   require("codemirror/mode/dockerfile/dockerfile");
-
-  require("codemirror/lib/codemirror.css");
-  require("./Editor.module.css");
 
   require("codemirror/theme/ayu-mirage.css");
   require("codemirror/theme/base16-dark.css");

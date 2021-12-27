@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap");
+
 .my-code-editor {
   font-family: "Roboto Mono", monospace;
   font-size: 17px;
@@ -8,12 +9,12 @@
 }
 
 .CodeMirror {
-  min-height: 500px;
+  height: 500px !important;
   width: 100%;
 }
 
 .cm-matchhighlight {
-  background: #4b4949 !important;
+  background: rgb(75, 73, 73) !important;
   opacity: 5;
 }
 
@@ -26,4 +27,3 @@
   padding-top: 1rem;
   padding-left: 2rem;
 }
-/*# sourceMappingURL=Editor.module.css.map */
