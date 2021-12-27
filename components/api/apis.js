@@ -3,8 +3,8 @@ import axios from "axios";
 const BASE_URL = "https://db-auth.herokuapp.com/";
 // const BASE_URL = "http://localhost:8000/";
 
-// const PROBLEM_URL = "https://db-code.herokuapp.com/";
-const PROBLEM_URL = "http://localhost:8000/";
+const PROBLEM_URL = "https://db-code.herokuapp.com/";
+// const PROBLEM_URL = "http://localhost:8000/";
 
 const localhost = "http://localhost:8000/";
 
