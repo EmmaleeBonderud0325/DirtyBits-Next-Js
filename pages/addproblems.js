@@ -30,7 +30,7 @@ import Gettoken from "../components/Helper/Gettoken";
 function addproblems(props) {
   const problemData = useSelector((state) => state.addProblemData);
   const dispatch = useDispatch();
-  let [step, setStep] = useState(2);
+  let [step, setStep] = useState(1);
   let [customTestCases, changeCustomTestCases] = useState([{ id: uuid() }]);
   let [testCases, changeTestCases] = useState([{ id: uuid() }]);
   let [probId, setProbId] = useState(null);
