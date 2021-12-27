@@ -18,7 +18,7 @@ import { BsBookmarkCheck, BsBookmarkCheckFill } from "react-icons/bs";
 import IoTable from "./ProblemPage/IoTable";
 import { memo } from "react";
 import {
-  getUpvoteDownvoteapi,
+  getProblemPageDataApi,
   getSubmissionsList,
   upAndDownVoteHandler,
 } from "./api/apis";
@@ -125,7 +125,7 @@ function BasicTabs({ questionData }) {
     GetOutputTestCases();
   };
 
-  const getUpvoteDownvote = async () => {
+  const getProblemPageData = async () => {
     if (!Cookies.get("refresh")) {
       console.error("upvote downvote", "Login Required !!");
       return;
@@ -134,7 +134,7 @@ function BasicTabs({ questionData }) {
     if (!acces_token) {
       await Gettoken(Cookies.get("refresh"));
     }
-    await getUpvoteDownvoteapi
+    await getProblemPageDataApi
       .post(
         "/",
         { problem_id: questionData.id },
@@ -155,7 +155,7 @@ function BasicTabs({ questionData }) {
     getTestCases();
     setUpVote(questionData.up_votes);
     setDownVote(questionData.down_votes);
-    getUpvoteDownvote();
+    getProblemPageData();
   }, []);
 
   const upVoteHandler = async () => {
