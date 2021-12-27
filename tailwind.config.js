@@ -2,7 +2,7 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
   mode: "jit",
-  purge: ["./pages/**/*.js", "./styles/**/*.css", "./components/**/*.js"],
+  content: ["./pages/**/*.js", "./styles/**/*.css", "./components/**/*.js"],
   future: {
     removeDeprecatedGapUtilities: true,
     purgeLayersByDefault: true,
@@ -21,6 +21,7 @@ module.exports = {
         "custom-maroon": "#410B3B",
         "custom-background": "#06202A",
         "custom-bg": "#AB61F7",
+        "custom-indigo": "#6366F1",
       },
     },
   },

@@ -2,7 +2,7 @@ import hero from "../public/cartoon1.jpeg";
 import Image from "next/image";
 import Typewriter from "typewriter-effect";
 
-export default function Example() {
+export default function Hero() {
   return (
     <>
       <div className="relative bg-purple-400 h-screen w-screen customHero -z-50">
@@ -20,7 +20,7 @@ export default function Example() {
             <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
               <div className="sm:text-center lg:text-left">
                 <h1 className="text-4xl tracking-tight font-thin text-gray-900 sm:text-xs md:text-6xl">
-                  <span className="block xl:block font-semibold text-custom-yellow lg:text-5xl md:text-3xl">
+                  <span className="block xl:block font-semibold text-custom-indigo lg:text-5xl md:text-3xl tracking-wider">
                     <Typewriter
                       options={{ loop: true }}
                       onInit={(typewriter) => {
@@ -40,7 +40,7 @@ export default function Example() {
                       }}
                     />
                   </span>{" "}
-                  <span className="block text-white font-light xl:block mt-5 text-4xl">
+                  <span className="block text-white font-light xl:block mt-5 text-4xl tracking-wider">
                     Be a Coder with us.
                   </span>
                 </h1>
@@ -51,7 +51,7 @@ export default function Example() {
                   <div className="rounded-md shadow">
                     <a
                       href="#"
-                      className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-custom-yellow hover:bg-custom-yellow2 md:py-4 md:text-lg md:px-10 shadow-xl shadow-custom-yellow/40"
+                      className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-custom-indigo hover:bg-custom-yellow2 md:py-4 md:text-lg md:px-10 shadow-xl shadow-custom-indigo/40"
                     >
                       Explore Now
                     </a>

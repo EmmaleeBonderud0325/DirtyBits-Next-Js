@@ -9,6 +9,7 @@ import { connect, useDispatch } from "react-redux";
 import LoginButton from "./LoginButton";
 import Cookies from "js-cookie";
 import { updateUserinfo } from "../redux/actions";
+import logo from "../public/logo.svg";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -78,18 +79,19 @@ function Navbar({ userInfo, bg, fixedHeader }) {
                     )}
                   </Disclosure.Button>
                 </div>
-                <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+                <div className="flex-1 flex items-center justify-center sm:items-center sm:justify-start ">
                   <div className="flex-shrink-0 flex items-center">
-                    <img
+                    {/* <img
                       className="block lg:hidden h-8 w-auto"
                       src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
                       alt="Workflow"
-                    />
-                    <img
+                    /> */}
+                    <Image src={logo} width={300} height={100} />
+                    {/* <img
                       className="hidden lg:block h-8 w-auto"
                       src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
                       alt="Workflow"
-                    />
+                    /> */}
                   </div>
                   <div className="hidden sm:block sm:ml-6">
                     <div className="flex space-x-4">
@@ -98,8 +100,8 @@ function Navbar({ userInfo, bg, fixedHeader }) {
                         <a
                           className={classNames(
                             item.current
-                              ? "bg-custom-yellow text-white"
-                              : "text-gray-300 hover:bg-custom-yellow hover:text-white",
+                              ? "bg-custom-indigo text-white hover:text-white"
+                              : "text-gray-300 hover:bg-gray-500 hover:text-white",
                             "px-3 py-2 rounded-md text-sm font-medium"
                           )}
                           aria-current={item.current ? "page" : undefined}

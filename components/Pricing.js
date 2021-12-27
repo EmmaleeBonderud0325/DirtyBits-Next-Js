@@ -9,7 +9,7 @@ function Pricing() {
           <div className="">
             <div className="text-center font-semibold">
               <h1 className="text-5xl">
-                <span className="text-custom-yellow tracking-wide">
+                <span className="text-custom-indigo tracking-wide">
                   Flexible{" "}
                 </span>
                 <span className="text-white">Plans</span>
@@ -55,7 +55,7 @@ function Pricing() {
                   </p>
 
                   <a href="#" className="cursor-not-allowed">
-                    <p className="w-full py-4 bg-custom-yellow mt-8 rounded-xl text-white">
+                    <p className="w-full py-4 bg-custom-indigo mt-8 rounded-xl text-white">
                       <span className="font-medium">Choose Plan</span>
                       <span className="pl-2 material-icons align-middle text-sm">
                         <ArrowForward />
@@ -67,8 +67,8 @@ function Pricing() {
               <div className="w-80 p-8 bg-gray-900 text-center rounded-3xl text-white border-4 shadow-xl border-white transform scale-125">
                 <h1 className="text-white font-semibold text-2xl">Startup</h1>
                 <p className="pt-2 tracking-wide">
-                  <span className="text-gray-400 align-top">$ </span>
-                  <span className="text-3xl font-semibold">24</span>
+                  <span className="text-gray-400 align-top">Rs </span>
+                  <span className="text-3xl font-semibold">1</span>
                   <span className="text-gray-400 font-medium">/ user</span>
                 </p>
                 <hr className="mt-4 border-1 border-gray-600" />
@@ -78,7 +78,7 @@ function Pricing() {
                       <Check />
                     </span>
                     <span className="pl-2">
-                      User Profile <span className="text-black">access</span>
+                      User Profile <span className="text-white">access</span>
                     </span>
                   </p>
                   <p className="font-semibold text-gray-400 text-left pt-5">
@@ -86,7 +86,7 @@ function Pricing() {
                       <Check />
                     </span>
                     <span className="pl-2">
-                      Add Problems <span className="text-black">access</span>
+                      Add Problems <span className="text-white">access</span>
                     </span>
                   </p>
                   <p className="font-semibold text-gray-400 text-left pt-5">
@@ -99,7 +99,7 @@ function Pricing() {
                   </p>
 
                   <a href="#" className="">
-                    <p className="w-full py-4 bg-custom-yellow mt-8 rounded-xl text-white">
+                    <p className="w-full py-4 bg-custom-indigo mt-8 rounded-xl text-white">
                       <span className="font-medium">Choose Plan</span>
                       <span className="pl-2 material-icons align-middle text-sm">
                         <ArrowForward />
@@ -108,7 +108,7 @@ function Pricing() {
                   </a>
                 </div>
                 <div className="absolute top-4 right-4">
-                  <p className="bg-custom-yellow2 font-semibold px-4 py-1 rounded-full uppercase text-xs">
+                  <p className="bg-indigo-800 font-semibold px-4 py-1 rounded-full uppercase text-xs">
                     Popular
                   </p>
                 </div>
@@ -118,8 +118,8 @@ function Pricing() {
                   Enterprise
                 </h1>
                 <p className="pt-2 tracking-wide">
-                  <span className="text-gray-400 align-top">$ </span>
-                  <span className="text-3xl font-semibold">35</span>
+                  <span className="text-gray-400 align-top">Rs </span>
+                  <span className="text-3xl font-semibold">0</span>
                   <span className="text-gray-400 font-medium">/ user</span>
                 </p>
                 <hr className="mt-4 border-1" />
@@ -150,7 +150,7 @@ function Pricing() {
                   </p>
 
                   <a href="#" className="cursor-not-allowed">
-                    <p className="w-full py-4 bg-custom-yellow mt-8 rounded-xl text-white">
+                    <p className="w-full py-4 bg-custom-indigo mt-8 rounded-xl text-white">
                       <span className="font-medium">Choose Plan</span>
                       <span className="pl-2 material-icons align-middle text-sm">
                         <ArrowForward />
