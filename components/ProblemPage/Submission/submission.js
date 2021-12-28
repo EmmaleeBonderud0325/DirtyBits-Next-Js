@@ -7,19 +7,14 @@ const Submission = () => {
   useEffect(() => {
     //request
     async function getList() {
-      const response = await getSubmissionsList.post(
-        "/",
-        {
+      try {
+        const response = await getSubmissionsList.post("/", {
           problem_id: 6,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `JWT ${Cookies.get("access")}`,
-          },
-        }
-      );
-      console.log("response", response.data);
+        });
+        console.log("response", response.data);
+      } catch (e) {
+        console.error("Token Error");
+      }
     }
     getList();
   });

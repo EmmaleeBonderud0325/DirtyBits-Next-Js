@@ -23,7 +23,6 @@ import {
   handleBookmark,
 } from "./api/apis";
 import Cookies from "js-cookie";
-import Gettoken from "./Helper/Gettoken";
 import Submissions from "./ProblemPage/Submission/submission";
 
 function TabPanel(props) {
@@ -132,27 +131,18 @@ function BasicTabs({ questionData }) {
       console.error("upvote downvote", "Login Required !!");
       return;
     }
-    const acces_token = Cookies.get("access");
-    if (!acces_token) {
-      await Gettoken(Cookies.get("refresh"));
+    try {
+      await getProblemPageDataApi
+        .post("/", { problem_id: questionData.id })
+        .then((result) => {
+          setIsUpVoted(result.data.upvote);
+          setIsDownVoted(result.data.downvote);
+          setUserSubmissions(result.data.submissions);
+          setIsBookmarkSet(result.data.bookmarked);
+        });
+    } catch (e) {
+      console.error("Token Error");
     }
-    await getProblemPageDataApi
-      .post(
-        "/",
-        { problem_id: questionData.id },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `JWT ${Cookies.get("access")}`,
-          },
-        }
-      )
-      .then((result) => {
-        setIsUpVoted(result.data.upvote);
-        setIsDownVoted(result.data.downvote);
-        setUserSubmissions(result.data.submissions);
-        setIsBookmarkSet(result.data.bookmarked);
-      });
   };
 
   useEffect(() => {
@@ -163,45 +153,35 @@ function BasicTabs({ questionData }) {
   }, []);
 
   const upVoteHandler = async () => {
-    const response = await upAndDownVoteHandler.post(
-      "/",
-      {
+    try {
+      await upAndDownVoteHandler.post("/", {
         data: {
           problem_id: questionData.id,
           type: "upvote",
         },
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `JWT ${Cookies.get("access")}`,
-        },
-      }
-    );
-    setIsUpVoted(!isUpVoted);
-    isUpVoted ? setUpVote((prev) => prev - 1) : setUpVote((prev) => prev + 1);
+      });
+      setIsUpVoted(!isUpVoted);
+      isUpVoted ? setUpVote((prev) => prev - 1) : setUpVote((prev) => prev + 1);
+    } catch (e) {
+      console.error("Token Error");
+    }
   };
 
   const downVoteHandler = async () => {
-    const response = await upAndDownVoteHandler.post(
-      "/",
-      {
+    try {
+      await upAndDownVoteHandler.post("/", {
         data: {
           problem_id: questionData.id,
           type: "downvote",
         },
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `JWT ${Cookies.get("access")}`,
-        },
-      }
-    );
-    setIsDownVoted(!isDownVoted);
-    isDownVoted
-      ? setDownVote((prev) => prev - 1)
-      : setDownVote((prev) => prev + 1);
+      });
+      setIsDownVoted(!isDownVoted);
+      isDownVoted
+        ? setDownVote((prev) => prev - 1)
+        : setDownVote((prev) => prev + 1);
+    } catch (e) {
+      console.error("Token Error");
+    }
   };
 
   // const submissionsListHandler = async () => {
@@ -209,20 +189,15 @@ function BasicTabs({ questionData }) {
   // }
 
   const bookmarkStatusHandler = async () => {
-    const { status } = await handleBookmark.post(
-      "/",
-      {
+    try {
+      const { status } = await handleBookmark.post("/", {
         problem_id: 6,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `JWT ${Cookies.get("access")}`,
-        },
+      });
+      if (status === 200) {
+        setIsBookmarkSet(!isBookmarkSet);
       }
-    );
-    if (status === 200) {
-      setIsBookmarkSet(!isBookmarkSet);
+    } catch (e) {
+      console.error("Token Error");
     }
   };
 

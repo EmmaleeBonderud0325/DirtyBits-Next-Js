@@ -1,4 +1,10 @@
 import axios from "axios";
+import Cookies from "js-cookie";
+
+const HEADERS = {
+  "Content-Type": "application/json",
+  Authorization: "JWT " + Cookies.get("access"),
+};
 
 const BASE_URL = "https://db-auth.herokuapp.com/";
 // const BASE_URL = "http://localhost:8000/";
@@ -46,7 +52,38 @@ export const verifyVerificationCode = axios.create({
 
 export const AddProblem = axios.create({
   baseURL: PROBLEM_URL + "problems/addProblem",
+  headers: HEADERS,
 });
+
+AddProblem.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const originalRequest = error.config;
+    if (
+      error.response.status === 401 &&
+      error.response.statusText === "Unauthorized"
+    ) {
+      const refresh_token = Cookies.get("refresh");
+      return refreshTokenApi
+        .post("/", {
+          refresh: refresh_token,
+        })
+        .then((response) => {
+          const { access, refresh } = response.data;
+          Cookies.set("access", access);
+          Cookies.set("refresh", refresh, { expires: 14 });
+          AddProblem.defaults.headers["Authorization"] = "JWT " + access;
+          originalRequest.headers["Authorization"] = "JWT " + access;
+          return AddProblem(originalRequest);
+        })
+        .catch((err) => {
+          // LOGOUT AND REDIRECT TO SIGNIN AGAIN
+          console.log(err);
+        });
+    }
+    return Promise.reject(error);
+  }
+);
 
 export const uploadTestCases = axios.create({
   baseURL: PROBLEM_URL + "problems/uploadTC",
@@ -58,7 +95,38 @@ export const getProblemsList = axios.create({
 
 export const getProblemsStatus = axios.create({
   baseURL: PROBLEM_URL + "problems/getProblemsStatus",
+  headers: HEADERS,
 });
+
+getProblemsStatus.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const originalRequest = error.config;
+    if (
+      error.response.status === 401 &&
+      error.response.statusText === "Unauthorized"
+    ) {
+      const refresh_token = Cookies.get("refresh");
+      return refreshTokenApi
+        .post("/", {
+          refresh: refresh_token,
+        })
+        .then((response) => {
+          const { access, refresh } = response.data;
+          Cookies.set("access", access);
+          Cookies.set("refresh", refresh, { expires: 14 });
+          getProblemsStatus.defaults.headers["Authorization"] = "JWT " + access;
+          originalRequest.headers["Authorization"] = "JWT " + access;
+          return getProblemsStatus(originalRequest);
+        })
+        .catch((err) => {
+          // LOGOUT AND REDIRECT TO SIGNIN AGAIN
+          console.log(err);
+        });
+    }
+    return Promise.reject(error);
+  }
+);
 
 export const getProblem = axios.create({
   baseURL: PROBLEM_URL + "problems/getProblem",
@@ -78,15 +146,143 @@ export const runTestCases = axios.create({
 
 export const getProblemPageDataApi = axios.create({
   baseURL: PROBLEM_URL + "problems/getProblemPageData",
+  headers: HEADERS,
 });
+
+getProblemPageDataApi.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const originalRequest = error.config;
+    if (
+      error.response.status === 401 &&
+      error.response.statusText === "Unauthorized"
+    ) {
+      const refresh_token = Cookies.get("refresh");
+      return refreshTokenApi
+        .post("/", {
+          refresh: refresh_token,
+        })
+        .then((response) => {
+          const { access, refresh } = response.data;
+          Cookies.set("access", access);
+          Cookies.set("refresh", refresh, { expires: 14 });
+          getProblemPageDataApi.defaults.headers["Authorization"] =
+            "JWT " + access;
+          originalRequest.headers["Authorization"] = "JWT " + access;
+          return getProblemPageDataApi(originalRequest);
+        })
+        .catch((err) => {
+          // LOGOUT AND REDIRECT TO SIGNIN AGAIN
+          console.log(err);
+        });
+    }
+    return Promise.reject(error);
+  }
+);
 
 export const getSubmissionsList = axios.create({
   baseURL: PROBLEM_URL + "problems/getsubmissionslist",
+  headers: HEADERS,
 });
+
+getSubmissionsList.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const originalRequest = error.config;
+    if (
+      error.response.status === 401 &&
+      error.response.statusText === "Unauthorized"
+    ) {
+      const refresh_token = Cookies.get("refresh");
+      return refreshTokenApi
+        .post("/", {
+          refresh: refresh_token,
+        })
+        .then((response) => {
+          const { access, refresh } = response.data;
+          Cookies.set("access", access);
+          Cookies.set("refresh", refresh, { expires: 14 });
+          getSubmissionsList.defaults.headers["Authorization"] =
+            "JWT " + access;
+          originalRequest.headers["Authorization"] = "JWT " + access;
+          return getSubmissionsList(originalRequest);
+        })
+        .catch((err) => {
+          // LOGOUT AND REDIRECT TO SIGNIN AGAIN
+          console.log(err);
+        });
+    }
+    return Promise.reject(error);
+  }
+);
 
 export const upAndDownVoteHandler = axios.create({
   baseURL: PROBLEM_URL + "problems/handleupvotedownvote",
+  headers: HEADERS,
 });
+
+upAndDownVoteHandler.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const originalRequest = error.config;
+    if (
+      error.response.status === 401 &&
+      error.response.statusText === "Unauthorized"
+    ) {
+      const refresh_token = Cookies.get("refresh");
+      return refreshTokenApi
+        .post("/", {
+          refresh: refresh_token,
+        })
+        .then((response) => {
+          const { access, refresh } = response.data;
+          Cookies.set("access", access);
+          Cookies.set("refresh", refresh, { expires: 14 });
+          upAndDownVoteHandler.defaults.headers["Authorization"] =
+            "JWT " + access;
+          originalRequest.headers["Authorization"] = "JWT " + access;
+          return upAndDownVoteHandler(originalRequest);
+        })
+        .catch((err) => {
+          // LOGOUT AND REDIRECT TO SIGNIN AGAIN
+          console.log(err);
+        });
+    }
+    return Promise.reject(error);
+  }
+);
+
 export const handleBookmark = axios.create({
   baseURL: PROBLEM_URL + "problems/handlebookmark",
+  headers: HEADERS,
 });
+
+handleBookmark.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const originalRequest = error.config;
+    if (
+      error.response.status === 401 &&
+      error.response.statusText === "Unauthorized"
+    ) {
+      const refresh_token = Cookies.get("refresh");
+      return refreshTokenApi
+        .post("/", {
+          refresh: refresh_token,
+        })
+        .then((response) => {
+          const { access, refresh } = response.data;
+          Cookies.set("access", access);
+          Cookies.set("refresh", refresh, { expires: 14 });
+          handleBookmark.defaults.headers["Authorization"] = "JWT " + access;
+          originalRequest.headers["Authorization"] = "JWT " + access;
+          return handleBookmark(originalRequest);
+        })
+        .catch((err) => {
+          // LOGOUT AND REDIRECT TO SIGNIN AGAIN
+          console.log(err);
+        });
+    }
+    return Promise.reject(error);
+  }
+);

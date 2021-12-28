@@ -25,7 +25,6 @@ import {
 } from "../redux/actions";
 import MultiSelect from "../components/MultiSelect";
 import { AddProblem, uploadTestCases } from "../components/api/apis";
-import Gettoken from "../components/Helper/Gettoken";
 
 function addproblems(props) {
   const problemData = useSelector((state) => state.addProblemData);
@@ -197,26 +196,19 @@ function addproblems(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(problemData);
-    await Gettoken(Cookies.get("refresh"));
-    await AddProblem.post(
-      "/",
-      { data: problemData },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "JWT " + Cookies.get("access"),
-        },
-      }
-    )
-      .then((result) => {
-        console.log(result.data);
-        setProbId(result.data["id"]);
-        setStep(2);
-      })
-      .catch(() => {
-        console.log("error");
-      });
+    try {
+      await AddProblem.post("/", { data: problemData })
+        .then((result) => {
+          console.log(result.data);
+          setProbId(result.data["id"]);
+          setStep(2);
+        })
+        .catch(() => {
+          console.log("error");
+        });
+    } catch (e) {
+      console.error("Token Error");
+    }
   };
 
   let problemMarkup;
