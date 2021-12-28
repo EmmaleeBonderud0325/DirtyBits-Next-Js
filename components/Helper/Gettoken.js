@@ -11,7 +11,8 @@ const Gettoken = async (refresh_token) => {
       return false;
     }
     const { access, refresh } = result.data;
-    Cookies.set("access", access);
+    var inTwentyMinutes = new Date(new Date().getTime() + 20 * 60 * 1000);
+    Cookies.set("access", access, { expires: inTwentyMinutes });
     Cookies.set("refresh", refresh, { expires: 14 });
     return true;
   } catch (e) {
