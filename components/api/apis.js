@@ -87,3 +87,6 @@ export const getSubmissionsList = axios.create({
 export const upAndDownVoteHandler = axios.create({
   baseURL: PROBLEM_URL + "problems/handleupvotedownvote",
 });
+export const handleBookmark = axios.create({
+  baseURL: PROBLEM_URL + "problems/handlebookmark",
+});
