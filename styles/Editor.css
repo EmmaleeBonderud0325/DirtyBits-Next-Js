@@ -8,8 +8,9 @@
 }
 
 .CodeMirror {
-  min-height: 500px;
+  height: 600px !important;
   width: 100%;
+  overflow: hidden !important;
 }
 
 .cm-matchhighlight {
@@ -26,4 +27,4 @@
   padding-top: 1rem;
   padding-left: 2rem;
 }
-/*# sourceMappingURL=Editor.module.css.map */
+/*# sourceMappingURL=Editor.css.map */

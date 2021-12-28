@@ -9,8 +9,9 @@
 }
 
 .CodeMirror {
-  min-height: 500px;
+  height: 600px !important;
   width: 100%;
+  overflow: hidden !important;
 }
 
 .cm-matchhighlight {

@@ -18,7 +18,7 @@ import { BsBookmarkCheck, BsBookmarkCheckFill } from "react-icons/bs";
 import IoTable from "./ProblemPage/IoTable";
 import { memo } from "react";
 import {
-  getUpvoteDownvoteapi,
+  getProblemPageDataApi,
   getSubmissionsList,
   upAndDownVoteHandler,
 } from "./api/apis";
@@ -67,6 +67,7 @@ function BasicTabs({ questionData }) {
   const [isUpVoted, setIsUpVoted] = React.useState(false);
   const [isDownVoted, setIsDownVoted] = React.useState(false);
   const [isBookmarkSet, setIsBookmarkSet] = React.useState(false);
+  const [userSubmissions, setUserSubmissions] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -125,13 +126,16 @@ function BasicTabs({ questionData }) {
     GetOutputTestCases();
   };
 
-  const getUpvoteDownvote = async () => {
+  const getProblemPageData = async () => {
     if (!Cookies.get("refresh")) {
       console.error("upvote downvote", "Login Required !!");
       return;
     }
-    await Gettoken(Cookies.get("refresh"));
-    await getUpvoteDownvoteapi
+    const acces_token = Cookies.get("access");
+    if (!acces_token) {
+      await Gettoken(Cookies.get("refresh"));
+    }
+    await getProblemPageDataApi
       .post(
         "/",
         { problem_id: questionData.id },
@@ -145,7 +149,7 @@ function BasicTabs({ questionData }) {
       .then((result) => {
         setIsUpVoted(result.data.upvote);
         setIsDownVoted(result.data.downvote);
-        console.log(result.data);
+        setUserSubmissions(result.data.submissions);
       });
   };
 
@@ -153,7 +157,7 @@ function BasicTabs({ questionData }) {
     getTestCases();
     setUpVote(questionData.up_votes);
     setDownVote(questionData.down_votes);
-    getUpvoteDownvote();
+    getProblemPageData();
   }, []);
 
   const upVoteHandler = async () => {
@@ -172,12 +176,8 @@ function BasicTabs({ questionData }) {
         },
       }
     );
-    console.log("response", response);
     setIsUpVoted(!isUpVoted);
     isUpVoted ? setUpVote((prev) => prev - 1) : setUpVote((prev) => prev + 1);
-    if (downVote > 0) {
-      setDownVote((prev) => prev - 1);
-    }
   };
 
   const downVoteHandler = async () => {
@@ -196,14 +196,10 @@ function BasicTabs({ questionData }) {
         },
       }
     );
-    console.log("response", response);
     setIsDownVoted(!isDownVoted);
     isDownVoted
       ? setDownVote((prev) => prev - 1)
       : setDownVote((prev) => prev + 1);
-    if (upVote > 0) {
-      setUpVote((prev) => prev - 1);
-    }
   };
 
   // const submissionsListHandler = async () => {
@@ -231,10 +227,7 @@ function BasicTabs({ questionData }) {
           aria-label="basic tabs example"
         >
           <Tab label="Problem" {...a11yProps(0)} />
-          <Tab
-            label={`Submissions ${questionData.totalSubmissions}`}
-            {...a11yProps(1)}
-          />
+          <Tab label={`Submissions ${userSubmissions}`} {...a11yProps(1)} />
           <Tab label="Discussion" {...a11yProps(2)} />
         </Tabs>
       </Box>

@@ -76,12 +76,14 @@ export const runTestCases = axios.create({
   baseURL: PROBLEM_URL + "core/runtests",
 });
 
-export const getUpvoteDownvoteapi = axios.create({
-  baseURL: PROBLEM_URL + "problems/getupvotedownvote",
+export const getProblemPageDataApi = axios.create({
+  baseURL: PROBLEM_URL + "problems/getProblemPageData",
 });
+
 export const getSubmissionsList = axios.create({
   baseURL: PROBLEM_URL + "problems/getsubmissionslist",
 });
+
 export const upAndDownVoteHandler = axios.create({
   baseURL: PROBLEM_URL + "problems/handleupvotedownvote",
 });

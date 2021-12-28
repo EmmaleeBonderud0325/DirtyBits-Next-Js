@@ -23,6 +23,7 @@ import { googleLoginApi } from "../../components/api/apis";
 import { updateUserinfo } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 
+require("codemirror/lib/codemirror.css");
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
   return (
@@ -60,9 +61,6 @@ if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
   CodeMirror = require("react-codemirror2").Controlled;
   require("codemirror/mode/yaml/yaml");
   require("codemirror/mode/dockerfile/dockerfile");
-
-  require("codemirror/lib/codemirror.css");
-  require("./Editor.module.css");
 
   require("codemirror/theme/ayu-mirage.css");
   require("codemirror/theme/base16-dark.css");
@@ -166,12 +164,6 @@ const Editor = ({ id }) => {
   );
   let [showMode, changeShowMode] = useState(true);
   const [showConsole, setShowConsole] = useState(false);
-  let [inputBtnClass, setInputBtnClass] = useState(
-    "positive ui left attached button"
-  );
-  let [outputBtnClass, setOutputBtnClass] = useState(
-    "right attached ui button"
-  );
   let [showLoader, setShowLoader] = useState(false);
   const [value, setValue] = React.useState(0);
 
@@ -281,7 +273,6 @@ const Editor = ({ id }) => {
       )
       .then((result) => {
         setShowLoader(false);
-
         if (result.data["status"] !== "Accepted") {
           changeOutputValue(
             result.data["status"] + "\n" + result.data["error"]
@@ -370,14 +361,10 @@ const Editor = ({ id }) => {
 
   const handleShowMode = (e) => {
     const ele_id = e.target.id;
-    if (ele_id === "input-btn") {
+    if (ele_id === "simple-tab-0") {
       changeShowMode(true);
-      setInputBtnClass("positive ui left attached button");
-      setOutputBtnClass("right attached ui button");
     } else {
       changeShowMode(false);
-      setInputBtnClass("ui left attached button");
-      setOutputBtnClass("positive right attached ui button");
     }
     console.log(e.target.id);
   };
@@ -567,7 +554,7 @@ const Editor = ({ id }) => {
       <div>
         {CodeMirror && (
           <CodeMirror
-            className="my-code-editor text-base"
+            className="my-code-editor text-base scrollbar-hide"
             value={editorValue}
             options={options}
             onBeforeChange={(editor, data, value) => changeCode(value)}
