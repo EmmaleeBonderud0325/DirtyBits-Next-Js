@@ -19,11 +19,12 @@ import IoTable from "./ProblemPage/IoTable";
 import { memo } from "react";
 import {
   getProblemPageDataApi,
-  getSubmissionsList,
   upAndDownVoteHandler,
+  handleBookmark,
 } from "./api/apis";
 import Cookies from "js-cookie";
 import Gettoken from "./Helper/Gettoken";
+import Submissions from "./ProblemPage/Submission/submission";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -150,6 +151,7 @@ function BasicTabs({ questionData }) {
         setIsUpVoted(result.data.upvote);
         setIsDownVoted(result.data.downvote);
         setUserSubmissions(result.data.submissions);
+        setIsBookmarkSet(result.data.bookmarked);
       });
   };
 
@@ -206,16 +208,24 @@ function BasicTabs({ questionData }) {
   //   const {data} = getSubmissionsList.
   // }
 
-  // GET THE CURRENT STATUS OF BOOKMARK FOR THE CURRENT USER
-  const getBookmarkStatus = () => {
-    // SET THE STATE OF THE BOOKMARK BASED ON THE API RESPONSE
+  const bookmarkStatusHandler = async () => {
+    const { status } = await handleBookmark.post(
+      "/",
+      {
+        problem_id: 6,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `JWT ${Cookies.get("access")}`,
+        },
+      }
+    );
+    if (status === 200) {
+      setIsBookmarkSet(!isBookmarkSet);
+    }
   };
 
-  const bookMarkHandler = () => {
-    setIsBookmarkSet(!isBookmarkSet);
-  };
-
-  console.log("TABS COMPONENT RENDERED");
   return (
     <Box sx={{ width: "100%", height: "100vh" }} className="scrollbar-hide">
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -241,7 +251,7 @@ function BasicTabs({ questionData }) {
           </p>
 
           {/* BOOKMARK */}
-          <div onClick={bookMarkHandler}>
+          <div onClick={bookmarkStatusHandler}>
             {isBookmarkSet ? (
               <BsBookmarkCheckFill className="text-lg" />
             ) : (
@@ -334,7 +344,7 @@ function BasicTabs({ questionData }) {
         </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Submissions
+        <Submissions />
       </TabPanel>
       <TabPanel value={value} index={2}>
         Discussion
