@@ -17,9 +17,9 @@ function MyApp({ Component, pageProps }) {
   let background;
   let fixedTop = "";
   if (router.pathname === "/") {
-    background = "bg-transparent-800 w-screen absolute";
+    background = "bg-transparent-800 w-screen absolute z-50";
   } else {
-    background = "bg-black border-b-1 border-gray-500 w-screen";
+    background = "bg-black border-b-1 border-gray-500 w-screen z-50";
     fixedTop = "sticky top-0 z-50";
   }
   return (
