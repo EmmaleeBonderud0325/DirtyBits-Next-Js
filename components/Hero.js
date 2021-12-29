@@ -5,7 +5,7 @@ import Typewriter from "typewriter-effect";
 export default function Hero() {
   return (
     <>
-      <div className="relative bg-purple-400 h-screen w-screen customHero -z-50">
+      <div className="relative bg-purple-400 h-screen w-screen customHero">
         <div className="max-w-7xl mx-auto">
           <div className="relative z-10 pb-8 bg-black-400 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
             <svg
@@ -50,8 +50,8 @@ export default function Hero() {
                 <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                   <div className="rounded-md shadow">
                     <a
-                      href="#"
-                      className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-custom-indigo hover:bg-custom-yellow2 md:py-4 md:text-lg md:px-10 shadow-xl shadow-custom-indigo/40"
+                      href="/problemset"
+                      className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-custom-indigo hover:bg-indigo-600 hover:text-white md:py-4 md:text-lg md:px-10 shadow-xl shadow-custom-indigo/40"
                     >
                       Explore Now
                     </a>
