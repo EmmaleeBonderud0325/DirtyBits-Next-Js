@@ -21,6 +21,7 @@ const TextEditor = (props) => {
           height: 200,
           menubar: false,
           plugins: [
+            "link image code",
             "advlist autolink lists link image",
             "charmap print preview anchor help",
             "searchreplace visualblocks code",
@@ -31,8 +32,8 @@ const TextEditor = (props) => {
           font_formats:
             "Arial Black=arial black,avant garde; Courier New=courier new,courier; Lato Black=lato; Roboto=roboto;",
           toolbar:
-            "undo redo | styleselect | fontselect | bold italic | \
-            alignleft aligncenter alignright | \
+            "undo redo | styleselect | fontselect | bold italic | code | \
+            alignleft aligncenter alignright | link | image | \
             bullist numlist outdent indent | help",
         }}
         onEditorChange={handleEditorChange}
