@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,YAAY,CAAC;EACX,aAAa,EAAE,eAAe;EAC9B,MAAM,EAAE,eAAe;CACxB",
+    "sources": [
+        "tinymce.scss"
+    ],
+    "names": [],
+    "file": "tinymce.css"
+}

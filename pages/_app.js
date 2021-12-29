@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import "antd/dist/antd.css";
 import ContextWrapper from "../context";
 import "../styles/Editor.css";
+import "../styles/tinymce.css";
 
 function MyApp({ Component, pageProps }) {
   if (Component.getLayout) {
