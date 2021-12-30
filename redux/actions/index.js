@@ -156,7 +156,7 @@ export const updateProblemsStatus = () => async (dispatch, getState) => {
 
 export const getProblems = (isLoggedin) => async (dispatch, getState) => {
   try {
-    const result = await getProblemsList.post("/");
+    const result = await getProblemsList.get("/");
     dispatch(updateProblemList(result.data));
     if (isLoggedin) {
       dispatch(updateProblemsStatus());

@@ -9,8 +9,8 @@ const HEADERS = {
 const BASE_URL = "https://db-auth.herokuapp.com/";
 // const BASE_URL = "http://localhost:8000/";
 
-const PROBLEM_URL = "https://db-code.herokuapp.com/";
-// const PROBLEM_URL = "http://localhost:8000/";
+// const PROBLEM_URL = "https://db-code.herokuapp.com/";
+const PROBLEM_URL = "http://localhost:8000/";
 
 const localhost = "http://localhost:8000/";
 
@@ -238,7 +238,7 @@ runTestCases.interceptors.response.use(
 );
 
 export const getProblemPageDataApi = axios.create({
-  baseURL: localhost + "problems/getProblemPageData",
+  baseURL: PROBLEM_URL + "problems/getProblemPageData",
   headers: HEADERS,
 });
 
@@ -274,7 +274,7 @@ getProblemPageDataApi.interceptors.response.use(
 );
 
 export const getSubmissionsList = axios.create({
-  baseURL: localhost + "problems/getsubmissionslist",
+  baseURL: PROBLEM_URL + "problems/getsubmissionslist",
   headers: HEADERS,
 });
 
