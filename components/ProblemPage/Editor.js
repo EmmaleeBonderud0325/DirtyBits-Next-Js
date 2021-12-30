@@ -140,8 +140,9 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const Editor = ({ id }) => {
+const Editor = (props) => {
   const dispatch = useDispatch();
+  const id = props.id;
   let [editorValue, changeEditorValue] = useState(
     "#include<iostream>\nusing namespace std;\n\nint main(){\n\n  return 0;\n}"
   );
@@ -278,7 +279,7 @@ const Editor = ({ id }) => {
       console.error("Login Required !!");
       return;
     }
-    const encoded_mail = Encodemail("server@gmail.com");
+    const encoded_mail = Encodemail(props.email);
     var socket = new WebSocket(
       `ws://db-code.herokuapp.com/ws/runcode/${encoded_mail}/`
     );
