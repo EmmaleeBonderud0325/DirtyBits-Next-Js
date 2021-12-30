@@ -24,11 +24,8 @@ ProblemView.getLayout = function PageLayout(page) {
 export default ProblemView;
 
 export const getServerSideProps = async (ctx) => {
-  console.log("ctx", ctx.params);
-  console.log("query", ctx.query);
-  console.log("id", ctx.query.id);
   const { data } = await getProblem.get(`/${ctx.query.id}/`);
-  
+
   return {
     props: {
       data,
