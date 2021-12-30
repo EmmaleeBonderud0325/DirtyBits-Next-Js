@@ -274,7 +274,7 @@ getProblemPageDataApi.interceptors.response.use(
 );
 
 export const getSubmissionsList = axios.create({
-  baseURL: PROBLEM_URL + "problems/getsubmissionslist",
+  baseURL: localhost + "problems/getsubmissionslist",
   headers: HEADERS,
 });
 

@@ -10,9 +10,7 @@ const Submission = (props) => {
     console.log("useeffect submissions");
     async function getList() {
       try {
-        const response = await getSubmissionsList.post("/", {
-          problem_id: props.probId,
-        });
+        const response = await getSubmissionsList.get(`/${props.probId}/`);
         setSubmissionList(response.data);
       } catch (e) {
         console.error("Token Error");
