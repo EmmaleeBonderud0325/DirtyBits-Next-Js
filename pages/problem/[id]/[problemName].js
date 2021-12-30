@@ -28,9 +28,7 @@ export const getServerSideProps = async (ctx) => {
   console.log("query", ctx.query);
   console.log("id", ctx.query.id);
   const { data } = await getProblem.get(`/${ctx.query.id}/`);
-
-  console.log(data);
-
+  
   return {
     props: {
       data,
