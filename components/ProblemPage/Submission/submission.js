@@ -5,7 +5,7 @@ import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { AiOutlineCloseCircle, AiOutlineInfoCircle } from "react-icons/ai";
 
 const Submission = (props) => {
-  const [submissionList, setSubmissionList] = useState([]);
+  const [submissionList, setSubmissionList] = useState(null);
   useEffect(() => {
     console.log("useeffect submissions");
     async function getList() {
@@ -19,10 +19,17 @@ const Submission = (props) => {
     getList();
   }, []);
   const listRowHandler = () => {
-    if (submissionList.length <= 0) {
+    if (submissionList == null) {
       return (
         <div className="text-center">
           <p className="text-white font-bold text-2xl">Loading...</p>
+        </div>
+      );
+    }
+    if (submissionList.length <= 0) {
+      return (
+        <div className="text-center">
+          <p className="text-white font-bold text-2xl">No Submissions</p>
         </div>
       );
     }
