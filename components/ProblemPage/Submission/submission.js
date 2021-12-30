@@ -3,6 +3,7 @@ import { getSubmissionsList } from "../../api/apis";
 import moment from "moment";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { AiOutlineCloseCircle, AiOutlineInfoCircle } from "react-icons/ai";
+import { Spin } from "antd";
 
 const Submission = (props) => {
   const [submissionList, setSubmissionList] = useState(null);
@@ -19,20 +20,6 @@ const Submission = (props) => {
     getList();
   }, []);
   const listRowHandler = () => {
-    if (submissionList == null) {
-      return (
-        <div className="text-center">
-          <p className="text-white font-bold text-2xl">Loading...</p>
-        </div>
-      );
-    }
-    if (submissionList.length <= 0) {
-      return (
-        <div className="text-center">
-          <p className="text-white font-bold text-2xl">No Submissions</p>
-        </div>
-      );
-    }
     let rowMarkup = submissionList.map((submission) => {
       let status;
       let color;
@@ -84,8 +71,24 @@ const Submission = (props) => {
                 <th class="px-4 py-3">Time</th>
               </tr>
             </thead>
-            <tbody class="bg-slate-800">{listRowHandler()}</tbody>
+            <tbody class="bg-slate-800">
+              {submissionList !== null && listRowHandler()}
+            </tbody>
           </table>
+          {submissionList === null && (
+            <div className="text-center w-full">
+              <p className="text-white font-bold text-2xl p-4">
+                <Spin size="large" tip="Loading..."></Spin>
+              </p>
+            </div>
+          )}
+          {submissionList !== null && submissionList.length <= 0 && (
+            <div className="text-center w-full">
+              <p className="text-white p-4 font-bold text-2xl">
+                No Submissions
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </section>

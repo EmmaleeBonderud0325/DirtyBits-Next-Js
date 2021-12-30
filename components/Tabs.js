@@ -244,7 +244,7 @@ function BasicTabs({ questionData }) {
               className="flex items-center space-x-1 cursor-pointer"
             >
               <p>{isUpVoted ? <AiFillLike /> : <AiOutlineLike />}</p>
-              <p className="text-xs">UpVotes. {upVote}</p>
+              <p className="text-xs">{upVote}</p>
             </div>
 
             <div
@@ -252,7 +252,7 @@ function BasicTabs({ questionData }) {
               className="flex items-center space-x-1 cursor-pointer"
             >
               <p>{isDownVoted ? <AiFillDislike /> : <AiOutlineDislike />}</p>
-              <p className="text-xs">DownVotes. {downVote}</p>
+              <p className="text-xs">{downVote}</p>
             </div>
 
             <div className="flex items-center space-x-1">

@@ -444,7 +444,7 @@ const Editor = (props) => {
         <div className="space-x-1 flex items-center transition-all ease-in-out">
           <Tooltip className="bg-none" placement="top" title="Save">
             <Button ghost style={{ border: "none", fontSize: 20 }}>
-              <MdSaveAlt />
+              <BsCloudArrowUp />
             </Button>
           </Tooltip>
 
@@ -460,7 +460,7 @@ const Editor = (props) => {
               ghost
               style={{ border: "none", fontSize: 20 }}
             >
-              <BsCloudArrowUp />
+              <MdSaveAlt />
             </Button>
           </Tooltip>
 
