@@ -6,6 +6,8 @@ import Head from "next/head";
 import { ToastContainer, toast } from "react-toastify";
 import { CloudUploadOutlined } from "@mui/icons-material";
 import "react-toastify/dist/ReactToastify.min.css";
+import { TiPlus } from "react-icons/ti";
+import { ImCross } from "react-icons/im";
 
 function Page2(props) {
   let [customTestCases, changeCustomTestCases] = useState([{ id: uuid() }]);
@@ -54,7 +56,7 @@ function Page2(props) {
     const sci = "sc-" + n.id + "-i";
     const sco = "sc-" + n.id + "-o";
     return (
-      <div className="overflow-hidden bg-black w-full p-4 space-y-3 rounded-2xl border border-custom-bg">
+      <div className="overflow-hidden bg-slate-800 w-full p-4 space-y-3 rounded-2xl shadow-2xl">
         <h1 className="lg:text-3xl text-white font-bold">
           Test Case - {idx + 1}
         </h1>
@@ -62,18 +64,32 @@ function Page2(props) {
           <div className="lg:flex justify-center lg:space-x-10">
             <div className="lg:space-x-6 ">
               <label className="text-lg font-bold">Input</label>
-              <input type="file" id={sci} accept=".txt"></input>
+              <input
+                type="file"
+                id={sci}
+                accept=".txt"
+                className="filebtn"
+              ></input>
             </div>
             <span className="border-r-2 border-custom-bg hidden lg:block"></span>
             <div className="lg:space-x-6 border-custom-bg">
               <label className="text-lg font-bold">Output</label>
-              <input type="file" id={sco} accept=".txt"></input>
+              <input
+                type="file"
+                id={sco}
+                accept=".txt"
+                className="filebtn"
+              ></input>
             </div>
           </div>
           <div className="add-tc-close-icon">
-            <div id={n.id} onClick={(e) => deleteFileSC(e)}>
-              X
-            </div>
+            <button
+              id={n.id}
+              onClick={(e) => deleteFileSC(e)}
+              className="px-3 pb-1  bg-transparent rounded-full hover:bg-white hover:text-black transition-all duration-200 text-xl ease-in-out font-bold"
+            >
+              x
+            </button>
           </div>
         </div>
       </div>
@@ -84,24 +100,38 @@ function Page2(props) {
     const tci = "tc-" + n.id + "-i";
     const tco = "tc-" + n.id + "-o";
     return (
-      <div className="overflow-hidden bg-black p-4 space-y-3 rounded-2xl border border-custom-bg">
+      <div className="overflow-hidden bg-slate-800 p-4 space-y-3 rounded-2xl shadow-2xl">
         <h1 className="text-3xl text-white">Test Case - {idx + 1}</h1>
         <div className="each-custom" id={n.id}>
           <div className="lg:flex justify-center lg:space-x-10">
             <div className="lg:space-x-6 ">
               <label className="text-lg font-bold">Input</label>
-              <input type="file" id={tci} accept=".txt"></input>
+              <input
+                type="file"
+                id={tci}
+                accept=".txt"
+                className="filebtn"
+              ></input>
             </div>
             <span className="border-r-2 border-custom-bg hidden lg:block"></span>
             <div className="lg:space-x-6 border-custom-bg">
               <label className="text-lg font-bold">Output</label>
-              <input type="file" id={tco} accept=".txt"></input>
+              <input
+                type="file"
+                id={tco}
+                accept=".txt"
+                className="filebtn"
+              ></input>
             </div>
           </div>
-          <div className="add-tc-close-icon">
-            <div id={n.id} onClick={(e) => deleteFileTC(e)}>
-              X
-            </div>
+          <div className="add-tc-close-icon inline-block">
+            <button
+              id={n.id}
+              onClick={(e) => deleteFileTC(e)}
+              className="px-3 pb-1  bg-transparent rounded-full hover:bg-white hover:text-black transition-all duration-200 text-xl ease-in-out font-bold"
+            >
+              x
+            </button>
           </div>
         </div>
       </div>
@@ -169,28 +199,22 @@ function Page2(props) {
             Sample Test Cases
           </h3>
           {renderListSC}
-          <button
-            className="ui right floated button btn-purple"
-            onClick={(e) => addNewFileInputSC(e)}
-          >
-            Add{" "}
+          <button className="btn-purple" onClick={(e) => addNewFileInputSC(e)}>
+            <TiPlus />{" "}
           </button>
           <h3 className="font-bold text-white text-center text-2xl lg:text-[2rem] lg:text-left">
             Test Cases
           </h3>
           {renderListTC}
-          <button
-            className="ui right floated button btn-purple"
-            onClick={(e) => addNewFileInputTC(e)}
-          >
-            Add{" "}
+          <button className="btn-purple" onClick={(e) => addNewFileInputTC(e)}>
+            <TiPlus />{" "}
           </button>
           <div>
             <button
-              className="ui right floated button btn-purple"
+              className="btn-purple text-white px-5 text-lg"
               onClick={submitted}
             >
-              Upload Test Cases{" "}
+              Upload{" "}
             </button>
           </div>
         </div>

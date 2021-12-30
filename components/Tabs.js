@@ -214,6 +214,7 @@ function BasicTabs({ questionData }) {
           <Tab label="Problem" {...a11yProps(0)} />
           <Tab label={`Submissions ${userSubmissions}`} {...a11yProps(1)} />
           <Tab label="Discussion" {...a11yProps(2)} />
+          <Tab label="Editorial" {...a11yProps(3)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -323,6 +324,9 @@ function BasicTabs({ questionData }) {
       </TabPanel>
       <TabPanel value={value} index={2}>
         Discussion
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        Editorial
       </TabPanel>
     </Box>
   );

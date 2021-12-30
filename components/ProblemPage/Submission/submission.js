@@ -1,13 +1,8 @@
 import { useEffect, useState } from "react";
 import { getSubmissionsList } from "../../api/apis";
-import Cookies from "js-cookie";
 import moment from "moment";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
-import {
-  AiOutlineCloseCircle,
-  AiOutlineInfoCircle,
-  AiOutlineSync,
-} from "react-icons/ai";
+import { AiOutlineCloseCircle, AiOutlineInfoCircle } from "react-icons/ai";
 
 const Submission = () => {
   const [submissionList, setSubmissionList] = useState([]);

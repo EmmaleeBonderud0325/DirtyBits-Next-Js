@@ -29,7 +29,7 @@
 
 @layer components {
   .btn-purple {
-    @apply bg-custom-bg px-10 rounded-full py-2 font-extrabold hover:bg-purple-600 transition-all ease-out;
+    @apply bg-custom-bg py-3 px-3 text-xl text-white rounded-full font-extrabold hover:bg-purple-600 transition-all ease-out;
   }
   .table-heading {
     @apply py-4 px-6 font-bold text-base text-[#686868] border-b;
@@ -48,6 +48,14 @@
   }
   .loginSignUpHeading {
     @apply mb-3 font-bold text-5xl text-white;
+  }
+
+  .filebtn {
+    @apply text-sm text-gray-500 file:mr-4 file:py-2 file:px-4
+    file:rounded-full file:border-0
+    file:text-sm file:font-semibold
+    file:bg-violet-50 file:text-violet-700
+    hover:file:bg-violet-100;
   }
 }
 
