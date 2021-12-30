@@ -4,7 +4,6 @@ import { getProblem } from "../../../components/api/apis";
 import Head from "next/head";
 
 function ProblemView({ data, id }) {
-  console.log("data", data);
   return (
     <>
       <Head>
