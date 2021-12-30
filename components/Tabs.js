@@ -191,7 +191,7 @@ function BasicTabs({ questionData }) {
   const bookmarkStatusHandler = async () => {
     try {
       const { status } = await handleBookmark.post("/", {
-        problem_id: 6,
+        problem_id: questionData.id,
       });
       if (status === 200) {
         setIsBookmarkSet(!isBookmarkSet);
