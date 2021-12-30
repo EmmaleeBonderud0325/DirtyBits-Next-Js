@@ -132,14 +132,12 @@ function BasicTabs({ questionData }) {
       return;
     }
     try {
-      await getProblemPageDataApi
-        .post("/", { problem_id: questionData.id })
-        .then((result) => {
-          setIsUpVoted(result.data.upvote);
-          setIsDownVoted(result.data.downvote);
-          setUserSubmissions(result.data.submissions);
-          setIsBookmarkSet(result.data.bookmarked);
-        });
+      await getProblemPageDataApi.get(`/${questionData.id}/`).then((result) => {
+        setIsUpVoted(result.data.upvote);
+        setIsDownVoted(result.data.downvote);
+        setUserSubmissions(result.data.submissions);
+        setIsBookmarkSet(result.data.bookmarked);
+      });
     } catch (e) {
       console.error("Token Error");
     }

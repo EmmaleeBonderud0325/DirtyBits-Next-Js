@@ -238,7 +238,7 @@ runTestCases.interceptors.response.use(
 );
 
 export const getProblemPageDataApi = axios.create({
-  baseURL: PROBLEM_URL + "problems/getProblemPageData",
+  baseURL: localhost + "problems/getProblemPageData",
   headers: HEADERS,
 });
 
