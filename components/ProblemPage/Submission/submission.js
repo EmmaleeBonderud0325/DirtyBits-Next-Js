@@ -3,6 +3,11 @@ import { getSubmissionsList } from "../../api/apis";
 import Cookies from "js-cookie";
 import moment from "moment";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+import {
+  AiOutlineCloseCircle,
+  AiOutlineInfoCircle,
+  AiOutlineSync,
+} from "react-icons/ai";
 
 const Submission = () => {
   const [submissionList, setSubmissionList] = useState([]);
@@ -28,20 +33,41 @@ const Submission = () => {
         </div>
       );
     }
-    let rowMarkup = submissionList.map((submission) => (
-      <tr class="text-white">
-        <td class="px-4 py-3 ont-semibold text-green-500 text-sm flex items-center gap-2">
-          <IoMdCheckmarkCircleOutline /> {submission.status}
-        </td>
-        <td class="px-4 py-3 text-ms font-semibold ">{submission.score}</td>
-        <td class="px-4 py-3 text-xs ">{submission.language}</td>
-        <td class="px-4 py-3 text-sm ">
-          {moment(submission.submission_Date_Time).format(
-            "MMMM Do YYYY, h:mm:ss a"
-          )}
-        </td>
-      </tr>
-    ));
+    let rowMarkup = submissionList.map((submission) => {
+      let status;
+      let color;
+      switch (submission.status) {
+        case "Accepted":
+          status = <IoMdCheckmarkCircleOutline />;
+          color = "text-green-500";
+          break;
+        case "Wrong Answer":
+          status = <AiOutlineCloseCircle />;
+          color = "text-red-500";
+          break;
+        default:
+          status = <AiOutlineInfoCircle />;
+          color = "text-yellow-500";
+      }
+
+      return (
+        <tr class="text-white">
+          <td
+            class={`px-4 py-3 ont-semibold ${color} text-sm flex items-center gap-2`}
+          >
+            {status}
+            {submission.status}
+          </td>
+          <td class="px-4 py-3 text-ms font-semibold ">{submission.score}</td>
+          <td class="px-4 py-3 text-xs ">{submission.language}</td>
+          <td class="px-4 py-3 text-sm ">
+            {moment(submission.submission_Date_Time).format(
+              "MMMM Do YYYY, h:mm:ss a"
+            )}
+          </td>
+        </tr>
+      );
+    });
 
     return rowMarkup;
   };
