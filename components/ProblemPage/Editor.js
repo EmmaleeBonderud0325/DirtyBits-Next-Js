@@ -130,7 +130,6 @@ if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
 
 import { runCode, runTestCases, submitCode } from "../api/apis";
 import Cookies from "js-cookie";
-import Gettoken from "../Helper/Gettoken";
 import Encodemail from "../Helper/Encodemail";
 import { Menu, Transition } from "@headlessui/react";
 import Parsetoken from "../Helper/Parsetoken";
@@ -255,22 +254,12 @@ const Editor = ({ id }) => {
     setShowLoader(true);
     setShowConsole(true);
 
-    await Gettoken(Cookies.get("refresh"));
     await runTestCases
-      .post(
-        "/",
-        {
-          problem_Id: id,
-          code: base64_encode(editorValue),
-          language: currLang.label,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `JWT ${Cookies.get("access")}`,
-          },
-        }
-      )
+      .post("/", {
+        problem_Id: id,
+        code: base64_encode(editorValue),
+        language: currLang.label,
+      })
       .then((result) => {
         setShowLoader(false);
         if (result.data["status"] !== "Accepted") {
