@@ -5,7 +5,7 @@ import Page1 from "../components/AddProblemComponents/Page1";
 import Page2 from "../components/AddProblemComponents/Page2";
 
 function addproblems(props) {
-  let [step, setStep] = useState(2);
+  let [step, setStep] = useState(1);
   let [probId, setProbId] = useState(null);
   return (
     <div>

@@ -4,14 +4,14 @@ import moment from "moment";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { AiOutlineCloseCircle, AiOutlineInfoCircle } from "react-icons/ai";
 
-const Submission = () => {
+const Submission = (props) => {
   const [submissionList, setSubmissionList] = useState([]);
   useEffect(() => {
     console.log("useeffect submissions");
     async function getList() {
       try {
         const response = await getSubmissionsList.post("/", {
-          problem_id: 6,
+          problem_id: props.probId,
         });
         setSubmissionList(response.data);
       } catch (e) {

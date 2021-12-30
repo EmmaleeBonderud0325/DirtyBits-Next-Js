@@ -320,7 +320,7 @@ function BasicTabs({ questionData }) {
         </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Submissions />
+        <Submissions probId={questionData.id} />
       </TabPanel>
       <TabPanel value={value} index={2}>
         Discussion
