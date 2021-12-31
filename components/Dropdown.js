@@ -17,17 +17,29 @@ function Dropdown(props) {
   const returnObj = fieldValues.map((item, i) => {
     return (
       <Menu.Item>
-        {({ active }) => (
-          <a
-            onClick={() => dispatch(props.actionFunction(item))}
-            className={classNames(
-              active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-              "block px-4 py-2 text-sm cursor-pointer"
-            )}
-          >
-            {item}
-          </a>
-        )}
+        {({ active }) => {
+          props.hasAction ? (
+            <a
+              onClick={() => dispatch(props.actionFunction(item))}
+              className={classNames(
+                active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                "block px-4 py-2 text-sm cursor-pointer"
+              )}
+            >
+              {item}
+            </a>
+          ) : (
+            <a
+              onClick={() => props.actionFunction(item)}
+              className={classNames(
+                active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                "block px-4 py-2 text-sm cursor-pointer"
+              )}
+            >
+              {item}
+            </a>
+          );
+        }}
       </Menu.Item>
     );
   });

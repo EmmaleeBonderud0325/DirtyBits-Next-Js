@@ -24,6 +24,9 @@ function Problem(props) {
   ];
   const [value, setValue] = useState("");
 
+  const [difficulty, setDifficulty] = useState("Difficulty");
+  const [status, setStatus] = useState("Status");
+
   const problemList = useSelector((state) => state.problemList);
 
   const fetchQuestions = (e) => {
@@ -125,12 +128,18 @@ function Problem(props) {
           fieldName={"Difficulty"}
           fieldValues={["Easy", "Medium", "Hard"]}
           bg={"bg-black"}
+          hasAction={false}
+          currentValue={difficulty}
+          actionFunction={setDifficulty}
         />
         <Dropdown
           textColor={"text-white"}
           fieldName={"Status"}
           fieldValues={["ToDo", "Solved", "Attempted"]}
           bg={"bg-black"}
+          hasAction={false}
+          currentValue={status}
+          actionFunction={setStatus}
         />
       </div>
 

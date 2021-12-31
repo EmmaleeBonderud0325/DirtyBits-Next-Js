@@ -122,7 +122,8 @@ function addproblems(props) {
                 fieldValues={["Easy", "Medium", "Hard"]}
                 bg={"bg-white"}
                 textColor={"text-black"}
-                currentValue={mapping[problemData.problem_level]} 
+                hasAction={true}
+                currentValue={mapping[problemData.problem_level]}
                 actionFunction={updateProblemLevel}
               />
             </div>
