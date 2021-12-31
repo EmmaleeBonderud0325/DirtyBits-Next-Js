@@ -72,9 +72,14 @@ export const updateProblemOutputFormat = (newState) => {
 };
 
 export const updateProblemLevel = (newState) => {
+  const mapping = {
+    Easy: "E",
+    Medium: "M",
+    Hard: "H",
+  };
   return {
     type: updateLevel,
-    payload: newState,
+    payload: mapping[newState],
   };
 };
 

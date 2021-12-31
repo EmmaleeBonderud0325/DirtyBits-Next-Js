@@ -15,6 +15,7 @@ import {
   updateProblemOutputFormat,
   updateProblemMemoryLimit,
   updateProblemTimeLimit,
+  updateProblemLevel,
 } from "../../redux/actions";
 import MultiSelect from "../MultiSelect";
 import { AddProblem } from "../api/apis";
@@ -22,6 +23,13 @@ import { AddProblem } from "../api/apis";
 function addproblems(props) {
   const problemData = useSelector((state) => state.addProblemData);
   const dispatch = useDispatch();
+
+  const mapping = {
+    Difficulty: "Difficulty",
+    E: "Easy",
+    M: "Medium",
+    H: "Hard",
+  };
 
   const HandleProblemStatementUpdate = (data) => {
     dispatch(updateProblemStatement(data));
@@ -114,6 +122,8 @@ function addproblems(props) {
                 fieldValues={["Easy", "Medium", "Hard"]}
                 bg={"bg-white"}
                 textColor={"text-black"}
+                currentValue={mapping[problemData.problem_level]} 
+                actionFunction={updateProblemLevel}
               />
             </div>
             <div className="space-y-3">
