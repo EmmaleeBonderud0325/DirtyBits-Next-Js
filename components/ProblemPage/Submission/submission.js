@@ -6,21 +6,23 @@ import { AiOutlineCloseCircle, AiOutlineInfoCircle } from "react-icons/ai";
 import { Spin } from "antd";
 
 const Submission = (props) => {
-  const [submissionList, setSubmissionList] = useState(null);
   useEffect(() => {
     console.log("useeffect submissions");
     async function getList() {
       try {
         const response = await getSubmissionsList.get(`/${props.probId}/`);
-        setSubmissionList(response.data);
+        props.setSubmissionList(response.data);
       } catch (e) {
         console.error("Token Error");
       }
     }
-    getList();
+    if (props.getSubmissionsState) {
+      getList();
+      props.setGetSubmissionsState(false);
+    }
   }, []);
   const listRowHandler = () => {
-    let rowMarkup = submissionList.map((submission) => {
+    let rowMarkup = props.submissionList.map((submission) => {
       let status;
       let color;
       switch (submission.status) {
@@ -72,17 +74,17 @@ const Submission = (props) => {
               </tr>
             </thead>
             <tbody class="bg-slate-800">
-              {submissionList !== null && listRowHandler()}
+              {props.submissionList !== null && listRowHandler()}
             </tbody>
           </table>
-          {submissionList === null && (
+          {props.submissionList === null && (
             <div className="text-center w-full">
               <p className="text-white font-bold text-2xl p-4">
                 <Spin size="large" tip="Loading..."></Spin>
               </p>
             </div>
           )}
-          {submissionList !== null && submissionList.length <= 0 && (
+          {props.submissionList !== null && props.submissionList.length <= 0 && (
             <div className="text-center w-full">
               <p className="text-white p-4 font-bold text-2xl">
                 No Submissions

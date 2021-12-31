@@ -6,6 +6,8 @@ import { connect } from "react-redux";
 
 function Panel2(props) {
   const [userSubmissions, setUserSubmissions] = useState(0);
+  const [submissionList, setSubmissionList] = useState(null);
+  const [getSubmissionsState, setGetSubmissionsState] = useState(true);
   return (
     <div>
       <SplitPane
@@ -23,6 +25,10 @@ function Panel2(props) {
             questionData={props.question}
             userSubmissions={userSubmissions}
             setUserSubmissions={setUserSubmissions}
+            submissionList={submissionList}
+            setSubmissionList={setSubmissionList}
+            getSubmissionsState={getSubmissionsState}
+            setGetSubmissionsState={setGetSubmissionsState}
           />
         </Pane>
         <Pane className="scrollbar-hide" style={{ overflowY: "scroll" }}>
@@ -31,6 +37,8 @@ function Panel2(props) {
             email={props.userEmail}
             userSubmissions={userSubmissions}
             setUserSubmissions={setUserSubmissions}
+            submissionList={submissionList}
+            setSubmissionList={setSubmissionList}
           />
         </Pane>
       </SplitPane>

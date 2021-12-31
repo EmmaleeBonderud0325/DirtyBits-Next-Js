@@ -321,7 +321,13 @@ function BasicTabs(props) {
         </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Submissions probId={questionData.id} />
+        <Submissions
+          probId={questionData.id}
+          submissionList={props.submissionList}
+          setSubmissionList={props.setSubmissionList}
+          getSubmissionsState={props.getSubmissionsState}
+          setGetSubmissionsState={props.setGetSubmissionsState}
+        />
       </TabPanel>
       <TabPanel value={value} index={2}>
         Discussion

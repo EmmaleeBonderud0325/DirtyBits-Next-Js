@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { base64_decode, base64_encode, download } from "./Helper2";
+import cloneDeep from "lodash/cloneDeep";
 
 import { MdSaveAlt } from "react-icons/md";
 import { AiOutlineUpload, AiFillGithub } from "react-icons/ai";
@@ -295,8 +296,25 @@ const Editor = (props) => {
       var data = JSON.parse(e.data);
       if (!data["is_testcase"]) {
         props.setUserSubmissions(props.userSubmissions + 1);
+        if (props.submissionList !== null) {
+          var problemResult = JSON.parse(data["text"]);
+          problemResult = problemResult[0]["fields"];
+          var appendData = {
+            status: problemResult.status,
+            score: problemResult.score,
+            language: problemResult.language,
+            submission_Date_Time: problemResult.submission_Date_Time,
+            total_score: problemResult.total_score,
+          };
+          let oldState = cloneDeep(props.submissionList);
+          oldState.unshift(appendData);
+          console.log(oldState);
+          console.log(typeof oldState);
+          props.setSubmissionList(oldState);
+        }
+      } else {
+        console.log(data["text"]);
       }
-      console.log(data["text"]);
     };
     socket.onclose = function (e) {
       console.log("closed");
