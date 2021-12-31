@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getSubmissionsList } from "../../api/apis";
 import moment from "moment";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";

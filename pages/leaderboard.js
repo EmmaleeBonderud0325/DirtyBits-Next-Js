@@ -2,12 +2,6 @@ import React, { useEffect } from "react";
 import Head from "next/head";
 
 function leaderboard() {
-  // useEffect(() => {
-  //   var socket = new WebSocket("ws://db-code.herokuapp.com/ws/runcode/abcd/");
-  //   socket.onopen = function (e) {
-  //     console.log("opened");
-  //   };
-  // }, []);
   return (
     <div className="flex lg:w-screen lg:h-screen h-screen w-screen">
       <Head>
