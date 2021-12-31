@@ -111,6 +111,11 @@
       "type": "dark"
     },
     {
+      "label": "Cobalt",
+      "value": "cobalt",
+      "type": "dark"
+    },
+    {
       "label": "Base-16 Light",
       "value": "base16-light",
       "type": "light"

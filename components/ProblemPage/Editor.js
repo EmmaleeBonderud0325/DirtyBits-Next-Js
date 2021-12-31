@@ -64,6 +64,7 @@ if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
   require("codemirror/mode/dockerfile/dockerfile");
 
   require("codemirror/theme/ayu-mirage.css");
+  require("codemirror/theme/cobalt.css");
   require("codemirror/theme/base16-dark.css");
   require("codemirror/theme/base16-light.css");
   require("codemirror/theme/bespin.css");
@@ -127,6 +128,9 @@ if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
   require("codemirror/addon/display/fullscreen.css");
   require("codemirror/addon/fold/foldgutter.css");
   require("codemirror/keymap/sublime");
+
+  require("codemirror/addon/scroll/simplescrollbars.css");
+  require("codemirror/addon/scroll/simplescrollbars");
 }
 
 import { runCode, runTestCases, submitCode } from "../api/apis";
@@ -334,11 +338,12 @@ const Editor = (props) => {
     autoCloseTags: true,
     keyMap: "sublime",
     matchBrackets: true,
+    scrollbarStyle: "simple",
     autoCloseBrackets: true,
     foldcode: true,
     lineNumbers: true,
     autoRefresh: true,
-    viewportMargin: 1,
+    viewportMargin: 2,
     highlightSelectionMatches: {
       minChars: 2,
       style: "matchhighlight",

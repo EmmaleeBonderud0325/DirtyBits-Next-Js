@@ -1,10 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap");
 .CodeMirror {
   height: 600px !important;
+  min-width: 50% !important;
+  overflow-x: scroll;
+  font-size: 15px !important;
 }
 
 .cm-matchhighlight {
   background: #4b4949 !important;
   opacity: 5;
+}
+
+.CodeMirror-wrap pre {
+  word-break: break-word;
+}
+
+.cm-s-cobalt .CodeMirror-gutters {
+  border-right: none !important;
 }
 /*# sourceMappingURL=Editor.css.map */

@@ -2,9 +2,20 @@
 
 .CodeMirror {
   height: 600px !important;
+  min-width: 50% !important;
+  overflow-x: scroll;
+  font-size: 15px !important;
 }
 
 .cm-matchhighlight {
   background: rgb(75, 73, 73) !important;
   opacity: 5;
+}
+
+.CodeMirror-wrap pre {
+  word-break: break-word;
+}
+
+.cm-s-cobalt .CodeMirror-gutters {
+  border-right: none !important;
 }
