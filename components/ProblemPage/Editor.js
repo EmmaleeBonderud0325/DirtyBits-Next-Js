@@ -308,8 +308,6 @@ const Editor = (props) => {
           };
           let oldState = cloneDeep(props.submissionList);
           oldState.unshift(appendData);
-          console.log(oldState);
-          console.log(typeof oldState);
           props.setSubmissionList(oldState);
         }
       } else {
