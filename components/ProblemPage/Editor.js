@@ -293,12 +293,9 @@ const Editor = (props) => {
     };
     socket.onmessage = async function (e) {
       var data = JSON.parse(e.data);
-      // if (data["text"] !== "passed" && data["text"] !== "failed") {
-      //   var metadata = JSON.parse(data["text"])[0];
-      //   displayOut(metadata.fields);
-      // } else {
-      //   console.log(data["text"]);
-      // }
+      if (!data["is_testcase"]) {
+        props.setUserSubmissions(props.userSubmissions + 1);
+      }
       console.log(data["text"]);
     };
     socket.onclose = function (e) {

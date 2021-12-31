@@ -58,7 +58,8 @@ function a11yProps(index) {
   };
 }
 
-function BasicTabs({ questionData }) {
+function BasicTabs(props) {
+  const questionData = props.questionData;
   const [value, setValue] = React.useState(0);
   const [inputTestCases, setInputTestCases] = React.useState([]);
   const [outputTestCases, setOutputTestCases] = React.useState([]);
@@ -67,7 +68,6 @@ function BasicTabs({ questionData }) {
   const [isUpVoted, setIsUpVoted] = React.useState(false);
   const [isDownVoted, setIsDownVoted] = React.useState(false);
   const [isBookmarkSet, setIsBookmarkSet] = React.useState(false);
-  const [userSubmissions, setUserSubmissions] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -135,7 +135,7 @@ function BasicTabs({ questionData }) {
       await getProblemPageDataApi.get(`/${questionData.id}/`).then((result) => {
         setIsUpVoted(result.data.upvote);
         setIsDownVoted(result.data.downvote);
-        setUserSubmissions(result.data.submissions);
+        props.setUserSubmissions(result.data.submissions);
         setIsBookmarkSet(result.data.bookmarked);
       });
     } catch (e) {
@@ -210,7 +210,10 @@ function BasicTabs({ questionData }) {
           aria-label="basic tabs example"
         >
           <Tab label="Problem" {...a11yProps(0)} />
-          <Tab label={`Submissions ${userSubmissions}`} {...a11yProps(1)} />
+          <Tab
+            label={`Submissions ${props.userSubmissions}`}
+            {...a11yProps(1)}
+          />
           <Tab label="Discussion" {...a11yProps(2)} />
           <Tab label="Editorial" {...a11yProps(3)} />
         </Tabs>

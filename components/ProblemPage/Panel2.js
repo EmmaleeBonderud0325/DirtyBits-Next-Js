@@ -1,10 +1,11 @@
-import React from "react";
+import { useState } from "react";
 import SplitPane, { Pane } from "react-split-pane";
 import Editor from "./Editor";
 import Tabs from "../Tabs";
 import { connect } from "react-redux";
 
 function Panel2(props) {
+  const [userSubmissions, setUserSubmissions] = useState(0);
   return (
     <div>
       <SplitPane
@@ -18,10 +19,19 @@ function Panel2(props) {
         // onChange={(size) => localStorage.setItem('splitPos', size)}
       >
         <Pane className="scrollbar-hide" style={{ overflowY: "scroll" }}>
-          <Tabs questionData={props.question} />
+          <Tabs
+            questionData={props.question}
+            userSubmissions={userSubmissions}
+            setUserSubmissions={setUserSubmissions}
+          />
         </Pane>
         <Pane className="scrollbar-hide" style={{ overflowY: "scroll" }}>
-          <Editor id={props.id} email={props.userEmail} />
+          <Editor
+            id={props.id}
+            email={props.userEmail}
+            userSubmissions={userSubmissions}
+            setUserSubmissions={setUserSubmissions}
+          />
         </Pane>
       </SplitPane>
     </div>

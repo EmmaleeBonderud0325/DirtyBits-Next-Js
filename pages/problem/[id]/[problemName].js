@@ -1,4 +1,3 @@
-// import axios from 'axios';
 import Panel2 from "../../../components/ProblemPage/Panel2";
 import { getProblem } from "../../../components/api/apis";
 import Head from "next/head";
