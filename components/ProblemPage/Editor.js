@@ -140,6 +140,7 @@ import Cookies from "js-cookie";
 import Encodemail from "../Helper/Encodemail";
 import { Menu, Transition } from "@headlessui/react";
 import Parsetoken from "../Helper/Parsetoken";
+import FontDropdown from "./FontDropdown";
 
 const jsonData = require("./data.json");
 
@@ -158,6 +159,7 @@ const Editor = (props) => {
     value: "dracula",
     type: "dark",
   });
+  let [fontSize, setFontSize] = useState("15px");
   let [currLang, setCurrLang] = useState({
     label: "C++",
     value: "text/x-c++src",
@@ -387,11 +389,52 @@ const Editor = (props) => {
 
   const profileImageLink = userInfo.profile_pic;
 
+  const setLangFunction = (label) => {
+    for (let i = 0; i < jsonData.language.length; i++) {
+      if (jsonData.language[i].label === label) {
+        setCurrLang({
+          currLang,
+          value: jsonData.language[i].value,
+          label: jsonData.language[i].label,
+          ext: jsonData.language[i].ext,
+          icon: jsonData.language[i].icon,
+        });
+        return;
+      }
+    }
+  };
+
+  let fileReader;
+
+  const handleFileRead = (e) => {
+    const content = fileReader.result;
+    changeEditorValue(content);
+  };
+
+  const uploadedfile = (e) => {
+    let input_file = e.target.files[0];
+    fileReader = new FileReader();
+    fileReader.onloadend = handleFileRead;
+    fileReader.readAsText(input_file);
+    var [fileName, extension] = input_file.name.split(".");
+    if (extension == "cpp") {
+      setLangFunction("C++");
+    } else if (extension == "java") {
+      setLangFunction("Java");
+    } else if (extension == "py") {
+      setLangFunction("Python 3");
+    } else if (extension == "c") {
+      setLangFunction("C");
+    }
+  };
+
   return (
     <div
       style={{ height: "100vh" }}
       className="problem-page-right-container p-2"
     >
+      <FontDropdown fontSize={fontSize} setFontSize={setFontSize} />
+
       <div className="flex justify-around p-10">
         <Dropdown2
           dropdownType={"theme"}
@@ -418,9 +461,17 @@ const Editor = (props) => {
           </Tooltip>
 
           <Tooltip className="bg-none" placement="top" title="Upload">
-            <Button ghost style={{ border: "none", fontSize: 20 }}>
-              <AiOutlineUpload />
-            </Button>
+            <input
+              type="file"
+              accept=".cpp, .c, .py, .java"
+              id="uploaded-file"
+              onChange={(e) => uploadedfile(e)}
+              className="filebtn"
+            >
+              {/* <Button ghost style={{ border: "none", fontSize: 20 }}>
+                <AiOutlineUpload />
+              </Button> */}
+            </input>
           </Tooltip>
 
           <Tooltip className="bg-none" placement="top" title="Download Code">
@@ -515,6 +566,7 @@ const Editor = (props) => {
           <CodeMirror
             className="my-code-editor text-base scrollbar-hide"
             value={editorValue}
+            style={{ fontSize: "100px !important" }}
             options={options}
             onBeforeChange={(editor, data, value) => changeCode(value)}
             //   onChange={(editor, data, value) => changeCode(value)}

@@ -179,7 +179,8 @@
       "lang": "clike",
       "versionIndex": "4",
       "ext": ".c",
-      "pre": "#include<stdio.h>\nusing namespace std;\n\nint main(){\n\n  return 0;\n}"
+      "pre": "#include<stdio.h>\nusing namespace std;\n\nint main(){\n\n  return 0;\n}",
+      "iconClass" : "SiCplusplus"
     },
     {
       "label": "C++",
@@ -187,7 +188,8 @@
       "lang": "clike",
       "versionIndex": "0",
       "ext": ".cpp",
-      "pre": "#include<iostream>\nusing namespace std;\n\nint main(){\n\n  return 0;\n}"
+      "pre": "#include<iostream>\nusing namespace std;\n\nint main(){\n\n  return 0;\n}",
+      "iconClass" : "SiCplusplus"
     },
     {
       "label": "Java",
@@ -195,7 +197,8 @@
       "lang": "clike",
       "versionIndex": "3",
       "ext": ".java",
-      "pre": "public class Main {\n  public static void main(String args[]) {\n\tSystem.out.println('Hello World!');\n  }\n}"
+      "pre": "public class Main {\n  public static void main(String args[]) {\n\tSystem.out.println('Hello World!');\n  }\n}",
+      "iconClass" : "SiJava"
     },
     {
       "label": "Python 3",
@@ -203,7 +206,8 @@
       "lang": "python",
       "versionIndex": "3",
       "ext": ".py",
-      "pre": "print('Hello World !')"
+      "pre": "print('Hello World !')",
+      "iconClass" : "SiPython"
     }
   ]
 }

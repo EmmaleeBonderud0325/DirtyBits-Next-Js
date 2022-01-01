@@ -1,6 +1,7 @@
 import React from "react";
 import { Menu, Dropdown, Button, message, Space, Tooltip } from "antd";
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
+import { SiPython, SiCplusplus, SiJava } from "react-icons/si";
 
 const jsonData = require("./data.json");
 
@@ -37,10 +38,25 @@ function Dropdown2(props) {
     }
   }
 
+  const getIconClass = (label) => {
+    if (label === "C++" || label === "C") {
+      return <SiCplusplus />;
+    }
+    if (label === "Python 3") {
+      return <SiPython />;
+    }
+    if (label === "Java") {
+      return <SiJava />;
+    }
+  };
+
   const renderThemeList = jsonData.theme.map((item) => {
     if (props.currTheme.value !== item.value) {
       return (
-        <Menu.Item key={item.label + "|" + item.value} icon={<UserOutlined />}>
+        <Menu.Item
+          key={item.label + "|" + item.value}
+          icon={getIconClass(item.label)}
+        >
           {item.label}
         </Menu.Item>
       );
@@ -51,7 +67,10 @@ function Dropdown2(props) {
   const renderLangList = jsonData.language.map((item) => {
     if (props.currLang.label !== item.label) {
       return (
-        <Menu.Item key={item.ext + "|" + item.value} icon={<UserOutlined />}>
+        <Menu.Item
+          key={item.ext + "|" + item.value}
+          icon={getIconClass(item.label)}
+        >
           {item.label}
         </Menu.Item>
       );
@@ -75,6 +94,11 @@ function Dropdown2(props) {
         overlayStyle={{ background: "black", color: "white" }}
       >
         <Button>
+          {/* {props.dropdownType === "theme" ? (
+            <></>
+          ) : (
+            getIconClass(props.currLang.label)
+          )}{" "} */}
           {props.dropdownType === "theme"
             ? props.currTheme.label
             : props.currLang.label}{" "}
