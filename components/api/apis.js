@@ -379,3 +379,73 @@ handleBookmark.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+export const uploadCode = axios.create({
+  baseURL: PROBLEM_URL + "problems/saveCode",
+  headers: HEADERS,
+});
+
+uploadCode.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const originalRequest = error.config;
+    if (
+      error.response.status === 401 &&
+      error.response.statusText === "Unauthorized"
+    ) {
+      const refresh_token = Cookies.get("refresh");
+      return refreshTokenApi
+        .post("/", {
+          refresh: refresh_token,
+        })
+        .then((response) => {
+          const { access, refresh } = response.data;
+          Cookies.set("access", access);
+          Cookies.set("refresh", refresh, { expires: 14 });
+          uploadCode.defaults.headers["Authorization"] = "JWT " + access;
+          originalRequest.headers["Authorization"] = "JWT " + access;
+          return uploadCode(originalRequest);
+        })
+        .catch((err) => {
+          // LOGOUT AND REDIRECT TO SIGNIN AGAIN
+          console.log(err);
+        });
+    }
+    return Promise.reject(error);
+  }
+);
+
+export const getSavedCode = axios.create({
+  baseURL: PROBLEM_URL + "problems/getSavedCode",
+  headers: HEADERS,
+});
+
+getSavedCode.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const originalRequest = error.config;
+    if (
+      error.response.status === 401 &&
+      error.response.statusText === "Unauthorized"
+    ) {
+      const refresh_token = Cookies.get("refresh");
+      return refreshTokenApi
+        .post("/", {
+          refresh: refresh_token,
+        })
+        .then((response) => {
+          const { access, refresh } = response.data;
+          Cookies.set("access", access);
+          Cookies.set("refresh", refresh, { expires: 14 });
+          getSavedCode.defaults.headers["Authorization"] = "JWT " + access;
+          originalRequest.headers["Authorization"] = "JWT " + access;
+          return getSavedCode(originalRequest);
+        })
+        .catch((err) => {
+          // LOGOUT AND REDIRECT TO SIGNIN AGAIN
+          console.log(err);
+        });
+    }
+    return Promise.reject(error);
+  }
+);

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { base64_decode, base64_encode, download } from "./Helper2";
 import cloneDeep from "lodash/cloneDeep";
 
@@ -20,9 +20,24 @@ import Box from "@mui/material/Box";
 import { useSelector } from "react-redux";
 import Image from "next/image";
 import GoogleLogin from "react-google-login";
-import { googleLoginApi } from "../../components/api/apis";
+import {
+  googleLoginApi,
+  runCode,
+  runTestCases,
+  submitCode,
+  uploadCode,
+  getSavedCode,
+} from "../../components/api/apis";
 import { updateUserinfo } from "../../redux/actions";
 import { useDispatch } from "react-redux";
+
+import Cookies from "js-cookie";
+import Encodemail from "../Helper/Encodemail";
+import { Menu, Transition } from "@headlessui/react";
+import Parsetoken from "../Helper/Parsetoken";
+import FontDropdown from "./FontDropdown";
+
+const jsonData = require("./data.json");
 
 import Dropdown2 from "./Dropdown2";
 
@@ -135,22 +150,14 @@ if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
   require("codemirror/addon/scroll/simplescrollbars");
 }
 
-import { runCode, runTestCases, submitCode } from "../api/apis";
-import Cookies from "js-cookie";
-import Encodemail from "../Helper/Encodemail";
-import { Menu, Transition } from "@headlessui/react";
-import Parsetoken from "../Helper/Parsetoken";
-import FontDropdown from "./FontDropdown";
-
-const jsonData = require("./data.json");
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 const Editor = (props) => {
-  const dispatch = useDispatch();
   const id = props.id;
+
+  const dispatch = useDispatch();
   let [editorValue, changeEditorValue] = useState(
     "#include<iostream>\nusing namespace std;\n\nint main(){\n\n  return 0;\n}"
   );
@@ -177,6 +184,34 @@ const Editor = (props) => {
   const [value, setValue] = React.useState(0);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const setLangFunction = (label) => {
+    for (let i = 0; i < jsonData.language.length; i++) {
+      if (jsonData.language[i].label === label) {
+        setCurrLang({
+          currLang,
+          value: jsonData.language[i].value,
+          label: jsonData.language[i].label,
+          ext: jsonData.language[i].ext,
+          icon: jsonData.language[i].icon,
+        });
+        return;
+      }
+    }
+  };
+  useEffect(() => {
+    async function getCode() {
+      try {
+        await getSavedCode.get(`/${id}/`).then((res) => {
+          setLangFunction(res.data[0].language);
+          changeEditorValue(res.data[0].code);
+        });
+      } catch (e) {
+        console.log("Token Error");
+      }
+    }
+    getCode();
+  }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -389,21 +424,6 @@ const Editor = (props) => {
 
   const profileImageLink = userInfo.profile_pic;
 
-  const setLangFunction = (label) => {
-    for (let i = 0; i < jsonData.language.length; i++) {
-      if (jsonData.language[i].label === label) {
-        setCurrLang({
-          currLang,
-          value: jsonData.language[i].value,
-          label: jsonData.language[i].label,
-          ext: jsonData.language[i].ext,
-          icon: jsonData.language[i].icon,
-        });
-        return;
-      }
-    }
-  };
-
   let fileReader;
 
   const handleFileRead = (e) => {
@@ -425,6 +445,28 @@ const Editor = (props) => {
       setLangFunction("Python 3");
     } else if (extension == "c") {
       setLangFunction("C");
+    }
+  };
+
+  const uploadCloud = async () => {
+    console.log("clod button clicked");
+    console.log(editorValue);
+    console.log(currLang.label);
+    console.log("Prob Id", id);
+    console.log("email", props.email);
+    try {
+      await uploadCode
+        .post("/", {
+          code: editorValue,
+          language: currLang.label,
+          probId: id,
+          email: props.email,
+        })
+        .then(() => {
+          console.log("Success");
+        });
+    } catch (e) {
+      console.error("Token Error");
     }
   };
 
@@ -455,7 +497,11 @@ const Editor = (props) => {
         {/* TOP RIGHT ICONS */}
         <div className="space-x-1 flex items-center transition-all ease-in-out">
           <Tooltip className="bg-none" placement="top" title="Save">
-            <Button ghost style={{ border: "none", fontSize: 20 }}>
+            <Button
+              ghost
+              style={{ border: "none", fontSize: 20 }}
+              onClick={uploadCloud}
+            >
               <BsCloudArrowUp />
             </Button>
           </Tooltip>
