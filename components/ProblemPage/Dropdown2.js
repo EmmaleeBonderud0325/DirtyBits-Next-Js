@@ -5,7 +5,6 @@ import { SiPython, SiCplusplus, SiJava } from "react-icons/si";
 import { IoMoonOutline } from "react-icons/io5";
 import { MdOutlineWbSunny } from "react-icons/md";
 
-
 const jsonData = require("./data.json");
 
 function Dropdown2(props) {
@@ -64,7 +63,10 @@ function Dropdown2(props) {
   const renderThemeList = jsonData.theme.map((item) => {
     if (props.currTheme.value !== item.value) {
       return (
-        <Menu.Item key={item.label} icon={getThemeIconClass(item.type)}>
+        <Menu.Item
+          key={item.label + "|" + item.value}
+          icon={getThemeIconClass(item.type)}
+        >
           {/* {getThemeIconClass(item.type)} */}
           {item.label}
         </Menu.Item>
