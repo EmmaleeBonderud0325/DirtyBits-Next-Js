@@ -288,6 +288,9 @@ const Editor = (props) => {
     var socket = new WebSocket(
       `ws://db-code.herokuapp.com/ws/runcode/${encoded_mail}/`
     );
+    // var socket = new WebSocket(
+    //   `ws://localhost:8000/ws/runcode/${encoded_mail}/`
+    // );
     socket.onopen = async function (e) {
       console.log("opened");
       await submitCode.post("/", {
@@ -298,6 +301,11 @@ const Editor = (props) => {
     };
     socket.onmessage = async function (e) {
       var data = JSON.parse(e.data);
+      console.log(data);
+      if (data["inc_submissions"]) {
+        //Inc submission count
+        console.log(true);
+      }
       if (!data["is_testcase"]) {
         props.setUserSubmissions(props.userSubmissions + 1);
         if (props.submissionList !== null) {

@@ -102,7 +102,7 @@ function Navbar({ userInfo, bg, fixedHeader }) {
                             item.current
                               ? "bg-custom-indigo text-white hover:text-white"
                               : "text-gray-300 hover:bg-gray-500 hover:text-white",
-                            "px-3 py-2 rounded-md text-sm font-medium"
+                            "px-3 py-2 rounded-md text-sm font-medium font-sans"
                           )}
                           aria-current={item.current ? "page" : undefined}
                           href={item.href}
