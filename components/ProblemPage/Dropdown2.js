@@ -57,7 +57,7 @@ function Dropdown2(props) {
           key={item.label + "|" + item.value}
           icon={getIconClass(item.label)}
         >
-          {item.label}
+          {item.label + "  |  " + item.type}
         </Menu.Item>
       );
     }
