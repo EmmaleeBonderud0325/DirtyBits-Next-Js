@@ -2,17 +2,11 @@ import React from "react";
 import { Menu, Dropdown, Button } from "antd";
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
 
-var sizeList = ["10px", "15px", "20px", "25px"];
+var sizeList = ["10px", "20px", "40px", "50px"];
 
 function FontDropdown(props) {
   function handleMenuClick(e) {
-    // document.getElementsByClassName(".CodeMirror").style.fontSize =
-    //   e.key + " !important";
-    // var ele = document.getElementsByClassName("CodeMirror");
-    // ele[0].style.fontsize = "100px !important";
-    console.log(ele[0].style);
     props.setFontSize(e.key);
-    console.log(e);
   }
 
   const renderList = sizeList.map((item) => {

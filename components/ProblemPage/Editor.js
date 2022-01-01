@@ -166,7 +166,7 @@ const Editor = (props) => {
     value: "dracula",
     type: "dark",
   });
-  let [fontSize, setFontSize] = useState("15px");
+  let [fontSize, setFontSize] = useState("10px");
   let [currLang, setCurrLang] = useState({
     label: "C++",
     value: "text/x-c++src",
@@ -475,9 +475,8 @@ const Editor = (props) => {
       style={{ height: "100vh" }}
       className="problem-page-right-container p-2"
     >
-      <FontDropdown fontSize={fontSize} setFontSize={setFontSize} />
-
       <div className="flex justify-around p-10">
+        <FontDropdown fontSize={fontSize} setFontSize={setFontSize} />
         <Dropdown2
           dropdownType={"theme"}
           currTheme={currTheme}
@@ -610,9 +609,8 @@ const Editor = (props) => {
       <div>
         {CodeMirror && (
           <CodeMirror
-            className="my-code-editor text-base scrollbar-hide"
+            className={`my-code-editor scrollbar-hide text-[${fontSize}]`}
             value={editorValue}
-            style={{ fontSize: "100px !important" }}
             options={options}
             onBeforeChange={(editor, data, value) => changeCode(value)}
             //   onChange={(editor, data, value) => changeCode(value)}
