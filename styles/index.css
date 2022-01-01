@@ -221,3 +221,16 @@ html::-webkit-scrollbar-thumb {
 .ant-statistic-title {
   color: white !important;
 }
+
+.ant-btn,
+.ant-dropdown-menu {
+  background-color: #000 !important;
+  color: white !important;
+}
+.ant-dropdown-menu-item {
+  color: white !important;
+}
+.ant-dropdown-menu-item-active {
+  background-color: gray !important;
+  color: white !important;
+}

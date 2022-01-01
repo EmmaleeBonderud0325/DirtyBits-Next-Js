@@ -24,6 +24,8 @@ import { googleLoginApi } from "../../components/api/apis";
 import { updateUserinfo } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 
+import Dropdown2 from "../Dropdown2";
+
 require("codemirror/lib/codemirror.css");
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -442,9 +444,8 @@ const Editor = (props) => {
       style={{ height: "100vh" }}
       className="problem-page-right-container p-2"
     >
-      <div className="dropdown-container flex justify-around p-10">
-        <div>
-          <label className="font-semibold">Theme : </label>
+      <div className="flex justify-around p-10">
+        {/* <label className="font-semibold">Theme : </label>
           <select
             className="border border-gray-700 hover:border-custom-bg rounded-full text-white h-10 ml-2 pl-5 pr-10 bg-gray-800 focus:outline-none appearance-none transition-all ease-out scrollbar-hide"
             onChange={(e) => handleThemeChange(e)}
@@ -453,9 +454,18 @@ const Editor = (props) => {
               {currTheme.label}
             </option>
             {renderThemeList}
-          </select>
-        </div>
-        <div>
+          </select> */}
+        {/* <Dropdown
+          fieldName="Theme"
+          fieldValues={["Easy", "Medium", "Hard"]}
+          bg={"bg-[#1F2937]"}
+          textColor={"text-white"}
+          hasAction={false}
+          currentValue={currTheme.value}
+          actionFunction={handleThemeChange}
+        /> */}
+        <Dropdown2 />
+        {/* <div>
           <label className="font-semibold">Language : </label>
           <select
             className="border border-gray-700 hover:border-custom-bg rounded-full text-white h-10 ml-2 pl-5 pr-10 bg-gray-800 focus:outline-none appearance-none transition-all ease-out"
@@ -464,8 +474,8 @@ const Editor = (props) => {
             <option value={currLang.value}>{currLang.label}</option>
             {renderLangList}
           </select>
-        </div>
-
+        </div> */}
+        <Dropdown2 />
         {/* TOP RIGHT ICONS */}
         <div className="space-x-1 flex items-center transition-all ease-in-out">
           <Tooltip className="bg-none" placement="top" title="Save">
