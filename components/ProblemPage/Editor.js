@@ -24,7 +24,7 @@ import { googleLoginApi } from "../../components/api/apis";
 import { updateUserinfo } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 
-import Dropdown2 from "../Dropdown2";
+import Dropdown2 from "./Dropdown2";
 
 require("codemirror/lib/codemirror.css");
 function TabPanel(props) {
@@ -159,7 +159,7 @@ const Editor = (props) => {
     type: "dark",
   });
   let [currLang, setCurrLang] = useState({
-    label: "C++ 17",
+    label: "C++",
     value: "text/x-c++src",
     ext: ".cpp",
   });
@@ -196,28 +196,6 @@ const Editor = (props) => {
   //     editor.showHint({ completeSingle: false });
   //   }
   // };
-
-  const renderThemeList = jsonData.theme.map((item) => {
-    if (currTheme.value !== item.value) {
-      return (
-        <option key={item.label} className="" value={item.value}>
-          {item.label}
-        </option>
-      );
-    }
-    return <></>;
-  });
-
-  const renderLangList = jsonData.language.map((item) => {
-    if (currLang.label !== item.label) {
-      return (
-        <option key={item.ext} value={item.value}>
-          {item.label}
-        </option>
-      );
-    }
-    return <></>;
-  });
 
   const handleThemeChange = (e) => {
     for (let i = 0; i < jsonData.theme.length; i++) {
@@ -445,37 +423,22 @@ const Editor = (props) => {
       className="problem-page-right-container p-2"
     >
       <div className="flex justify-around p-10">
-        {/* <label className="font-semibold">Theme : </label>
-          <select
-            className="border border-gray-700 hover:border-custom-bg rounded-full text-white h-10 ml-2 pl-5 pr-10 bg-gray-800 focus:outline-none appearance-none transition-all ease-out scrollbar-hide"
-            onChange={(e) => handleThemeChange(e)}
-          >
-            <option className="" value={currTheme.value}>
-              {currTheme.label}
-            </option>
-            {renderThemeList}
-          </select> */}
-        {/* <Dropdown
-          fieldName="Theme"
-          fieldValues={["Easy", "Medium", "Hard"]}
-          bg={"bg-[#1F2937]"}
-          textColor={"text-white"}
-          hasAction={false}
-          currentValue={currTheme.value}
-          actionFunction={handleThemeChange}
-        /> */}
-        <Dropdown2 />
-        {/* <div>
-          <label className="font-semibold">Language : </label>
-          <select
-            className="border border-gray-700 hover:border-custom-bg rounded-full text-white h-10 ml-2 pl-5 pr-10 bg-gray-800 focus:outline-none appearance-none transition-all ease-out"
-            onChange={(e) => handleLangChange(e)}
-          >
-            <option value={currLang.value}>{currLang.label}</option>
-            {renderLangList}
-          </select>
-        </div> */}
-        <Dropdown2 />
+        <Dropdown2
+          dropdownType={"theme"}
+          currTheme={currTheme}
+          currLang={currLang}
+          setCurrTheme={setCurrTheme}
+          setCurrLang={setCurrLang}
+          changeEditorValue={changeEditorValue}
+        />
+        <Dropdown2
+          dropdownType={"language"}
+          currLang={currLang}
+          currTheme={currTheme}
+          setCurrTheme={setCurrTheme}
+          setCurrLang={setCurrLang}
+          changeEditorValue={changeEditorValue}
+        />
         {/* TOP RIGHT ICONS */}
         <div className="space-x-1 flex items-center transition-all ease-in-out">
           <Tooltip className="bg-none" placement="top" title="Save">

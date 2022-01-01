@@ -182,15 +182,7 @@
       "pre": "#include<stdio.h>\nusing namespace std;\n\nint main(){\n\n  return 0;\n}"
     },
     {
-      "label": "C++ 14",
-      "value": "text/x-c++src",
-      "lang": "clike",
-      "versionIndex": "3",
-      "ext": ".cpp",
-      "pre": "#include<iostream>\nusing namespace std;\n\nint main(){\n\n  return 0;\n}"
-    },
-    {
-      "label": "C++ 17",
+      "label": "C++",
       "value": "text/x-c++src",
       "lang": "clike",
       "versionIndex": "0",
@@ -204,14 +196,6 @@
       "versionIndex": "3",
       "ext": ".java",
       "pre": "public class Main {\n  public static void main(String args[]) {\n\tSystem.out.println('Hello World!');\n  }\n}"
-    },
-    {
-      "label": "Python 2",
-      "value": "text/x-python",
-      "lang": "python",
-      "versionIndex": "2",
-      "ext": ".py",
-      "pre": "print('Hello World !')"
     },
     {
       "label": "Python 3",
