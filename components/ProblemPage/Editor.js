@@ -197,36 +197,6 @@ const Editor = (props) => {
   //   }
   // };
 
-  const handleThemeChange = (e) => {
-    for (let i = 0; i < jsonData.theme.length; i++) {
-      if (jsonData.theme[i].value === e.target.value) {
-        setCurrTheme({
-          ...currTheme,
-          value: e.target.value,
-          label: jsonData.theme[i].label,
-          type: jsonData.theme[i].type,
-        });
-        return;
-      }
-    }
-  };
-
-  const handleLangChange = (e) => {
-    for (let i = 0; i < jsonData.language.length; i++) {
-      if (jsonData.language[i].value === e.target.value) {
-        setCurrLang({
-          ...currLang,
-          value: jsonData.language[i].value,
-          label: jsonData.language[i].label,
-          ext: jsonData.language[i].ext,
-          icon: jsonData.language[i].icon,
-        });
-        changeEditorValue(jsonData.language[i].pre);
-        return;
-      }
-    }
-  };
-
   const handleCompileCode = async () => {};
 
   const handleRunCode = async () => {

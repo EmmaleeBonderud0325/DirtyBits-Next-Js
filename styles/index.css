@@ -226,6 +226,12 @@ html::-webkit-scrollbar-thumb {
 .ant-dropdown-menu {
   background-color: #000 !important;
   color: white !important;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.ant-dropdown-trigger {
+  width: 170px;
 }
 .ant-dropdown-menu-item {
   color: white !important;

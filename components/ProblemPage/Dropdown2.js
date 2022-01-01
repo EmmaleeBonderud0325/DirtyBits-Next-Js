@@ -7,11 +7,7 @@ const jsonData = require("./data.json");
 function Dropdown2(props) {
   function handleMenuClick(e) {
     if (props.dropdownType === "theme") {
-      // message.info("Click on menu item.");
-      // console.log("click", e);
-      // console.log("click", e.domEvent);
       const [key, value] = e.key.split("|");
-      // console.log(key, value);
       for (let i = 0; i < jsonData.theme.length; i++) {
         if (jsonData.theme[i].value === value) {
           props.setCurrTheme({
@@ -24,11 +20,7 @@ function Dropdown2(props) {
         }
       }
     } else {
-      // message.info("Click on menu item.");
-      // console.log("click", e);
-      // console.log("click", e.domEvent);
       const [key, value] = e.key.split("|");
-      // console.log(key, value);
       for (let i = 0; i < jsonData.language.length; i++) {
         if (jsonData.language[i].value === value) {
           props.setCurrLang({
@@ -84,7 +76,7 @@ function Dropdown2(props) {
       >
         <Button>
           {props.dropdownType === "theme"
-            ? props.currTheme.value
+            ? props.currTheme.label
             : props.currLang.label}{" "}
           <DownOutlined />
         </Button>
