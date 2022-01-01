@@ -2,6 +2,9 @@ import React from "react";
 import { Menu, Dropdown, Button, message, Space, Tooltip } from "antd";
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import { SiPython, SiCplusplus, SiJava } from "react-icons/si";
+import { IoMoonOutline } from "react-icons/io5";
+import { MdOutlineWbSunny } from "react-icons/md";
+
 
 const jsonData = require("./data.json");
 
@@ -38,7 +41,7 @@ function Dropdown2(props) {
     }
   }
 
-  const getIconClass = (label) => {
+  const getLangIconClass = (label) => {
     if (label === "C++" || label === "C") {
       return <SiCplusplus />;
     }
@@ -50,14 +53,20 @@ function Dropdown2(props) {
     }
   };
 
+  const getThemeIconClass = (type) => {
+    if (type == "dark") {
+      return <IoMoonOutline />;
+    } else {
+      return <MdOutlineWbSunny />;
+    }
+  };
+
   const renderThemeList = jsonData.theme.map((item) => {
     if (props.currTheme.value !== item.value) {
       return (
-        <Menu.Item
-          key={item.label + "|" + item.value}
-          icon={getIconClass(item.label)}
-        >
-          {item.label + "  |  " + item.type}
+        <Menu.Item key={item.label} icon={getThemeIconClass(item.type)}>
+          {/* {getThemeIconClass(item.type)} */}
+          {item.label}
         </Menu.Item>
       );
     }
@@ -69,7 +78,7 @@ function Dropdown2(props) {
       return (
         <Menu.Item
           key={item.ext + "|" + item.value}
-          icon={getIconClass(item.label)}
+          icon={getLangIconClass(item.label)}
         >
           {item.label}
         </Menu.Item>
@@ -97,7 +106,7 @@ function Dropdown2(props) {
           {/* {props.dropdownType === "theme" ? (
             <></>
           ) : (
-            getIconClass(props.currLang.label)
+            getLangIconClass(props.currLang.label)
           )}{" "} */}
           {props.dropdownType === "theme"
             ? props.currTheme.label
