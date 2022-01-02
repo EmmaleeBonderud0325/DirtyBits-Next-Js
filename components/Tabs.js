@@ -228,7 +228,10 @@ function BasicTabs(props) {
           </p>
 
           {/* BOOKMARK */}
-          <div onClick={bookmarkStatusHandler}>
+          <div
+            onClick={bookmarkStatusHandler}
+            className="inline-block cursor-pointer"
+          >
             {isBookmarkSet ? (
               <BsBookmarkCheckFill className="text-lg" />
             ) : (
