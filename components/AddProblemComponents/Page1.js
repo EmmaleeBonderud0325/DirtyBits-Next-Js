@@ -20,17 +20,18 @@ import {
 import MultiSelect from "./MultiSelect";
 import { AddProblem } from "../api/apis";
 import { TextAreaComponent } from "./TextAreaComponent";
+import { InputComponent } from "./InputComponent";
+
+const mapping = {
+  Difficulty: "Difficulty",
+  E: "Easy",
+  M: "Medium",
+  H: "Hard",
+};
 
 export const Page1 = (props) => {
   const problemData = useSelector((state) => state.addProblemData);
   const dispatch = useDispatch();
-
-  const mapping = {
-    Difficulty: "Difficulty",
-    E: "Easy",
-    M: "Medium",
-    H: "Hard",
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,16 +63,13 @@ export const Page1 = (props) => {
           </h1>
           <hr />
           <form className="space-y-5">
-            <div className="space-y-3">
-              <label className="text-lg lg:text-2xl ml-1">Problem Title</label>
-              <input
-                className="w-full text-base px-4 py-2 text-black focus:text-base border border-gray-400 rounded-lg focus:outline-none focus:border-custom-yellow"
-                placeholder="Title"
-                type="text"
-                value={problemData.title}
-                onChange={(e) => dispatch(updateProblemTitle(e.target.value))}
-              />
-            </div>
+            <InputComponent
+              label={"Problem Title"}
+              value={problemData.title}
+              dispatch={updateProblemTitle}
+              type={"text"}
+              placeholder={"Title"}
+            />
             <TextEditor
               label="Problem Statement"
               dispatch={updateProblemStatement}
@@ -105,32 +103,21 @@ export const Page1 = (props) => {
                 actionFunction={updateProblemLevel}
               />
             </div>
-            <div className="space-y-3">
-              <label className="text-lg lg:text-2xl ml-1">Tags</label>
-              <MultiSelect value={props.tags} />
-            </div>
-            <div className="space-y-3">
-              <label className="text-lg lg:text-2xl ml-1">Time Limit</label>
-              <input
-                placeholder="in seconds"
-                type="number"
-                className="w-full text-base px-4 py-2 text-black focus:text-base border border-gray-400 rounded-lg focus:outline-none focus:border-custom-yellow"
-                onChange={(e) =>
-                  dispatch(updateProblemTimeLimit(e.target.value))
-                }
-              />
-            </div>
-            <div className="space-y-3">
-              <label className="text-lg lg:text-2xl ml-1">Memory Limit</label>
-              <input
-                placeholder="in MB"
-                type="number"
-                className="w-full text-base px-4 py-2 text-black focus:text-base border border-gray-400 rounded-lg focus:outline-none focus:border-custom-yellow"
-                onChange={(e) =>
-                  dispatch(updateProblemMemoryLimit(e.target.value))
-                }
-              />
-            </div>
+            <MultiSelect label="Tags" value={props.tags} />
+            <InputComponent
+              label={"Time Limit"}
+              value={problemData.time_Limit}
+              dispatch={updateProblemTimeLimit}
+              type={"number"}
+              placeholder={"in seconds"}
+            />
+            <InputComponent
+              label={"Memory Limit"}
+              value={problemData.memory_Limit}
+              dispatch={updateProblemMemoryLimit}
+              type={"number"}
+              placeholder={"in MB"}
+            />
             <div className="flex justify-center items-center ">
               <button className="btn-purple" onClick={(e) => handleSubmit(e)}>
                 Add Test Case
