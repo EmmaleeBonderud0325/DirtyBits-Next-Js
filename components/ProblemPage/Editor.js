@@ -506,17 +506,18 @@ const Editor = (props) => {
           </Tooltip>
 
           <Tooltip className="bg-none" placement="top" title="Upload">
-            <input
-              type="file"
-              accept=".cpp, .c, .py, .java"
-              id="uploaded-file"
-              onChange={(e) => uploadedfile(e)}
-              className="filebtn"
-            >
-              {/* <Button ghost style={{ border: "none", fontSize: 20 }}>
-                <AiOutlineUpload />
-              </Button> */}
-            </input>
+            <div>
+              <label htmlFor="file-input">
+                <AiOutlineUpload style={{ fontSize: 20, color: "white" }} />
+              </label>
+              <input
+                type="file"
+                accept=".cpp, .c, .py, .java"
+                id="file-input"
+                onChange={(e) => uploadedfile(e)}
+                className="hidden"
+              />
+            </div>
           </Tooltip>
 
           <Tooltip className="bg-none" placement="top" title="Download Code">
