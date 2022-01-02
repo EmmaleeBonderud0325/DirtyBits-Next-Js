@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { uploadTestCases } from "../api/apis";
 import uuid from "react-uuid";
 import _ from "lodash";
@@ -9,7 +9,12 @@ import "react-toastify/dist/ReactToastify.min.css";
 import { TiPlus } from "react-icons/ti";
 import { ImCross } from "react-icons/im";
 
-function Page2(props) {
+export const Page2 = (props) => {
+  useEffect(() => {
+    return () => {
+      console.log("component unmounted");
+    };
+  }, []);
   let [customTestCases, changeCustomTestCases] = useState([{ id: uuid() }]);
   let [testCases, changeTestCases] = useState([{ id: uuid() }]);
   const addNewFileInputSC = (e) => {
@@ -221,6 +226,4 @@ function Page2(props) {
       </div>
     </>
   );
-}
-
-export default Page2;
+};

@@ -1,17 +1,8 @@
-import { useEffect, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
+import { useDispatch } from "react-redux";
 
-const TextEditor = (props) => {
-  let [editorData, changeEditorData] = useState("");
-
-  useEffect(() => {
-    props.dispatch(editorData);
-  }, [editorData]);
-
-  const handleEditorChange = (content, editor) => {
-    changeEditorData(content);
-  };
-
+export const TextEditor = (props) => {
+  const dispatch = useDispatch();
   return (
     <div className="space-y-3">
       <label className="text-lg lg:text-2xl ml-1">{props.label}</label>
@@ -29,6 +20,7 @@ const TextEditor = (props) => {
             "searchreplace visualblocks code",
             "insertdatetime media table paste wordcount",
           ],
+          fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
           content_style:
             "@import url('https://fonts.googleapis.com/css2?family=Lato:wght@900&family=Roboto&display=swap'); \
             body { font-family: 'Roboto', sans-serif; } \
@@ -45,14 +37,14 @@ const TextEditor = (props) => {
             Times New Roman=times new roman,times; \
             Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva;",
           toolbar:
-            "styleselect | fontselect | undo redo | forecolor | bold italic underline | \
+            "styleselect | fontselect | fontsizeselect | undo redo | forecolor | bold italic underline | \
             alignleft aligncenter alignright | link image media | \
             insertdatetime | table | bullist numlist outdent indent",
         }}
-        onEditorChange={handleEditorChange}
+        onEditorChange={(content, _) => {
+          dispatch(props.dispatch(content));
+        }}
       />
     </div>
   );
 };
-
-export default TextEditor;

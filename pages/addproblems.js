@@ -1,8 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 
-import Page1 from "../components/AddProblemComponents/Page1";
-import Page2 from "../components/AddProblemComponents/Page2";
+import { Page1 } from "../components/AddProblemComponents/Page1";
+import { Page2 } from "../components/AddProblemComponents/Page2";
 
 function addproblems(props) {
   let [step, setStep] = useState(1);

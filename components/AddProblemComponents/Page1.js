@@ -4,7 +4,7 @@ import Head from "next/head";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 
-import TextEditor from "./TextEditor";
+import { TextEditor } from "./TextEditor";
 import Dropdown from "../Dropdown";
 import {
   updateProblemTitle,
@@ -21,7 +21,7 @@ import MultiSelect from "../MultiSelect";
 import { AddProblem } from "../api/apis";
 import { TextAreaComponent } from "./TextAreaComponent";
 
-function addproblems(props) {
+export const Page1 = (props) => {
   const problemData = useSelector((state) => state.addProblemData);
   const dispatch = useDispatch();
 
@@ -30,22 +30,6 @@ function addproblems(props) {
     E: "Easy",
     M: "Medium",
     H: "Hard",
-  };
-
-  const HandleProblemStatementUpdate = (data) => {
-    dispatch(updateProblemStatement(data));
-  };
-
-  const HandleInputFormatUpdate = (data) => {
-    dispatch(updateProblemInputFormat(data));
-  };
-
-  const HandleConstraintsUpdate = (data) => {
-    dispatch(updateProblemContraints(data));
-  };
-
-  const HandleOutputFormatUpdate = (data) => {
-    dispatch(updateProblemOutputFormat(data));
   };
 
   const handleSubmit = async (e) => {
@@ -90,7 +74,7 @@ function addproblems(props) {
             </div>
             <TextEditor
               label="Problem Statement"
-              dispatch={HandleProblemStatementUpdate}
+              dispatch={updateProblemStatement}
             />
             <TextAreaComponent
               label="Note"
@@ -99,15 +83,15 @@ function addproblems(props) {
             />
             <TextEditor
               label="Input Format"
-              dispatch={HandleInputFormatUpdate}
+              dispatch={updateProblemInputFormat}
             />
             <TextEditor
               label="Constraints"
-              dispatch={HandleConstraintsUpdate}
+              dispatch={updateProblemContraints}
             />
             <TextEditor
               label="Output Format"
-              dispatch={HandleOutputFormatUpdate}
+              dispatch={updateProblemOutputFormat}
             />
             <div className="space-y-3">
               <label className="text-lg lg:text-2xl ml-1 block">Level</label>
@@ -160,6 +144,4 @@ function addproblems(props) {
       </div>
     </>
   );
-}
-
-export default addproblems;
+};
