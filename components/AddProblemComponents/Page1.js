@@ -4,7 +4,7 @@ import Head from "next/head";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 
-import TextEditor from "../TextEditor";
+import TextEditor from "./TextEditor";
 import Dropdown from "../Dropdown";
 import {
   updateProblemTitle,
@@ -19,6 +19,7 @@ import {
 } from "../../redux/actions";
 import MultiSelect from "../MultiSelect";
 import { AddProblem } from "../api/apis";
+import { TextAreaComponent } from "./TextAreaComponent";
 
 function addproblems(props) {
   const problemData = useSelector((state) => state.addProblemData);
@@ -87,34 +88,27 @@ function addproblems(props) {
                 onChange={(e) => dispatch(updateProblemTitle(e.target.value))}
               />
             </div>
-            <div className="space-y-3">
-              <label className="text-lg lg:text-2xl ml-1">
-                Problem Statement
-              </label>
-              <TextEditor dispatch={HandleProblemStatementUpdate} />
-            </div>
-            <div className="space-y-3">
-              <label className="text-lg lg:text-2xl ml-1">Note</label>
-              <textarea
-                className="w-full text-base px-4 py-2 text-black focus:text-base border border-gray-400 rounded-lg focus:outline-none focus:border-custom-yellow"
-                placeholder="Write a short description of the problem ..."
-                value={problemData.note}
-                onChange={(e) => dispatch(updateProblemNote(e.target.value))}
-                rows="4"
-              />
-            </div>
-            <div className="space-y-3">
-              <label className="text-lg lg:text-2xl ml-1">Input Format</label>
-              <TextEditor dispatch={HandleInputFormatUpdate} />
-            </div>
-            <div className="space-y-3">
-              <label className="text-lg lg:text-2xl ml-1">Constraints</label>
-              <TextEditor dispatch={HandleConstraintsUpdate} />
-            </div>
-            <div className="space-y-3">
-              <label className="text-lg lg:text-2xl ml-1">Output Format</label>
-              <TextEditor dispatch={HandleOutputFormatUpdate} />
-            </div>
+            <TextEditor
+              label="Problem Statement"
+              dispatch={HandleProblemStatementUpdate}
+            />
+            <TextAreaComponent
+              label="Note"
+              value={problemData.note}
+              dispatch={updateProblemNote}
+            />
+            <TextEditor
+              label="Input Format"
+              dispatch={HandleInputFormatUpdate}
+            />
+            <TextEditor
+              label="Constraints"
+              dispatch={HandleConstraintsUpdate}
+            />
+            <TextEditor
+              label="Output Format"
+              dispatch={HandleOutputFormatUpdate}
+            />
             <div className="space-y-3">
               <label className="text-lg lg:text-2xl ml-1 block">Level</label>
               <Dropdown

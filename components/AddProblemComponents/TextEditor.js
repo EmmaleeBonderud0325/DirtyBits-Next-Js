@@ -13,7 +13,8 @@ const TextEditor = (props) => {
   };
 
   return (
-    <div>
+    <div className="space-y-3">
+      <label className="text-lg lg:text-2xl ml-1">{props.label}</label>
       <Editor
         apiKey="g9fbihack52f29u89rqqazv3me0jk3xak5aged47rn1d7aaq"
         initialValue=""
