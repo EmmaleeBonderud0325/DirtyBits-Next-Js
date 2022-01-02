@@ -38,6 +38,9 @@ const Submission = (props) => {
           status = <AiOutlineInfoCircle />;
           color = "text-yellow-500";
       }
+      if (submission.status === "Running") {
+        return <></>;
+      }
 
       return (
         <tr class="text-white">

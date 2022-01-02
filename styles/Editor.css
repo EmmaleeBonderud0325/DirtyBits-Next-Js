@@ -3,6 +3,7 @@
   height: 600px !important;
   min-width: 50% !important;
   overflow-x: scroll;
+  font-weight: bolder;
 }
 
 .cm-matchhighlight {

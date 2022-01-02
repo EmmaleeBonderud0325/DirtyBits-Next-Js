@@ -77,8 +77,6 @@ function a11yProps(index) {
 let CodeMirror = null;
 if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
   CodeMirror = require("react-codemirror2").Controlled;
-  require("codemirror/mode/yaml/yaml");
-  require("codemirror/mode/dockerfile/dockerfile");
 
   require("codemirror/theme/ayu-mirage.css");
   require("codemirror/theme/cobalt.css");
