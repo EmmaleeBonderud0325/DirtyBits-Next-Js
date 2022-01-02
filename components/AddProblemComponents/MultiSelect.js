@@ -3,7 +3,7 @@ import chroma from "chroma-js";
 import Select from "react-select";
 import { connect, useDispatch } from "react-redux";
 
-import { updateProblemTags } from "../redux/actions";
+import { updateProblemTags } from "../../redux/actions";
 
 function MultiSelect(props) {
   const dispatch = useDispatch();

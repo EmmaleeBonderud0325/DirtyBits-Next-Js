@@ -17,7 +17,7 @@ import {
   updateProblemTimeLimit,
   updateProblemLevel,
 } from "../../redux/actions";
-import MultiSelect from "../MultiSelect";
+import MultiSelect from "./MultiSelect";
 import { AddProblem } from "../api/apis";
 import { TextAreaComponent } from "./TextAreaComponent";
 
