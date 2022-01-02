@@ -5,7 +5,6 @@ import { store } from "../redux/store";
 import "../styles/index.css";
 import { useRouter } from "next/router";
 import "antd/dist/antd.css";
-import ContextWrapper from "../context";
 import "../styles/Editor.css";
 import "../styles/tinymce.css";
 
@@ -24,11 +23,10 @@ function MyApp({ Component, pageProps }) {
     fixedTop = "sticky top-0 z-50";
   }
   return (
-    <ContextWrapper>
+    <>
       <Navbar fixedHeader={fixedTop} bg={background} />
       <Component {...pageProps} />
-      {/* <Footer /> */}
-    </ContextWrapper>
+    </>
   );
 }
 
