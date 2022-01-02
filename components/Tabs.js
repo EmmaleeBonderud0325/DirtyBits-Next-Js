@@ -60,7 +60,7 @@ function a11yProps(index) {
 
 function BasicTabs(props) {
   const questionData = props.questionData;
-  const [value, setValue] = React.useState(0);
+
   const [inputTestCases, setInputTestCases] = React.useState([]);
   const [outputTestCases, setOutputTestCases] = React.useState([]);
   const [upVote, setUpVote] = React.useState(0);
@@ -68,10 +68,16 @@ function BasicTabs(props) {
   const [isUpVoted, setIsUpVoted] = React.useState(false);
   const [isDownVoted, setIsDownVoted] = React.useState(false);
   const [isBookmarkSet, setIsBookmarkSet] = React.useState(false);
+
+  useEffect(() => {
+    console.log(props.currentTabValue);
+  }, []);
+
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    props.currentTabFunction(newValue);
   };
 
+  console.log("tabs currentTabvalue", props.currentTabValue);
   let level;
   let color;
   switch (questionData.problem_level) {
@@ -203,7 +209,7 @@ function BasicTabs(props) {
     <Box sx={{ width: "100%", height: "100vh" }} className="scrollbar-hide">
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
-          value={value}
+          value={props.currentTabValue}
           textColor="inherit"
           indicatorColor="secondary"
           onChange={handleChange}
@@ -218,7 +224,7 @@ function BasicTabs(props) {
           <Tab label="Editorial" {...a11yProps(3)} />
         </Tabs>
       </Box>
-      <TabPanel value={value} index={0}>
+      <TabPanel value={props.currentTabValue} index={0}>
         <div className="space-y-5 transition-all ease-in-out">
           {/* PROBLEM TITLE */}
 
@@ -323,8 +329,10 @@ function BasicTabs(props) {
           <pre>Time Limit: {questionData.time_Limit}s</pre>
         </div>
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      <TabPanel value={props.currentTabValue} index={1}>
         <Submissions
+          isRunning={props.codeRunner}
+          result={props.submissionData}
           probId={questionData.id}
           submissionList={props.submissionList}
           setSubmissionList={props.setSubmissionList}
@@ -332,11 +340,11 @@ function BasicTabs(props) {
           setGetSubmissionsState={props.setGetSubmissionsState}
         />
       </TabPanel>
-      <TabPanel value={value} index={2}>
-        Discussion
-      </TabPanel>
-      <TabPanel value={value} index={3}>
+      <TabPanel value={props.currentTabValue} index={2}>
         Editorial
+      </TabPanel>
+      <TabPanel value={props.currentTabValue} index={3}>
+        Discussion
       </TabPanel>
     </Box>
   );

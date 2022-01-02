@@ -8,6 +8,22 @@ function Panel2(props) {
   const [userSubmissions, setUserSubmissions] = useState(0);
   const [submissionList, setSubmissionList] = useState(null);
   const [getSubmissionsState, setGetSubmissionsState] = useState(true);
+  const [tabsValue, setTabsValue] = useState(0);
+  const [resultData, setResultData] = useState({});
+  const [running, setIsRunning] = useState(false);
+  const tabsValueHandler = (value) => {
+    setTabsValue(value);
+  };
+
+  const submissionDataHandler = (value) => {
+    setResultData(value);
+  };
+
+  const runningHandler = (value) => {
+    setIsRunning(value);
+  };
+
+  console.log("result data", resultData);
   return (
     <div>
       <SplitPane
@@ -22,6 +38,10 @@ function Panel2(props) {
       >
         <Pane className="scrollbar-hide" style={{ overflowY: "scroll" }}>
           <Tabs
+            codeRunner={running}
+            submissionData={resultData}
+            currentTabValue={tabsValue}
+            currentTabFunction={tabsValueHandler}
             questionData={props.question}
             userSubmissions={userSubmissions}
             setUserSubmissions={setUserSubmissions}
@@ -33,6 +53,9 @@ function Panel2(props) {
         </Pane>
         <Pane className="scrollbar-hide" style={{ overflowY: "scroll" }}>
           <Editor
+            codeRunner={runningHandler}
+            result={submissionDataHandler}
+            currentTabFunction={tabsValueHandler}
             id={props.id}
             email={props.userEmail}
             userSubmissions={userSubmissions}

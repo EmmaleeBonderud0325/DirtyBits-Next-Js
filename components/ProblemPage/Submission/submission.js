@@ -60,8 +60,46 @@ const Submission = (props) => {
 
     return rowMarkup;
   };
+
+  console.log("sub result", props.result);
   return (
     <section class="container mx-auto p-6 font-mono scrollbar-hide">
+      {props.isRunning && (
+        <div className="pl-5 h-36">
+          <span className="loader"></span>
+        </div>
+      )}
+      {Object.keys(props.result).length > 0 && (
+        <div className="w-full pl-4">
+          <div className="flex items-center gap-10">
+            <p className="text-green-500 text-2xl tracking-wider">
+              {props.result.status}
+            </p>
+            <p>Details:</p>
+          </div>
+          <p>
+            Score: <span className="font-semibold">{props.result.score}</span>
+          </p>
+          <p>
+            Runtime: <span className="font-semibold">0 ms</span>
+          </p>
+          <p>
+            Memory Usage: <span className="font-semibold">7 MB</span>
+          </p>
+          <p>
+            Language:{" "}
+            <span className="font-semibold">{props.result.language}</span>
+          </p>
+          <p>
+            Submission Time:{" "}
+            <span className="font-semibold">
+              {moment(props.result.submission_Date_Time).format(
+                "MMMM Do YYYY, h:mm:ss a"
+              )}
+            </span>
+          </p>
+        </div>
+      )}
       <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg scrollbar-hide">
         <div class="w-full overflow-x-hidden">
           <table class="w-full">

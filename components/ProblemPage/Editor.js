@@ -158,6 +158,7 @@ const Editor = (props) => {
   const id = props.id;
 
   const dispatch = useDispatch();
+
   let [editorValue, changeEditorValue] = useState(
     "#include<iostream>\nusing namespace std;\n\nint main(){\n\n  return 0;\n}"
   );
@@ -279,6 +280,8 @@ const Editor = (props) => {
     //   `ws://localhost:8000/ws/runcode/${encoded_mail}/`
     // );
     socket.onopen = async function (e) {
+      props.currentTabFunction(1);
+      props.codeRunner(true);
       console.log("opened");
       await submitCode.post("/", {
         problem_Id: id,
@@ -308,12 +311,14 @@ const Editor = (props) => {
           let oldState = cloneDeep(props.submissionList);
           oldState.unshift(appendData);
           props.setSubmissionList(oldState);
+          props.result(problemResult);
         }
       } else {
         console.log(data["text"]);
       }
     };
     socket.onclose = function (e) {
+      props.codeRunner(false);
       console.log("closed");
     };
   };
