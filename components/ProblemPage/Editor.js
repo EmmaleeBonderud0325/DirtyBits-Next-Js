@@ -454,11 +454,6 @@ const Editor = (props) => {
   };
 
   const uploadCloud = async () => {
-    console.log("clod button clicked");
-    console.log(editorValue);
-    console.log(currLang.label);
-    console.log("Prob Id", id);
-    console.log("email", props.email);
     try {
       await uploadCode
         .post("/", {
