@@ -7,12 +7,34 @@ import { ToastContainer, toast } from "react-toastify";
 import { CloudUploadOutlined } from "@mui/icons-material";
 import "react-toastify/dist/ReactToastify.min.css";
 import { TiPlus } from "react-icons/ti";
-import { ImCross } from "react-icons/im";
+import { useDispatch } from "react-redux";
+import {
+  updateProblemTitle,
+  updateProblemNote,
+  updateProblemStatement,
+  updateProblemInputFormat,
+  updateProblemContraints,
+  updateProblemOutputFormat,
+  updateProblemMemoryLimit,
+  updateProblemTimeLimit,
+  updateProblemLevel,
+  updateProblemTags,
+} from "../../redux/actions";
 
 export const Page2 = (props) => {
+  const dispatch = useDispatch();
   useEffect(() => {
     return () => {
-      console.log("component unmounted");
+      dispatch(updateProblemTitle(""));
+      dispatch(updateProblemNote(""));
+      dispatch(updateProblemStatement(""));
+      dispatch(updateProblemInputFormat(""));
+      dispatch(updateProblemContraints(""));
+      dispatch(updateProblemOutputFormat(""));
+      dispatch(updateProblemMemoryLimit(null));
+      dispatch(updateProblemTimeLimit(null));
+      dispatch(updateProblemLevel("Difficulty"));
+      dispatch(updateProblemTags([]));
     };
   }, []);
   let [customTestCases, changeCustomTestCases] = useState([{ id: uuid() }]);
