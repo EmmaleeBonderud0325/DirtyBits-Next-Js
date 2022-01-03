@@ -4,7 +4,6 @@ import Editor from "./Editor";
 import Tabs from "../Tabs";
 
 function Panel2() {
-  const [userSubmissions, setUserSubmissions] = useState(0);
   const [submissionList, setSubmissionList] = useState(null);
   const [getSubmissionsState, setGetSubmissionsState] = useState(true);
   const [tabsValue, setTabsValue] = useState(0);
@@ -39,8 +38,6 @@ function Panel2() {
             submissionData={resultData}
             currentTabValue={tabsValue}
             currentTabFunction={tabsValueHandler}
-            userSubmissions={userSubmissions}
-            setUserSubmissions={setUserSubmissions}
             submissionList={submissionList}
             setSubmissionList={setSubmissionList}
             getSubmissionsState={getSubmissionsState}
@@ -52,8 +49,6 @@ function Panel2() {
             codeRunner={runningHandler}
             result={submissionDataHandler}
             currentTabFunction={tabsValueHandler}
-            userSubmissions={userSubmissions}
-            setUserSubmissions={setUserSubmissions}
             submissionList={submissionList}
             setSubmissionList={setSubmissionList}
           />

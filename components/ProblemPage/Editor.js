@@ -23,7 +23,10 @@ import {
 } from "../../components/api/apis";
 import { updateUserinfo } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { changeEditorValue } from "../../redux/actions/ProblemPage";
+import {
+  changeEditorValue,
+  changeSubmissionCount,
+} from "../../redux/actions/ProblemPage";
 
 import Cookies from "js-cookie";
 import Encodemail from "../Helper/Encodemail";
@@ -146,6 +149,7 @@ const Editor = (props) => {
   const fontSize = useSelector((state) => state.fontSize);
   const id = useSelector((state) => state.problemPageProblemId);
   const email = useSelector((state) => state.userData.email);
+  const userSubmissions = useSelector((state) => state.submissionCount);
 
   let [customInput, setCustomInput] = useState(false);
   let [inputValue, changeInputValue] = useState("");
@@ -241,7 +245,7 @@ const Editor = (props) => {
         console.log(true);
       }
       if (!data["is_testcase"]) {
-        props.setUserSubmissions(props.userSubmissions + 1);
+        dispatch(changeSubmissionCount(userSubmissions + 1));
         if (props.submissionList !== null) {
           var problemResult = JSON.parse(data["text"]);
           problemResult = problemResult[0]["fields"];
