@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { getSubmissionsList } from "../../api/apis";
+import { getSubmissionsList } from "../api/apis";
 import moment from "moment";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { AiOutlineCloseCircle, AiOutlineInfoCircle } from "react-icons/ai";

@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import ReactHtmlParser from "react-html-parser";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import {
   AiOutlineDislike,
   AiOutlineLike,
@@ -23,7 +24,8 @@ import {
   handleBookmark,
 } from "./api/apis";
 import Cookies from "js-cookie";
-import Submissions from "./ProblemPage/Submission/submission";
+import Submissions from "./ProblemPage/submission";
+import { changeProblemPageProblemId } from "../redux/actions/ProblemPage";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -59,6 +61,7 @@ function a11yProps(index) {
 }
 
 function BasicTabs(props) {
+  const dispatch = useDispatch();
   const questionData = props.questionData;
 
   const [inputTestCases, setInputTestCases] = React.useState([]);
@@ -70,7 +73,7 @@ function BasicTabs(props) {
   const [isBookmarkSet, setIsBookmarkSet] = React.useState(false);
 
   useEffect(() => {
-    console.log(props.currentTabValue);
+    dispatch(changeProblemPageProblemId(props.questionData.id));
   }, []);
 
   const handleChange = (event, newValue) => {

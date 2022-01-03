@@ -6,6 +6,8 @@ import { ProblemListReducer } from "./ProblemList";
 import { EditorValueReducer } from "./EditorValueReducer";
 import { ThemeReducer } from "./ThemeReducer";
 import { EditorLanguageReducer } from "./EditorLanguageReducer";
+import { FontSizeReducer } from "./EditorFontSizeReducer";
+import { ProblemPageProblemIdReducer } from "./ProblemPageProblemId";
 
 export default combineReducers({
   userData: userDataReducer,
@@ -15,4 +17,6 @@ export default combineReducers({
   editorValue: EditorValueReducer,
   themeValue: ThemeReducer,
   editorLanguage: EditorLanguageReducer,
+  fontSize: FontSizeReducer,
+  problemPageProblemId: ProblemPageProblemIdReducer,
 });

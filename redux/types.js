@@ -19,3 +19,5 @@ export const UpdateProblemList = "UPDATE_PROBLEM_LIST";
 export const UpdateEditorValue = "UPDATE_EDITOR_VALUE";
 export const UpdateEditorTheme = "UPDATE_EDITOR_THEME";
 export const UpdateEditorLanguage = "UPDATE_EDITOR_LANGUAGE";
+export const UpdateEditorFontSize = "UPDATE_EDITOR_FONT_SIZE";
+export const UpdateProblemPageProblemId = "UPDATE_PROBLEM_PAGE_PROBLEM_ID";

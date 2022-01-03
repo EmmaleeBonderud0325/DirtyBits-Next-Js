@@ -1,13 +1,12 @@
 import React from "react";
 import { Menu, Dropdown, Button } from "antd";
-import { DownOutlined, UserOutlined } from "@ant-design/icons";
+import { DownOutlined } from "@ant-design/icons";
+import { useDispatch } from "react-redux";
 
 var sizeList = ["10px", "20px", "40px", "50px"];
 
 function FontDropdown(props) {
-  function handleMenuClick(e) {
-    props.setFontSize(e.key);
-  }
+  const dispatch = useDispatch();
 
   const renderList = sizeList.map((item) => {
     if (item !== props.fontSize) {
@@ -17,7 +16,11 @@ function FontDropdown(props) {
     }
   });
 
-  const menu = <Menu onClick={handleMenuClick}>{renderList}</Menu>;
+  const menu = (
+    <Menu onClick={(e) => dispatch(props.setFontSize(e.key))}>
+      {renderList}
+    </Menu>
+  );
 
   return (
     <div>

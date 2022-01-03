@@ -37,13 +37,10 @@ import {
 
 import Cookies from "js-cookie";
 import Encodemail from "../Helper/Encodemail";
-import { Menu, Transition } from "@headlessui/react";
 import Parsetoken from "../Helper/Parsetoken";
-import FontDropdown from "./FontDropdown";
+import { Header } from "./Header";
 
 const jsonData = require("./data.json");
-
-import Dropdown2 from "./Dropdown2";
 
 require("codemirror/lib/codemirror.css");
 function TabPanel(props) {
@@ -153,19 +150,15 @@ if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
   require("codemirror/addon/scroll/simplescrollbars");
 }
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-
 const Editor = (props) => {
   const id = props.id;
   const dispatch = useDispatch();
   const editorValue = useSelector((state) => state.editorValue);
   const currTheme = useSelector((state) => state.themeValue);
   const currLang = useSelector((state) => state.editorLanguage);
+  const fontSize = useSelector((state) => state.fontSize);
   const userInfo = useSelector((state) => state.userData);
 
-  let [fontSize, setFontSize] = useState("10px");
   let [customInput, setCustomInput] = useState(false);
   let [inputValue, changeInputValue] = useState("");
   let [outputValue, changeOutputValue] = useState(
@@ -370,20 +363,6 @@ const Editor = (props) => {
     console.log(e.target.id);
   };
 
-  const signOutUser = () => {
-    Cookies.remove("access");
-    Cookies.remove("refresh");
-    dispatch(
-      updateUserinfo({
-        is_logged_in: false,
-        email: "",
-        first_name: "",
-        last_name: "",
-        username: "",
-      })
-    );
-  };
-
   const responseGoogleSuccess = async (data) => {
     try {
       await googleLoginApi
@@ -420,186 +399,12 @@ const Editor = (props) => {
     console.error("Google Authentication failed !");
   };
 
-  const profileImageLink = userInfo.profile_pic;
-
-  let fileReader;
-
-  const handleFileRead = (e) => {
-    const content = fileReader.result;
-    dispatch(changeEditorValue(content));
-  };
-
-  const uploadedfile = (e) => {
-    let input_file = e.target.files[0];
-    fileReader = new FileReader();
-    fileReader.onloadend = handleFileRead;
-    fileReader.readAsText(input_file);
-    var [fileName, extension] = input_file.name.split(".");
-    if (extension == "cpp") {
-      setLangFunction("C++");
-    } else if (extension == "java") {
-      setLangFunction("Java");
-    } else if (extension == "py") {
-      setLangFunction("Python 3");
-    } else if (extension == "c") {
-      setLangFunction("C");
-    }
-  };
-
-  const uploadCloud = async () => {
-    try {
-      await uploadCode
-        .post("/", {
-          code: editorValue,
-          language: currLang.label,
-          probId: id,
-          email: props.email,
-        })
-        .then(() => {
-          console.log("Success");
-        });
-    } catch (e) {
-      console.error("Token Error");
-    }
-  };
-
   return (
     <div
       style={{ height: "100vh" }}
       className="problem-page-right-container p-2"
     >
-      <div className="flex justify-around p-10">
-        <FontDropdown fontSize={fontSize} setFontSize={setFontSize} />
-        <Dropdown2
-          dropdownType={"theme"}
-          currTheme={currTheme}
-          currLang={currLang}
-          setCurrTheme={changeTheme}
-          setCurrLang={changeLanguage}
-          changeEditorValue={changeEditorValue}
-        />
-        <Dropdown2
-          dropdownType={"language"}
-          currLang={currLang}
-          currTheme={currTheme}
-          setCurrTheme={changeTheme}
-          setCurrLang={changeLanguage}
-          changeEditorValue={changeEditorValue}
-        />
-        {/* TOP RIGHT ICONS */}
-        <div className="space-x-1 flex items-center transition-all ease-in-out">
-          <Tooltip className="bg-none" placement="top" title="Save">
-            <Button
-              ghost
-              style={{ border: "none", fontSize: 20 }}
-              onClick={uploadCloud}
-            >
-              <BsCloudArrowUp />
-            </Button>
-          </Tooltip>
-
-          <Tooltip className="bg-none" placement="top" title="Upload">
-            <div>
-              <label htmlFor="file-input">
-                <AiOutlineUpload style={{ fontSize: 20, color: "white" }} />
-              </label>
-              <input
-                type="file"
-                accept=".cpp, .c, .py, .java"
-                id="file-input"
-                onChange={(e) => uploadedfile(e)}
-                className="hidden"
-              />
-            </div>
-          </Tooltip>
-
-          <Tooltip className="bg-none" placement="top" title="Download Code">
-            <Button
-              onClick={() => download("code" + currLang.ext, editorValue)}
-              ghost
-              style={{ border: "none", fontSize: 20 }}
-            >
-              <MdSaveAlt />
-            </Button>
-          </Tooltip>
-
-          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 z-50">
-            {/* Profile dropdown */}
-            {
-              <Menu as="div" className="ml-3 relative">
-                <div>
-                  <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                    <span className="sr-only">Open user menu</span>
-                    {profileImageLink && (
-                      <Image
-                        className="rounded-full"
-                        width={40}
-                        height={40}
-                        src={profileImageLink}
-                        alt="profile pic"
-                      />
-                    )}
-                  </Menu.Button>
-                </div>
-                <Transition
-                  as={React.Fragment}
-                  enter="transition ease-out duration-100"
-                  enterFrom="transform opacity-0 scale-95"
-                  enterTo="transform opacity-100 scale-100"
-                  leave="transition ease-in duration-75"
-                  leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95"
-                >
-                  <Menu.Items
-                    className={`origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}
-                  >
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="/profile/mohitbisht"
-                          className={classNames(
-                            active ? "bg-gray-100" : "",
-                            "block px-4 py-2 text-sm text-gray-700"
-                          )}
-                        >
-                          Your Profile
-                        </a>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="/addproblems"
-                          className={classNames(
-                            active ? "bg-gray-100" : "",
-                            "block px-4 py-2 text-sm text-gray-700"
-                          )}
-                        >
-                          Add Problem
-                        </a>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="#"
-                          onClick={signOutUser}
-                          className={classNames(
-                            active ? "bg-gray-100" : "",
-                            "block px-4 py-2 text-sm text-gray-700"
-                          )}
-                        >
-                          Sign out
-                        </a>
-                      )}
-                    </Menu.Item>
-                  </Menu.Items>
-                </Transition>
-              </Menu>
-            }
-          </div>
-        </div>
-      </div>
+      <Header />
       <div>
         {CodeMirror && (
           <CodeMirror
