@@ -3,11 +3,11 @@ import { userDataReducer } from "./UserDataReducer";
 import { AddProblemReducer } from "./AddProblemReducer";
 import { SignupErrorReducer } from "./SignupErrors";
 import { ProblemListReducer } from "./ProblemList";
-import { EditorValueReducer } from "./EditorValueReducer";
-import { ThemeReducer } from "./ThemeReducer";
-import { EditorLanguageReducer } from "./EditorLanguageReducer";
-import { FontSizeReducer } from "./EditorFontSizeReducer";
-import { ProblemPageProblemIdReducer } from "./ProblemPageProblemId";
+import { EditorValueReducer } from "./ProblemPageReducers/EditorValueReducer";
+import { ThemeReducer } from "./ProblemPageReducers/ThemeReducer";
+import { EditorLanguageReducer } from "./ProblemPageReducers/EditorLanguageReducer";
+import { FontSizeReducer } from "./ProblemPageReducers/EditorFontSizeReducer";
+import { ProblemPageProblemIdReducer } from "./ProblemPageReducers/ProblemPageProblemId";
 
 export default combineReducers({
   userData: userDataReducer,

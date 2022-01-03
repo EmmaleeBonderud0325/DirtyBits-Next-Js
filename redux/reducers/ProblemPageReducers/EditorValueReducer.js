@@ -1,4 +1,4 @@
-import { UpdateEditorValue } from "../types";
+import { UpdateEditorValue } from "../../types";
 
 let initial =
   "#include<iostream>\nusing namespace std;\n\nint main(){\n\n  return 0;\n}";

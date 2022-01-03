@@ -1,4 +1,4 @@
-import { UpdateEditorFontSize } from "../types";
+import { UpdateEditorFontSize } from "../../types";
 
 let initial = "15px";
 

@@ -1,4 +1,4 @@
-import { UpdateEditorLanguage } from "../types";
+import { UpdateEditorLanguage } from "../../types";
 
 let initial = {
   label: "C++",

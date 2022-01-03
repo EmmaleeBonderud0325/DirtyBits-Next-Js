@@ -1,4 +1,4 @@
-import { UpdateProblemPageProblemId } from "../types";
+import { UpdateProblemPageProblemId } from "../../types";
 
 let initial = null;
 

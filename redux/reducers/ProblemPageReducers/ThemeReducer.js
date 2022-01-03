@@ -1,4 +1,4 @@
-import { UpdateEditorTheme } from "../types";
+import { UpdateEditorTheme } from "../../types";
 
 let initial = {
   label: "Dracula",
