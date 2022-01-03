@@ -18,13 +18,15 @@ import {
 import { BsBookmarkCheck, BsBookmarkCheckFill } from "react-icons/bs";
 import IoTable from "./ProblemPage/IoTable";
 import { memo } from "react";
-import {
-  getProblemPageDataApi,
-  upAndDownVoteHandler,
-  handleBookmark,
-} from "./api/apis";
-import Cookies from "js-cookie";
+import { upAndDownVoteHandler, handleBookmark } from "./api/apis";
 import Submissions from "./ProblemPage/submission";
+import {
+  changeUpvotes,
+  changeDownvotes,
+  changeIsUpvoted,
+  changeIsDownvoted,
+  changeIsBookmarked,
+} from "../redux/actions/ProblemPage";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -61,15 +63,16 @@ function a11yProps(index) {
 
 function BasicTabs(props) {
   const dispatch = useDispatch();
+  const userSubmissions = useSelector((state) => state.submissionCount);
   const questionData = useSelector((state) => state.problemData);
+  const isBookmarkSet = useSelector((state) => state.isBookmarked);
+  const upVote = useSelector((state) => state.upvoteCount);
+  const downVote = useSelector((state) => state.downvoteCount);
+  const isUpVoted = useSelector((state) => state.isUpvoted);
+  const isDownVoted = useSelector((state) => state.isDownvoted);
 
   const [inputTestCases, setInputTestCases] = React.useState([]);
   const [outputTestCases, setOutputTestCases] = React.useState([]);
-  const [upVote, setUpVote] = React.useState(0);
-  const [downVote, setDownVote] = React.useState(0);
-  const [isUpVoted, setIsUpVoted] = React.useState(false);
-  const [isDownVoted, setIsDownVoted] = React.useState(false);
-  const [isBookmarkSet, setIsBookmarkSet] = React.useState(false);
 
   const handleChange = (event, newValue) => {
     props.currentTabFunction(newValue);
@@ -130,28 +133,8 @@ function BasicTabs(props) {
     GetOutputTestCases();
   };
 
-  const getProblemPageData = async () => {
-    if (!Cookies.get("refresh")) {
-      console.error("upvote downvote", "Login Required !!");
-      return;
-    }
-    try {
-      await getProblemPageDataApi.get(`/${questionData.id}/`).then((result) => {
-        setIsUpVoted(result.data.upvote);
-        setIsDownVoted(result.data.downvote);
-        props.setUserSubmissions(result.data.submissions);
-        setIsBookmarkSet(result.data.bookmarked);
-      });
-    } catch (e) {
-      console.error("Token Error");
-    }
-  };
-
   useEffect(() => {
     getTestCases();
-    setUpVote(questionData.up_votes);
-    setDownVote(questionData.down_votes);
-    getProblemPageData();
   }, []);
 
   const upVoteHandler = async () => {
@@ -162,8 +145,10 @@ function BasicTabs(props) {
           type: "upvote",
         },
       });
-      setIsUpVoted(!isUpVoted);
-      isUpVoted ? setUpVote((prev) => prev - 1) : setUpVote((prev) => prev + 1);
+      isUpVoted
+        ? dispatch(changeUpvotes(upVote - 1))
+        : dispatch(changeUpvotes(upVote + 1));
+      dispatch(changeIsUpvoted(!isUpVoted));
     } catch (e) {
       console.error("Token Error");
     }
@@ -177,18 +162,14 @@ function BasicTabs(props) {
           type: "downvote",
         },
       });
-      setIsDownVoted(!isDownVoted);
       isDownVoted
-        ? setDownVote((prev) => prev - 1)
-        : setDownVote((prev) => prev + 1);
+        ? dispatch(changeDownvotes(downVote - 1))
+        : dispatch(changeDownvotes(downVote + 1));
+      dispatch(changeIsDownvoted(!isDownVoted));
     } catch (e) {
       console.error("Token Error");
     }
   };
-
-  // const submissionsListHandler = async () => {
-  //   const {data} = getSubmissionsList.
-  // }
 
   const bookmarkStatusHandler = async () => {
     try {
@@ -196,7 +177,7 @@ function BasicTabs(props) {
         problem_id: questionData.id,
       });
       if (status === 200) {
-        setIsBookmarkSet(!isBookmarkSet);
+        dispatch(changeIsBookmarked(!isBookmarkSet));
       }
     } catch (e) {
       console.error("Token Error");
@@ -214,10 +195,7 @@ function BasicTabs(props) {
           aria-label="basic tabs example"
         >
           <Tab label="Problem" {...a11yProps(0)} />
-          <Tab
-            label={`Submissions ${props.userSubmissions}`}
-            {...a11yProps(1)}
-          />
+          <Tab label={`Submissions ${userSubmissions}`} {...a11yProps(1)} />
           <Tab label="Discussion" {...a11yProps(2)} />
           <Tab label="Editorial" {...a11yProps(3)} />
         </Tabs>

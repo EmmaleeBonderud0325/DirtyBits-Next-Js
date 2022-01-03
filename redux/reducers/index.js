@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+
 import { userDataReducer } from "./UserDataReducer";
 import { AddProblemReducer } from "./AddProblemReducer";
 import { SignupErrorReducer } from "./SignupErrors";
@@ -9,6 +10,14 @@ import { EditorLanguageReducer } from "./ProblemPageReducers/EditorLanguageReduc
 import { FontSizeReducer } from "./ProblemPageReducers/EditorFontSizeReducer";
 import { ProblemPageProblemIdReducer } from "./ProblemPageReducers/ProblemPageProblemId";
 import { ProblemDataReducer } from "./ProblemPageReducers/ProblemDataReducer";
+import {
+  DownvoteReducer,
+  SetIsBookmarkedReducer,
+  SetIsDownvotedReducer,
+  SetIsUpvotedReducer,
+  submissionCountReducer,
+  UpvoteReducer,
+} from "./ProblemPageReducers/AdditionalDataReducer";
 
 export default combineReducers({
   userData: userDataReducer,
@@ -21,4 +30,10 @@ export default combineReducers({
   fontSize: FontSizeReducer,
   problemPageProblemId: ProblemPageProblemIdReducer,
   problemData: ProblemDataReducer,
+  upvoteCount: UpvoteReducer,
+  downvoteCount: DownvoteReducer,
+  isUpvoted: SetIsUpvotedReducer,
+  isDownvoted: SetIsDownvotedReducer,
+  submissionCount: submissionCountReducer,
+  isBookmarked: SetIsBookmarkedReducer,
 });

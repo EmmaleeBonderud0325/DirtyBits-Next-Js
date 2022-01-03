@@ -5,8 +5,18 @@ import {
   UpdateEditorFontSize,
   UpdateProblemPageProblemId,
   UpdateProblemPageProblemData,
+  UpdateIsUpvoted,
+  UpdateIsDownvoted,
+  UpdateUpvotes,
+  UpdateDownvotes,
+  UpdateSubmissionCount,
+  UpdateIsBookmarked,
 } from "../types";
-import { getProblem, getSavedCode } from "../../components/api/apis";
+import {
+  getProblem,
+  getSavedCode,
+  getProblemPageDataApi,
+} from "../../components/api/apis";
 const jsonData = require("../../components/ProblemPage/data.json");
 
 export const changeEditorValue = (newState) => {
@@ -44,10 +54,54 @@ export const changeProblemData = (newState) => {
   };
 };
 
+export const changeIsUpvoted = (newState) => {
+  return {
+    type: UpdateIsUpvoted,
+    payload: newState,
+  };
+};
+
+export const changeIsDownvoted = (newState) => {
+  return {
+    type: UpdateIsDownvoted,
+    payload: newState,
+  };
+};
+
+export const changeUpvotes = (newState) => {
+  return {
+    type: UpdateUpvotes,
+    payload: newState,
+  };
+};
+
+export const changeDownvotes = (newState) => {
+  return {
+    type: UpdateDownvotes,
+    payload: newState,
+  };
+};
+
+export const changeSubmissionCount = (newState) => {
+  return {
+    type: UpdateSubmissionCount,
+    payload: newState,
+  };
+};
+
+export const changeIsBookmarked = (newState) => {
+  return {
+    type: UpdateIsBookmarked,
+    payload: newState,
+  };
+};
+
 export const getProblemPageProblemData = (id) => async (dispatch, getState) => {
   try {
     const { data } = await getProblem.get(`/${id}/`);
     dispatch(changeProblemData(data));
+    dispatch(changeUpvotes(data.up_votes));
+    dispatch(changeDownvotes(data.down_votes));
     if (getState().userData.is_logged_in) {
       const res = await getSavedCode.get(`/${id}/`);
       dispatch(changeEditorValue(res.data[0].code));
@@ -66,6 +120,11 @@ export const getProblemPageProblemData = (id) => async (dispatch, getState) => {
           break;
         }
       }
+      const problemData = await getProblemPageDataApi.get(`/${id}/`);
+      dispatch(changeIsUpvoted(problemData.data.upvote));
+      dispatch(changeIsDownvoted(problemData.data.downvote));
+      dispatch(changeSubmissionCount(problemData.data.submissions));
+      dispatch(changeIsBookmarked(problemData.data.bookmarked));
     }
   } catch (err) {
     console.error("error");
