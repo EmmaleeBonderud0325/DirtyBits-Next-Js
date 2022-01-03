@@ -21,10 +21,11 @@ const Submission = (props) => {
       props.setGetSubmissionsState(false);
     }
   }, []);
+
   const listRowHandler = () => {
     let rowMarkup = props.submissionList.map((submission) => {
-      let status;
       let color;
+      let status;
       switch (submission.status) {
         case "Accepted":
           status = <IoMdCheckmarkCircleOutline />;
@@ -45,7 +46,7 @@ const Submission = (props) => {
       return (
         <tr class="text-white">
           <td
-            class={`px-4 py-3 ont-semibold ${color} text-sm flex items-center gap-2`}
+            class={`px-4 py-3 font-semibold ${color} text-sm flex items-center gap-2`}
           >
             {status}
             {submission.status}
@@ -64,7 +65,17 @@ const Submission = (props) => {
     return rowMarkup;
   };
 
-  console.log("sub result", props.result);
+  if (Object.keys(props.result).length > 0) {
+    var statusColor;
+    switch (props.result.status) {
+      case "Accepted":
+        statusColor = "text-green-500";
+        break;
+      case "Wrong Answer":
+        statusColor = "text-red-500";
+        break;
+    }
+  }
   return (
     <section class="container mx-auto p-6 font-mono scrollbar-hide">
       {props.isRunning && (
@@ -75,7 +86,7 @@ const Submission = (props) => {
       {Object.keys(props.result).length > 0 && (
         <div className="w-full pl-4">
           <div className="flex items-center gap-10">
-            <p className="text-green-500 text-2xl tracking-wider">
+            <p className={`${statusColor} text-2xl tracking-wider`}>
               {props.result.status}
             </p>
             <p>Details:</p>

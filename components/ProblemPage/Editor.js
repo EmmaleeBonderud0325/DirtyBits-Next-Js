@@ -274,7 +274,7 @@ const Editor = (props) => {
     }
     const encoded_mail = Encodemail(props.email);
     var socket = new WebSocket(
-      `ws://db-code.herokuapp.com/ws/runcode/${encoded_mail}/`
+      `wss://db-code.herokuapp.com/ws/runcode/${encoded_mail}/`
     );
     // var socket = new WebSocket(
     //   `ws://localhost:8000/ws/runcode/${encoded_mail}/`
@@ -282,6 +282,7 @@ const Editor = (props) => {
     socket.onopen = async function (e) {
       props.currentTabFunction(1);
       props.codeRunner(true);
+      props.result({});
       console.log("opened");
       await submitCode.post("/", {
         problem_Id: id,
