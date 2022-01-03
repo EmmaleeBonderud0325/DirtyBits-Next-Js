@@ -4,7 +4,10 @@ import {
   UpdateEditorLanguage,
   UpdateEditorFontSize,
   UpdateProblemPageProblemId,
+  UpdateProblemPageProblemData,
 } from "../types";
+
+import { getProblem } from "../../components/api/apis";
 
 export const changeEditorValue = (newState) => {
   return {
@@ -32,6 +35,22 @@ export const changeFont = (newState) => {
     type: UpdateEditorFontSize,
     payload: newState,
   };
+};
+
+export const changeProblemData = (newState) => {
+  return {
+    type: UpdateProblemPageProblemData,
+    payload: newState,
+  };
+};
+
+export const getProblemPageProblemData = (id) => async (dispatch, getState) => {
+  try {
+    const { data } = await getProblem.get(`/${id}/`);
+    dispatch(changeProblemData(data));
+  } catch (err) {
+    console.log("error");
+  }
 };
 
 export const changeProblemPageProblemId = (newState) => {

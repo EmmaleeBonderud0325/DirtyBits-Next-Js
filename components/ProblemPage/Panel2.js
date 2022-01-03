@@ -42,7 +42,6 @@ function Panel2(props) {
             submissionData={resultData}
             currentTabValue={tabsValue}
             currentTabFunction={tabsValueHandler}
-            questionData={props.question}
             userSubmissions={userSubmissions}
             setUserSubmissions={setUserSubmissions}
             submissionList={submissionList}

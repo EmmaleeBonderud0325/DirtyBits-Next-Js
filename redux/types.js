@@ -21,3 +21,4 @@ export const UpdateEditorTheme = "UPDATE_EDITOR_THEME";
 export const UpdateEditorLanguage = "UPDATE_EDITOR_LANGUAGE";
 export const UpdateEditorFontSize = "UPDATE_EDITOR_FONT_SIZE";
 export const UpdateProblemPageProblemId = "UPDATE_PROBLEM_PAGE_PROBLEM_ID";
+export const UpdateProblemPageProblemData = "UPDATE_PROBLEM_PAGE_DATA";

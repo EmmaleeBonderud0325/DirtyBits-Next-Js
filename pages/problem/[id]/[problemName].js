@@ -1,23 +1,27 @@
 import Head from "next/head";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { changeProblemPageProblemId } from "../../../redux/actions/ProblemPage";
+import {
+  changeProblemPageProblemId,
+  getProblemPageProblemData,
+} from "../../../redux/actions/ProblemPage";
 import Panel2 from "../../../components/ProblemPage/Panel2";
-import { getProblem } from "../../../components/api/apis";
 
-function ProblemView({ data, id }) {
+function ProblemView({ id }) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(changeProblemPageProblemId(id));
+    dispatch(getProblemPageProblemData(id));
   }, []);
+  const title = useSelector((state) => state.problemData.title);
   return (
     <>
       <Head>
-        <title>{data.title}</title>
+        <title>{title}</title>
       </Head>
       <div>
-        <Panel2 id={id} question={data} />
+        <Panel2 id={id} />
       </div>
     </>
   );
@@ -30,11 +34,8 @@ ProblemView.getLayout = function PageLayout(page) {
 export default ProblemView;
 
 export const getServerSideProps = async (ctx) => {
-  const { data } = await getProblem.get(`/${ctx.query.id}/`);
-
   return {
     props: {
-      data,
       id: ctx.query.id,
     },
   };
