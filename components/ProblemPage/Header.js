@@ -1,33 +1,13 @@
 import React from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { useState, useEffect } from "react";
-import { base64_decode, base64_encode, download } from "./Helper2";
-import cloneDeep from "lodash/cloneDeep";
+import { download } from "./Helper2";
 
 import { MdSaveAlt } from "react-icons/md";
-import { AiOutlineUpload, AiFillGithub } from "react-icons/ai";
-import { BsCloudArrowUp, BsTerminal } from "react-icons/bs";
-import { MdCreate } from "react-icons/md";
-import { VscRunAll } from "react-icons/vsc";
-import { Button, Tooltip, Modal } from "antd";
-import { RiSendPlaneFill } from "react-icons/ri";
-import { FcGoogle } from "react-icons/fc";
+import { AiOutlineUpload } from "react-icons/ai";
+import { BsCloudArrowUp } from "react-icons/bs";
+import { Button, Tooltip } from "antd";
 
-import PropTypes from "prop-types";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Image from "next/image";
-import GoogleLogin from "react-google-login";
-import {
-  googleLoginApi,
-  runCode,
-  runTestCases,
-  submitCode,
-  uploadCode,
-  getSavedCode,
-} from "../../components/api/apis";
+import { getSavedCode } from "../../components/api/apis";
 import { updateUserinfo } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -38,8 +18,6 @@ import {
 } from "../../redux/actions/ProblemPage";
 
 import Cookies from "js-cookie";
-import Encodemail from "../Helper/Encodemail";
-import Parsetoken from "../Helper/Parsetoken";
 
 const jsonData = require("./data.json");
 

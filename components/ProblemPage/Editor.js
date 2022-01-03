@@ -1,37 +1,32 @@
-import { useState, useEffect } from "react";
-import { base64_decode, base64_encode, download } from "./Helper2";
+import { useState, useEffect, memo } from "react";
+import { base64_encode } from "./Helper2";
 import cloneDeep from "lodash/cloneDeep";
 
-import { MdSaveAlt } from "react-icons/md";
-import { AiOutlineUpload, AiFillGithub } from "react-icons/ai";
-import { BsCloudArrowUp, BsTerminal } from "react-icons/bs";
+import { AiFillGithub } from "react-icons/ai";
+import { BsTerminal } from "react-icons/bs";
 import { MdCreate } from "react-icons/md";
 import { VscRunAll } from "react-icons/vsc";
-import { Button, Tooltip, Modal } from "antd";
+import { Modal } from "antd";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { FcGoogle } from "react-icons/fc";
 
-import * as React from "react";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Image from "next/image";
 import GoogleLogin from "react-google-login";
 import {
   googleLoginApi,
   runCode,
   runTestCases,
   submitCode,
-  uploadCode,
   getSavedCode,
 } from "../../components/api/apis";
 import { updateUserinfo } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import {
   changeEditorValue,
-  changeTheme,
   changeLanguage,
 } from "../../redux/actions/ProblemPage";
 
@@ -167,7 +162,7 @@ const Editor = (props) => {
   let [showMode, changeShowMode] = useState(true);
   const [showConsole, setShowConsole] = useState(false);
   let [showLoader, setShowLoader] = useState(false);
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -535,4 +530,4 @@ const Editor = (props) => {
   );
 };
 
-export default React.memo(Editor);
+export default memo(Editor);
