@@ -17,7 +17,6 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { useSelector } from "react-redux";
 import Image from "next/image";
 import GoogleLogin from "react-google-login";
 import {
@@ -29,7 +28,12 @@ import {
   getSavedCode,
 } from "../../components/api/apis";
 import { updateUserinfo } from "../../redux/actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  changeEditorValue,
+  changeTheme,
+  changeLanguage,
+} from "../../redux/actions/ProblemPage";
 
 import Cookies from "js-cookie";
 import Encodemail from "../Helper/Encodemail";
@@ -78,7 +82,6 @@ let CodeMirror = null;
 if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
   CodeMirror = require("react-codemirror2").Controlled;
   require("codemirror/mode/yaml/yaml");
-  // require("codemirror/mode/dockerfile/dckerfile");
 
   require("codemirror/theme/ayu-mirage.css");
   require("codemirror/theme/cobalt.css");
@@ -156,24 +159,13 @@ function classNames(...classes) {
 
 const Editor = (props) => {
   const id = props.id;
-
   const dispatch = useDispatch();
+  const editorValue = useSelector((state) => state.editorValue);
+  const currTheme = useSelector((state) => state.themeValue);
+  const currLang = useSelector((state) => state.editorLanguage);
+  const userInfo = useSelector((state) => state.userData);
 
-  let [editorValue, changeEditorValue] = useState(
-    "#include<iostream>\nusing namespace std;\n\nint main(){\n\n  return 0;\n}"
-  );
-  let [currTheme, setCurrTheme] = useState({
-    label: "Dracula",
-    value: "dracula",
-    type: "dark",
-  });
   let [fontSize, setFontSize] = useState("10px");
-  let [currLang, setCurrLang] = useState({
-    label: "C++",
-    value: "text/x-c++src",
-    ext: ".cpp",
-  });
-
   let [customInput, setCustomInput] = useState(false);
   let [inputValue, changeInputValue] = useState("");
   let [outputValue, changeOutputValue] = useState(
@@ -189,13 +181,15 @@ const Editor = (props) => {
   const setLangFunction = (label) => {
     for (let i = 0; i < jsonData.language.length; i++) {
       if (jsonData.language[i].label === label) {
-        setCurrLang({
-          currLang,
-          value: jsonData.language[i].value,
-          label: jsonData.language[i].label,
-          ext: jsonData.language[i].ext,
-          icon: jsonData.language[i].icon,
-        });
+        dispatch(
+          changeLanguage({
+            currLang,
+            value: jsonData.language[i].value,
+            label: jsonData.language[i].label,
+            ext: jsonData.language[i].ext,
+            icon: jsonData.language[i].icon,
+          })
+        );
         return;
       }
     }
@@ -205,7 +199,7 @@ const Editor = (props) => {
       try {
         await getSavedCode.get(`/${id}/`).then((res) => {
           setLangFunction(res.data[0].language);
-          changeEditorValue(res.data[0].code);
+          dispatch(changeEditorValue(res.data[0].code));
         });
       } catch (e) {
         console.log("Token Error");
@@ -219,10 +213,8 @@ const Editor = (props) => {
   };
 
   const changeCode = (data) => {
-    changeEditorValue(data);
+    dispatch(changeEditorValue(data));
   };
-
-  const userInfo = useSelector((state) => state.userData);
 
   // const handleKeyUp = (editor, event) => {
   //   if (editor.state.completionActive) {
@@ -434,7 +426,7 @@ const Editor = (props) => {
 
   const handleFileRead = (e) => {
     const content = fileReader.result;
-    changeEditorValue(content);
+    dispatch(changeEditorValue(content));
   };
 
   const uploadedfile = (e) => {
@@ -482,16 +474,16 @@ const Editor = (props) => {
           dropdownType={"theme"}
           currTheme={currTheme}
           currLang={currLang}
-          setCurrTheme={setCurrTheme}
-          setCurrLang={setCurrLang}
+          setCurrTheme={changeTheme}
+          setCurrLang={changeLanguage}
           changeEditorValue={changeEditorValue}
         />
         <Dropdown2
           dropdownType={"language"}
           currLang={currLang}
           currTheme={currTheme}
-          setCurrTheme={setCurrTheme}
-          setCurrLang={setCurrLang}
+          setCurrTheme={changeTheme}
+          setCurrLang={changeLanguage}
           changeEditorValue={changeEditorValue}
         />
         {/* TOP RIGHT ICONS */}

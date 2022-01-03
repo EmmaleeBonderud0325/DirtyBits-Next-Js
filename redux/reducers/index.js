@@ -4,6 +4,8 @@ import { AddProblemReducer } from "./AddProblemReducer";
 import { SignupErrorReducer } from "./SignupErrors";
 import { ProblemListReducer } from "./ProblemList";
 import { EditorValueReducer } from "./EditorValueReducer";
+import { ThemeReducer } from "./ThemeReducer";
+import { EditorLanguageReducer } from "./EditorLanguageReducer";
 
 export default combineReducers({
   userData: userDataReducer,
@@ -11,4 +13,6 @@ export default combineReducers({
   signupErrors: SignupErrorReducer,
   problemList: ProblemListReducer,
   editorValue: EditorValueReducer,
+  themeValue: ThemeReducer,
+  editorLanguage: EditorLanguageReducer,
 });

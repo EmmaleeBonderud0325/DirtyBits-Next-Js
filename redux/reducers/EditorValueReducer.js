@@ -1,6 +1,7 @@
 import { UpdateEditorValue } from "../types";
 
-let initial = "";
+let initial =
+  "#include<iostream>\nusing namespace std;\n\nint main(){\n\n  return 0;\n}";
 
 export const EditorValueReducer = (state = initial, action) => {
   switch (action.type) {

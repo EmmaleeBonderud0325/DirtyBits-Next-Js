@@ -4,21 +4,25 @@ import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import { SiPython, SiCplusplus, SiJava } from "react-icons/si";
 import { IoMoonOutline } from "react-icons/io5";
 import { MdOutlineWbSunny } from "react-icons/md";
+import { useDispatch } from "react-redux";
 
 const jsonData = require("./data.json");
 
 function Dropdown2(props) {
+  const dispatch = useDispatch();
   function handleMenuClick(e) {
     if (props.dropdownType === "theme") {
       const [key, value] = e.key.split("|");
       for (let i = 0; i < jsonData.theme.length; i++) {
         if (jsonData.theme[i].value === value) {
-          props.setCurrTheme({
-            ...props.currTheme,
-            value: value,
-            label: jsonData.theme[i].label,
-            type: jsonData.theme[i].type,
-          });
+          dispatch(
+            props.setCurrTheme({
+              ...props.currTheme,
+              value: value,
+              label: jsonData.theme[i].label,
+              type: jsonData.theme[i].type,
+            })
+          );
           return;
         }
       }
@@ -26,14 +30,16 @@ function Dropdown2(props) {
       const [key, value] = e.key.split("|");
       for (let i = 0; i < jsonData.language.length; i++) {
         if (jsonData.language[i].value === value) {
-          props.setCurrLang({
-            ...props.currLang,
-            value: jsonData.language[i].value,
-            label: jsonData.language[i].label,
-            ext: jsonData.language[i].ext,
-            icon: jsonData.language[i].icon,
-          });
-          props.changeEditorValue(jsonData.language[i].pre);
+          dispatch(
+            props.setCurrLang({
+              ...props.currLang,
+              value: jsonData.language[i].value,
+              label: jsonData.language[i].label,
+              ext: jsonData.language[i].ext,
+              icon: jsonData.language[i].icon,
+            })
+          );
+          dispatch(props.changeEditorValue(jsonData.language[i].pre));
           return;
         }
       }
