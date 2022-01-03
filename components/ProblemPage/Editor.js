@@ -282,6 +282,7 @@ const Editor = (props) => {
     socket.onopen = async function (e) {
       props.currentTabFunction(1);
       props.codeRunner(true);
+      props.result({});
       console.log("opened");
       await submitCode.post("/", {
         problem_Id: id,
