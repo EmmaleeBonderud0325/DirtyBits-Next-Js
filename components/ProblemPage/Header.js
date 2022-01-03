@@ -6,8 +6,9 @@ import { MdSaveAlt } from "react-icons/md";
 import { AiOutlineUpload } from "react-icons/ai";
 import { BsCloudArrowUp } from "react-icons/bs";
 import { Button, Tooltip } from "antd";
+import Image from "next/image";
 
-import { getSavedCode } from "../../components/api/apis";
+import { uploadCode } from "../../components/api/apis";
 import { updateUserinfo } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import {
