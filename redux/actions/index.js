@@ -160,6 +160,7 @@ export const updateProblemsStatus = () => async (dispatch, getState) => {
 };
 
 export const getProblems = (isLoggedin) => async (dispatch, getState) => {
+  console.log("called");
   try {
     const result = await getProblemsList.get("/");
     dispatch(updateProblemList(result.data));
