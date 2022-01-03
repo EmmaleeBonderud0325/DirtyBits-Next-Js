@@ -3,6 +3,7 @@ import SplitPane, { Pane } from "react-split-pane";
 import Editor from "./Editor";
 import Tabs from "../Tabs";
 import { useSelector } from "react-redux";
+import { Spin } from "antd";
 
 function Panel2() {
   const isRendered = useSelector((state) =>
@@ -37,7 +38,7 @@ function Panel2() {
         className="scrollbar-hide"
       >
         <Pane className="scrollbar-hide" style={{ overflowY: "scroll" }}>
-          {isRendered && (
+          {isRendered ? (
             <Tabs
               codeRunner={running}
               submissionData={resultData}
@@ -48,6 +49,12 @@ function Panel2() {
               getSubmissionsState={getSubmissionsState}
               setGetSubmissionsState={setGetSubmissionsState}
             />
+          ) : (
+            <div className="text-center w-full">
+              <p className="text-white font-bold text-2xl p-4">
+                <Spin size="large" tip="Loading..."></Spin>
+              </p>
+            </div>
           )}
         </Pane>
         <Pane className="scrollbar-hide" style={{ overflowY: "scroll" }}>
