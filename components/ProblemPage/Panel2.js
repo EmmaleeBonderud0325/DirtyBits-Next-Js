@@ -2,9 +2,8 @@ import { useState } from "react";
 import SplitPane, { Pane } from "react-split-pane";
 import Editor from "./Editor";
 import Tabs from "../Tabs";
-import { connect } from "react-redux";
 
-function Panel2(props) {
+function Panel2() {
   const [userSubmissions, setUserSubmissions] = useState(0);
   const [submissionList, setSubmissionList] = useState(null);
   const [getSubmissionsState, setGetSubmissionsState] = useState(true);
@@ -33,8 +32,6 @@ function Panel2(props) {
         defaultSize={900}
         style={{ height: "100vh" }}
         className="scrollbar-hide"
-        // defaultSize={parseInt(localStorage.getItem('splitPos'), 10)}
-        // onChange={(size) => localStorage.setItem('splitPos', size)}
       >
         <Pane className="scrollbar-hide" style={{ overflowY: "scroll" }}>
           <Tabs
@@ -66,10 +63,4 @@ function Panel2(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    userEmail: state.userData.email,
-  };
-};
-
-export default connect(mapStateToProps, {})(Panel2);
+export default Panel2;
