@@ -159,12 +159,11 @@ export const updateProblemsStatus = () => async (dispatch, getState) => {
   dispatch(updateProblemList(data));
 };
 
-export const getProblems = (isLoggedin) => async (dispatch, getState) => {
-  console.log("called");
+export const getProblems = () => async (dispatch, getState) => {
   try {
     const result = await getProblemsList.get("/");
     dispatch(updateProblemList(result.data));
-    if (isLoggedin) {
+    if (getState().userData.is_logged_in) {
       dispatch(updateProblemsStatus());
     }
   } catch {

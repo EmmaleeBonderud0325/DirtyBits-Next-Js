@@ -1,4 +1,4 @@
-import { useState, useEffect, memo } from "react";
+import { useState, memo } from "react";
 import { base64_encode } from "./Helper2";
 import cloneDeep from "lodash/cloneDeep";
 
@@ -18,24 +18,17 @@ import Box from "@mui/material/Box";
 import GoogleLogin from "react-google-login";
 import {
   googleLoginApi,
-  runCode,
   runTestCases,
   submitCode,
-  getSavedCode,
 } from "../../components/api/apis";
 import { updateUserinfo } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  changeEditorValue,
-  changeLanguage,
-} from "../../redux/actions/ProblemPage";
+import { changeEditorValue } from "../../redux/actions/ProblemPage";
 
 import Cookies from "js-cookie";
 import Encodemail from "../Helper/Encodemail";
 import Parsetoken from "../Helper/Parsetoken";
 import { Header } from "./Header";
-
-const jsonData = require("./data.json");
 
 require("codemirror/lib/codemirror.css");
 function TabPanel(props) {
@@ -165,36 +158,6 @@ const Editor = (props) => {
   const [value, setValue] = useState(0);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const setLangFunction = (label) => {
-    for (let i = 0; i < jsonData.language.length; i++) {
-      if (jsonData.language[i].label === label) {
-        dispatch(
-          changeLanguage({
-            currLang,
-            value: jsonData.language[i].value,
-            label: jsonData.language[i].label,
-            ext: jsonData.language[i].ext,
-            icon: jsonData.language[i].icon,
-          })
-        );
-        return;
-      }
-    }
-  };
-  // useEffect(() => {
-  // async function getCode() {
-  //   try {
-  //     await getSavedCode.get(`/${id}/`).then((res) => {
-  //       setLangFunction(res.data[0].language);
-  //       dispatch(changeEditorValue(res.data[0].code));
-  //     });
-  //   } catch (e) {
-  //     console.log("Token Error");
-  //   }
-  // }
-  // getCode();
-  // }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
