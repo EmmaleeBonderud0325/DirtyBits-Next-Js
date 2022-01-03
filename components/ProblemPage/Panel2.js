@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 function Panel2() {
   const isRendered = useSelector((state) =>
-    state.title !== "" ? true : false
+    state.problemData.title !== "" ? true : false
   );
   const [submissionList, setSubmissionList] = useState(null);
   const [getSubmissionsState, setGetSubmissionsState] = useState(true);
