@@ -139,16 +139,16 @@ function BasicTabs(props) {
 
   const upVoteHandler = async () => {
     try {
+      dispatch(changeIsUpvoted(!isUpVoted));
+      isUpVoted
+        ? dispatch(changeUpvotes(upVote - 1))
+        : dispatch(changeUpvotes(upVote + 1));
       await upAndDownVoteHandler.post("/", {
         data: {
           problem_id: questionData.id,
           type: "upvote",
         },
       });
-      isUpVoted
-        ? dispatch(changeUpvotes(upVote - 1))
-        : dispatch(changeUpvotes(upVote + 1));
-      dispatch(changeIsUpvoted(!isUpVoted));
     } catch (e) {
       console.error("Token Error");
     }
@@ -156,16 +156,16 @@ function BasicTabs(props) {
 
   const downVoteHandler = async () => {
     try {
+      dispatch(changeIsDownvoted(!isDownVoted));
+      isDownVoted
+        ? dispatch(changeDownvotes(downVote - 1))
+        : dispatch(changeDownvotes(downVote + 1));
       await upAndDownVoteHandler.post("/", {
         data: {
           problem_id: questionData.id,
           type: "downvote",
         },
       });
-      isDownVoted
-        ? dispatch(changeDownvotes(downVote - 1))
-        : dispatch(changeDownvotes(downVote + 1));
-      dispatch(changeIsDownvoted(!isDownVoted));
     } catch (e) {
       console.error("Token Error");
     }
@@ -173,12 +173,10 @@ function BasicTabs(props) {
 
   const bookmarkStatusHandler = async () => {
     try {
+      dispatch(changeIsBookmarked(!isBookmarkSet));
       const { status } = await handleBookmark.post("/", {
         problem_id: questionData.id,
       });
-      if (status === 200) {
-        dispatch(changeIsBookmarked(!isBookmarkSet));
-      }
     } catch (e) {
       console.error("Token Error");
     }
