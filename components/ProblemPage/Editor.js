@@ -274,7 +274,7 @@ const Editor = (props) => {
     }
     const encoded_mail = Encodemail(props.email);
     var socket = new WebSocket(
-      `ws://db-code.herokuapp.com/ws/runcode/${encoded_mail}/`
+      `wss://db-code.herokuapp.com/ws/runcode/${encoded_mail}/`
     );
     // var socket = new WebSocket(
     //   `ws://localhost:8000/ws/runcode/${encoded_mail}/`
