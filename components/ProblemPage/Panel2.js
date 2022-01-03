@@ -2,8 +2,12 @@ import { useState } from "react";
 import SplitPane, { Pane } from "react-split-pane";
 import Editor from "./Editor";
 import Tabs from "../Tabs";
+import { useSelector } from "react-redux";
 
 function Panel2() {
+  const isRendered = useSelector((state) =>
+    state.title !== "" ? true : false
+  );
   const [submissionList, setSubmissionList] = useState(null);
   const [getSubmissionsState, setGetSubmissionsState] = useState(true);
   const [tabsValue, setTabsValue] = useState(0);
@@ -33,16 +37,18 @@ function Panel2() {
         className="scrollbar-hide"
       >
         <Pane className="scrollbar-hide" style={{ overflowY: "scroll" }}>
-          <Tabs
-            codeRunner={running}
-            submissionData={resultData}
-            currentTabValue={tabsValue}
-            currentTabFunction={tabsValueHandler}
-            submissionList={submissionList}
-            setSubmissionList={setSubmissionList}
-            getSubmissionsState={getSubmissionsState}
-            setGetSubmissionsState={setGetSubmissionsState}
-          />
+          {isRendered && (
+            <Tabs
+              codeRunner={running}
+              submissionData={resultData}
+              currentTabValue={tabsValue}
+              currentTabFunction={tabsValueHandler}
+              submissionList={submissionList}
+              setSubmissionList={setSubmissionList}
+              getSubmissionsState={getSubmissionsState}
+              setGetSubmissionsState={setGetSubmissionsState}
+            />
+          )}
         </Pane>
         <Pane className="scrollbar-hide" style={{ overflowY: "scroll" }}>
           <Editor
