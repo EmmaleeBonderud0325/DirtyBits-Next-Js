@@ -146,13 +146,13 @@ if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
 }
 
 const Editor = (props) => {
-  const id = props.id;
   const dispatch = useDispatch();
   const editorValue = useSelector((state) => state.editorValue);
   const currTheme = useSelector((state) => state.themeValue);
   const currLang = useSelector((state) => state.editorLanguage);
   const fontSize = useSelector((state) => state.fontSize);
-  const userInfo = useSelector((state) => state.userData);
+  const id = useSelector((state) => state.problemPageProblemId);
+  const email = useSelector((state) => state.userData.email);
 
   let [customInput, setCustomInput] = useState(false);
   let [inputValue, changeInputValue] = useState("");
@@ -182,19 +182,19 @@ const Editor = (props) => {
       }
     }
   };
-  useEffect(() => {
-    async function getCode() {
-      try {
-        await getSavedCode.get(`/${id}/`).then((res) => {
-          setLangFunction(res.data[0].language);
-          dispatch(changeEditorValue(res.data[0].code));
-        });
-      } catch (e) {
-        console.log("Token Error");
-      }
-    }
-    getCode();
-  }, []);
+  // useEffect(() => {
+  // async function getCode() {
+  //   try {
+  //     await getSavedCode.get(`/${id}/`).then((res) => {
+  //       setLangFunction(res.data[0].language);
+  //       dispatch(changeEditorValue(res.data[0].code));
+  //     });
+  //   } catch (e) {
+  //     console.log("Token Error");
+  //   }
+  // }
+  // getCode();
+  // }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -252,7 +252,7 @@ const Editor = (props) => {
       console.error("Login Required !!");
       return;
     }
-    const encoded_mail = Encodemail(props.email);
+    const encoded_mail = Encodemail(email);
     var socket = new WebSocket(
       `wss://db-code.herokuapp.com/ws/runcode/${encoded_mail}/`
     );

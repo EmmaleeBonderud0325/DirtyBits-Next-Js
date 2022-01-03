@@ -1,8 +1,16 @@
+import Head from "next/head";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+
+import { changeProblemPageProblemId } from "../../../redux/actions/ProblemPage";
 import Panel2 from "../../../components/ProblemPage/Panel2";
 import { getProblem } from "../../../components/api/apis";
-import Head from "next/head";
 
 function ProblemView({ data, id }) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(changeProblemPageProblemId(id));
+  }, []);
   return (
     <>
       <Head>

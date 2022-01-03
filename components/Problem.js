@@ -1,5 +1,5 @@
 import { SearchOutlined } from "@mui/icons-material";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Dropdown from "../components/Dropdown";
 import { motion } from "framer-motion";
 import Table from "../components/Table";
@@ -144,7 +144,7 @@ function Problem(props) {
       </div>
 
       <div className="flex flex-col">
-        <Table list={questionsList()} />
+        <Table list={questionsList} />
       </div>
     </div>
   );

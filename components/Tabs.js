@@ -25,7 +25,7 @@ import {
 } from "./api/apis";
 import Cookies from "js-cookie";
 import Submissions from "./ProblemPage/submission";
-import { changeProblemPageProblemId } from "../redux/actions/ProblemPage";
+// import { changeProblemPageProblemId } from "../redux/actions/ProblemPage";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -72,9 +72,9 @@ function BasicTabs(props) {
   const [isDownVoted, setIsDownVoted] = React.useState(false);
   const [isBookmarkSet, setIsBookmarkSet] = React.useState(false);
 
-  useEffect(() => {
-    dispatch(changeProblemPageProblemId(props.questionData.id));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(changeProblemPageProblemId(props.questionData.id));
+  // }, []);
 
   const handleChange = (event, newValue) => {
     props.currentTabFunction(newValue);

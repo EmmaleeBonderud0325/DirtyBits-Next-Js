@@ -56,8 +56,6 @@ function Panel2(props) {
             codeRunner={runningHandler}
             result={submissionDataHandler}
             currentTabFunction={tabsValueHandler}
-            id={props.id}
-            email={props.userEmail}
             userSubmissions={userSubmissions}
             setUserSubmissions={setUserSubmissions}
             submissionList={submissionList}
