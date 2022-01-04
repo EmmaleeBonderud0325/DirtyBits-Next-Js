@@ -1,7 +1,5 @@
 import { useState, memo } from "react";
 import { base64_encode } from "./Helper2";
-import cloneDeep from "lodash/cloneDeep";
-
 import { AiFillGithub } from "react-icons/ai";
 import { BsTerminal } from "react-icons/bs";
 import { MdCreate } from "react-icons/md";
@@ -9,12 +7,15 @@ import { VscRunAll } from "react-icons/vsc";
 import { Modal } from "antd";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { FcGoogle } from "react-icons/fc";
-
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import Cookies from "js-cookie";
+import { useDispatch, useSelector } from "react-redux";
+
+require("codemirror/lib/codemirror.css");
 import GoogleLogin from "react-google-login";
 import {
   googleLoginApi,
@@ -22,52 +23,14 @@ import {
   submitCode,
 } from "../../components/api/apis";
 import { updateUserinfo } from "../../redux/actions";
-import { useDispatch, useSelector } from "react-redux";
 import {
   changeEditorValue,
   changeSubmissionCount,
-  changeGetSubmissionsList,
   changeGetSubmissionsListAppendData,
-  changeSubmissionsList,
 } from "../../redux/actions/ProblemPage";
-
-import Cookies from "js-cookie";
 import Encodemail from "../Helper/Encodemail";
 import Parsetoken from "../Helper/Parsetoken";
 import { Header } from "./Header";
-
-require("codemirror/lib/codemirror.css");
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
 
 let CodeMirror = null;
 if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
@@ -144,6 +107,38 @@ if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
   require("codemirror/addon/scroll/simplescrollbars");
 }
 
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
 const Editor = (props) => {
   const dispatch = useDispatch();
   const editorValue = useSelector((state) => state.editorValue);
@@ -153,7 +148,6 @@ const Editor = (props) => {
   const id = useSelector((state) => state.problemPageProblemId);
   const email = useSelector((state) => state.userData.email);
   const userSubmissions = useSelector((state) => state.submissionCount);
-  const submissionList = useSelector((state) => state.submissionsList);
 
   let [customInput, setCustomInput] = useState(false);
   let [inputValue, changeInputValue] = useState("");
