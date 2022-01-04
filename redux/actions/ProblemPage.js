@@ -108,6 +108,7 @@ export const getProblemPageProblemData = (id) => async (dispatch, getState) => {
     dispatch(changeDownvotes(data.down_votes));
     if (getState().userData.is_logged_in) {
       const res = await getSavedCode.get(`/${id}/`);
+      console.log("result", res.data);
       if (res.data.length > 0) {
         dispatch(changeEditorValue(res.data[0].code));
         const currLang = getState().editorLanguage;
@@ -125,6 +126,8 @@ export const getProblemPageProblemData = (id) => async (dispatch, getState) => {
             break;
           }
         }
+      } else {
+        //
       }
       const problemData = await getProblemPageDataApi.get(`/${id}/`);
       dispatch(changeIsUpvoted(problemData.data.upvote));

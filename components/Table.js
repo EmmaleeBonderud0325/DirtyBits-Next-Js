@@ -1,6 +1,7 @@
 import TableLoader from "./TableLoader";
 import { memo } from "react";
 import { useSelector } from "react-redux";
+import Link from "next/link";
 
 function Table() {
   const list = useSelector((state) => state.problemList);
@@ -38,12 +39,11 @@ function Table() {
     return (
       <tr key={problem.id}>
         <td className="table-data text-white ">
-          <a
-            className="text-white hover:bg-blue-dark"
-            href={`/problem/${problem.id}/${problem.title}`}
-          >
-            {idx + 1} . {problem.title}
-          </a>
+          <Link href={`/problem/${problem.id}/${problem.title}`}>
+            <a className="text-white hover:bg-blue-dark">
+              {idx + 1} . {problem.title}
+            </a>
+          </Link>
         </td>
         <td className="py-4 px-6 border-b border-grey-light">
           <p
