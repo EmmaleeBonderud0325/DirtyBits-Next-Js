@@ -46,7 +46,7 @@ function Panel2() {
               currentTabFunction={tabsValueHandler}
             />
           ) : (
-            <div className="text-center w-full">
+            <div className="h-[100vh] flex justify-center items-center w-full">
               <p className="text-white font-bold text-2xl p-4">
                 <Spin size="large" tip="Loading..."></Spin>
               </p>
