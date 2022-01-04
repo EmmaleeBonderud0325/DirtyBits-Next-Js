@@ -1,4 +1,4 @@
-import { useState, memo } from "react";
+import { useState, useEffect, memo } from "react";
 import { base64_encode } from "./Helper2";
 import { AiFillGithub } from "react-icons/ai";
 import { BsTerminal } from "react-icons/bs";
@@ -27,6 +27,7 @@ import {
   changeEditorValue,
   changeSubmissionCount,
   changeGetSubmissionsListAppendData,
+  changeLanguage,
 } from "../../redux/actions/ProblemPage";
 import Encodemail from "../Helper/Encodemail";
 import Parsetoken from "../Helper/Parsetoken";
@@ -141,6 +142,22 @@ function a11yProps(index) {
 
 const Editor = (props) => {
   const dispatch = useDispatch();
+  useEffect(() => {
+    return () => {
+      dispatch(
+        changeEditorValue(
+          "#include<iostream>\nusing namespace std;\n\nint main(){\n\n  return 0;\n}"
+        )
+      );
+      dispatch(
+        changeLanguage({
+          label: "C++",
+          value: "text/x-c++src",
+          ext: ".cpp",
+        })
+      );
+    };
+  });
   const editorValue = useSelector((state) => state.editorValue);
   const currTheme = useSelector((state) => state.themeValue);
   const currLang = useSelector((state) => state.editorLanguage);
