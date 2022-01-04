@@ -128,6 +128,11 @@ export const getProblemPageProblemData = (id) => async (dispatch, getState) => {
         }
       } else {
         dispatch(
+          changeEditorValue(
+            "#include<iostream>\nusing namespace std;\n\nint main(){\n\n  return 0;\n}"
+          )
+        );
+        dispatch(
           changeLanguage({
             label: "C++",
             value: "text/x-c++src",
