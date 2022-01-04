@@ -30,3 +30,4 @@ export const UpdateSubmissionCount = "UPDATE_SUBMISSION_COUNT";
 export const UpdateIsBookmarked = "UPDATE_IS_BOOKMARKED";
 export const UpdateSubmissionsList = "UPDATE_SUBMISSIONS_LIST";
 export const UpdateGetSubmissionsState = "UPDATE_GET_SUBMISSIONS_STATE";
+export const AppendSubmissionList = "APPEND_SUBMISSIONS_LIST";

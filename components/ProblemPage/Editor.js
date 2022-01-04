@@ -260,14 +260,7 @@ const Editor = (props) => {
           submission_Date_Time: problemResult.submission_Date_Time,
           total_score: problemResult.total_score,
         };
-        if (submissionList !== null) {
-          let oldState = cloneDeep(submissionList);
-          oldState.unshift(appendData);
-          console.log(oldState);
-          dispatch(changeSubmissionsList(oldState));
-        } else {
-          dispatch(changeSubmissionsList([appendData]));
-        }
+        dispatch(changeGetSubmissionsListAppendData(appendData));
       } else {
         console.log(data["text"]);
       }

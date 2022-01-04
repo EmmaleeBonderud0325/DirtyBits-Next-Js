@@ -13,6 +13,7 @@ import {
   UpdateIsBookmarked,
   UpdateSubmissionsList,
   UpdateGetSubmissionsState,
+  AppendSubmissionList,
 } from "../types";
 import {
   getProblem,
@@ -139,6 +140,14 @@ export const getProblemPageProblemData = (id) => async (dispatch, getState) => {
 export const changeSubmissionsList = (newState) => {
   return {
     type: UpdateSubmissionsList,
+    payload: newState,
+  };
+};
+
+export const changeGetSubmissionsListAppendData = (newState) => {
+  console.log(newState);
+  return {
+    type: AppendSubmissionList,
     payload: newState,
   };
 };

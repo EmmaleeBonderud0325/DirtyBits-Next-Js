@@ -1,7 +1,9 @@
 import {
   UpdateSubmissionsList,
   UpdateGetSubmissionsState,
+  AppendSubmissionList,
 } from "../../types";
+import cloneDeep from "lodash/cloneDeep";
 
 const initial = null;
 
@@ -11,6 +13,13 @@ export const SubmissionsListReducer = (state = initial, action) => {
   switch (action.type) {
     case UpdateSubmissionsList:
       return action.payload;
+    case AppendSubmissionList:
+      if (state === null) {
+        return [action.payload];
+      }
+      let oldState = cloneDeep(state);
+      oldState.unshift(action.payload);
+      return oldState;
     default:
       return state;
   }
