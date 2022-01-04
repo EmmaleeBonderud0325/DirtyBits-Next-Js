@@ -127,7 +127,13 @@ export const getProblemPageProblemData = (id) => async (dispatch, getState) => {
           }
         }
       } else {
-        //
+        dispatch(
+          changeLanguage({
+            label: "C++",
+            value: "text/x-c++src",
+            ext: ".cpp",
+          })
+        );
       }
       const problemData = await getProblemPageDataApi.get(`/${id}/`);
       dispatch(changeIsUpvoted(problemData.data.upvote));
