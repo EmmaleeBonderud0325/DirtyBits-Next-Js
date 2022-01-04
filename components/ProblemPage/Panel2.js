@@ -44,10 +44,6 @@ function Panel2() {
               submissionData={resultData}
               currentTabValue={tabsValue}
               currentTabFunction={tabsValueHandler}
-              submissionList={submissionList}
-              setSubmissionList={setSubmissionList}
-              getSubmissionsState={getSubmissionsState}
-              setGetSubmissionsState={setGetSubmissionsState}
             />
           ) : (
             <div className="text-center w-full">

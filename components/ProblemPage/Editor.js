@@ -26,6 +26,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   changeEditorValue,
   changeSubmissionCount,
+  changeGetSubmissionsList,
+  changeGetSubmissionsListAppendData,
+  changeSubmissionsList,
 } from "../../redux/actions/ProblemPage";
 
 import Cookies from "js-cookie";
@@ -150,6 +153,7 @@ const Editor = (props) => {
   const id = useSelector((state) => state.problemPageProblemId);
   const email = useSelector((state) => state.userData.email);
   const userSubmissions = useSelector((state) => state.submissionCount);
+  const submissionList = useSelector((state) => state.submissionsList);
 
   let [customInput, setCustomInput] = useState(false);
   let [inputValue, changeInputValue] = useState("");
@@ -246,20 +250,23 @@ const Editor = (props) => {
       }
       if (!data["is_testcase"]) {
         dispatch(changeSubmissionCount(userSubmissions + 1));
-        if (props.submissionList !== null) {
-          var problemResult = JSON.parse(data["text"]);
-          problemResult = problemResult[0]["fields"];
-          var appendData = {
-            status: problemResult.status,
-            score: problemResult.score,
-            language: problemResult.language,
-            submission_Date_Time: problemResult.submission_Date_Time,
-            total_score: problemResult.total_score,
-          };
-          let oldState = cloneDeep(props.submissionList);
+        var problemResult = JSON.parse(data["text"]);
+        problemResult = problemResult[0]["fields"];
+        props.result(problemResult);
+        var appendData = {
+          status: problemResult.status,
+          score: problemResult.score,
+          language: problemResult.language,
+          submission_Date_Time: problemResult.submission_Date_Time,
+          total_score: problemResult.total_score,
+        };
+        if (submissionList !== null) {
+          let oldState = cloneDeep(submissionList);
           oldState.unshift(appendData);
-          props.setSubmissionList(oldState);
-          props.result(problemResult);
+          console.log(oldState);
+          dispatch(changeSubmissionsList(oldState));
+        } else {
+          dispatch(changeSubmissionsList([appendData]));
         }
       } else {
         console.log(data["text"]);

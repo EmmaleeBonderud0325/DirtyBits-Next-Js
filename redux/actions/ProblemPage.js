@@ -11,11 +11,14 @@ import {
   UpdateDownvotes,
   UpdateSubmissionCount,
   UpdateIsBookmarked,
+  UpdateSubmissionsList,
+  UpdateGetSubmissionsState,
 } from "../types";
 import {
   getProblem,
   getSavedCode,
   getProblemPageDataApi,
+  getSubmissionsList,
 } from "../../components/api/apis";
 const jsonData = require("../../components/ProblemPage/data.json");
 
@@ -104,20 +107,22 @@ export const getProblemPageProblemData = (id) => async (dispatch, getState) => {
     dispatch(changeDownvotes(data.down_votes));
     if (getState().userData.is_logged_in) {
       const res = await getSavedCode.get(`/${id}/`);
-      dispatch(changeEditorValue(res.data[0].code));
-      const currLang = getState().editorLanguage;
-      for (let i = 0; i < jsonData.language.length; i++) {
-        if (jsonData.language[i].label === res.data[0].language) {
-          dispatch(
-            changeLanguage({
-              currLang,
-              value: jsonData.language[i].value,
-              label: jsonData.language[i].label,
-              ext: jsonData.language[i].ext,
-              icon: jsonData.language[i].icon,
-            })
-          );
-          break;
+      if (res.data.length > 0) {
+        dispatch(changeEditorValue(res.data[0].code));
+        const currLang = getState().editorLanguage;
+        for (let i = 0; i < jsonData.language.length; i++) {
+          if (jsonData.language[i].label === res.data[0].language) {
+            dispatch(
+              changeLanguage({
+                currLang,
+                value: jsonData.language[i].value,
+                label: jsonData.language[i].label,
+                ext: jsonData.language[i].ext,
+                icon: jsonData.language[i].icon,
+              })
+            );
+            break;
+          }
         }
       }
       const problemData = await getProblemPageDataApi.get(`/${id}/`);
@@ -128,6 +133,34 @@ export const getProblemPageProblemData = (id) => async (dispatch, getState) => {
     }
   } catch (err) {
     console.error("error");
+  }
+};
+
+export const changeSubmissionsList = (newState) => {
+  return {
+    type: UpdateSubmissionsList,
+    payload: newState,
+  };
+};
+
+export const changeGetSubmissionsList = (newState) => {
+  return {
+    type: UpdateGetSubmissionsState,
+    payload: newState,
+  };
+};
+
+export const getSubmissionsListAction = () => async (dispatch, getState) => {
+  try {
+    if (getState().userData.is_logged_in && getState().getSubmissionsState) {
+      const response = await getSubmissionsList.get(
+        `/${getState().problemPageProblemId}/`
+      );
+      dispatch(changeSubmissionsList(response.data));
+      dispatch(changeGetSubmissionsList(false));
+    }
+  } catch (err) {
+    console.error("Token Error");
   }
 };
 

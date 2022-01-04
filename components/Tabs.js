@@ -307,11 +307,6 @@ function BasicTabs(props) {
         <Submissions
           isRunning={props.codeRunner}
           result={props.submissionData}
-          probId={questionData.id}
-          submissionList={props.submissionList}
-          setSubmissionList={props.setSubmissionList}
-          getSubmissionsState={props.getSubmissionsState}
-          setGetSubmissionsState={props.setGetSubmissionsState}
         />
       </TabPanel>
       <TabPanel value={props.currentTabValue} index={2}>

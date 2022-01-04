@@ -1,29 +1,21 @@
 import { useEffect } from "react";
-import { getSubmissionsList } from "../api/apis";
+import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { AiOutlineCloseCircle, AiOutlineInfoCircle } from "react-icons/ai";
 import { Spin } from "antd";
 
+import { getSubmissionsListAction } from "../../redux/actions/ProblemPage";
+
 const Submission = (props) => {
+  const dispatch = useDispatch();
+  const submissionList = useSelector((state) => state.submissionsList);
   useEffect(() => {
-    console.log("useeffect submissions");
-    async function getList() {
-      try {
-        const response = await getSubmissionsList.get(`/${props.probId}/`);
-        props.setSubmissionList(response.data);
-      } catch (e) {
-        console.error("Token Error");
-      }
-    }
-    if (props.getSubmissionsState) {
-      getList();
-      props.setGetSubmissionsState(false);
-    }
+    dispatch(getSubmissionsListAction());
   }, []);
 
   const listRowHandler = () => {
-    let rowMarkup = props.submissionList.map((submission) => {
+    let rowMarkup = submissionList.map((submission) => {
       let color;
       let status;
       switch (submission.status) {
@@ -126,17 +118,17 @@ const Submission = (props) => {
               </tr>
             </thead>
             <tbody class="bg-slate-800">
-              {props.submissionList !== null && listRowHandler()}
+              {submissionList !== null && listRowHandler()}
             </tbody>
           </table>
-          {props.submissionList === null && (
+          {submissionList === null && (
             <div className="text-center w-full">
               <p className="text-white font-bold text-2xl p-4">
                 <Spin size="large" tip="Loading..."></Spin>
               </p>
             </div>
           )}
-          {props.submissionList !== null && props.submissionList.length <= 0 && (
+          {submissionList !== null && submissionList.length <= 0 && (
             <div className="text-center w-full">
               <p className="text-white p-4 font-bold text-2xl">
                 No Submissions

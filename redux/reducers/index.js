@@ -18,6 +18,10 @@ import {
   submissionCountReducer,
   UpvoteReducer,
 } from "./ProblemPageReducers/AdditionalDataReducer";
+import {
+  GetSubmissionsStateReducer,
+  SubmissionsListReducer,
+} from "./ProblemPageReducers/SubmissionsListReducer";
 
 export default combineReducers({
   userData: userDataReducer,
@@ -36,4 +40,6 @@ export default combineReducers({
   isDownvoted: SetIsDownvotedReducer,
   submissionCount: submissionCountReducer,
   isBookmarked: SetIsBookmarkedReducer,
+  submissionsList: SubmissionsListReducer,
+  getSubmissionsState: GetSubmissionsStateReducer,
 });
