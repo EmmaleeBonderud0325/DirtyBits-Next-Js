@@ -5,7 +5,7 @@ import Typewriter from "typewriter-effect";
 export default function Hero() {
   return (
     <>
-      <div className="relative bg-purple-400 h-screen w-screen customHero">
+      <div className="relative h-screen w-screen customHero">
         <div className="max-w-7xl mx-auto">
           <div className="relative z-10 pb-8 bg-black-400 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
             <svg
@@ -19,9 +19,7 @@ export default function Hero() {
             </svg>
             <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
               <div className="sm:text-center lg:text-left">
-                <h1 className="text-4xl tracking-tight font-thin text-gray-900 sm:text-xs md:text-6xl">
-                  <span className="block xl:block font-semibold text-custom-indigo lg:text-5xl md:text-3xl tracking-wider">
-                    <Typewriter
+                {/* <Typewriter
                       options={{ loop: true }}
                       onInit={(typewriter) => {
                         typewriter
@@ -38,12 +36,13 @@ export default function Hero() {
                           .deleteAll()
                           .start();
                       }}
-                    />
-                  </span>{" "}
-                  <span className="block text-white font-light xl:block mt-5 text-4xl tracking-wider">
-                    Be a Coder with us.
-                  </span>
+                    /> */}
+                <h1 className="text-6xl text-transparent bg-clip-text bg-gradient-to-r from-[#AE67FA] to-[#F49867]">
+                  Welcome to DirtyBits
                 </h1>
+                <span className="block text-white font-light xl:block mt-5 text-4xl tracking-wider">
+                  Be a Coder with us.
+                </span>
                 <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
                   First, solve the problem. Then, write the code.
                 </p>
@@ -51,7 +50,7 @@ export default function Hero() {
                   <div className="rounded-md shadow">
                     <a
                       href="/problemset"
-                      className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-custom-indigo hover:bg-indigo-600 hover:text-white md:py-4 md:text-lg md:px-10 shadow-xl shadow-custom-indigo/40"
+                      className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base   rounded-full font-semibold text-black bg-white hover:opacity-70 hover:text-black md:py-4 md:text-lg md:px-10 shadow-xl shadow-white/20 transition-all ease-in-out duration-400 active:ring-4 active:ring-white/50"
                     >
                       Explore Now
                     </a>
