@@ -91,7 +91,7 @@ export const Header = () => {
 
   return (
     <div className="flex justify-around p-10">
-      <FontDropdown fontSize={fontSize} setFontSize={changeFont} />
+      {/* <FontDropdown fontSize={fontSize} setFontSize={changeFont} /> */}
       <Dropdown2
         dropdownType={"theme"}
         currTheme={currTheme}
@@ -147,7 +147,7 @@ export const Header = () => {
 
         <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 z-50">
           {/* Profile dropdown */}
-          {<Profile />}
+          <Profile />
         </div>
       </div>
     </div>

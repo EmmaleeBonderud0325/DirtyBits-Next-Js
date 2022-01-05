@@ -157,7 +157,7 @@ const Editor = (props) => {
         })
       );
     };
-  });
+  }, []);
   const editorValue = useSelector((state) => state.editorValue);
   const currTheme = useSelector((state) => state.themeValue);
   const currLang = useSelector((state) => state.editorLanguage);
