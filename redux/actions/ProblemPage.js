@@ -126,17 +126,18 @@ export const upvoteHandler = () => async (dispatch, getState) => {
     : dispatch(changeUpvotes(getState().upvoteCount + 1));
   dispatch(changeIsUpvoted(!getState().isUpvoted));
   try {
-    await upAndDownVoteHandler.post("/", {
-      data: {
-        problem_id: Number(getState().problemPageProblemId),
-        type: "upvote",
-      },
-    });
     if (flag) {
       await upAndDownVoteHandler.post("/", {
         data: {
           problem_id: Number(getState().problemPageProblemId),
-          type: "downvote",
+          type: "UpvoteDownvote",
+        },
+      });
+    } else {
+      await upAndDownVoteHandler.post("/", {
+        data: {
+          problem_id: Number(getState().problemPageProblemId),
+          type: "upvote",
         },
       });
     }
@@ -157,17 +158,18 @@ export const downvoteHandler = () => async (dispatch, getState) => {
     : dispatch(changeDownvotes(getState().downvoteCount + 1));
   dispatch(changeIsDownvoted(!getState().isDownvoted));
   try {
-    await upAndDownVoteHandler.post("/", {
-      data: {
-        problem_id: Number(getState().problemPageProblemId),
-        type: "downvote",
-      },
-    });
     if (flag) {
       await upAndDownVoteHandler.post("/", {
         data: {
           problem_id: Number(getState().problemPageProblemId),
-          type: "upvote",
+          type: "UpvoteDownvote",
+        },
+      });
+    } else {
+      await upAndDownVoteHandler.post("/", {
+        data: {
+          problem_id: Number(getState().problemPageProblemId),
+          type: "downvote",
         },
       });
     }
