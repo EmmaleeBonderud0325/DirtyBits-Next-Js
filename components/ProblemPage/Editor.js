@@ -1,7 +1,6 @@
 import { useState, useEffect, memo } from "react";
-import { base64_encode } from "./Helper2";
-import { AiFillGithub } from "react-icons/ai";
 import { BsTerminal } from "react-icons/bs";
+import { AiFillGithub } from "react-icons/ai";
 import { MdCreate } from "react-icons/md";
 import { VscRunAll } from "react-icons/vsc";
 import { Modal } from "antd";
@@ -14,9 +13,10 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
-
-require("codemirror/lib/codemirror.css");
 import GoogleLogin from "react-google-login";
+
+import { base64_encode } from "./Helper2";
+require("codemirror/lib/codemirror.css");
 import {
   googleLoginApi,
   runTestCases,

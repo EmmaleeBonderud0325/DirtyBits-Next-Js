@@ -72,6 +72,7 @@ AddProblem.interceptors.response.use(
           const { access, refresh } = response.data;
           Cookies.set("access", access);
           Cookies.set("refresh", refresh, { expires: 14 });
+          HEADERS["Authorization"] = "JWT " + access;
           AddProblem.defaults.headers["Authorization"] = "JWT " + access;
           originalRequest.headers["Authorization"] = "JWT " + access;
           return AddProblem(originalRequest);
@@ -115,6 +116,7 @@ getProblemsStatus.interceptors.response.use(
           const { access, refresh } = response.data;
           Cookies.set("access", access);
           Cookies.set("refresh", refresh, { expires: 14 });
+          HEADERS["Authorization"] = "JWT " + access;
           getProblemsStatus.defaults.headers["Authorization"] = "JWT " + access;
           originalRequest.headers["Authorization"] = "JWT " + access;
           return getProblemsStatus(originalRequest);
@@ -154,6 +156,7 @@ runCode.interceptors.response.use(
           const { access, refresh } = response.data;
           Cookies.set("access", access);
           Cookies.set("refresh", refresh, { expires: 14 });
+          HEADERS["Authorization"] = "JWT " + access;
           runCode.defaults.headers["Authorization"] = "JWT " + access;
           originalRequest.headers["Authorization"] = "JWT " + access;
           return runCode(originalRequest);
@@ -189,6 +192,7 @@ submitCode.interceptors.response.use(
           const { access, refresh } = response.data;
           Cookies.set("access", access);
           Cookies.set("refresh", refresh, { expires: 14 });
+          HEADERS["Authorization"] = "JWT " + access;
           submitCode.defaults.headers["Authorization"] = "JWT " + access;
           originalRequest.headers["Authorization"] = "JWT " + access;
           return submitCode(originalRequest);
@@ -224,6 +228,7 @@ runTestCases.interceptors.response.use(
           const { access, refresh } = response.data;
           Cookies.set("access", access);
           Cookies.set("refresh", refresh, { expires: 14 });
+          HEADERS["Authorization"] = "JWT " + access;
           runTestCases.defaults.headers["Authorization"] = "JWT " + access;
           originalRequest.headers["Authorization"] = "JWT " + access;
           return runTestCases(originalRequest);
@@ -259,6 +264,7 @@ getProblemPageDataApi.interceptors.response.use(
           const { access, refresh } = response.data;
           Cookies.set("access", access);
           Cookies.set("refresh", refresh, { expires: 14 });
+          HEADERS["Authorization"] = "JWT " + access;
           getProblemPageDataApi.defaults.headers["Authorization"] =
             "JWT " + access;
           originalRequest.headers["Authorization"] = "JWT " + access;
@@ -295,6 +301,7 @@ getSubmissionsList.interceptors.response.use(
           const { access, refresh } = response.data;
           Cookies.set("access", access);
           Cookies.set("refresh", refresh, { expires: 14 });
+          HEADERS["Authorization"] = "JWT " + access;
           getSubmissionsList.defaults.headers["Authorization"] =
             "JWT " + access;
           originalRequest.headers["Authorization"] = "JWT " + access;
@@ -331,6 +338,7 @@ upAndDownVoteHandler.interceptors.response.use(
           const { access, refresh } = response.data;
           Cookies.set("access", access);
           Cookies.set("refresh", refresh, { expires: 14 });
+          HEADERS["Authorization"] = "JWT " + access;
           upAndDownVoteHandler.defaults.headers["Authorization"] =
             "JWT " + access;
           originalRequest.headers["Authorization"] = "JWT " + access;
@@ -367,6 +375,7 @@ handleBookmark.interceptors.response.use(
           const { access, refresh } = response.data;
           Cookies.set("access", access);
           Cookies.set("refresh", refresh, { expires: 14 });
+          HEADERS["Authorization"] = "JWT " + access;
           handleBookmark.defaults.headers["Authorization"] = "JWT " + access;
           originalRequest.headers["Authorization"] = "JWT " + access;
           return handleBookmark(originalRequest);
@@ -402,6 +411,7 @@ uploadCode.interceptors.response.use(
           const { access, refresh } = response.data;
           Cookies.set("access", access);
           Cookies.set("refresh", refresh, { expires: 14 });
+          HEADERS["Authorization"] = "JWT " + access;
           uploadCode.defaults.headers["Authorization"] = "JWT " + access;
           originalRequest.headers["Authorization"] = "JWT " + access;
           return uploadCode(originalRequest);
@@ -437,6 +447,7 @@ getSavedCode.interceptors.response.use(
           const { access, refresh } = response.data;
           Cookies.set("access", access);
           Cookies.set("refresh", refresh, { expires: 14 });
+          HEADERS["Authorization"] = "JWT " + access;
           getSavedCode.defaults.headers["Authorization"] = "JWT " + access;
           originalRequest.headers["Authorization"] = "JWT " + access;
           return getSavedCode(originalRequest);

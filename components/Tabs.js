@@ -1,12 +1,11 @@
-import * as React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState, memo } from "react";
+import ReactHtmlParser from "react-html-parser";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import ReactHtmlParser from "react-html-parser";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
   AiOutlineDislike,
   AiOutlineLike,
@@ -16,16 +15,13 @@ import {
   AiOutlineGlobal,
 } from "react-icons/ai";
 import { BsBookmarkCheck, BsBookmarkCheckFill } from "react-icons/bs";
+
 import IoTable from "./ProblemPage/IoTable";
-import { memo } from "react";
-import { upAndDownVoteHandler, handleBookmark } from "./api/apis";
 import Submissions from "./ProblemPage/submission";
 import {
-  changeUpvotes,
-  changeDownvotes,
-  changeIsUpvoted,
-  changeIsDownvoted,
-  changeIsBookmarked,
+  bookmarkStatusHandler,
+  upvoteHandler,
+  downvoteHandler,
 } from "../redux/actions/ProblemPage";
 
 function TabPanel(props) {
@@ -71,8 +67,8 @@ function BasicTabs(props) {
   const isUpVoted = useSelector((state) => state.isUpvoted);
   const isDownVoted = useSelector((state) => state.isDownvoted);
 
-  const [inputTestCases, setInputTestCases] = React.useState([]);
-  const [outputTestCases, setOutputTestCases] = React.useState([]);
+  const [inputTestCases, setInputTestCases] = useState([]);
+  const [outputTestCases, setOutputTestCases] = useState([]);
 
   const handleChange = (event, newValue) => {
     props.currentTabFunction(newValue);
@@ -137,51 +133,6 @@ function BasicTabs(props) {
     getTestCases();
   }, []);
 
-  const upVoteHandler = async () => {
-    try {
-      dispatch(changeIsUpvoted(!isUpVoted));
-      isUpVoted
-        ? dispatch(changeUpvotes(upVote - 1))
-        : dispatch(changeUpvotes(upVote + 1));
-      await upAndDownVoteHandler.post("/", {
-        data: {
-          problem_id: questionData.id,
-          type: "upvote",
-        },
-      });
-    } catch (e) {
-      console.error("Token Error");
-    }
-  };
-
-  const downVoteHandler = async () => {
-    try {
-      dispatch(changeIsDownvoted(!isDownVoted));
-      isDownVoted
-        ? dispatch(changeDownvotes(downVote - 1))
-        : dispatch(changeDownvotes(downVote + 1));
-      await upAndDownVoteHandler.post("/", {
-        data: {
-          problem_id: questionData.id,
-          type: "downvote",
-        },
-      });
-    } catch (e) {
-      console.error("Token Error");
-    }
-  };
-
-  const bookmarkStatusHandler = async () => {
-    try {
-      dispatch(changeIsBookmarked(!isBookmarkSet));
-      const { status } = await handleBookmark.post("/", {
-        problem_id: questionData.id,
-      });
-    } catch (e) {
-      console.error("Token Error");
-    }
-  };
-
   return (
     <Box sx={{ width: "100%", height: "100vh" }} className="scrollbar-hide">
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -209,7 +160,9 @@ function BasicTabs(props) {
 
           {/* BOOKMARK */}
           <div
-            onClick={bookmarkStatusHandler}
+            onClick={() => {
+              dispatch(bookmarkStatusHandler());
+            }}
             className="inline-block cursor-pointer"
           >
             {isBookmarkSet ? (
@@ -226,7 +179,9 @@ function BasicTabs(props) {
             </p>
 
             <div
-              onClick={upVoteHandler}
+              onClick={() => {
+                dispatch(upvoteHandler());
+              }}
               className="flex items-center space-x-1 cursor-pointer"
             >
               <p>{isUpVoted ? <AiFillLike /> : <AiOutlineLike />}</p>
@@ -234,7 +189,9 @@ function BasicTabs(props) {
             </div>
 
             <div
-              onClick={downVoteHandler}
+              onClick={() => {
+                dispatch(downvoteHandler());
+              }}
               className="flex items-center space-x-1 cursor-pointer"
             >
               <p>{isDownVoted ? <AiFillDislike /> : <AiOutlineDislike />}</p>
