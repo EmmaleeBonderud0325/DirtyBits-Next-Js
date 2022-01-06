@@ -123,6 +123,7 @@ body {
 
 .cartoon {
   animation: updown 2s ease infinite;
+  margin-top: -9rem !important;
 }
 
 html::-webkit-scrollbar {
