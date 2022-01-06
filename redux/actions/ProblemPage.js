@@ -115,10 +115,24 @@ export const bookmarkStatusHandler = () => async (dispatch, getState) => {
 };
 
 export const upvoteHandler = () => async (dispatch, getState) => {
+  let flag = false;
+  if (getState().isDownvoted) {
+    dispatch(changeDownvotes(getState().downvoteCount - 1));
+    dispatch(changeIsDownvoted(!getState().isDownvoted));
+    flag = true;
+  }
+  getState().isUpvoted
+    ? dispatch(changeUpvotes(getState().upvoteCount - 1))
+    : dispatch(changeUpvotes(getState().upvoteCount + 1));
+  dispatch(changeIsUpvoted(!getState().isUpvoted));
   try {
-    if (getState().isDownvoted) {
-      dispatch(changeDownvotes(getState().downvoteCount - 1));
-      dispatch(changeIsDownvoted(!getState().isDownvoted));
+    await upAndDownVoteHandler.post("/", {
+      data: {
+        problem_id: Number(getState().problemPageProblemId),
+        type: "upvote",
+      },
+    });
+    if (flag) {
       await upAndDownVoteHandler.post("/", {
         data: {
           problem_id: Number(getState().problemPageProblemId),
@@ -126,51 +140,37 @@ export const upvoteHandler = () => async (dispatch, getState) => {
         },
       });
     }
-    getState().isUpvoted
-      ? dispatch(changeUpvotes(getState().upvoteCount - 1))
-      : dispatch(changeUpvotes(getState().upvoteCount + 1));
-    dispatch(changeIsUpvoted(!getState().isUpvoted));
-    try {
-      await upAndDownVoteHandler.post("/", {
-        data: {
-          problem_id: Number(getState().problemPageProblemId),
-          type: "upvote",
-        },
-      });
-    } catch (e) {
-      console.error("Token Error");
-    }
   } catch (e) {
     console.error("Token Error");
   }
 };
 
 export const downvoteHandler = () => async (dispatch, getState) => {
+  let flag = false;
+  if (getState().isUpvoted) {
+    dispatch(changeUpvotes(getState().upvoteCount - 1));
+    dispatch(changeIsUpvoted(!getState().isUpvoted));
+    flag = true;
+  }
+  getState().isDownvoted
+    ? dispatch(changeDownvotes(getState().downvoteCount - 1))
+    : dispatch(changeDownvotes(getState().downvoteCount + 1));
+  dispatch(changeIsDownvoted(!getState().isDownvoted));
   try {
-    if (getState().isUpvoted) {
-      dispatch(changeUpvotes(getState().upvoteCount - 1));
-      dispatch(changeIsUpvoted(!getState().isUpvoted));
-      try {
-        await upAndDownVoteHandler.post("/", {
-          data: {
-            problem_id: Number(getState().problemPageProblemId),
-            type: "upvote",
-          },
-        });
-      } catch (e) {
-        console.error("Token Error");
-      }
-    }
-    getState().isDownvoted
-      ? dispatch(changeDownvotes(getState().downvoteCount - 1))
-      : dispatch(changeDownvotes(getState().downvoteCount + 1));
-    dispatch(changeIsDownvoted(!getState().isDownvoted));
     await upAndDownVoteHandler.post("/", {
       data: {
         problem_id: Number(getState().problemPageProblemId),
         type: "downvote",
       },
     });
+    if (flag) {
+      await upAndDownVoteHandler.post("/", {
+        data: {
+          problem_id: Number(getState().problemPageProblemId),
+          type: "upvote",
+        },
+      });
+    }
   } catch (e) {
     console.error("Token Error");
   }
