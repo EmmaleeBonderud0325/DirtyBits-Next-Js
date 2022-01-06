@@ -20,6 +20,8 @@ import {
   getSavedCode,
   getProblemPageDataApi,
   getSubmissionsList,
+  handleBookmark,
+  upAndDownVoteHandler,
 } from "../../components/api/apis";
 const jsonData = require("../../components/ProblemPage/data.json");
 
@@ -98,6 +100,80 @@ export const changeIsBookmarked = (newState) => {
     type: UpdateIsBookmarked,
     payload: newState,
   };
+};
+
+export const bookmarkStatusHandler = () => async (dispatch, getState) => {
+  console.log("called");
+  try {
+    dispatch(changeIsBookmarked(!getState().isBookmarked));
+    handleBookmark.post("/", {
+      problem_id: Number(getState().problemPageProblemId),
+    });
+  } catch (err) {
+    console.log("Token Error");
+  }
+};
+
+export const upvoteHandler = () => async (dispatch, getState) => {
+  try {
+    if (getState().isDownvoted) {
+      dispatch(changeDownvotes(getState().downvoteCount - 1));
+      dispatch(changeIsDownvoted(!getState().isDownvoted));
+      await upAndDownVoteHandler.post("/", {
+        data: {
+          problem_id: Number(getState().problemPageProblemId),
+          type: "downvote",
+        },
+      });
+    }
+    getState().isUpvoted
+      ? dispatch(changeUpvotes(getState().upvoteCount - 1))
+      : dispatch(changeUpvotes(getState().upvoteCount + 1));
+    dispatch(changeIsUpvoted(!getState().isUpvoted));
+    try {
+      await upAndDownVoteHandler.post("/", {
+        data: {
+          problem_id: Number(getState().problemPageProblemId),
+          type: "upvote",
+        },
+      });
+    } catch (e) {
+      console.error("Token Error");
+    }
+  } catch (e) {
+    console.error("Token Error");
+  }
+};
+
+export const downvoteHandler = () => async (dispatch, getState) => {
+  try {
+    if (getState().isUpvoted) {
+      dispatch(changeUpvotes(getState().upvoteCount - 1));
+      dispatch(changeIsUpvoted(!getState().isUpvoted));
+      try {
+        await upAndDownVoteHandler.post("/", {
+          data: {
+            problem_id: Number(getState().problemPageProblemId),
+            type: "upvote",
+          },
+        });
+      } catch (e) {
+        console.error("Token Error");
+      }
+    }
+    getState().isDownvoted
+      ? dispatch(changeDownvotes(getState().downvoteCount - 1))
+      : dispatch(changeDownvotes(getState().downvoteCount + 1));
+    dispatch(changeIsDownvoted(!getState().isDownvoted));
+    await upAndDownVoteHandler.post("/", {
+      data: {
+        problem_id: Number(getState().problemPageProblemId),
+        type: "downvote",
+      },
+    });
+  } catch (e) {
+    console.error("Token Error");
+  }
 };
 
 export const getProblemPageProblemData = (id) => async (dispatch, getState) => {
