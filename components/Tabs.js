@@ -1,12 +1,11 @@
-import * as React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState, memo } from "react";
+import ReactHtmlParser from "react-html-parser";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import ReactHtmlParser from "react-html-parser";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
   AiOutlineDislike,
   AiOutlineLike,
@@ -16,9 +15,8 @@ import {
   AiOutlineGlobal,
 } from "react-icons/ai";
 import { BsBookmarkCheck, BsBookmarkCheckFill } from "react-icons/bs";
+
 import IoTable from "./ProblemPage/IoTable";
-import { memo } from "react";
-import { upAndDownVoteHandler, handleBookmark } from "./api/apis";
 import Submissions from "./ProblemPage/submission";
 import {
   bookmarkStatusHandler,
@@ -69,8 +67,8 @@ function BasicTabs(props) {
   const isUpVoted = useSelector((state) => state.isUpvoted);
   const isDownVoted = useSelector((state) => state.isDownvoted);
 
-  const [inputTestCases, setInputTestCases] = React.useState([]);
-  const [outputTestCases, setOutputTestCases] = React.useState([]);
+  const [inputTestCases, setInputTestCases] = useState([]);
+  const [outputTestCases, setOutputTestCases] = useState([]);
 
   const handleChange = (event, newValue) => {
     props.currentTabFunction(newValue);
