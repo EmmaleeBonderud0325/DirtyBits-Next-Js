@@ -400,14 +400,14 @@ const Editor = (props) => {
         </div>
         <div className="flex space-x-3">
           <button
-            className="group flex items-center space-x-2 bg-[#7220c4] hover:bg-[#6406c2] transition-all ease-out p-2 px-5  rounded-lg"
+            className="group flex items-center space-x-2 login-btn bg-white text-black font-semibold"
             onClick={handleRunCode}
           >
             <VscRunAll className="text-lg group-hover:animate-bounce" />
             <span>Run</span>
           </button>
           <button
-            className="group flex items-center space-x-2 bg-[#7220c4] hover:bg-[#6406c2] transition-all ease-out p-2 px-8  rounded-lg"
+            className="group flex items-center space-x-2 login-btn bg-white text-black font-semibold"
             onClick={handleSubmitCode}
           >
             <RiSendPlaneFill className="text-lg group-hover:rotate-45 transition-all ease-in-out" />
