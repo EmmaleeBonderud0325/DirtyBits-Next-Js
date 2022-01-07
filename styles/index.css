@@ -67,20 +67,11 @@
 
 html {
   overflow-x: hidden;
-  /* background-color: red !important; */
 }
 
 body {
   font-family: "Lato" !important;
 }
-
-/* .customHero {
-  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-    url("../public//background.webp");
-  background-position: center center;
-  background-size: cover;
-  padding: 80px;
-} */
 
 .customHero {
   /* ff 3.6+ */

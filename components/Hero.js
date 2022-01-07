@@ -1,24 +1,15 @@
 import Image from "next/image";
-import system from "../public/co.png";
-import mohit from "../public/stat.png";
-import cartoon from "../public/cartoon.png";
 import ms from "../public/ms.png";
 import cal from "../public/calendar.png";
+import hero from "../public/hero.png";
 
 export default function Hero() {
-  // relative h-screen w-screen customHero
   return (
     <>
       <div className="relative h-screen w-screen customHero">
         <div className="relative space-y-8 container p-10 mx-auto max-w-screen-xl flex justify-center items-center">
-          <div className="absolute top-[2rem] right-[14rem] opacity-70">
-            <Image
-              src={mohit}
-              width={100}
-              height={100}
-              className="object-contain"
-            />
-          </div>
+          {/* <div className="absolute top-[2rem] right-[14rem] opacity-70">
+          </div> */}
           <div className="absolute top-[1rem] left-[44rem] opacity-70">
             <Image
               src={ms}
@@ -62,12 +53,12 @@ export default function Hero() {
           <div className="flex-1 flex justify-end">
             <Image
               className="cartoon"
-              src={cartoon}
-              alt="hero"
+              src={hero}
+              alt="hero section image"
               width={600}
               height={700}
               priority
-              placeholder=" blur"
+              placeholder="blur"
             />
           </div>
         </div>
