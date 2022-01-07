@@ -265,7 +265,11 @@ html::-webkit-scrollbar-thumb {
 .ant-dropdown-trigger {
   width: 170px;
 }
-.ant-dropdown-menu-item {
+.ant-dropdown-menu-item,
+.ant-progress-text,
+.ant-result-title,
+.ant-result-subtitle,
+.ant-result-extra {
   color: white !important;
 }
 .ant-dropdown-menu-item-active {
