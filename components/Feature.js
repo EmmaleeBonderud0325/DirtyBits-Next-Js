@@ -10,7 +10,9 @@ const Feature = ({ name, description, icon, colorString, borderColor }) => {
             <div
               className={`relative flex justify-center items-center h-24 w-24 bg-gradient-to-b ${colorString} rounded-full text-[50px]`}
             >
-              <span className="group-hover:animate-bounce">{icon}</span>
+              <span className="group-hover:animate-bounce text-white">
+                {icon}
+              </span>
             </div>
             <h3 className="text-lg text-white tracking-wider font-semibold">
               {name}

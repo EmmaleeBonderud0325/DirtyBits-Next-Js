@@ -16,14 +16,14 @@ function ProblemView({ id }) {
   }, []);
   const title = useSelector((state) => state.problemData.title);
   return (
-    <>
+    <div className="text-white">
       <Head>
         <title>{title}</title>
       </Head>
       <div>
         <Panel2 id={id} />
       </div>
-    </>
+    </div>
   );
 }
 

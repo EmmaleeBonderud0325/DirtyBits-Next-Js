@@ -26,7 +26,8 @@ function Panel2() {
     setIsRunning(value);
   };
 
-  console.log("result data", resultData);
+  const backgroundColor = "#060F1E";
+
   return (
     <div>
       <SplitPane
@@ -37,7 +38,10 @@ function Panel2() {
         style={{ height: "100vh" }}
         className="scrollbar-hide"
       >
-        <Pane className="scrollbar-hide" style={{ overflowY: "scroll" }}>
+        <Pane
+          className="scrollbar-hide"
+          style={{ overflowY: "scroll", background: backgroundColor }}
+        >
           {isRendered ? (
             <Tabs
               codeRunner={running}
@@ -53,7 +57,10 @@ function Panel2() {
             </div>
           )}
         </Pane>
-        <Pane className="scrollbar-hide" style={{ overflowY: "scroll" }}>
+        <Pane
+          className="scrollbar-hide"
+          style={{ overflowY: "scroll", background: backgroundColor }}
+        >
           <Editor
             codeRunner={runningHandler}
             result={submissionDataHandler}

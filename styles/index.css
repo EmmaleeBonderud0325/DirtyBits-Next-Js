@@ -15,11 +15,16 @@
 
 /* Your own custom utilities */
 
-@layer base {
+/* @layer base {
   body {
     @apply bg-[#060F1E] text-gray-300 !important;
   }
-}
+} */
+/* @layer base {
+  body {
+    @apply bg-[#060F1E] text-gray-300 !important;
+  }
+} */
 
 /* @layer base {
   body {
@@ -32,7 +37,7 @@
     @apply bg-custom-bg py-3 px-3 text-xl text-white rounded-full font-extrabold hover:bg-purple-600 transition-all ease-out;
   }
   .table-heading {
-    @apply py-4 px-6 font-bold text-base text-[#686868] border-b;
+    @apply py-4 px-6 font-bold text-base text-[#686868] border-b border-slate-500;
   }
   .table-data {
     @apply py-4 px-6 border-b font-medium hover:text-blue-700 transition-all ease-in-out duration-100 cursor-pointer;
@@ -71,6 +76,12 @@ html {
 
 body {
   font-family: "Lato" !important;
+  background: radial-gradient(
+    circle at 60% 12%,
+    rgba(0, 40, 83, 1) 0%,
+    rgba(4, 12, 24, 1) 100%
+  );
+  background-attachment: fixed;
 }
 
 .customHero {

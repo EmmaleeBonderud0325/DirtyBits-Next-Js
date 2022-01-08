@@ -54,25 +54,25 @@ function Problem(props) {
           Problem <span className="text-custom-bg">List</span>
         </h1> */}
         <div className="flex gap-10">
-          <div className="space-y-3 h-40 w-40 pb-2">
+          <div className="space-y-3 h-40 w-40 pb-2 opacity-60">
             <div className="relative flex justify-center items-center h-full w-full rounded-md bg-gradient-to-r from-cyan-500 to-blue-500">
-              <DiReact className="absolute text-9xl" />
+              <DiReact className="absolute text-9xl text-white" />
             </div>
             <a href="/learning/reactjs" className="text-white text-center">
               Learn React Development
             </a>
           </div>
-          <div className="space-y-3 h-40 w-40 pb-2">
+          <div className="space-y-3 h-40 w-40 pb-2 opacity-60">
             <div className="relative flex justify-center items-center h-full w-full rounded-md bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
-              <DiReact className="absolute text-9xl" />
+              <DiReact className="absolute text-9xl text-white" />
             </div>
             <a href="/learning/reactjs" className="text-white text-center">
               Learn React Development
             </a>
           </div>
-          <div className="space-y-3 h-40 w-40 pb-2">
+          <div className="space-y-3 h-40 w-40 pb-2 opacity-60">
             <div className="relative flex justify-center items-center h-full w-full rounded-md bg-gradient-to-r from-green-400 to-green-300">
-              <DiReact className="absolute text-9xl" />
+              <DiReact className="absolute text-9xl text-white" />
             </div>
             <a href="/learning/reactjs" className="text-white text-center">
               Learn React Development
@@ -88,7 +88,7 @@ function Problem(props) {
             return (
               <div
                 key={value}
-                className="flex flex-col items-center justify-center"
+                className="flex flex-col items-center justify-center text-white"
               >
                 <button className="text-base rounded-xl bg-gray-800 px-2 lg:px-4 lg:py-1 hover:scale-125 transition-all ease-out">
                   {value}
@@ -113,7 +113,7 @@ function Problem(props) {
               value={value}
               onChange={(e) => fetchQuestions(e)}
             />
-            <SearchOutlined />
+            <SearchOutlined className="text-white" />
           </form>
           {/* <button type="submit" className="rounded-xl  bg-gray-800 px-6 py-1">
             Search

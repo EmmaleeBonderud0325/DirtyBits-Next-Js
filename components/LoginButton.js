@@ -1,10 +1,10 @@
 import React from "react";
 import Link from "next/link";
 
-function LoginButton() {
+function LoginButton({ url, text }) {
   return (
-    <Link href="/auth/signin">
-      <a className="login-btn bg-white text-black">Login</a>
+    <Link href={url}>
+      <a className="login-btn bg-white text-black">{text}</a>
     </Link>
   );
 }
