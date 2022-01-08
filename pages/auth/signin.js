@@ -104,6 +104,7 @@ function signin() {
             dispatch(
               updateUserinfo({
                 is_logged_in: true,
+                is_admin: data.is_admin,
                 email: data.user_mail,
                 first_name: data.first_name,
                 last_name: data.last_name,
@@ -129,6 +130,7 @@ function signin() {
   const postAuthentication = (tokens) => {
     const { access, refresh } = tokens;
     const data = Parsetoken(access);
+    console.log("data", data);
     if (data.is_verified) {
       var inTwentyMinutes = new Date(new Date().getTime() + 20 * 60 * 1000);
       Cookies.set("access", access, { expires: inTwentyMinutes });
@@ -136,6 +138,7 @@ function signin() {
       dispatch(
         updateUserinfo({
           is_logged_in: true,
+          is_admin: data.is_admin,
           email: data.user_mail,
           first_name: data.first_name,
           last_name: data.last_name,

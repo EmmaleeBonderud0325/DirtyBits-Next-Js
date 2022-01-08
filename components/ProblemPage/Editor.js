@@ -351,6 +351,7 @@ const Editor = (props) => {
             dispatch(
               updateUserinfo({
                 is_logged_in: true,
+                is_admin: data.is_admin,
                 email: data.user_mail,
                 first_name: data.first_name,
                 last_name: data.last_name,

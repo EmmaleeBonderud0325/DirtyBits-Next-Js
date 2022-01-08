@@ -5,6 +5,7 @@ import Parsetoken from "../../components/Helper/Parsetoken";
 
 const initial_state = {
   is_logged_in: false,
+  is_admin: "",
   email: "",
   first_name: "",
   last_name: "",
@@ -17,6 +18,7 @@ if (refresh_token) {
   try {
     const data = Parsetoken(refresh_token);
     initial_state.is_logged_in = true;
+    initial_state.is_admin = data.is_admin;
     initial_state.email = data.user_mail;
     initial_state.first_name = data.first_name;
     initial_state.last_name = data.last_name;
@@ -33,6 +35,7 @@ export const userDataReducer = (state = initial_state, action) => {
       return {
         ...state,
         is_logged_in: action.payload.is_logged_in,
+        is_admin: action.payload.is_admin,
         email: action.payload.email,
         first_name: action.payload.first_name,
         last_name: action.payload.last_name,
