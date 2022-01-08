@@ -10,6 +10,7 @@ import LoginButton from "./LoginButton";
 import Cookies from "js-cookie";
 import { updateUserinfo } from "../redux/actions";
 import logo from "../public/logo.svg";
+import logo2 from "../public/logo2.svg";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -85,8 +86,14 @@ function Navbar({ userInfo, bg, fixedHeader }) {
                       className="block lg:hidden h-8 w-auto"
                       src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
                       alt="Workflow"
+                      
                     /> */}
-                    <Image src={logo} width={300} height={100} />
+                    <Image
+                      className="hidden"
+                      src={logo}
+                      width={300}
+                      height={100}
+                    />
                     {/* <img
                       className="hidden lg:block h-8 w-auto"
                       src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
@@ -198,7 +205,7 @@ function Navbar({ userInfo, bg, fixedHeader }) {
                       </Transition>
                     </Menu>
                   ) : (
-                    <div className="space-x-3">
+                    <div className="lg:space-x-3">
                       <LoginButton url={"/auth/signin"} text="Login" />
                       <span className="border-r border-white"></span>
                       <LoginButton url={"/auth/signup"} text="Sign Up" />
