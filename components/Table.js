@@ -38,28 +38,30 @@ function Table() {
     }
     return (
       <tr key={problem.id}>
-        <td className="table-data text-white ">
+        <td className="table-data text-white border-b border-slate-800">
           <Link href={`/problem/${problem.id}/${problem.title}`}>
             <a className="text-white hover:bg-blue-dark">
               {idx + 1} . {problem.title}
             </a>
           </Link>
         </td>
-        <td className="py-4 px-6 border-b border-grey-light">
+        <td className="py-4 px-6 border-b border-slate-800">
           <p
             className={` ${problemColor} font-bold py-1 px-3 rounded text-xs `}
           >
             {problemLevel}
           </p>
         </td>
-        <td className="table-data cursor-default">{status}</td>
+        <td className="table-data cursor-default border-b border-slate-800">
+          {status}
+        </td>
       </tr>
     );
   });
 
   return (
     <div className="lg:w-2/3 md:w-full sm:w-full xs:w-full">
-      <div className="bg-[#060F1E] shadow-md rounded my-6">
+      <div className="bg-slate-800 shadow-md rounded-md my-6">
         <table className="text-left w-full border-collapse">
           <thead>
             <tr>
@@ -68,11 +70,10 @@ function Table() {
               <th className="table-heading">Status</th>
             </tr>
           </thead>
-          <tbody className="">
-            {list.length > 0 ? problemMarkup : <TableLoader />}
-          </tbody>
+          <tbody className="">{list.length > 0 && problemMarkup}</tbody>
         </table>
       </div>
+      {list.length <= 0 && <TableLoader />}
     </div>
   );
 }

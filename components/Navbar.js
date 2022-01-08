@@ -198,7 +198,11 @@ function Navbar({ userInfo, bg, fixedHeader }) {
                       </Transition>
                     </Menu>
                   ) : (
-                    <LoginButton />
+                    <div className="space-x-3">
+                      <LoginButton url={"/auth/signin"} text="Login" />
+                      <span className="border-r border-white"></span>
+                      <LoginButton url={"/auth/signup"} text="Sign Up" />
+                    </div>
                   )}
                 </div>
               </div>

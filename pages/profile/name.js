@@ -28,14 +28,14 @@ function Name() {
           </div>
 
           <div class="center flex items-center p-1 pl-2 rounded-2xl">
-            <AiOutlineSearch className="text-[20px]" />
+            <AiOutlineSearch className="text-[20px] text-white" />
             <input
-              class="ml-1 text-lg placeholder:text-base placeholder:p-1 placeholder:tracking-wide outline-none bg-transparent py-4 caret-custom-indigo"
+              class="ml-1 text-lg placeholder:text-base placeholder:p-1 placeholder:tracking-wide outline-none bg-transparent py-4 caret-custom-indigo text-white"
               type="text"
               placeholder="Search..."
             />
           </div>
-          <div class="right flex gap-4">
+          <div class="right flex gap-4 text-white">
             <VscSettingsGear className="text-lg" />
             <Badge color="secondary" badgeContent={0} showZero>
               <IoMdNotificationsOutline className="text-lg" />
@@ -83,13 +83,13 @@ function Name() {
                       src="https://img.icons8.com/emoji/48/000000/pencil-emoji.png"
                     />
                   </button>
-                  <p class="font-semibold tracking-wider text-lg">
+                  <p class="font-semibold tracking-wider text-lg text-white">
                     Jarrad Jackson
                   </p>
                   <p class="text-gray-500 text-sm">
                     Jarrad.jackson@hotmail.com
                   </p>
-                  <p>28, F</p>
+                  <p className="text-white">28, F</p>
                   <div class="lg:my-6 my-3 flex lg:flex-col lg:items-end items-center space-x-2">
                     <label class="text-gray-500 text-sm">Role</label>
                     <Chip label="Trainer" color="success" />
@@ -97,7 +97,7 @@ function Name() {
 
                   <div class="lg:flex-col flex lg:inline-flex lg:my-6 my-3  lg:items-end space-x-2">
                     <label class="text-gray-500 text-sm">Primary Trainer</label>
-                    <p>Steve Hills</p>
+                    <p className="text-white">Steve Hills</p>
                   </div>
                 </div>
               </div>
