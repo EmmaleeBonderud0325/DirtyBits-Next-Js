@@ -5,7 +5,7 @@ import Parsetoken from "../../components/Helper/Parsetoken";
 
 const initial_state = {
   is_logged_in: false,
-  is_admin: "",
+  is_admin: false,
   email: "",
   first_name: "",
   last_name: "",

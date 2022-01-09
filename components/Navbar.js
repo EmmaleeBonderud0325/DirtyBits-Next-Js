@@ -9,7 +9,7 @@ import { connect, useDispatch } from "react-redux";
 import LoginButton from "./LoginButton";
 import Cookies from "js-cookie";
 import { updateUserinfo } from "../redux/actions";
-import logo from "../public/logo.svg";
+import logo from "../public/logo3.svg";
 import logo2 from "../public/logo2.svg";
 
 function classNames(...classes) {
@@ -54,6 +54,7 @@ function Navbar({ userInfo, bg, fixedHeader }) {
     dispatch(
       updateUserinfo({
         is_logged_in: false,
+        is_admin: false,
         email: "",
         first_name: "",
         last_name: "",
@@ -81,7 +82,7 @@ function Navbar({ userInfo, bg, fixedHeader }) {
                   </Disclosure.Button>
                 </div>
                 <div className="flex-1 flex items-center justify-center sm:items-center sm:justify-start ">
-                  <div className="flex-shrink-0 flex items-center">
+                  <div className="flex-shrink-0 flex items-center pt-2">
                     {/* <img
                       className="block lg:hidden h-8 w-auto"
                       src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
@@ -90,9 +91,9 @@ function Navbar({ userInfo, bg, fixedHeader }) {
                     /> */}
                     <Image
                       className="hidden"
-                      src={logo}
+                      src={logo2}
                       width={300}
-                      height={100}
+                      height={50}
                     />
                     {/* <img
                       className="hidden lg:block h-8 w-auto"

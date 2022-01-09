@@ -18,6 +18,7 @@ export const Profile = () => {
     dispatch(
       updateUserinfo({
         is_logged_in: false,
+        is_admin: false,
         email: "",
         first_name: "",
         last_name: "",
