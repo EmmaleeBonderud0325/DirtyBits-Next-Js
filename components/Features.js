@@ -7,7 +7,7 @@ import Feature from "./Feature";
 
 export default function Features() {
   return (
-    <div className="py-12 lg:mt-50 w-screen">
+    <div className="py-12 lg:mt-50 w-screen min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="lg:text-center space-y-10">
           <h2 className="text-base lg:text-2xl text-center text-custom-indigo font-semibold tracking-wide uppercase">

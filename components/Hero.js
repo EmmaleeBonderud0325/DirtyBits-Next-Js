@@ -6,7 +6,7 @@ import hero from "../public/hero.png";
 export default function Hero() {
   return (
     <>
-      <div className="relative h-screen w-screen customHero">
+      <div className="relative min-h-screen h-[824px] w-screen customHero  overflow-hidden">
         <div className="relative space-y-8 container p-10 mx-auto max-w-screen-xl flex justify-center items-center">
           {/* <div className="absolute top-[2rem] right-[14rem] opacity-70">
           </div> */}
