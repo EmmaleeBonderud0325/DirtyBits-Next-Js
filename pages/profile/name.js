@@ -9,12 +9,15 @@ import Badge from "@mui/material/Badge";
 import { Progress } from "antd";
 import { Statistic, Card, Row, Col } from "antd";
 import { ArrowUpOutlined, ArrowDownOutlined } from "@ant-design/icons";
-import { getUserProfile } from "../../components/api/apis";
+import { getStaticData, getUserProfile } from "../../components/api/apis";
 
 function Name() {
   useEffect(() => {
     const getProfile = async () => {
       await getUserProfile.get("/server@gmail.com/").then((result) => {
+        console.log(result.data);
+      });
+      await getStaticData.get("/").then((result) => {
         console.log(result.data);
       });
     };
