@@ -1,16 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SplitPane, { Pane } from "react-split-pane";
 import Editor from "./Editor";
 import Tabs from "../Tabs";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Spin } from "antd";
+import {
+  changeSubmissionsList,
+  changeGetSubmissionsList,
+} from "../../redux/actions/ProblemPage";
 
 function Panel2() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    return () => {
+      dispatch(changeGetSubmissionsList(true));
+      dispatch(changeSubmissionsList(null));
+    };
+  }, []);
   const isRendered = useSelector((state) =>
     state.problemData.title !== "" ? true : false
   );
-  const [submissionList, setSubmissionList] = useState(null);
-  const [getSubmissionsState, setGetSubmissionsState] = useState(true);
   const [tabsValue, setTabsValue] = useState(0);
   const [resultData, setResultData] = useState({});
   const [running, setIsRunning] = useState(false);
@@ -65,8 +74,6 @@ function Panel2() {
             codeRunner={runningHandler}
             result={submissionDataHandler}
             currentTabFunction={tabsValueHandler}
-            submissionList={submissionList}
-            setSubmissionList={setSubmissionList}
           />
         </Pane>
       </SplitPane>

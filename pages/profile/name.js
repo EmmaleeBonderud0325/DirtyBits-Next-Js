@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { VscSettingsGear } from "react-icons/vsc";
 import { IoMdNotificationsOutline } from "react-icons/io";
@@ -9,8 +9,20 @@ import Badge from "@mui/material/Badge";
 import { Progress } from "antd";
 import { Statistic, Card, Row, Col } from "antd";
 import { ArrowUpOutlined, ArrowDownOutlined } from "@ant-design/icons";
+import { getStaticData, getUserProfile } from "../../components/api/apis";
 
 function Name() {
+  useEffect(() => {
+    const getProfile = async () => {
+      await getUserProfile.get("/server@gmail.com/").then((result) => {
+        console.log(result.data);
+      });
+      await getStaticData.get("/").then((result) => {
+        console.log(result.data);
+      });
+    };
+    getProfile();
+  }, []);
   return (
     <div className="space-y-8 container p-10 mx-auto max-w-screen-xs lg:max-w-screen-xl">
       <div class="lg:p-4">
