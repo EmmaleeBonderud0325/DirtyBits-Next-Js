@@ -23,6 +23,8 @@ import {
   upvoteHandler,
   downvoteHandler,
 } from "../redux/actions/ProblemPage";
+import Link from "next/link";
+import { AiOutlineMenuUnfold } from "react-icons/ai";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -157,6 +159,13 @@ function BasicTabs(props) {
             <span>{questionData.id}. </span>
             {questionData.title}
           </p>
+
+          <div className="flex items-center gap-2">
+            <AiOutlineMenuUnfold />
+            <Link href="/problemset">
+              <a className="text-white hover:text-white">Problem set</a>
+            </Link>
+          </div>
 
           {/* BOOKMARK */}
           <div
