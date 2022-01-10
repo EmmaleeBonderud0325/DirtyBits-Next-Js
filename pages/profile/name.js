@@ -3,21 +3,12 @@ import { useSelector } from "react-redux";
 import { AiOutlineSearch } from "react-icons/ai";
 import { VscSettingsGear } from "react-icons/vsc";
 import { IoMdNotificationsOutline } from "react-icons/io";
-import { Button, Rate, Result } from "antd";
+import { Rate } from "antd";
 import Image from "next/image";
 import Chip from "@mui/material/Chip";
 import Badge from "@mui/material/Badge";
 import { Progress } from "antd";
-import {
-  LineChart,
-  Line,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  AreaChart,
-  Area,
-} from "recharts";
+import { XAxis, Tooltip, AreaChart, Area } from "recharts";
 
 import { getStaticData, getUserProfile } from "../../components/api/apis";
 
