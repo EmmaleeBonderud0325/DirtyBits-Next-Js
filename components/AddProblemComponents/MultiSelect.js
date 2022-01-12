@@ -66,7 +66,9 @@ function MultiSelect(props) {
   };
   return (
     <div className="space-y-3">
-      <label className="text-lg lg:text-2xl ml-1">{props.label}</label>
+      <label className="text-lg lg:text-2xl ml-1 text-white">
+        {props.label}
+      </label>
       <Select
         closeMenuOnSelect={false}
         defaultValue={[colourOptions[1], colourOptions[2]]}

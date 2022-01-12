@@ -275,10 +275,12 @@ html::-webkit-scrollbar-thumb {
 .ant-progress-text,
 .ant-result-title,
 .ant-result-subtitle,
-.ant-result-extra {
+.ant-result-extra,
+.ant-notification-notice-message,
+.ant-notification-close-x,
+.ant-dropdown-menu-item-active {
   color: white !important;
 }
 .ant-dropdown-menu-item-active {
   background-color: gray !important;
-  color: white !important;
 }
