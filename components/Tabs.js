@@ -23,8 +23,7 @@ import {
   upvoteHandler,
   downvoteHandler,
 } from "../redux/actions/ProblemPage";
-import Link from "next/link";
-import { AiOutlineMenuUnfold } from "react-icons/ai";
+import { IoPlayBackOutline } from "react-icons/io5";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -154,18 +153,20 @@ function BasicTabs(props) {
       <TabPanel value={props.currentTabValue} index={0}>
         <div className="space-y-5 transition-all ease-in-out">
           {/* PROBLEM TITLE */}
+          <div className="flex items-center gap-2 group">
+            <a
+              href="/problemset"
+              className="login-btn text-black group-hover:text-white bg-white flex items-center gap-2"
+            >
+              <IoPlayBackOutline className="text-base" />
+              <span>Problem Set</span>
+            </a>
+          </div>
 
           <p className="font-medium text-lg text-[#a1acc0]">
             <span>{questionData.id}. </span>
             {questionData.title}
           </p>
-
-          <div className="flex items-center gap-2">
-            <AiOutlineMenuUnfold />
-            <Link href="/problemset">
-              <a className="text-white hover:text-white">Problem set</a>
-            </Link>
-          </div>
 
           {/* BOOKMARK */}
           <div
