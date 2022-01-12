@@ -1,25 +1,33 @@
 import { Fragment, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
-import router, { Router, useRouter } from "next/router";
+import { MenuIcon, XIcon } from "@heroicons/react/outline";
+import { AiOutlineInfoCircle } from "react-icons/ai";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
-import { connect, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import Cookies from "js-cookie";
+import { notification, Space } from "antd";
 
 import LoginButton from "./LoginButton";
-import Cookies from "js-cookie";
 import { updateUserinfo } from "../redux/actions";
-import logo from "../public/logo3.svg";
 import logo2 from "../public/logo2.svg";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-function Navbar({ userInfo, bg, fixedHeader }) {
+function Navbar({ bg, fixedHeader }) {
   const router = useRouter();
   const dispatch = useDispatch();
-  const isLoggedIn = userInfo.is_logged_in;
+  // const isLoggedIn = userInfo.is_logged_in;
+
+  const isLoggedIn = useSelector((state) => state.userData.is_logged_in);
+  const isAdmin = useSelector((state) => state.userData.is_admin);
+  const profilePic = useSelector((state) => state.userData.profile_pic);
+  const username = useSelector((state) => state.userData.username);
+
   const navigation = [
     {
       name: "Home",
@@ -61,6 +69,25 @@ function Navbar({ userInfo, bg, fixedHeader }) {
         username: "",
       })
     );
+  };
+
+  const openNotificationWithIcon = (type) => {
+    notification[type]({
+      message: "Not an Admin",
+      description:
+        "You don't have enough privileges, because you are not an admin",
+      style: {
+        background: "black",
+        color: "white",
+      },
+      className: "notification",
+    });
+  };
+
+  const notificationHandler = () => {
+    if (!isAdmin) {
+      openNotificationWithIcon("info");
+    }
   };
 
   return (
@@ -140,13 +167,13 @@ function Navbar({ userInfo, bg, fixedHeader }) {
                           <span className="sr-only">Open user menu</span>
                           <Image
                             className="h-10 w-10 rounded-full"
-                            src={userInfo.profile_pic}
+                            src={profilePic}
                             alt="profilePic"
                             height="40"
                             width="40"
                           />
                           <span className="text-white px-2 pt-1.5 pr-3 text-base hidden sm:block">
-                            {userInfo.username}
+                            {username}
                           </span>
                         </Menu.Button>
                       </div>
@@ -165,7 +192,7 @@ function Navbar({ userInfo, bg, fixedHeader }) {
                           <Menu.Item>
                             {({ active }) => (
                               <a
-                                href={`/profile/${userInfo.username}`}
+                                href={`/profile/${username}`}
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"
@@ -178,13 +205,17 @@ function Navbar({ userInfo, bg, fixedHeader }) {
                           <Menu.Item>
                             {({ active }) => (
                               <a
-                                href="/addproblems"
+                                href={`${isAdmin ? "/addproblems" : "#"}`}
+                                onClick={notificationHandler}
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
+                                  "block px-4 py-2 text-sm text-gray-700 flex items-center gap-2"
                                 )}
                               >
-                                Add Problem
+                                <span>Add Problem</span>
+                                {!isAdmin && (
+                                  <AiOutlineInfoCircle className="text-red-500 text-lg" />
+                                )}
                               </a>
                             )}
                           </Menu.Item>
@@ -243,10 +274,4 @@ function Navbar({ userInfo, bg, fixedHeader }) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    userInfo: state.userData,
-  };
-};
-
-export default connect(mapStateToProps, {})(Navbar);
+export default Navbar;
