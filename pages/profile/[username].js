@@ -8,7 +8,7 @@ import Image from "next/image";
 import Chip from "@mui/material/Chip";
 import Badge from "@mui/material/Badge";
 import { Progress } from "antd";
-import { XAxis, Tooltip, AreaChart, Area } from "recharts";
+import { XAxis, Tooltip, AreaChart, Area, YAxis } from "recharts";
 import Cookies from "js-cookie";
 import { getStaticData, getUserProfile } from "../../components/api/apis";
 
@@ -35,7 +35,7 @@ function Profile() {
     const getProfile = async () => {
       const {
         data: { easy_solved, medium_solved, hard_solved, submissions },
-      } = await getUserProfile.get(`/${userInfo.email}/`);
+      } = await getUserProfile.get("/");
 
       const {
         data: { easy, medium, hard },
@@ -251,6 +251,7 @@ function Profile() {
                         </linearGradient>
                       </defs>
                       <XAxis dataKey="date" />
+
                       <Tooltip
                         cursor={false}
                         contentStyle={{
@@ -261,7 +262,7 @@ function Profile() {
                       />
                       <Area
                         type="monotone"
-                        dataKey="data_length"
+                        dataKey="Questions Solved"
                         stroke="#5476DA"
                         fillOpacity={1}
                         strokeWidth={5}
