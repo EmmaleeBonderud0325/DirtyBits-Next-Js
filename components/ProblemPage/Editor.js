@@ -4,7 +4,6 @@ import { AiFillGithub } from "react-icons/ai";
 import { MdCreate } from "react-icons/md";
 import { VscRunAll } from "react-icons/vsc";
 import { Modal } from "antd";
-import { RiSendPlaneFill } from "react-icons/ri";
 import { FcGoogle } from "react-icons/fc";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
@@ -14,6 +13,7 @@ import Box from "@mui/material/Box";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import GoogleLogin from "react-google-login";
+import { AiOutlineSend } from "react-icons/ai";
 
 import { base64_encode } from "./Helper2";
 require("codemirror/lib/codemirror.css");
@@ -32,6 +32,8 @@ import {
 import Encodemail from "../Helper/Encodemail";
 import Parsetoken from "../Helper/Parsetoken";
 import { Header } from "./Header";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 let CodeMirror = null;
 if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
@@ -142,6 +144,21 @@ function a11yProps(index) {
 
 const Editor = (props) => {
   const dispatch = useDispatch();
+
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
+  let [customInput, setCustomInput] = useState(false);
+  let [inputValue, changeInputValue] = useState("");
+  let [outputValue, changeOutputValue] = useState(
+    "You must run your code first."
+  );
+  let [showMode, changeShowMode] = useState(true);
+  const [showConsole, setShowConsole] = useState(false);
+  let [showLoader, setShowLoader] = useState(false);
+  const [value, setValue] = useState(0);
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   useEffect(() => {
     return () => {
       dispatch(
@@ -158,25 +175,17 @@ const Editor = (props) => {
       );
     };
   }, []);
-  const editorValue = useSelector((state) => state.editorValue);
-  const currTheme = useSelector((state) => state.themeValue);
-  const currLang = useSelector((state) => state.editorLanguage);
-  const fontSize = useSelector((state) => state.fontSize);
-  const id = useSelector((state) => state.problemPageProblemId);
+
+  const {
+    editorValue,
+    themeValue,
+    editorLanguage,
+    fontSize,
+    problemPageProblemId,
+    submissionCount,
+  } = useSelector((state) => state);
+
   const email = useSelector((state) => state.userData.email);
-  const userSubmissions = useSelector((state) => state.submissionCount);
-
-  let [customInput, setCustomInput] = useState(false);
-  let [inputValue, changeInputValue] = useState("");
-  let [outputValue, changeOutputValue] = useState(
-    "You must run your code first."
-  );
-  let [showMode, changeShowMode] = useState(true);
-  const [showConsole, setShowConsole] = useState(false);
-  let [showLoader, setShowLoader] = useState(false);
-  const [value, setValue] = useState(0);
-
-  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -186,21 +195,8 @@ const Editor = (props) => {
     dispatch(changeEditorValue(data));
   };
 
-  // const handleKeyUp = (editor, event) => {
-  //   if (editor.state.completionActive) {
-  //     return;
-  //   }
-  //   var cur = editor.getCursor();
-  //   var token = editor.getTokenAt(cur);
-  //   if (token.type && token.type !== "comment" && event.keyCode !== 13) {
-  //     editor.showHint({ completeSingle: false });
-  //   }
-  // };
-
-  const handleCompileCode = async () => {};
-
   const handleRunCode = async () => {
-    console.log(editorValue, currLang.label, inputValue);
+    setIsDisabled(true);
     if (!Cookies.get("refresh")) {
       setIsModalVisible(true);
 
@@ -212,11 +208,12 @@ const Editor = (props) => {
 
     await runTestCases
       .post("/", {
-        problem_Id: id,
+        problem_Id: problemPageProblemId,
         code: base64_encode(editorValue),
-        language: currLang.label,
+        language: editorLanguage.label,
       })
       .then((result) => {
+        setIsDisabled(false);
         setShowLoader(false);
         if (result.data["status"] !== "Accepted") {
           changeOutputValue(
@@ -230,6 +227,7 @@ const Editor = (props) => {
   };
 
   const handleSubmitCode = async () => {
+    setIsSubmitDisabled(true);
     if (!Cookies.get("refresh")) {
       console.error("Login Required !!");
       return;
@@ -247,8 +245,8 @@ const Editor = (props) => {
       props.result({});
       console.log("opened");
       await submitCode.post("/", {
-        problem_Id: id,
-        language: currLang.label,
+        problem_Id: problemPageProblemId,
+        language: editorLanguage.label,
         code: base64_encode(editorValue),
       });
     };
@@ -260,7 +258,7 @@ const Editor = (props) => {
         console.log(true);
       }
       if (!data["is_testcase"]) {
-        dispatch(changeSubmissionCount(userSubmissions + 1));
+        dispatch(changeSubmissionCount(submissionCount + 1));
         var problemResult = JSON.parse(data["text"]);
         problemResult = problemResult[0]["fields"];
         props.result(problemResult);
@@ -278,13 +276,14 @@ const Editor = (props) => {
     };
     socket.onclose = function (e) {
       props.codeRunner(false);
+      setIsSubmitDisabled(false);
       console.log("closed");
     };
   };
 
   let options = {
-    mode: currLang.value,
-    theme: currTheme.value,
+    mode: editorLanguage.value,
+    theme: themeValue.value,
     lineWrapping: true,
     smartIndent: true,
     foldGutter: true,
@@ -373,6 +372,7 @@ const Editor = (props) => {
     console.error("Google Authentication failed !");
   };
 
+  const antIcon = <LoadingOutlined style={{ fontSize: 20 }} spin />;
   return (
     <div
       style={{ height: "100vh" }}
@@ -403,15 +403,21 @@ const Editor = (props) => {
           <button
             className="group flex items-center space-x-2 login-btn bg-white text-black font-semibold"
             onClick={handleRunCode}
+            disabled={isDisabled}
           >
-            <VscRunAll className="text-lg group-hover:animate-bounce" />
+            {isDisabled ? (
+              <Spin indicator={antIcon} />
+            ) : (
+              <VscRunAll className="text-lg group-hover:animate-bounce" />
+            )}
             <span>Run</span>
           </button>
           <button
             className="group flex items-center space-x-2 login-btn bg-white text-black font-semibold"
             onClick={handleSubmitCode}
+            disabled={isSubmitDisabled}
           >
-            <RiSendPlaneFill className="text-lg group-hover:rotate-45 transition-all ease-in-out" />
+            <AiOutlineSend className="text-lg group-hover:rotate-45 transition-all ease-in-out" />
             <span>Submit</span>
           </button>
         </div>
