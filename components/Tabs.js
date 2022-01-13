@@ -6,6 +6,8 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import SmoothList from "react-smooth-list";
+
 import {
   AiOutlineDislike,
   AiOutlineLike,
@@ -153,21 +155,24 @@ function BasicTabs(props) {
       <TabPanel value={props.currentTabValue} index={0}>
         <div className="space-y-5 transition-all ease-in-out">
           {/* PROBLEM TITLE */}
-          <div className="flex items-center gap-2 group">
-            <a
-              href="/problemset"
-              className="login-btn text-black group-hover:text-white bg-white flex items-center gap-2"
-            >
-              <IoPlayBackOutline className="text-base" />
-              <span>Problem Set</span>
-            </a>
-          </div>
+          <SmoothList>
+            <div className="flex items-center gap-2 group">
+              <a
+                href="/problemset"
+                className="login-btn text-black group-hover:text-white bg-white flex items-center gap-2"
+              >
+                <IoPlayBackOutline className="text-base" />
+                <span>Problem Set</span>
+              </a>
+            </div>
+          </SmoothList>
 
-          <p className="font-medium text-lg text-[#a1acc0]">
-            <span>{questionData.id}. </span>
-            {questionData.title}
-          </p>
-
+          <SmoothList>
+            <p className="font-medium text-lg text-[#a1acc0]">
+              <span>{questionData.id}. </span>
+              {questionData.title}
+            </p>
+          </SmoothList>
           {/* BOOKMARK */}
           <div
             onClick={() => {
@@ -226,11 +231,12 @@ function BasicTabs(props) {
           </div>
 
           {/* PROBLEM DESCRIPTION */}
-
-          <div className="">
-            {questionData.problem_statement &&
-              ReactHtmlParser(questionData.problem_statement)}
-          </div>
+          <SmoothList>
+            <div className="">
+              {questionData.problem_statement &&
+                ReactHtmlParser(questionData.problem_statement)}
+            </div>
+          </SmoothList>
 
           {/* PROBLEM NOTE IF ANY */}
           {questionData.note && <p>Note: {questionData.note}</p>}
@@ -250,24 +256,28 @@ function BasicTabs(props) {
           </pre>
 
           {/* SAMEPLE INPUT TEST CASES */}
-          <h2 className="text-white">Sample Test Cases</h2>
-          {inputTestCases.length > 0 &&
-            inputTestCases.map((val, idx) => (
-              <IoTable
-                key={idx}
-                inputData={val}
-                outputData={outputTestCases[idx]}
-              />
-            ))}
+          <SmoothList>
+            <h2 className="text-white">Sample Test Cases</h2>
+            {inputTestCases.length > 0 &&
+              inputTestCases.map((val, idx) => (
+                <IoTable
+                  key={idx}
+                  inputData={val}
+                  outputData={outputTestCases[idx]}
+                />
+              ))}
+          </SmoothList>
 
           {/* CONSTRAINTS */}
-          <h2 className="text-white">Constraints:</h2>
-          <pre>
-            {questionData.constraints &&
-              ReactHtmlParser(questionData.constraints)}
-          </pre>
-          <pre>Memory Limit: {questionData.memory_Limit} KB</pre>
-          <pre>Time Limit: {questionData.time_Limit}s</pre>
+          <SmoothList>
+            <h2 className="text-white">Constraints:</h2>
+            <pre>
+              {questionData.constraints &&
+                ReactHtmlParser(questionData.constraints)}
+            </pre>
+            <pre>Memory Limit: {questionData.memory_Limit} KB</pre>
+            <pre>Time Limit: {questionData.time_Limit}s</pre>
+          </SmoothList>
         </div>
       </TabPanel>
       <TabPanel value={props.currentTabValue} index={1}>

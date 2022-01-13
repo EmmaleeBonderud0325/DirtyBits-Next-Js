@@ -34,7 +34,7 @@ import Parsetoken from "../Helper/Parsetoken";
 import { Header } from "./Header";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-
+import SmoothList from "react-smooth-list";
 let CodeMirror = null;
 if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
   CodeMirror = require("react-codemirror2").Controlled;
@@ -400,26 +400,30 @@ const Editor = (props) => {
           <span className="ml-2 text-sm">Console</span>
         </div>
         <div className="flex space-x-3">
-          <button
-            className="group flex items-center space-x-2 login-btn bg-white text-black font-semibold"
-            onClick={handleRunCode}
-            disabled={isDisabled}
-          >
-            {isDisabled ? (
-              <Spin indicator={antIcon} />
-            ) : (
-              <VscRunAll className="text-lg group-hover:animate-bounce" />
-            )}
-            <span>Run</span>
-          </button>
-          <button
-            className="group flex items-center space-x-2 login-btn bg-white text-black font-semibold"
-            onClick={handleSubmitCode}
-            disabled={isSubmitDisabled}
-          >
-            <AiOutlineSend className="text-lg group-hover:rotate-45 transition-all ease-in-out" />
-            <span>Submit</span>
-          </button>
+          <SmoothList>
+            <button
+              className="group flex items-center space-x-2 login-btn bg-white text-black font-semibold"
+              onClick={handleRunCode}
+              disabled={isDisabled}
+            >
+              {isDisabled ? (
+                <Spin indicator={antIcon} />
+              ) : (
+                <VscRunAll className="text-lg group-hover:animate-bounce" />
+              )}
+              <span>Run</span>
+            </button>
+          </SmoothList>
+          <SmoothList>
+            <button
+              className="group flex items-center space-x-2 login-btn bg-white text-black font-semibold"
+              onClick={handleSubmitCode}
+              disabled={isSubmitDisabled}
+            >
+              <AiOutlineSend className="text-lg group-hover:rotate-45 transition-all ease-in-out" />
+              <span>Submit</span>
+            </button>
+          </SmoothList>
         </div>
       </div>
 

@@ -8,11 +8,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
-import { notification, Space } from "antd";
+import { notification } from "antd";
 
 import LoginButton from "./LoginButton";
 import { updateUserinfo } from "../redux/actions";
 import logo2 from "../public/logo2.svg";
+import SmoothList from "react-smooth-list";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -21,7 +22,6 @@ function classNames(...classes) {
 function Navbar({ bg, fixedHeader }) {
   const router = useRouter();
   const dispatch = useDispatch();
-  // const isLoggedIn = userInfo.is_logged_in;
 
   const isLoggedIn = useSelector((state) => state.userData.is_logged_in);
   const isAdmin = useSelector((state) => state.userData.is_admin);
@@ -238,11 +238,13 @@ function Navbar({ bg, fixedHeader }) {
                       </Transition>
                     </Menu>
                   ) : (
-                    <div className="lg:space-x-3">
-                      <LoginButton url={"/auth/signin"} text="Login" />
-                      <span className="border-r border-white"></span>
-                      <LoginButton url={"/auth/signup"} text="Sign Up" />
-                    </div>
+                    <SmoothList>
+                      <div className="lg:space-x-3">
+                        <LoginButton url={"/auth/signin"} text="Login" />
+                        <span className="border-r border-white"></span>
+                        <LoginButton url={"/auth/signup"} text="Sign Up" />
+                      </div>
+                    </SmoothList>
                   )}
                 </div>
               </div>

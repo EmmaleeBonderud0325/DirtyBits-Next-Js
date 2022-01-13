@@ -14,6 +14,7 @@ import { updateUserinfo } from "../../redux/actions";
 import Input from "../../components/Input";
 import { signinApi, googleLoginApi } from "../../components/api/apis";
 import Parsetoken from "../../components/Helper/Parsetoken";
+import SmoothList from "react-smooth-list";
 
 function Signin() {
   const dispatch = useDispatch();
@@ -202,21 +203,22 @@ function Signin() {
         <div className="min-h-screen sm:flex sm:flex-row mx-0 justify-center space-x-48">
           <div className="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
             <div className="self-start hidden lg:flex flex-col  text-white">
-              <img src="" className="mb-3" />
-              <h1 className="loginSignUpHeading text-transparent bg-clip-text bg-gradient-to-r from-[#AE67FA] to-[#F49867]">
-                Hola,
-              </h1>
-              <br />
-              <p className="text-6xl ">
-                Welcome to{" "}
-                <span>
-                  <Link href="/">
-                    <a className="text-custom-indigo font-bold font-dance text-7xl">
-                      DirtyBits
-                    </a>
-                  </Link>
-                </span>
-              </p>
+              <SmoothList>
+                <h1 className="loginSignUpHeading text-transparent bg-clip-text bg-gradient-to-r from-[#AE67FA] to-[#F49867]">
+                  Hola,
+                </h1>
+                <br />
+                <p className="text-6xl ">
+                  Welcome to{" "}
+                  <span>
+                    <Link href="/">
+                      <a className="text-custom-indigo font-bold font-dance text-7xl">
+                        DirtyBits
+                      </a>
+                    </Link>
+                  </span>
+                </p>
+              </SmoothList>
 
               {/* <p className="pr-3">
                 Lorem ipsum is placeholder text commonly used in the graphic,
