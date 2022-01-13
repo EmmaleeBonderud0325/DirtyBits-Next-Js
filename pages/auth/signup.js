@@ -38,60 +38,60 @@ function signup(props) {
 
   const emailInputColor = props.isErrors.email.error
     ? "border-red-300"
-    : "border-white-400";
+    : "border-custom-indigo";
   const emailInputFocusColor = props.isErrors.email.error
     ? "border-red-300"
-    : "border-custom-yellow";
+    : "border-custom-indigo";
   const emailLabelColor = props.isErrors.email.error
     ? "text-red-700"
     : "text-gray-700";
 
   const firstnameInputColor = props.isErrors.firstname.error
     ? "border-red-300"
-    : "border-white-400";
+    : "border-custom-indigo";
   const firstnameInputFocusColor = props.isErrors.firstname.error
     ? "border-red-300"
-    : "border-custom-yellow";
+    : "border-custom-indigo";
   const firstnameLabelColor = props.isErrors.firstname.error
     ? "text-red-700"
     : "text-gray-700";
 
   const lastnameInputColor = props.isErrors.lastname.error
     ? "border-red-300"
-    : "border-white-400";
+    : "border-custom-indigo";
   const lastnameInputFocusColor = props.isErrors.lastname.error
     ? "border-red-300"
-    : "border-custom-yellow";
+    : "border-custom-indigo";
   const lastnameLabelColor = props.isErrors.lastname.error
     ? "text-red-700"
     : "text-gray-700";
 
   const usernameInputColor = props.isErrors.username.error
     ? "border-red-300"
-    : "border-white-400";
+    : "border-custom-indigo";
   const usernameInputFocusColor = props.isErrors.username.error
     ? "border-red-300"
-    : "border-custom-yellow";
+    : "border-custom-indigo";
   const usernameLabelColor = props.isErrors.username.error
     ? "text-red-700"
     : "text-gray-700";
 
   const passwordInputColor = props.isErrors.password.error
     ? "border-red-300"
-    : "border-white-400";
+    : "border-custom-indigo";
   const passwordInputFocusColor = props.isErrors.password.error
     ? "border-red-300"
-    : "border-custom-yellow";
+    : "border-custom-indigo";
   const passwordLabelColor = props.isErrors.password.error
     ? "text-red-700"
     : "text-gray-700";
 
   const confirmPasswordInputColor = props.isErrors.confirmPassword.error
     ? "border-red-300"
-    : "border-white-400";
+    : "border-custom-indigo";
   const confirmPasswordInputFocusColor = props.isErrors.confirmPassword.error
     ? "border-red-300"
-    : "border-custom-yellow";
+    : "border-custom-indigo";
   const confirmPasswordLabelColor = props.isErrors.confirmPassword.error
     ? "text-red-700"
     : "text-gray-700";
@@ -310,10 +310,10 @@ function signup(props) {
       </Head>
       <ToastContainer theme="dark" />
       <div class="loginSignUp">
-        <div class="absolute w-60 h-60 rounded-xl bg-custom-yellow2 -top-5 -left-16 z-0 transform rotate-45 hidden md:block"></div>
-        <div class="absolute w-48 h-48 rounded-xl bg-custom-yellow2 -bottom-10 transform rotate-12 hidden md:block"></div>
-        <div class="w-40 h-40 absolute bg-custom-yellow2 rounded-full top-0 right-12 hidden md:block"></div>
-        <div class="w-20 h-40 absolute bg-custom-yellow2 rounded-full bottom-20 right-10 transform rotate-45 hidden md:block"></div>
+        <div class="absolute w-60 h-60 rounded-xl bg-custom-indigo -top-5 -left-16 z-0 transform rotate-45 hidden md:block"></div>
+        <div class="absolute w-48 h-48 rounded-xl bg-custom-indigo -bottom-10 transform rotate-12 hidden md:block"></div>
+        <div class="w-40 h-40 absolute bg-custom-indigo rounded-full top-0 right-12 hidden md:block"></div>
+        <div class="w-20 h-40 absolute bg-custom-indigo rounded-full bottom-20 right-10 transform rotate-45 hidden md:block"></div>
         <div class="absolute md:bg-gradient-to-b from-black to-black opacity-75 lg:inset-0 z-0"></div>
         <div class="min-h-screen sm:flex sm:flex-row mx-0 justify-center">
           <div class="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
@@ -321,7 +321,9 @@ function signup(props) {
               <img src="" class="mb-3" />
               <h1 class="loginSignUpHeading">
                 Hello Welcome to{" "}
-                <span className="text-custom-yellow">DirtyBits</span>
+                <span className="text-custom-indigo">
+                  <a href="/">DirtyBits</a>
+                </span>
               </h1>
               {/* <p className="pr-3">
                 Lorem ipsum is placeholder text commonly used in the graphic,
@@ -330,7 +332,7 @@ function signup(props) {
               </p> */}
             </div>
           </div>
-          <div class="flex items-center justify-center self-center  z-10">
+          <div class="flexContainer self-center  z-10">
             <div class="p-5 md:p-9 bg-white mx-auto rounded-2xl w-100 -mt-14 mb-4 lg:m-0 md:m-0">
               <div class="mb-4">
                 <h3 class="font-semibold text-2xl text-gray-800">Sign Up </h3>
@@ -346,13 +348,14 @@ function signup(props) {
                   <Input
                     id={"username-field-signup"}
                     type={"text"}
+                    placeholder="Your username"
                     color={usernameInputColor}
                     focusColor={usernameInputFocusColor}
                     onchangeFunction={HandleUserNameUpdateDebounce}
                   />
                   <div style={{ height: ".3rem" }}>
                     {props.isErrors.username.error ? (
-                      <span className="text-xs text-red-400 ml-2 mb:2">
+                      <span className="text-xs text-red-500 ml-2 mb:2">
                         {props.isErrors.username.details}
                       </span>
                     ) : (
@@ -369,6 +372,7 @@ function signup(props) {
                   <Input
                     value={formData.firstName}
                     type={"text"}
+                    placeholder="Your firstname"
                     color={firstnameInputColor}
                     focusColor={firstnameInputFocusColor}
                     id={"none"}
@@ -378,7 +382,7 @@ function signup(props) {
                   />
                   <div style={{ height: ".3rem" }}>
                     {props.isErrors.firstname.error ? (
-                      <span className="text-xs text-red-400 ml-2 mb:2">
+                      <span className="text-xs text-red-500 ml-2 mb:2">
                         {props.isErrors.firstname.details}
                       </span>
                     ) : (
@@ -395,6 +399,7 @@ function signup(props) {
                   <Input
                     value={formData.lastName}
                     type={"text"}
+                    placeholder="Your lastname"
                     color={lastnameInputColor}
                     focusColor={lastnameInputFocusColor}
                     id={"none"}
@@ -404,7 +409,7 @@ function signup(props) {
                   />
                   <div style={{ height: ".3rem" }}>
                     {props.isErrors.lastname.error ? (
-                      <span className="text-xs text-red-400 ml-2 mb:2">
+                      <span className="text-xs text-red-500 ml-2 mb:2">
                         {props.isErrors.lastname.details}
                       </span>
                     ) : (
@@ -428,7 +433,7 @@ function signup(props) {
                   />
                   <div style={{ height: ".3rem" }}>
                     {props.isErrors.email.error ? (
-                      <span className="text-xs text-red-400 ml-2 mb:2">
+                      <span className="text-xs text-red-500 ml-2 mb:2">
                         {props.isErrors.email.details}
                       </span>
                     ) : (
@@ -443,6 +448,7 @@ function signup(props) {
                     Password
                   </label>
                   <Input
+                    placeholder="Password"
                     type={"password"}
                     color={passwordInputColor}
                     focusColor={passwordInputFocusColor}
@@ -451,7 +457,7 @@ function signup(props) {
                   />
                   <div style={{ height: ".3rem" }}>
                     {props.isErrors.password.error ? (
-                      <span className="text-xs text-red-400 ml-2 mb:2">
+                      <span className="text-xs text-red-500 ml-2 mb:2">
                         {props.isErrors.password.details}
                       </span>
                     ) : (
@@ -467,6 +473,7 @@ function signup(props) {
                   </label>
                   <Input
                     type={"password"}
+                    placeholder="Confirm Password"
                     color={confirmPasswordInputColor}
                     focusColor={confirmPasswordInputFocusColor}
                     id={"confirmpassword-field-signup"}
@@ -474,7 +481,7 @@ function signup(props) {
                   />
                   <div style={{ height: ".3rem" }}>
                     {props.isErrors.confirmPassword.error ? (
-                      <span className="text-xs text-red-400 ml-2 mb:2">
+                      <span className="text-xs text-red-500 ml-2 mb:2">
                         {props.isErrors.confirmPassword.details}
                       </span>
                     ) : (
@@ -494,7 +501,7 @@ function signup(props) {
                         })
                       }
                       type="checkbox"
-                      className="h-4 w-4 rounded accent-custom-yellow"
+                      className="h-4 w-4 rounded accent-custom-indigo"
                     />
                     <label
                       for="remember_me"
@@ -504,7 +511,7 @@ function signup(props) {
                     </label>
                   </div>
                   <div className="text-sm">
-                    <a href="#" className="text-black hover:text-custom-yellow">
+                    <a href="#" className="text-custom-indigo">
                       Forgot your password?
                     </a>
                   </div>
@@ -512,7 +519,7 @@ function signup(props) {
                 <div>
                   <button
                     type="submit"
-                    className={`w-full flex justify-center bg-custom-yellow2  hover:bg-custom-yellow text-gray-100 p-3  rounded-full tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500 ${
+                    className={`w-full flex justify-center bg-custom-indigo  hover:bg-indigo-900 text-gray-100 p-3  rounded-full tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500 ${
                       isDisabled && "opacity-50 cursor-not-allowed"
                     }`}
                     onClick={(e) => submitSignupForm(e)}
@@ -525,9 +532,7 @@ function signup(props) {
                 <span>
                   Already have an account ?{" "}
                   <Link href="/auth/signin">
-                    <a className="text-black hover:text-custom-yellow">
-                      Sign In
-                    </a>
+                    <a className="text-custom-indigo">Sign In</a>
                   </Link>
                 </span>
               </div>
