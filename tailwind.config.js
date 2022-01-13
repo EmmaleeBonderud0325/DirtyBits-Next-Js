@@ -10,6 +10,9 @@ module.exports = {
   darkMode: "class",
   plugins: [require("tailwind-scrollbar-hide")],
   theme: {
+    fontFamily: {
+      dance: ['"Dancing Script"'],
+    },
     screens: {
       xs: "630px",
       ...defaultTheme.screens,

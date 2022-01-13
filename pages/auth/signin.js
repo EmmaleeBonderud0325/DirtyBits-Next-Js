@@ -3,7 +3,7 @@ import Link from "next/link";
 import GoogleLogin from "react-google-login";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
 import { validate } from "email-validator";
-import { AiFillGithub, AiOutlineConsoleSql } from "react-icons/ai";
+import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import Cookies from "js-cookie";
 import { connect, useDispatch } from "react-redux";
@@ -15,7 +15,7 @@ import Input from "../../components/Input";
 import { signinApi, googleLoginApi } from "../../components/api/apis";
 import Parsetoken from "../../components/Helper/Parsetoken";
 
-function signin() {
+function Signin() {
   const dispatch = useDispatch();
   const router = useRouter();
   let [formData, setFormData] = useState({
@@ -34,23 +34,23 @@ function signin() {
   const [isDisabled, setIsDisabled] = useState(false);
 
   const emailInputColor = isError.email.error
-    ? "border-red-300"
-    : "border-white-400";
+    ? "border-red-500"
+    : "border-custom-indigo";
   const emailInputFocusColor = isError.email.error
-    ? "border-red-300"
-    : "border-custom-yellow2";
+    ? "border-white"
+    : "border-custom-indigo";
   const emailLabelColor = isError.email.error
-    ? "text-red-700"
+    ? "text-red-500"
     : "text-gray-700";
 
   const passwordInputColor = isError.password.error
-    ? "border-red-300"
-    : "border-white-400";
+    ? "border-red-500"
+    : "border-custom-indigo";
   const passwordInputFocusColor = isError.password.error
-    ? "border-red-300"
-    : "border-custom-yellow2";
+    ? "border-red-500"
+    : "border-custom-indigo";
   const passwordLabelColor = isError.password.error
-    ? "text-red-700"
+    ? "text-red-500"
     : "text-gray-700";
 
   const validateFormData = () => {
@@ -193,24 +193,31 @@ function signin() {
         <title>Sign In to DirtyBits</title>
       </Head>
       <div className="loginSignUp">
-        <div className="absolute w-60 h-60 rounded-xl bg-custom-yellow2 -top-5 -left-16 z-0 transform rotate-45 hidden md:block"></div>
-        <div className="absolute w-48 h-48 rounded-xl bg-custom-yellow2 -bottom-10 transform rotate-12 hidden md:block"></div>
-        <div className="w-40 h-40 absolute bg-custom-yellow2 rounded-full top-0 right-12 hidden md:block"></div>
-        <div className="w-20 h-40 absolute bg-custom-yellow2 rounded-full bottom-20 right-10 transform rotate-45 hidden md:block"></div>
+        <div className="absolute w-60 h-60 rounded-xl bg-custom-indigo -top-5 -left-16 z-0 transform rotate-45 hidden md:block"></div>
+        <div className="absolute w-48 h-48 rounded-xl bg-custom-indigo -bottom-10 transform rotate-12 hidden md:block"></div>
+        <div className="w-40 h-40 absolute bg-custom-indigo rounded-full top-0 right-12 hidden md:block"></div>
+        <div className="w-20 h-40 absolute bg-custom-indigo rounded-full bottom-20 right-10 transform rotate-45 hidden md:block"></div>
 
         <div className="absolute md:bg-gradient-to-b from-black to-black opacity-75 lg:inset-0 z-0"></div>
-        <div className="min-h-screen sm:flex sm:flex-row mx-0 justify-center">
+        <div className="min-h-screen sm:flex sm:flex-row mx-0 justify-center space-x-48">
           <div className="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
             <div className="self-start hidden lg:flex flex-col  text-white">
               <img src="" className="mb-3" />
-              <h1 className="loginSignUpHeading">
-                Hello Welcome to{" "}
+              <h1 className="loginSignUpHeading text-transparent bg-clip-text bg-gradient-to-r from-[#AE67FA] to-[#F49867]">
+                Hola,
+              </h1>
+              <br />
+              <p className="text-6xl ">
+                Welcome to{" "}
                 <span>
                   <Link href="/">
-                    <a className="text-custom-yellow">DirtyBits</a>
+                    <a className="text-custom-indigo font-bold font-dance text-7xl">
+                      DirtyBits
+                    </a>
                   </Link>
                 </span>
-              </h1>
+              </p>
+
               {/* <p className="pr-3">
                 Lorem ipsum is placeholder text commonly used in the graphic,
                 print, and publishing industries for previewing layouts and
@@ -236,7 +243,7 @@ function signin() {
                     Email
                   </label>
                   <Input
-                    type="text"
+                    type="email"
                     placeholder={"@gmail.com"}
                     value={formData.email}
                     color={emailInputColor}
@@ -248,7 +255,7 @@ function signin() {
                   />
                   <div style={{ height: "1rem" }}>
                     {isError.email.error ? (
-                      <span className="text-xs text-red-400 ml-2 mb:2">
+                      <span className="text-xs text-red-500 ml-2 mb:2">
                         {isError.email.details}
                       </span>
                     ) : (
@@ -264,7 +271,7 @@ function signin() {
                   </label>
                   <div className={`w-full rounded-lg flex`}>
                     <input
-                      className={`w-full px-4 py-2 border text-black ${passwordInputColor} focus:${passwordInputFocusColor} focus:outline-none rounded-lg`}
+                      className={`w-full px-4 py-2 border-2 text-black ${passwordInputColor} focus:${passwordInputFocusColor} focus:outline-none rounded-lg`}
                       type={showPassword ? "text" : "password"}
                       value={formData.password}
                       placeholder="Password"
@@ -287,7 +294,7 @@ function signin() {
 
                   <div style={{ height: "1rem" }}>
                     {isError.password.error ? (
-                      <span className="text-xs text-red-400 ml-2">
+                      <span className="text-xs text-red-500 ml-2">
                         {isError.password.details}
                       </span>
                     ) : (
@@ -296,7 +303,7 @@ function signin() {
                   </div>
                 </div>
                 <div className="flex items-center justify-between my-2">
-                  <div className="flex items-center accent-custom-yellow">
+                  <div className="flex items-center accent-custom-indigo">
                     <input
                       id="remember_me"
                       name="remember_me"
@@ -330,7 +337,7 @@ function signin() {
                     disabled={isDisabled ? true : false}
                     type="submit"
                     onClick={(e) => submitLoginForm(e)}
-                    className={`social-login-btn bg-custom-yellow2 hover:bg-custom-yellow
+                    className={`social-login-btn  bg-custom-indigo hover:bg-indigo-900 hover:outline-black
                       transition ease-in duration-500
                       ${isDisabled && "opacity-50 cursor-not-allowed"}
                     `}
@@ -364,7 +371,7 @@ function signin() {
                 <span>
                   Don't have account ?{" "}
                   <Link href="/auth/signup">
-                    <a className="text-custom-yellow hover:text-black">
+                    <a className="text-custom-indigo hover:text-black">
                       Sign Up
                     </a>
                   </Link>
@@ -378,7 +385,7 @@ function signin() {
   );
 }
 
-signin.getLayout = function PageLayout(page) {
+Signin.getLayout = function PageLayout(page) {
   return <>{page}</>;
 };
 const mapStateToProps = (state) => {
@@ -387,4 +394,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { updateUserinfo })(signin);
+export default connect(mapStateToProps, { updateUserinfo })(Signin);

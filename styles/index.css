@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap");
 
 @import "tailwindcss/base";
 /* Write your own custom base styles here */
@@ -43,7 +44,7 @@
     @apply py-4 px-6 border-b font-medium hover:text-blue-700 transition-all ease-in-out duration-100 cursor-pointer;
   }
   .login-btn {
-    @apply py-2 px-4 shadow-md no-underline rounded-full bg-custom-indigo text-white font-sans font-semibold text-sm border-custom-indigo hover:text-white hover:bg-custom-background focus:outline-none active:shadow-none mr-2 transition-all ease-in-out duration-300;
+    @apply py-2 px-4 shadow-md no-underline rounded-full bg-custom-indigo text-white font-semibold text-sm border-custom-indigo hover:text-white hover:bg-custom-background focus:outline-none active:shadow-none mr-2 transition-all ease-in-out duration-300;
   }
   .social-login-btn {
     @apply mt-3 w-full flex justify-center rounded-full bg-black px-4 p-3 font-semibold text-white items-center space-x-2;
@@ -52,7 +53,7 @@
     @apply bg-no-repeat bg-cover bg-center relative overflow-hidden;
   }
   .loginSignUpHeading {
-    @apply mb-3 font-bold text-5xl text-white;
+    @apply mb-3 font-bold text-7xl text-white;
   }
 
   .filebtn {
@@ -61,6 +62,10 @@
     file:text-sm file:font-semibold
     file:bg-violet-50 file:text-violet-700
     hover:file:bg-violet-100;
+  }
+
+  .flexContainer {
+    @apply flex justify-center items-center;
   }
 }
 
