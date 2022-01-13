@@ -24,6 +24,7 @@ import {
   updatePasswordError,
   updateConfirmPasswordError,
 } from "../../redux/actions";
+import SmoothList from "react-smooth-list";
 
 function signup(props) {
   const dispatch = useDispatch();
@@ -316,15 +317,24 @@ function signup(props) {
         <div class="w-20 h-40 absolute bg-custom-indigo rounded-full bottom-20 right-10 transform rotate-45 hidden md:block"></div>
         <div class="absolute md:bg-gradient-to-b from-black to-black opacity-75 lg:inset-0 z-0"></div>
         <div class="min-h-screen sm:flex sm:flex-row mx-0 justify-center">
-          <div class="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
-            <div class="self-start hidden lg:flex flex-col  text-white">
-              <img src="" class="mb-3" />
-              <h1 class="loginSignUpHeading">
-                Hello Welcome to{" "}
-                <span className="text-custom-indigo">
-                  <a href="/">DirtyBits</a>
-                </span>
-              </h1>
+          <div class="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl z-10">
+            <div class="self-start hidden lg:flex flex-col  text-white ">
+              <SmoothList>
+                <h1 className="loginSignUpHeading text-transparent bg-clip-text bg-gradient-to-r from-[#AE67FA] to-[#F49867]">
+                  Hola,
+                </h1>
+                <br />
+                <p className="text-6xl ">
+                  Welcome to{" "}
+                  <span>
+                    <Link href="/">
+                      <a className="text-custom-indigo font-bold font-dance text-7xl">
+                        DirtyBits
+                      </a>
+                    </Link>
+                  </span>
+                </p>
+              </SmoothList>
               {/* <p className="pr-3">
                 Lorem ipsum is placeholder text commonly used in the graphic,
                 print, and publishing industries for previewing layouts and
@@ -489,27 +499,7 @@ function signup(props) {
                     )}
                   </div>
                 </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <input
-                      id="remember_me"
-                      name="remember_me"
-                      onChange={() =>
-                        setFormData({
-                          ...formData,
-                          remeberMe: !formData.remeberMe,
-                        })
-                      }
-                      type="checkbox"
-                      className="h-4 w-4 rounded accent-custom-indigo"
-                    />
-                    <label
-                      for="remember_me"
-                      className="ml-2 block text-sm text-gray-800"
-                    >
-                      Remember me
-                    </label>
-                  </div>
+                <div className="flex items-center justify-end">
                   <div className="text-sm">
                     <a href="#" className="text-custom-indigo">
                       Forgot your password?
