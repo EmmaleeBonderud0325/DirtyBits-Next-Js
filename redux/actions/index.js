@@ -21,6 +21,8 @@ import {
 } from "../types";
 
 import { Updateproblemsstatus } from "../../components/Helper/Updateproblemsstatus";
+import Cookies from "js-cookie";
+import { initial_state as userInitialState } from "../reducers/UserDataReducer";
 
 export const updateUserinfo = (newState) => {
   return {
@@ -166,6 +168,18 @@ export const getProblems = () => async (dispatch, getState) => {
     if (getState().userData.is_logged_in) {
       dispatch(updateProblemsStatus());
     }
+  } catch {
+    console.error("Server Error in Problems List Fetching");
+  }
+};
+
+export const logoutUser = () => async (dispatch, getState) => {
+  try {
+    await logoutUser
+      .post("/", { refresh_token: Cookies.get("refresh") })
+      .then(() => {
+        dispatch(updateUserinfo(userInitialState));
+      });
   } catch {
     console.error("Server Error in Problems List Fetching");
   }

@@ -27,6 +27,12 @@ export const createUser = axios.create({
   baseURL: BASE_URL + "auth/register",
 });
 
+export const logoutUser = axios.create({
+  baseURL: BASE_URL + "auth/logout",
+});
+
+// {"refresh_token" : token} -> post request
+
 export const signinApi = axios.create({
   baseURL: BASE_URL + "auth/authenticate",
 });

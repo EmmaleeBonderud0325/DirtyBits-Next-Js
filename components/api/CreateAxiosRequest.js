@@ -14,6 +14,11 @@ export const CreateAxiosRequest = (baseURL) => {
     (response) => response,
     (error) => {
       const originalRequest = error.config;
+      //   if (error.response.status === 401 && originalRequest.url === baseURL+'token/refresh/') {
+      //     window.location.href = '/login/';
+      //     return Promise.reject(error);
+      // }
+
       if (
         error.response.status === 401 &&
         error.response.statusText === "Unauthorized"
