@@ -20,6 +20,7 @@ const jsonData = require("./data.json");
 
 import Dropdown2 from "./Dropdown2";
 import FontDropdown from "./FontDropdown";
+import { message } from "antd";
 
 export const Header = () => {
   const dispatch = useDispatch();
@@ -31,6 +32,14 @@ export const Header = () => {
   const id = useSelector((state) => state.problemPageProblemId);
 
   const uploadCloud = async () => {
+    const key = "updatable";
+    message.loading({
+      content: "Loading...",
+      key,
+      style: {
+        marginTop: "7rem",
+      },
+    });
     try {
       await uploadCode
         .post("/", {
@@ -40,10 +49,17 @@ export const Header = () => {
           email: userInfo.email,
         })
         .then(() => {
-          console.log("Success");
+          message.success({
+            content: "Code Uploaded Successfully",
+            key,
+            duration: 2,
+            style: {
+              marginTop: "7rem",
+            },
+          });
         });
     } catch (e) {
-      console.error("Token Error");
+      message.error({ content: "Try Again !", key, duration: 2 });
     }
   };
 
