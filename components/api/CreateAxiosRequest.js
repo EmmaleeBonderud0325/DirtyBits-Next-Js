@@ -1,6 +1,8 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { refreshTokenApi } from "./apis";
+import { logoutUser } from "../../redux/actions";
+import Router from "next/router";
 
 export const CreateAxiosRequest = (baseURL) => {
   const newInstance = axios.create({
@@ -14,10 +16,13 @@ export const CreateAxiosRequest = (baseURL) => {
     (response) => response,
     (error) => {
       const originalRequest = error.config;
-      //   if (error.response.status === 401 && originalRequest.url === baseURL+'token/refresh/') {
-      //     window.location.href = '/login/';
-      //     return Promise.reject(error);
-      // }
+      if (
+        error.response.status === 401 &&
+        originalRequest.url === baseURL + "token/refresh/"
+      ) {
+        Router.push("/auth/signin");
+        return Promise.reject(error);
+      }
 
       if (
         error.response.status === 401 &&
@@ -39,6 +44,8 @@ export const CreateAxiosRequest = (baseURL) => {
           .catch((err) => {
             // LOGOUT AND REDIRECT TO SIGNIN AGAIN
             console.log(err);
+            logoutUser();
+            Router.push("/auth/signin");
           });
       }
       return Promise.reject(error);
