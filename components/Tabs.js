@@ -168,24 +168,27 @@ function BasicTabs(props) {
           </SmoothList>
 
           <SmoothList>
-            <p className="font-medium text-lg text-[#a1acc0]">
-              <span>{questionData.id}. </span>
-              {questionData.title}
-            </p>
+            <div className="font-medium text-lg text-[#a1acc0]">
+              <div className="flex items-center space-x-3">
+                <span>{questionData.id}. </span>
+                <div>{questionData.title}</div>
+                {/* BOOKMARK */}
+                <div
+                  onClick={() => {
+                    dispatch(bookmarkStatusHandler());
+                  }}
+                  className="inline-block cursor-pointer"
+                >
+                  {isBookmarkSet ? (
+                    <BsBookmarkCheckFill className="text-lg" />
+                  ) : (
+                    <BsBookmarkCheck className="text-lg" />
+                  )}
+                </div>
+              </div>
+            </div>
           </SmoothList>
-          {/* BOOKMARK */}
-          <div
-            onClick={() => {
-              dispatch(bookmarkStatusHandler());
-            }}
-            className="inline-block cursor-pointer"
-          >
-            {isBookmarkSet ? (
-              <BsBookmarkCheckFill className="text-lg" />
-            ) : (
-              <BsBookmarkCheck className="text-lg" />
-            )}
-          </div>
+
           {/* PROBLEM DIFFICULTY */}
 
           <div className="flex items-center space-x-5">
