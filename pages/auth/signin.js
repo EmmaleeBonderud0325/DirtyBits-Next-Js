@@ -9,12 +9,14 @@ import Cookies from "js-cookie";
 import { connect, useDispatch } from "react-redux";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import GitHubLogin from "react-github-login";
 
 import { updateUserinfo } from "../../redux/actions";
 import Input from "../../components/Input";
 import { signinApi, googleLoginApi } from "../../components/api/apis";
 import Parsetoken from "../../components/Helper/Parsetoken";
 import SmoothList from "react-smooth-list";
+import { githubLogin, googleLogin } from "../../redux/actions/authenticate";
 
 function Signin() {
   const dispatch = useDispatch();
@@ -88,40 +90,8 @@ function Signin() {
     }
   };
 
-  const responseGoogleSuccess = async (data) => {
-    try {
-      await googleLoginApi
-        .post("/", { auth_token: data["tokenId"] })
-        .then((result) => {
-          const { access, refresh } = result.data;
-          const data = Parsetoken(access);
-          console.log("data", data);
-          if (data.is_verified) {
-            var inTwentyMinutes = new Date(
-              new Date().getTime() + 20 * 60 * 1000
-            );
-            Cookies.set("access", access, { expires: inTwentyMinutes });
-            Cookies.set("refresh", refresh, { expires: 14 });
-            dispatch(
-              updateUserinfo({
-                is_logged_in: true,
-                is_admin: data.is_admin,
-                email: data.user_mail,
-                first_name: data.first_name,
-                last_name: data.last_name,
-                username: data.username,
-                profile_pic: data.profile_pic,
-              })
-            );
-            router.push("/");
-          }
-        })
-        .catch(() => {
-          console.error("Bad Request !");
-        });
-    } catch (e) {
-      console.log("Server Error !");
-    }
+  const responseGoogleSuccess = (data) => {
+    dispatch(googleLogin(data["tokenId"]));
   };
 
   const responseGoogleFailure = () => {
@@ -188,6 +158,12 @@ function Signin() {
     return;
   };
 
+  const onSuccess = (response) => {
+    console.log(response);
+    dispatch(githubLogin(response.code));
+  };
+  const onFailure = (response) => console.error(response);
+
   return (
     <>
       <Head>
@@ -219,12 +195,6 @@ function Signin() {
                   </span>
                 </p>
               </SmoothList>
-
-              {/* <p className="pr-3">
-                Lorem ipsum is placeholder text commonly used in the graphic,
-                print, and publishing industries for previewing layouts and
-                visual mockups
-              </p> */}
             </div>
           </div>
           <div className="flex justify-center self-center  z-10">
@@ -363,10 +333,19 @@ function Signin() {
                     onFailure={responseGoogleFailure}
                     cookiePolicy={"single_host_origin"}
                   />
-                  <button className="social-login-btn cursor-not-allowed opacity-25">
+                  {/* <button className="social-login-btn cursor-not-allowed opacity-25">
                     <AiFillGithub />
                     <span>Coming Soon...</span>
-                  </button>
+                  </button> */}
+                  <GitHubLogin
+                    clientId="4070334dbe20cf539952"
+                    onSuccess={onSuccess}
+                    onFailure={onFailure}
+                    redirectUri=""
+                    scope="read:user,user:email"
+                    buttonText="Login with Github"
+                    className="social-login-btn opacity-25"
+                  />
                 </div>
               </div>
               <div className="pt-5 text-center text-gray-400 text-xs">

@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { refreshTokenApi } from "./apis";
 import { logoutUser } from "../../redux/actions";
-import Router from "next/router";
+import { Router } from "next/router";
 
 export const CreateAxiosRequest = (baseURL) => {
   const newInstance = axios.create({
