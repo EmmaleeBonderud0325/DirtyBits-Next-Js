@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react";
+import { Fragment } from "react";
 import { useSelector } from "react-redux";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
@@ -13,7 +13,6 @@ import { notification } from "antd";
 import LoginButton from "./LoginButton";
 import { updateUserinfo } from "../redux/actions";
 import logo2 from "../public/logo2.svg";
-import SmoothList from "react-smooth-list";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -110,28 +109,16 @@ function Navbar({ bg, fixedHeader }) {
                 </div>
                 <div className="flex-1 flex items-center justify-center sm:items-center sm:justify-start ">
                   <div className="flex-shrink-0 flex items-center pt-2">
-                    {/* <img
-                      className="block lg:hidden h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-                      alt="Workflow"
-                      
-                    /> */}
                     <Image
                       className="hidden"
                       src={logo2}
                       width={300}
                       height={50}
                     />
-                    {/* <img
-                      className="hidden lg:block h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
-                      alt="Workflow"
-                    /> */}
                   </div>
                   <div className="hidden sm:block sm:ml-6">
                     <div className="flex space-x-4">
                       {navigation.map((item) => (
-                        // <Link key={item.name} href={item.href}>
                         <a
                           className={classNames(
                             item.current
@@ -145,20 +132,11 @@ function Navbar({ bg, fixedHeader }) {
                         >
                           {item.name}
                         </a>
-                        // </Link>
                       ))}
                     </div>
                   </div>
                 </div>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                  {/* <button
-                  type="button"
-                  className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                >
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button> */}
-
                   {/* Profile dropdown */}
                   {isLoggedIn ? (
                     <Menu as="div" className="ml-3 relative">
@@ -238,13 +216,11 @@ function Navbar({ bg, fixedHeader }) {
                       </Transition>
                     </Menu>
                   ) : (
-                    <SmoothList>
-                      <div className="lg:space-x-3">
-                        <LoginButton url={"/auth/signin"} text="Login" />
-                        <span className="border-r border-white"></span>
-                        <LoginButton url={"/auth/signup"} text="Sign Up" />
-                      </div>
-                    </SmoothList>
+                    <div className="lg:space-x-3">
+                      <LoginButton url={"/auth/signin"} text="Login" />
+                      <span className="border-r border-white"></span>
+                      <LoginButton url={"/auth/signup"} text="Sign Up" />
+                    </div>
                   )}
                 </div>
               </div>
