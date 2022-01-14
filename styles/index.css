@@ -289,3 +289,8 @@ html::-webkit-scrollbar-thumb {
 .ant-dropdown-menu-item-active {
   background-color: gray !important;
 }
+
+.ant-message-notice-content {
+  background: #1f1f1f !important;
+  color: white !important;
+}
