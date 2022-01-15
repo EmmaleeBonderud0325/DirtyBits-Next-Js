@@ -339,7 +339,7 @@ function Signin() {
                     }
                     redirectUri=""
                     scope="read:user,user:email"
-                    buttonText="Login with Github"
+                    buttonText=""
                     className="social-login-btn"
                   />
                 </div>
