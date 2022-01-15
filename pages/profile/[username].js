@@ -8,7 +8,7 @@ import Image from "next/image";
 import Chip from "@mui/material/Chip";
 import Badge from "@mui/material/Badge";
 import { Progress } from "antd";
-import { XAxis, Tooltip, AreaChart, Area, YAxis } from "recharts";
+import { XAxis, Tooltip, AreaChart, Area } from "recharts";
 import { getStaticData, getUserProfile } from "../../components/api/apis";
 
 function Profile() {
@@ -129,49 +129,12 @@ function Profile() {
                         color="success"
                       />
                     </div>
-
-                    {/* <div class="lg:flex-col flex lg:inline-flex lg:my-6 my-3  lg:items-end space-x-2">
-                    <label class="text-gray-500 text-sm">Primary Trainer</label>
-                    <p className="text-white">Steve Hills</p>
-                  </div> */}
                   </div>
                 </div>
 
                 <div className="my-4 text-center">
                   <Rate defaultValue={4} disabled />
                 </div>
-
-                {/* <div class="mt-5">
-                <h2 class="uppercase text-left text-[15px] text-white">
-                  Contact Information
-                </h2>
-                <div class="flex justify-between">
-                  <div>
-                    <label class="text-[11px] text-gray-500" for="mobile">
-                      Mobile
-                    </label>
-                    <p class="text-[13px] font-semibold">0401312312</p>
-                    <label class="text-[11px] text-gray-500" for="mobile">
-                      Mobile
-                    </label>
-                    <p class="text-[13px] font-semibold">0401312312</p>
-                    <label class="text-[11px] text-gray-500" for="mobile">
-                      Mobile
-                    </label>
-                    <p class="text-[13px] font-semibold">0401312312</p>
-                  </div>
-                  <div>
-                    <label class="text-[11px] text-gray-500" for="mobile">
-                      Mobile
-                    </label>
-                    <p class="text-[13px] font-semibold">0401312312</p>
-                    <label class="text-[11px] text-gray-500" for="mobile">
-                      Mobile
-                    </label>
-                    <p class="text-[13px] font-semibold">0401312312</p>
-                  </div>
-                </div>
-              </div> */}
               </div>
 
               <div class="mt-24 lg:mt-0 flex-1 p-2 flex flex-col items-center justify-center lg:pl-36 lg:space-y-10  rounded-2xl">

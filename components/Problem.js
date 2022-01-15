@@ -50,9 +50,6 @@ function Problem(props) {
   return (
     <div className="space-y-8 container p-10 mx-auto max-w-screen-xl">
       <motion.div animate={{ y: [20, 0, 0] }}>
-        {/* <h1 className="lg:text-5xl text-3xl font-extrabold text-white">
-          Problem <span className="text-custom-bg">List</span>
-        </h1> */}
         <div className="flex gap-10">
           <div className="space-y-3 h-40 w-40 pb-2 opacity-60">
             <div className="relative flex justify-center items-center h-full w-full rounded-md bg-gradient-to-r from-cyan-500 to-blue-500">
@@ -115,9 +112,6 @@ function Problem(props) {
             />
             <SearchOutlined className="text-white" />
           </form>
-          {/* <button type="submit" className="rounded-xl  bg-gray-800 px-6 py-1">
-            Search
-          </button> */}
         </div>
       </motion.div>
 
@@ -149,6 +143,4 @@ function Problem(props) {
     </div>
   );
 }
-
-// export default connect(mapStateToprops, { updateProblemsStatus })(Problem);
 export default Problem;
