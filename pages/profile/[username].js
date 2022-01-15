@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { AiOutlineSearch } from "react-icons/ai";
 import { VscSettingsGear } from "react-icons/vsc";
@@ -9,7 +9,6 @@ import Chip from "@mui/material/Chip";
 import Badge from "@mui/material/Badge";
 import { Progress } from "antd";
 import { XAxis, Tooltip, AreaChart, Area, YAxis } from "recharts";
-import Cookies from "js-cookie";
 import { getStaticData, getUserProfile } from "../../components/api/apis";
 
 function Profile() {
@@ -23,14 +22,6 @@ function Profile() {
 
   const [sub, setSub] = useState([]);
 
-  // if (!Cookies.get("access")) {
-  //   return {
-  //     redirect: {
-  //       destination: '/auth/signin',
-  //       permanent: false,
-  //     }
-  //   }
-  // }
   useEffect(() => {
     const getProfile = async () => {
       const {

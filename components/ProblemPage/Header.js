@@ -1,14 +1,13 @@
 import React from "react";
-import { download } from "./Helper2";
-
+import { useDispatch, useSelector } from "react-redux";
 import { MdSaveAlt } from "react-icons/md";
 import { AiOutlineUpload } from "react-icons/ai";
 import { BsCloudArrowUp } from "react-icons/bs";
 import { Button, Tooltip } from "antd";
-import { Profile } from "./Profile";
 
+import { download } from "./Helper2";
+import { Profile } from "./Profile";
 import { uploadCode } from "../../components/api/apis";
-import { useDispatch, useSelector } from "react-redux";
 import {
   changeEditorValue,
   changeTheme,
@@ -37,7 +36,7 @@ export const Header = () => {
       content: "Loading...",
       key,
       style: {
-        marginTop: "7rem",
+        marginTop: "2rem",
       },
     });
     try {
@@ -50,11 +49,11 @@ export const Header = () => {
         })
         .then(() => {
           message.success({
-            content: "Code Uploaded Successfully",
+            content: " Code Uploaded Successfully",
             key,
             duration: 2,
             style: {
-              marginTop: "7rem",
+              marginTop: "2rem",
             },
           });
         });
@@ -92,7 +91,7 @@ export const Header = () => {
     fileReader = new FileReader();
     fileReader.onloadend = handleFileRead;
     fileReader.readAsText(input_file);
-    var [fileName, extension] = input_file.name.split(".");
+    var [_, extension] = input_file.name.split(".");
     switch (extension) {
       case "cpp":
         setLangFunction("C++");
