@@ -1,17 +1,9 @@
 import axios from "axios";
-import Cookies from "js-cookie";
 import { CreateAxiosRequest } from "./CreateAxiosRequest";
 
-const HEADERS = {
-  "Content-Type": "application/json",
-  Authorization: "JWT " + Cookies.get("access"),
-};
-
 const BASE_URL = "https://db-auth.herokuapp.com/";
-// const BASE_URL = "http://localhost:8000/";
 
 const PROBLEM_URL = "https://db-code.herokuapp.com/";
-// const PROBLEM_URL = "http://localhost:8000/";
 
 const localhost = "http://localhost:8000/";
 
@@ -30,8 +22,6 @@ export const createUser = axios.create({
 export const logoutUser = axios.create({
   baseURL: BASE_URL + "auth/logout",
 });
-
-// {"refresh_token" : token} -> post request
 
 export const signinApi = axios.create({
   baseURL: BASE_URL + "auth/authenticate",

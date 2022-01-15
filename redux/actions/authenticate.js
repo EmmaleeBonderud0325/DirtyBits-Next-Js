@@ -1,8 +1,13 @@
 import Cookies from "js-cookie";
-import { githubLoginApi, googleLoginApi } from "../../components/api/apis";
+import {
+  githubLoginApi,
+  googleLoginApi,
+  logoutUser,
+} from "../../components/api/apis";
 import Parsetoken from "../../components/Helper/Parsetoken";
 import { updateUserinfo } from "./index";
 import Router from "next/router";
+import { initial_state as userInitialState } from "../reducers/UserDataReducer";
 
 export const updatedata = (result, dispatch) => {
   const { access, refresh } = result;
@@ -53,5 +58,16 @@ export const googleLogin = (auth_token) => async (dispatch, _) => {
       });
   } catch (e) {
     console.log("Server Error !");
+  }
+};
+
+export const signoutUser = () => async (dispatch, _) => {
+  try {
+    logoutUser.post("/", { refresh_token: Cookies.get("refresh") });
+    Cookies.remove("access");
+    Cookies.remove("refresh");
+    dispatch(updateUserinfo(userInitialState));
+  } catch (err) {
+    console.error("error");
   }
 };

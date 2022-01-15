@@ -3,17 +3,17 @@ import Link from "next/link";
 import GoogleLogin from "react-google-login";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
 import { validate } from "email-validator";
-import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import Cookies from "js-cookie";
 import { connect, useDispatch } from "react-redux";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import GitHubLogin from "react-github-login";
+import { AiFillGithub } from "react-icons/ai";
 
 import { updateUserinfo } from "../../redux/actions";
 import Input from "../../components/Input";
-import { signinApi, googleLoginApi } from "../../components/api/apis";
+import { signinApi } from "../../components/api/apis";
 import Parsetoken from "../../components/Helper/Parsetoken";
 import SmoothList from "react-smooth-list";
 import { githubLogin, googleLogin } from "../../redux/actions/authenticate";
@@ -90,14 +90,6 @@ function Signin() {
     }
   };
 
-  const responseGoogleSuccess = (data) => {
-    dispatch(googleLogin(data["tokenId"]));
-  };
-
-  const responseGoogleFailure = () => {
-    console.error("Google Authentication failed !");
-  };
-
   const postAuthentication = (tokens) => {
     const { access, refresh } = tokens;
     const data = Parsetoken(access);
@@ -157,12 +149,6 @@ function Signin() {
     setIsDisabled(false);
     return;
   };
-
-  const onSuccess = (response) => {
-    console.log(response);
-    dispatch(githubLogin(response.code));
-  };
-  const onFailure = (response) => console.error(response);
 
   return (
     <>
@@ -329,22 +315,32 @@ function Signin() {
                         <span>Sign In </span>
                       </button>
                     )}
-                    onSuccess={responseGoogleSuccess}
-                    onFailure={responseGoogleFailure}
+                    onSuccess={() => {
+                      dispatch(googleLogin(data["tokenId"]));
+                    }}
+                    onFailure={() => {
+                      console.error("Google Authentication failed !");
+                    }}
                     cookiePolicy={"single_host_origin"}
                   />
-                  {/* <button className="social-login-btn cursor-not-allowed opacity-25">
-                    <AiFillGithub />
-                    <span>Coming Soon...</span>
-                  </button> */}
                   <GitHubLogin
                     clientId="4070334dbe20cf539952"
-                    onSuccess={onSuccess}
-                    onFailure={onFailure}
+                    onSuccess={(response) => {
+                      dispatch(githubLogin(response.code));
+                    }}
+                    onFailure={(response) => {
+                      console.error(response);
+                    }}
+                    children={
+                      <>
+                        <AiFillGithub />
+                        <span>Sign In </span>
+                      </>
+                    }
                     redirectUri=""
                     scope="read:user,user:email"
                     buttonText="Login with Github"
-                    className="social-login-btn opacity-25"
+                    className="social-login-btn"
                   />
                 </div>
               </div>

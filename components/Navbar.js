@@ -7,12 +7,11 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
-import Cookies from "js-cookie";
 import { notification } from "antd";
 
 import LoginButton from "./LoginButton";
-import { updateUserinfo } from "../redux/actions";
 import logo2 from "../public/logo2.svg";
+import { signoutUser } from "../redux/actions/authenticate";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -54,21 +53,6 @@ function Navbar({ bg, fixedHeader }) {
       current: router.pathname === "/blogs" ? true : false,
     },
   ];
-  // useEffect(() => console.log('props', userInfo.is_logged_in))
-  const signOutUser = () => {
-    Cookies.remove("access");
-    Cookies.remove("refresh");
-    dispatch(
-      updateUserinfo({
-        is_logged_in: false,
-        is_admin: false,
-        email: "",
-        first_name: "",
-        last_name: "",
-        username: "",
-      })
-    );
-  };
 
   const openNotificationWithIcon = (type) => {
     notification[type]({
@@ -187,7 +171,7 @@ function Navbar({ bg, fixedHeader }) {
                                 onClick={notificationHandler}
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700 flex items-center gap-2"
+                                  "px-4 py-2 text-sm text-gray-700 flex items-center gap-2"
                                 )}
                               >
                                 <span>Add Problem</span>
@@ -201,7 +185,9 @@ function Navbar({ bg, fixedHeader }) {
                             {({ active }) => (
                               <Link href="/">
                                 <a
-                                  onClick={signOutUser}
+                                  onClick={() => {
+                                    dispatch(signoutUser());
+                                  }}
                                   className={classNames(
                                     active ? "bg-gray-100" : "",
                                     "block px-4 py-2 text-sm text-gray-700"
