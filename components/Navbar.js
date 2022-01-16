@@ -1,30 +1,19 @@
-import { Fragment } from "react";
 import { useSelector } from "react-redux";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { Disclosure } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
-import { AiOutlineInfoCircle } from "react-icons/ai";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
-import { useDispatch } from "react-redux";
-import { notification } from "antd";
 
 import LoginButton from "./LoginButton";
 import logo2 from "../public/logo2.svg";
-import { signoutUser } from "../redux/actions/authenticate";
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+import { UserProfileDropDown } from "./UserProfileDropDown";
+import { classNames } from "./Helper/Classnames";
 
 function Navbar({ bg, fixedHeader }) {
   const router = useRouter();
-  const dispatch = useDispatch();
 
   const isLoggedIn = useSelector((state) => state.userData.is_logged_in);
-  const isAdmin = useSelector((state) => state.userData.is_admin);
-  const profilePic = useSelector((state) => state.userData.profile_pic);
-  const username = useSelector((state) => state.userData.username);
 
   const navigation = [
     {
@@ -53,25 +42,6 @@ function Navbar({ bg, fixedHeader }) {
       current: router.pathname === "/blogs" ? true : false,
     },
   ];
-
-  const openNotificationWithIcon = (type) => {
-    notification[type]({
-      message: "Not an Admin",
-      description:
-        "You don't have enough privileges, because you are not an admin",
-      style: {
-        background: "black",
-        color: "white",
-      },
-      className: "notification",
-    });
-  };
-
-  const notificationHandler = () => {
-    if (!isAdmin) {
-      openNotificationWithIcon("info");
-    }
-  };
 
   return (
     <div className={fixedHeader}>
@@ -121,86 +91,11 @@ function Navbar({ bg, fixedHeader }) {
                   </div>
                 </div>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                  {/* Profile dropdown */}
                   {isLoggedIn ? (
-                    <Menu as="div" className="ml-3 relative">
-                      <div>
-                        <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                          <span className="sr-only">Open user menu</span>
-                          <Image
-                            className="h-10 w-10 rounded-full"
-                            src={profilePic}
-                            alt="profilePic"
-                            height="40"
-                            width="40"
-                          />
-                          <span className="text-white px-2 pt-1.5 pr-3 text-base hidden sm:block">
-                            {username}
-                          </span>
-                        </Menu.Button>
-                      </div>
-                      <Transition
-                        as={Fragment}
-                        enter="transition ease-out duration-100"
-                        enterFrom="transform opacity-0 scale-95"
-                        enterTo="transform opacity-100 scale-100"
-                        leave="transition ease-in duration-75"
-                        leaveFrom="transform opacity-100 scale-100"
-                        leaveTo="transform opacity-0 scale-95"
-                      >
-                        <Menu.Items
-                          className={`origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}
-                        >
-                          <Menu.Item>
-                            {({ active }) => (
-                              <a
-                                href={`/profile/${username}`}
-                                className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
-                                )}
-                              >
-                                Your Profile
-                              </a>
-                            )}
-                          </Menu.Item>
-                          <Menu.Item>
-                            {({ active }) => (
-                              <a
-                                href={`${isAdmin ? "/addproblems" : "#"}`}
-                                onClick={notificationHandler}
-                                className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "px-4 py-2 text-sm text-gray-700 flex items-center gap-2"
-                                )}
-                              >
-                                <span>Add Problem</span>
-                                {!isAdmin && (
-                                  <AiOutlineInfoCircle className="text-red-500 text-lg" />
-                                )}
-                              </a>
-                            )}
-                          </Menu.Item>
-                          <Menu.Item>
-                            {({ active }) => (
-                              <Link href="/">
-                                <a
-                                  onClick={() => {
-                                    dispatch(signoutUser());
-                                  }}
-                                  className={classNames(
-                                    active ? "bg-gray-100" : "",
-                                    "block px-4 py-2 text-sm text-gray-700"
-                                  )}
-                                >
-                                  Sign out
-                                </a>
-                              </Link>
-                            )}
-                          </Menu.Item>
-                        </Menu.Items>
-                      </Transition>
-                    </Menu>
+                    <UserProfileDropDown
+                      showUserName={true}
+                      redirectOnSignout={false}
+                    />
                   ) : (
                     <div className="lg:space-x-3">
                       <LoginButton url={"/auth/signin"} text="Login" />

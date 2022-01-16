@@ -73,13 +73,16 @@ export const googleLogin = (auth_token) => async (dispatch, _) => {
     });
 };
 
-export const signoutUser = () => async (dispatch, _) => {
+export const signoutUser = (redirectOnSignout) => async (dispatch, _) => {
   try {
     logoutUser.post("/", { refresh_token: Cookies.get("refresh") });
-    dispatch(updateUserinfo(userInitialState));
   } catch (err) {
     console.error("error");
   }
+  dispatch(updateUserinfo(userInitialState));
   Cookies.remove("access");
   Cookies.remove("refresh");
+  if (redirectOnSignout) {
+    Router.push("/");
+  }
 };

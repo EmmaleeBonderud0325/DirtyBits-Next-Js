@@ -6,7 +6,7 @@ import { BsCloudArrowUp } from "react-icons/bs";
 import { Button, Tooltip } from "antd";
 
 import { download } from "./Helper2";
-import { Profile } from "./Profile";
+import { UserProfileDropDown } from "../UserProfileDropDown";
 import { uploadCode } from "../../components/api/apis";
 import {
   changeEditorValue,
@@ -161,8 +161,12 @@ export const Header = () => {
         </Tooltip>
 
         <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 z-50">
-          {/* Profile dropdown */}
-          <Profile />
+          {userInfo.is_logged_in && (
+            <UserProfileDropDown
+              showUserName={false}
+              redirectOnSignout={false}
+            />
+          )}
         </div>
       </div>
     </div>
