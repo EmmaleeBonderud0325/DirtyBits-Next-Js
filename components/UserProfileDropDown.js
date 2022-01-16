@@ -94,7 +94,6 @@ export const UserProfileDropDown = (props) => {
             </Menu.Item>
             <Menu.Item>
               {({ active }) => (
-                // <Link href="/#">
                 <div
                   onClick={() => {
                     dispatch(signoutUser(props.redirectOnSignout));
@@ -108,7 +107,6 @@ export const UserProfileDropDown = (props) => {
                 >
                   Sign out
                 </div>
-                // </Link>
               )}
             </Menu.Item>
           </Menu.Items>

@@ -7,7 +7,6 @@ import {
 import Parsetoken from "../../components/Helper/Parsetoken";
 import { updateUserinfo } from "./index";
 import Router from "next/router";
-import { initial_state as userInitialState } from "../reducers/UserDataReducer";
 import { notification } from "antd";
 
 export const updatedata = (result, dispatch) => {

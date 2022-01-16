@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import { updateUserData } from "../types";
 import Parsetoken from "../../components/Helper/Parsetoken";
 
-export const initial_state = {
+const initial_state = {
   is_logged_in: false,
   is_admin: false,
   email: "",
