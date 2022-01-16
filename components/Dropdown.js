@@ -3,10 +3,7 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { useDispatch } from "react-redux";
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+import { classNames } from "./Helper/Classnames";
 
 function Dropdown(props) {
   const dispatch = useDispatch();

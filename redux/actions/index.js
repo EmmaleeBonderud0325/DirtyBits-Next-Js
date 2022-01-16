@@ -22,7 +22,7 @@ import {
 
 import { Updateproblemsstatus } from "../../components/Helper/Updateproblemsstatus";
 import Cookies from "js-cookie";
-import { initial_state as userInitialState } from "../reducers/UserDataReducer";
+// import { initial_state as userInitialState } from "../reducers/UserDataReducer";
 
 export const updateUserinfo = (newState) => {
   return {
@@ -178,7 +178,17 @@ export const logoutUser = () => async (dispatch, getState) => {
     await logoutUser
       .post("/", { refresh_token: Cookies.get("refresh") })
       .then(() => {
-        dispatch(updateUserinfo(userInitialState));
+        dispatch(
+          updateUserinfo({
+            is_logged_in: false,
+            is_admin: false,
+            email: "",
+            first_name: "",
+            last_name: "",
+            username: "",
+            profile_pic: "",
+          })
+        );
       });
   } catch {
     console.error("Server Error in Problems List Fetching");
