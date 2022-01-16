@@ -14,10 +14,11 @@ import {
   changeLanguage,
   changeFont,
 } from "../../redux/actions/ProblemPage";
-
+import { AiOutlineSync } from "react-icons/ai";
 const jsonData = require("./data.json");
 
 import Dropdown2 from "./Dropdown2";
+import { DropdownV3 } from "../Dropdown/DropdownV3";
 import FontDropdown from "./FontDropdown";
 import { message } from "antd";
 
@@ -117,6 +118,7 @@ export const Header = () => {
   return (
     <div className="flex justify-around p-10">
       {/* <FontDropdown fontSize={fontSize} setFontSize={changeFont} /> */}
+      <DropdownV3 />
       <Dropdown2
         dropdownType={"theme"}
         currTheme={currTheme}
@@ -171,12 +173,19 @@ export const Header = () => {
         </Tooltip>
 
         <div>
-          <button
+          {/* <button
             onClick={() => {
               resetCode();
             }}
           >
             reset
+          </button> */}
+          <button
+            onClick={() => resetCode()}
+            type="button"
+            class="inline-block rounded-full bg-custom-indigo text-white leading-normal uppercase shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out w-9 h-9 relative overflow-hidden flex justify-center items-center"
+          >
+            <AiOutlineSync className="absolute text-white text-2xl font-bold" />
           </button>
         </div>
 
