@@ -68,7 +68,11 @@ function Panel2() {
         </Pane>
         <Pane
           className="scrollbar-hide"
-          style={{ overflowY: "scroll", background: backgroundColor }}
+          style={{
+            overflowY: "scroll",
+            background: backgroundColor,
+            position: "relative",
+          }}
         >
           <Editor
             codeRunner={runningHandler}
