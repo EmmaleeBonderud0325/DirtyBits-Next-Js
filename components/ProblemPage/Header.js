@@ -183,7 +183,7 @@ export const Header = () => {
           <button
             onClick={() => resetCode()}
             type="button"
-            class="inline-block rounded-full bg-custom-indigo text-white leading-normal uppercase shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out w-9 h-9 relative overflow-hidden flex justify-center items-center"
+            class="rounded-full bg-custom-indigo text-white leading-normal uppercase shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out w-9 h-9 relative overflow-hidden flex justify-center items-center"
           >
             <AiOutlineSync className="absolute text-white text-2xl font-bold" />
           </button>
