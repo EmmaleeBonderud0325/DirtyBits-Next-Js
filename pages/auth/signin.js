@@ -320,7 +320,7 @@ function Signin() {
                         <span>Sign In </span>
                       </button>
                     )}
-                    onSuccess={() => {
+                    onSuccess={(data) => {
                       dispatch(googleLogin(data["tokenId"]));
                     }}
                     onFailure={() => {
