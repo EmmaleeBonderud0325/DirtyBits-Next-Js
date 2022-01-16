@@ -44,7 +44,7 @@ export const CreateAxiosRequest = (baseURL) => {
           .catch((err) => {
             // LOGOUT AND REDIRECT TO SIGNIN AGAIN
             console.log(err);
-            logoutUser();
+            logoutUser(true);
             Router.push("/auth/signin");
           });
       }

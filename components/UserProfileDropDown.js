@@ -6,7 +6,6 @@ import { Menu, Transition } from "@headlessui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { openNotificationWithIcon } from "./OpenNotification";
 import Image from "next/image";
-import Link from "next/link";
 import { classNames } from "./Helper/Classnames";
 
 export const UserProfileDropDown = (props) => {
