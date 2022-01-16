@@ -94,19 +94,21 @@ export const UserProfileDropDown = (props) => {
             </Menu.Item>
             <Menu.Item>
               {({ active }) => (
-                <Link href="/">
-                  <a
-                    onClick={() => {
-                      dispatch(signoutUser(props.redirectOnSignout));
-                    }}
-                    className={classNames(
-                      active ? "bg-gray-100" : "",
-                      "block px-4 py-2 text-sm text-gray-700"
-                    )}
-                  >
-                    Sign out
-                  </a>
-                </Link>
+                // <Link href="/#">
+                <div
+                  onClick={() => {
+                    dispatch(signoutUser(props.redirectOnSignout));
+                  }}
+                  className={classNames(
+                    active
+                      ? "bg-gray-100 hover:cursor-pointer text-blue-400"
+                      : "",
+                    "block px-4 py-2 text-sm text-gray-700"
+                  )}
+                >
+                  Sign out
+                </div>
+                // </Link>
               )}
             </Menu.Item>
           </Menu.Items>

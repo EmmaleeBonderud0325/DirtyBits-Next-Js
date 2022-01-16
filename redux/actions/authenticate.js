@@ -79,7 +79,17 @@ export const signoutUser = (redirectOnSignout) => async (dispatch, _) => {
   } catch (err) {
     console.error("error");
   }
-  dispatch(updateUserinfo(userInitialState));
+  dispatch(
+    updateUserinfo({
+      is_logged_in: false,
+      is_admin: false,
+      email: "",
+      first_name: "",
+      last_name: "",
+      username: "",
+      profile_pic: "",
+    })
+  );
   Cookies.remove("access");
   Cookies.remove("refresh");
   if (redirectOnSignout) {
