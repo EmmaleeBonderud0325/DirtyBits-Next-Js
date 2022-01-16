@@ -2,13 +2,21 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
   mode: "jit",
-  content: ["./pages/**/*.js", "./styles/**/*.css", "./components/**/*.js"],
+  content: [
+    "./pages/**/*.js",
+    "./styles/**/*.css",
+    "./components/**/*.js",
+    "./node_modules/tw-elements/dist/js/**/*.js",
+  ],
   future: {
     removeDeprecatedGapUtilities: true,
     purgeLayersByDefault: true,
   },
   darkMode: "class",
-  plugins: [require("tailwind-scrollbar-hide")],
+  plugins: [
+    require("tailwind-scrollbar-hide"),
+    require("tw-elements/dist/plugin"),
+  ],
   theme: {
     fontFamily: {
       dance: ['"Dancing Script"'],

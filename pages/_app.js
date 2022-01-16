@@ -9,6 +9,9 @@ import "../styles/Editor.css";
 import "../styles/tinymce.css";
 
 function MyApp({ Component, pageProps }) {
+  if (typeof window !== "undefined") {
+    import("tw-elements/dist/js/index.min.js");
+  }
   if (Component.getLayout) {
     return Component.getLayout(<Component {...pageProps} />);
   }
