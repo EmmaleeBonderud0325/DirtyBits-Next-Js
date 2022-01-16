@@ -104,6 +104,16 @@ export const Header = () => {
     }
   };
 
+  const resetCode = () => {
+    console.log("clicked");
+    for (let i = 0; i < jsonData.language.length; i++) {
+      if (jsonData.language[i].label === currLang.label) {
+        dispatch(changeEditorValue(jsonData.language[i].pre));
+        return;
+      }
+    }
+  };
+
   return (
     <div className="flex justify-around p-10">
       {/* <FontDropdown fontSize={fontSize} setFontSize={changeFont} /> */}
@@ -159,6 +169,16 @@ export const Header = () => {
             <MdSaveAlt />
           </Button>
         </Tooltip>
+
+        <div>
+          <button
+            onClick={() => {
+              resetCode();
+            }}
+          >
+            reset
+          </button>
+        </div>
 
         <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 z-50">
           {userInfo.is_logged_in && (
