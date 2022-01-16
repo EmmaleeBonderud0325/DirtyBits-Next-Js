@@ -7,7 +7,7 @@ import {
 import Parsetoken from "../../components/Helper/Parsetoken";
 import { updateUserinfo } from "./index";
 import Router from "next/router";
-import { notification } from "antd";
+import { openNotificationWithIcon } from "../../components/OpenNotification";
 
 export const updatedata = (result, dispatch) => {
   const { access, refresh } = result;
@@ -31,17 +31,6 @@ export const updatedata = (result, dispatch) => {
   }
 };
 
-const openNotificationWithIcon = (type, desc) => {
-  notification[type]({
-    message: "Login Error",
-    description: desc,
-    style: {
-      background: "black",
-      color: "white",
-    },
-  });
-};
-
 export const githubLogin = (auth_token) => async (dispatch, _) => {
   await githubLoginApi
     .post("/", { auth_token })
@@ -50,7 +39,11 @@ export const githubLogin = (auth_token) => async (dispatch, _) => {
     })
     .catch((error) => {
       if (error.response.status === 401) {
-        openNotificationWithIcon("error", error.response.data["detail"]);
+        openNotificationWithIcon(
+          "error",
+          "Login Error",
+          error.response.data["detail"]
+        );
       } else {
         console.error("Error", error);
       }
@@ -65,7 +58,11 @@ export const googleLogin = (auth_token) => async (dispatch, _) => {
     })
     .catch((error) => {
       if (error.response.status === 401) {
-        openNotificationWithIcon("error", error.response.data["detail"]);
+        openNotificationWithIcon(
+          "error",
+          "Login Error",
+          error.response.data["detail"]
+        );
       } else {
         console.error("Error", error);
       }
