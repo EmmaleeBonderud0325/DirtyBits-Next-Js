@@ -5,10 +5,13 @@ import { SiPython, SiCplusplus, SiJava } from "react-icons/si";
 import { IoMoonOutline } from "react-icons/io5";
 import { MdOutlineWbSunny } from "react-icons/md";
 import { useDispatch } from "react-redux";
+import { DropdownV3 } from "../Dropdown/DropdownV3";
 
 const jsonData = require("./data.json");
 
 function Dropdown2(props) {
+  console.log("curr theme", props.currTheme);
+  console.log("curr lng", props.currLang);
   const dispatch = useDispatch();
   function handleMenuClick(e) {
     if (props.dropdownType === "theme") {
@@ -69,13 +72,15 @@ function Dropdown2(props) {
   const renderThemeList = jsonData.theme.map((item) => {
     if (props.currTheme.value !== item.value) {
       return (
-        <Menu.Item
+        <li
           key={item.label + "|" + item.value}
           icon={getThemeIconClass(item.type)}
         >
-          {/* {getThemeIconClass(item.type)} */}
-          {item.label}
-        </Menu.Item>
+          <div className="flex items-center space-x-2">
+            <span>{getThemeIconClass(item.type)}</span>
+            <span> {item.label}</span>
+          </div>
+        </li>
       );
     }
     return <></>;
@@ -84,44 +89,51 @@ function Dropdown2(props) {
   const renderLangList = jsonData.language.map((item) => {
     if (props.currLang.label !== item.label) {
       return (
-        <Menu.Item
+        <li
           key={item.ext + "|" + item.value}
           icon={getLangIconClass(item.label)}
+          className=""
         >
-          {item.label}
-        </Menu.Item>
+          <div className="flex items-center space-x-2">
+            <p>{getLangIconClass(item.label)}</p>
+            <p>{item.label}</p>
+          </div>
+        </li>
       );
     }
     return <></>;
   });
 
-  const menu = (
-    <Menu onClick={handleMenuClick}>
-      {props.dropdownType === "theme" ? renderThemeList : renderLangList}
-    </Menu>
-  );
+  const itemList =
+    props.dropdownType === "theme" ? renderThemeList : renderLangList;
+  console.log("item list", itemList);
 
   return (
     <div>
-      <label className="font-semibold mr-3">
+      {/* <label className="font-semibold mr-3">
         {props.dropdownType === "theme" ? "Theme: " : "Language:  "}
-      </label>
-      <Dropdown
-        overlay={menu}
-        overlayStyle={{ background: "black", color: "white" }}
-      >
-        <Button>
-          {/* {props.dropdownType === "theme" ? (
+      </label> */}
+      <DropdownV3
+        label={
+          props.dropdownType === "theme"
+            ? props.currTheme.label
+            : props.currLang.label
+        }
+        list={itemList}
+        handleClick={handleMenuClick}
+      />
+      {/* <Button> */}
+      {/* {props.dropdownType === "theme" ? (
             <></>
           ) : (
             getLangIconClass(props.currLang.label)
           )}{" "} */}
-          {props.dropdownType === "theme"
+      {/* {props.dropdownType === "theme"
             ? props.currTheme.label
             : props.currLang.label}{" "}
           <DownOutlined />
         </Button>
-      </Dropdown>
+      </DropdownV3> */}
     </div>
   );
 }
