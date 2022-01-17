@@ -118,7 +118,6 @@ export const Header = () => {
   return (
     <div className="flex justify-around p-10">
       {/* <FontDropdown fontSize={fontSize} setFontSize={changeFont} /> */}
-      <DropdownV3 />
       <Dropdown2
         dropdownType={"theme"}
         currTheme={currTheme}
@@ -138,52 +137,40 @@ export const Header = () => {
       {/* TOP RIGHT ICONS */}
       <div className="space-x-1 flex items-center transition-all ease-in-out">
         <Tooltip className="bg-none" placement="top" title="Save">
-          <Button
-            ghost
-            style={{ border: "none", fontSize: 20 }}
-            onClick={uploadCloud}
-          >
-            <BsCloudArrowUp />
-          </Button>
+          <button className="circular-btn" onClick={uploadCloud}>
+            <BsCloudArrowUp className="absolute text-white text-2xl font-bold" />
+          </button>
         </Tooltip>
 
         <Tooltip className="bg-none" placement="top" title="Upload">
-          <div>
+          <div className="circular-btn">
             <label htmlFor="file-input">
-              <AiOutlineUpload style={{ fontSize: 20, color: "white" }} />
+              <AiOutlineUpload className="absolute text-white text-2xl font-bold" />
             </label>
             <input
               type="file"
               accept=".cpp, .c, .py, .java"
               id="file-input"
               onChange={(e) => uploadedfile(e)}
-              className="hidden"
+              className="hidden "
             />
           </div>
         </Tooltip>
 
         <Tooltip className="bg-none" placement="top" title="Download Code">
-          <Button
+          <button
             onClick={() => download("code" + currLang.ext, editorValue)}
-            ghost
-            style={{ border: "none", fontSize: 20 }}
+            className="circular-btn"
           >
-            <MdSaveAlt />
-          </Button>
+            <MdSaveAlt className="absolute text-white text-2xl font-bold" />
+          </button>
         </Tooltip>
 
         <div>
-          {/* <button
-            onClick={() => {
-              resetCode();
-            }}
-          >
-            reset
-          </button> */}
           <button
             onClick={() => resetCode()}
             type="button"
-            class="inline-block rounded-full bg-custom-indigo text-white leading-normal uppercase shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out w-9 h-9 relative overflow-hidden flex justify-center items-center"
+            className="circular-btn"
           >
             <AiOutlineSync className="absolute text-white text-2xl font-bold" />
           </button>
