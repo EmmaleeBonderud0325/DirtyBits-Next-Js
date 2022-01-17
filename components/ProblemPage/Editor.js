@@ -143,7 +143,6 @@ function a11yProps(index) {
 }
 
 const Editor = (props) => {
-  const [counter, setCounter] = useState(0);
   const dispatch = useDispatch();
 
   const [isDisabled, setIsDisabled] = useState(false);
@@ -161,7 +160,6 @@ const Editor = (props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
-    setCounter(counter + 1);
     return () => {
       dispatch(
         changeEditorValue(
@@ -177,7 +175,7 @@ const Editor = (props) => {
       );
     };
   }, []);
-  console.log("editor render", counter);
+
   const {
     editorValue,
     themeValue,
