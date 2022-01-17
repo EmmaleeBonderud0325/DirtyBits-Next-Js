@@ -34,16 +34,20 @@ export const DropdownV3 = (props) => {
               class="dropdown-menu min-w-full absolute hidden bg-white text-base z-50 float-left py-2 list-none text-left rounded-lg shadow-lg mt-1 hidden m-0 bg-clip-padding border-none bg-gray-800 max-h-60 overflow-scroll scrollbar-hide"
               aria-labelledby="dropdownMenuButton2"
             >
-              {props.list.map((item) => (
-                <li onClick={() => props.handleClick(item)}>
-                  <a
-                    class="dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-300 hover:bg-gray-700 hover:text-white focus:text-white focus:bg-gray-700 active:bg-indigo-600"
-                    href="#"
-                  >
-                    {item.props.children}
-                  </a>
-                </li>
-              ))}
+              {props.list.map((item) => {
+                if (item.key !== null) {
+                  return (
+                    <li onClick={() => props.handleClick(item)}>
+                      <a
+                        class="dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-300 hover:bg-gray-700 hover:text-white focus:text-white focus:bg-gray-700 active:bg-indigo-600"
+                        href="#"
+                      >
+                        {item.props.children}
+                      </a>
+                    </li>
+                  );
+                }
+              })}
             </ul>
           </div>
         </div>

@@ -397,7 +397,7 @@ const Editor = (props) => {
         <button
           onClick={() => setShowConsole(!showConsole)}
           type="button"
-          class="inline-block px-6 py-2.5 bg-custom-indigo text-white font-medium text-xs leading-tight  rounded shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out flex items-center rounded-tl-3xl -mb-1 rounded-bl-none rounded-tr-none rounded-br-none"
+          class="px-6 py-2.5 bg-custom-indigo text-white font-medium text-xs leading-tight  rounded shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out flex items-center rounded-tl-3xl -mb-1 rounded-bl-none rounded-tr-none rounded-br-none"
         >
           {/* <BsTerminal /> */}
           <span className="font-semibold text-base">Console</span>
