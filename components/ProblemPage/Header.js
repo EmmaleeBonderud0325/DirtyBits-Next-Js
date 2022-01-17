@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MdSaveAlt } from "react-icons/md";
 import { AiOutlineUpload } from "react-icons/ai";
 import { BsCloudArrowUp } from "react-icons/bs";
-import { Button, Tooltip } from "antd";
+import { Tooltip } from "antd";
 
 import { download } from "./Helper2";
 import { UserProfileDropDown } from "../UserProfileDropDown";
@@ -18,11 +18,14 @@ import { AiOutlineSync } from "react-icons/ai";
 const jsonData = require("./data.json");
 
 import Dropdown2 from "./Dropdown2";
-import { DropdownV3 } from "../Dropdown/DropdownV3";
 import FontDropdown from "./FontDropdown";
 import { message } from "antd";
 
-export const Header = () => {
+const Header = () => {
+  useEffect(() => {
+    console.log("header rendered");
+  }, []);
+
   const dispatch = useDispatch();
   const editorValue = useSelector((state) => state.editorValue);
   const fontSize = useSelector((state) => state.fontSize);
@@ -106,7 +109,6 @@ export const Header = () => {
   };
 
   const resetCode = () => {
-    console.log("clicked");
     for (let i = 0; i < jsonData.language.length; i++) {
       if (jsonData.language[i].label === currLang.label) {
         dispatch(changeEditorValue(jsonData.language[i].pre));
@@ -188,3 +190,5 @@ export const Header = () => {
     </div>
   );
 };
+
+export default React.memo(Header);

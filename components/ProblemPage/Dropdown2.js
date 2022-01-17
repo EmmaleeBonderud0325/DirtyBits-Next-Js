@@ -1,6 +1,4 @@
 import React from "react";
-import { Menu, Dropdown, Button, message, Space, Tooltip } from "antd";
-import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import { SiPython, SiCplusplus, SiJava } from "react-icons/si";
 import { IoMoonOutline } from "react-icons/io5";
 import { MdOutlineWbSunny } from "react-icons/md";
@@ -10,8 +8,6 @@ import { DropdownV3 } from "../Dropdown/DropdownV3";
 const jsonData = require("./data.json");
 
 function Dropdown2(props) {
-  console.log("curr theme", props.currTheme);
-  console.log("curr lng", props.currLang);
   const dispatch = useDispatch();
   function handleMenuClick(e) {
     if (props.dropdownType === "theme") {
@@ -106,13 +102,9 @@ function Dropdown2(props) {
 
   const itemList =
     props.dropdownType === "theme" ? renderThemeList : renderLangList;
-  console.log("item list", itemList);
 
   return (
     <div>
-      {/* <label className="font-semibold mr-3">
-        {props.dropdownType === "theme" ? "Theme: " : "Language:  "}
-      </label> */}
       <DropdownV3
         label={
           props.dropdownType === "theme"
@@ -122,18 +114,6 @@ function Dropdown2(props) {
         list={itemList}
         handleClick={handleMenuClick}
       />
-      {/* <Button> */}
-      {/* {props.dropdownType === "theme" ? (
-            <></>
-          ) : (
-            getLangIconClass(props.currLang.label)
-          )}{" "} */}
-      {/* {props.dropdownType === "theme"
-            ? props.currTheme.label
-            : props.currLang.label}{" "}
-          <DownOutlined />
-        </Button>
-      </DropdownV3> */}
     </div>
   );
 }

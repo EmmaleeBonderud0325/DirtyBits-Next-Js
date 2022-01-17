@@ -31,7 +31,7 @@ import {
 } from "../../redux/actions/ProblemPage";
 import Encodemail from "../Helper/Encodemail";
 import Parsetoken from "../Helper/Parsetoken";
-import { Header } from "./Header";
+import Header from "./Header";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import SmoothList from "react-smooth-list";
@@ -143,6 +143,7 @@ function a11yProps(index) {
 }
 
 const Editor = (props) => {
+  const [counter, setCounter] = useState(0);
   const dispatch = useDispatch();
 
   const [isDisabled, setIsDisabled] = useState(false);
@@ -160,6 +161,7 @@ const Editor = (props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
+    setCounter(counter + 1);
     return () => {
       dispatch(
         changeEditorValue(
@@ -175,7 +177,7 @@ const Editor = (props) => {
       );
     };
   }, []);
-
+  console.log("editor render", counter);
   const {
     editorValue,
     themeValue,
@@ -222,7 +224,6 @@ const Editor = (props) => {
         } else {
           changeOutputValue(result.data["status"]);
         }
-        console.log(result.data);
       });
   };
 
@@ -253,7 +254,6 @@ const Editor = (props) => {
     };
     socket.onmessage = async function (e) {
       var data = JSON.parse(e.data);
-      console.log(data);
       if (data["inc_submissions"]) {
         //Inc submission count
         console.log(true);
@@ -333,7 +333,6 @@ const Editor = (props) => {
     } else {
       changeShowMode(false);
     }
-    console.log(e.target.id);
   };
 
   const responseGoogleSuccess = async (data) => {
@@ -343,7 +342,6 @@ const Editor = (props) => {
         .then((result) => {
           const { access, refresh } = result.data;
           const data = Parsetoken(access);
-          console.log("data", data);
           if (data.is_verified) {
             setIsModalVisible(false);
             Cookies.set("access", access);

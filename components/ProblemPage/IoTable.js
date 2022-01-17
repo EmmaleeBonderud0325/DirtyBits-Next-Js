@@ -1,7 +1,6 @@
 import React, { memo } from "react";
 
 function IoTable({ inputData, outputData }) {
-  console.log("IO TABLE RENDERED");
   return (
     <div>
       <table class="border-collapse w-3/6">
