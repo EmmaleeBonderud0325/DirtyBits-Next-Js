@@ -173,13 +173,6 @@ export const Header = () => {
         </Tooltip>
 
         <div>
-          {/* <button
-            onClick={() => {
-              resetCode();
-            }}
-          >
-            reset
-          </button> */}
           <button
             onClick={() => resetCode()}
             type="button"
