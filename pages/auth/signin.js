@@ -312,8 +312,14 @@ function Signin(props) {
                       ${isDisabled && "opacity-50 cursor-not-allowed"}
                     `}
                   >
-                    {props.signInSpinner ? <Spin indicator={antIcon} /> : <></>}{" "}
-                    Sign In
+                    {props.signInSpinner ? (
+                      <>
+                        <Spin indicator={antIcon} className="mr-10" />
+                        <span>Signing in...</span>
+                      </>
+                    ) : (
+                      <span>Sign In</span>
+                    )}{" "}
                   </button>
 
                   <GoogleLogin
@@ -325,11 +331,16 @@ function Signin(props) {
                         className="social-login-btn"
                       >
                         {props.googleSpinner ? (
-                          <Spin indicator={antIcon} />
+                          <>
+                            <Spin indicator={antIcon} className="mr-10" />
+                            <span>Signing in...</span>
+                          </>
                         ) : (
-                          <FcGoogle />
+                          <>
+                            <FcGoogle />
+                            <span>Sign In </span>
+                          </>
                         )}
-                        <span>Sign In </span>
                       </button>
                     )}
                     onSuccess={(data) => {
@@ -351,13 +362,16 @@ function Signin(props) {
                     children={
                       <>
                         {props.githubSpinner ? (
-                          <Spin indicator={antIcon} />
+                          <>
+                            <Spin indicator={antIcon} className="mr-10" />
+                            <span>Signing in...</span>
+                          </>
                         ) : (
-                          <AiFillGithub />
+                          <>
+                            <AiFillGithub />
+                            <span>Sign In </span>
+                          </>
                         )}
-                        {/* <AiFillGithub /> */}
-
-                        <span>Sign In </span>
                       </>
                     }
                     redirectUri=""
