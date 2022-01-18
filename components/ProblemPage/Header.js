@@ -145,9 +145,9 @@ const Header = () => {
         </Tooltip>
 
         <Tooltip className="bg-none" placement="top" title="Upload">
-          <div className="circular-btn">
+          <div className="group circular-btn ">
             <label htmlFor="file-input">
-              <AiOutlineUpload className="absolute text-white text-2xl font-bold" />
+              <AiOutlineUpload className="group-hover:cursor-pointer text-white text-2xl font-bold" />
             </label>
             <input
               type="file"
