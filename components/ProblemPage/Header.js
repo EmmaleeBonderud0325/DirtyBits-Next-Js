@@ -36,27 +36,27 @@ function Header(props) {
         marginTop: "2rem",
       },
     });
-    try {
-      await uploadCode
-        .post("/", {
-          code: props.props.editorValue,
-          language: props.currLang.label,
-          probId: props.id,
-          email: props.userInfo.email,
-        })
-        .then(() => {
-          message.success({
-            content: " Code Uploaded Successfully",
-            key,
-            duration: 2,
-            style: {
-              marginTop: "2rem",
-            },
-          });
+    // try {
+    await uploadCode
+      .post("/", {
+        code: props.editorValue,
+        language: props.currLang.label,
+        probId: props.id,
+        email: props.userInfo.email,
+      })
+      .then(() => {
+        message.success({
+          content: " Code Uploaded Successfully",
+          key,
+          duration: 2,
+          style: {
+            marginTop: "2rem",
+          },
         });
-    } catch (e) {
-      message.error({ content: "Try Again !", key, duration: 2 });
-    }
+      });
+    // } catch (e) {
+    //   message.error({ content: "Try Again !", key, duration: 2 });
+    // }
   };
 
   const setLangFunction = (label) => {
@@ -80,7 +80,7 @@ function Header(props) {
 
   const handleFileRead = (e) => {
     const content = fileReader.result;
-    dispatch(changeprops.EditorValue(content));
+    dispatch(changeEditorValue(content));
   };
 
   const uploadedfile = (e) => {
@@ -105,7 +105,7 @@ function Header(props) {
     console.log("clicked");
     for (let i = 0; i < jsonData.language.length; i++) {
       if (jsonData.language[i].label === props.currLang.label) {
-        dispatch(changeprops.EditorValue(jsonData.language[i].pre));
+        dispatch(changeEditorValue(jsonData.language[i].pre));
         return;
       }
     }
