@@ -31,7 +31,7 @@ import {
 } from "../../redux/actions/ProblemPage";
 import Encodemail from "../Helper/Encodemail";
 import Parsetoken from "../Helper/Parsetoken";
-import { Header } from "./Header";
+import Header from "./Header";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import SmoothList from "react-smooth-list";

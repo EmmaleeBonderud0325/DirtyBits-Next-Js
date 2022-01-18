@@ -3,20 +3,16 @@ import { signoutUser } from "../redux/actions/authenticate";
 import { Fragment } from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { Menu, Transition } from "@headlessui/react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, connect } from "react-redux";
 import { openNotificationWithIcon } from "./OpenNotification";
 import Image from "next/image";
 import { classNames } from "./Helper/Classnames";
 
-export const UserProfileDropDown = (props) => {
+function UserProfileDropDown(props) {
   const dispatch = useDispatch();
 
-  const profilePic = useSelector((state) => state.userData.profile_pic);
-  const username = useSelector((state) => state.userData.username);
-  const isAdmin = useSelector((state) => state.userData.is_admin);
-
   const notificationHandler = () => {
-    if (!isAdmin) {
+    if (!props.props.isAdmin) {
       const message = "Not an Admin";
       const description =
         "You don't have enough privileges, because you are not an admin";
@@ -27,16 +23,17 @@ export const UserProfileDropDown = (props) => {
       );
     }
   };
+
   return (
     <>
       <Menu as="div" className="ml-3 relative">
         <div>
           <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
             <span className="sr-only">Open user menu</span>
-            {profilePic && (
+            {props.profilePic && (
               <Image
                 className="h-10 w-10 rounded-full"
-                src={profilePic}
+                src={props.profilePic}
                 alt="profilePic"
                 height="40"
                 width="40"
@@ -44,7 +41,7 @@ export const UserProfileDropDown = (props) => {
             )}
             {props.showUserName && (
               <span className="text-white px-2 pt-1.5 pr-3 text-base hidden sm:block">
-                {username}
+                {props.username}
               </span>
             )}
           </Menu.Button>
@@ -64,7 +61,7 @@ export const UserProfileDropDown = (props) => {
             <Menu.Item>
               {({ active }) => (
                 <a
-                  href={`/profile/${username}`}
+                  href={`/profile/${props.username}`}
                   className={classNames(
                     active ? "bg-gray-100" : "",
                     "block px-4 py-2 text-sm text-gray-700"
@@ -77,7 +74,7 @@ export const UserProfileDropDown = (props) => {
             <Menu.Item>
               {({ active }) => (
                 <a
-                  href={`${isAdmin ? "/addproblems" : "#"}`}
+                  href={`${props.isAdmin ? "/addproblems" : "#"}`}
                   onClick={notificationHandler}
                   className={classNames(
                     active ? "bg-gray-100" : "",
@@ -85,7 +82,7 @@ export const UserProfileDropDown = (props) => {
                   )}
                 >
                   <span>Add Problem</span>
-                  {!isAdmin && (
+                  {!props.isAdmin && (
                     <AiOutlineInfoCircle className="text-red-500 text-lg" />
                   )}
                 </a>
@@ -113,4 +110,14 @@ export const UserProfileDropDown = (props) => {
       </Menu>
     </>
   );
+}
+
+const mapStateToProps = (state) => {
+  return {
+    profilePic: state.userData.profile_pic,
+    username: state.userData.username,
+    isAdmin: state.userData.is_admin,
+  };
 };
+
+export default connect(mapStateToProps)(UserProfileDropDown);

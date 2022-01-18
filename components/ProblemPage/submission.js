@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import moment from "moment";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { AiOutlineCloseCircle, AiOutlineInfoCircle } from "react-icons/ai";
@@ -9,13 +9,13 @@ import { getSubmissionsListAction } from "../../redux/actions/ProblemPage";
 
 const Submission = (props) => {
   const dispatch = useDispatch();
-  const submissionList = useSelector((state) => state.submissionsList);
+
   useEffect(() => {
     dispatch(getSubmissionsListAction());
   }, []);
 
   const listRowHandler = () => {
-    let rowMarkup = submissionList.map((submission) => {
+    let rowMarkup = props.submissionList.map((submission) => {
       let color;
       let status;
       switch (submission.status) {
@@ -118,17 +118,17 @@ const Submission = (props) => {
               </tr>
             </thead>
             <tbody class="bg-slate-800">
-              {submissionList !== null && listRowHandler()}
+              {props.submissionList !== null && listRowHandler()}
             </tbody>
           </table>
-          {submissionList === null && (
+          {props.submissionList === null && (
             <div className="text-center w-full">
               <p className="text-white font-bold text-2xl p-4">
                 <Spin size="large" tip="Loading..."></Spin>
               </p>
             </div>
           )}
-          {submissionList !== null && submissionList.length <= 0 && (
+          {props.submissionList !== null && props.submissionList.length <= 0 && (
             <div className="text-center w-full">
               <p className="text-white p-4 font-bold text-2xl">
                 No Submissions
@@ -141,4 +141,10 @@ const Submission = (props) => {
   );
 };
 
-export default Submission;
+const mapStateToProps = (state) => {
+  return {
+    submissionList: state.submissionsList,
+  };
+};
+
+export default connect(mapStateToProps)(Submission);

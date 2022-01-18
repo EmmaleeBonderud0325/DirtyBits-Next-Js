@@ -3,7 +3,7 @@ import { useState } from "react";
 import Dropdown from "../components/Dropdown";
 import { motion } from "framer-motion";
 import Table from "../components/Table";
-import { useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { DiReact } from "react-icons/di";
 
 const variants = {
@@ -22,31 +22,31 @@ function Problem(props) {
     "Undefined",
     "Null",
   ];
+
   const [value, setValue] = useState("");
 
   const [difficulty, setDifficulty] = useState("Difficulty");
   const [status, setStatus] = useState("Status");
-
-  const problemList = useSelector((state) => state.problemList);
 
   const fetchQuestions = (e) => {
     e.preventDefault();
     setValue(e.target.value);
   };
 
-  const filteredData = problemList.filter((val) =>
+  const filteredData = props.problemList.filter((val) =>
     val.title.toLowerCase().includes(value.toLowerCase())
   );
 
   const questionsList = () => {
     if (value === "") {
-      return problemList;
+      return props.problemList;
     } else if (filteredData.length > 0) {
       return filteredData;
     } else {
       return [];
     }
   };
+
   return (
     <div className="space-y-8 container p-10 mx-auto max-w-screen-xl">
       <motion.div animate={{ y: [20, 0, 0] }}>
@@ -143,4 +143,11 @@ function Problem(props) {
     </div>
   );
 }
-export default Problem;
+
+const mapStateToProps = (state) => {
+  return {
+    problemList: state.problemList,
+  };
+};
+
+export default connect(mapStateToProps)(Problem);

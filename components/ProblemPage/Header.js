@@ -1,12 +1,12 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { MdSaveAlt } from "react-icons/md";
 import { AiOutlineUpload } from "react-icons/ai";
 import { BsCloudArrowUp } from "react-icons/bs";
 import { Button, Tooltip } from "antd";
 
 import { download } from "./Helper2";
-import { UserProfileDropDown } from "../UserProfileDropDown";
+import UserProfileDropDown from "../UserProfileDropDown";
 import { uploadCode } from "../../components/api/apis";
 import {
   changeEditorValue,
@@ -22,14 +22,10 @@ import { DropdownV3 } from "../Dropdown/DropdownV3";
 import FontDropdown from "./FontDropdown";
 import { message } from "antd";
 
-export const Header = () => {
+function Header(props) {
   const dispatch = useDispatch();
-  const editorValue = useSelector((state) => state.editorValue);
-  const fontSize = useSelector((state) => state.fontSize);
-  const currTheme = useSelector((state) => state.themeValue);
-  const currLang = useSelector((state) => state.editorLanguage);
-  const userInfo = useSelector((state) => state.userData);
-  const id = useSelector((state) => state.problemPageProblemId);
+
+  const currLang = props.currLang;
 
   const uploadCloud = async () => {
     const key = "updatable";
@@ -43,10 +39,10 @@ export const Header = () => {
     try {
       await uploadCode
         .post("/", {
-          code: editorValue,
-          language: currLang.label,
-          probId: id,
-          email: userInfo.email,
+          code: props.props.editorValue,
+          language: props.currLang.label,
+          probId: props.id,
+          email: props.userInfo.email,
         })
         .then(() => {
           message.success({
@@ -84,7 +80,7 @@ export const Header = () => {
 
   const handleFileRead = (e) => {
     const content = fileReader.result;
-    dispatch(changeEditorValue(content));
+    dispatch(changeprops.EditorValue(content));
   };
 
   const uploadedfile = (e) => {
@@ -108,8 +104,8 @@ export const Header = () => {
   const resetCode = () => {
     console.log("clicked");
     for (let i = 0; i < jsonData.language.length; i++) {
-      if (jsonData.language[i].label === currLang.label) {
-        dispatch(changeEditorValue(jsonData.language[i].pre));
+      if (jsonData.language[i].label === props.currLang.label) {
+        dispatch(changeprops.EditorValue(jsonData.language[i].pre));
         return;
       }
     }
@@ -117,19 +113,19 @@ export const Header = () => {
 
   return (
     <div className="flex justify-around p-10">
-      {/* <FontDropdown fontSize={fontSize} setFontSize={changeFont} /> */}
+      {/* <FontDropdown fontSize={props.fontSize} setFontSize={changeFont} /> */}
       <Dropdown2
         dropdownType={"theme"}
-        currTheme={currTheme}
-        currLang={currLang}
+        currTheme={props.currTheme}
+        currLang={props.currLang}
         setCurrTheme={changeTheme}
         setCurrLang={changeLanguage}
         changeEditorValue={changeEditorValue}
       />
       <Dropdown2
         dropdownType={"language"}
-        currLang={currLang}
-        currTheme={currTheme}
+        currLang={props.currLang}
+        currTheme={props.currTheme}
         setCurrTheme={changeTheme}
         setCurrLang={changeLanguage}
         changeEditorValue={changeEditorValue}
@@ -158,7 +154,9 @@ export const Header = () => {
 
         <Tooltip className="bg-none" placement="top" title="Download Code">
           <MdSaveAlt
-            onClick={() => download("code" + currLang.ext, editorValue)}
+            onClick={() =>
+              download("code" + props.currLang.ext, props.editorValue)
+            }
             className="text-white text-lg font-bold hover:cursor-pointer !mr-2"
           />
         </Tooltip>
@@ -171,7 +169,7 @@ export const Header = () => {
         </Tooltip>
 
         <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 z-50">
-          {userInfo.is_logged_in && (
+          {props.userInfo.is_logged_in && (
             <UserProfileDropDown
               showUserName={false}
               redirectOnSignout={false}
@@ -181,4 +179,17 @@ export const Header = () => {
       </div>
     </div>
   );
+}
+
+const mapStateToProps = (state) => {
+  return {
+    editorValue: state.editorValue,
+    fontSize: state.fontSize,
+    currTheme: state.themeValue,
+    currLang: state.editorLanguage,
+    userInfo: state.userData,
+    id: state.problemPageProblemId,
+  };
 };
+
+export default connect(mapStateToProps)(Header);
