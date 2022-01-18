@@ -1,16 +1,13 @@
 import TableLoader from "./TableLoader";
-import { memo } from "react";
-import { useSelector } from "react-redux";
+import { connect } from "react-redux";
 import Link from "next/link";
 
-function Table() {
-  const list = useSelector((state) => state.problemList);
+function Table(props) {
   let problemLevel;
   let problemColor;
   let status;
 
-  console.log("TABLE COMPONENT RENDERED");
-  let problemMarkup = list.map((problem, idx) => {
+  let problemMarkup = props.list.map((problem, idx) => {
     switch (problem.problem_level) {
       case "E":
         problemLevel = "Easy";
@@ -70,12 +67,18 @@ function Table() {
               <th className="table-heading">Status</th>
             </tr>
           </thead>
-          <tbody className="">{list.length > 0 && problemMarkup}</tbody>
+          <tbody className="">{props.list.length > 0 && problemMarkup}</tbody>
         </table>
       </div>
-      {list.length <= 0 && <TableLoader />}
+      {props.list.length <= 0 && <TableLoader />}
     </div>
   );
 }
 
-export default memo(Table);
+const mapStateToProps = (state) => {
+  return {
+    list: state.problemList,
+  };
+};
+
+export default connect(mapStateToProps)(Table);

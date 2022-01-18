@@ -22,6 +22,11 @@ import {
   GetSubmissionsStateReducer,
   SubmissionsListReducer,
 } from "./ProblemPageReducers/SubmissionsListReducer";
+import {
+  githubLoginSpinnerReducer,
+  googleLoginSpinnerReducer,
+  simpleLoginSpinnerReducer,
+} from "./SigninSpinnerReducer";
 
 export default combineReducers({
   userData: userDataReducer,
@@ -42,4 +47,7 @@ export default combineReducers({
   isBookmarked: SetIsBookmarkedReducer,
   submissionsList: SubmissionsListReducer,
   getSubmissionsState: GetSubmissionsStateReducer,
+  githubLoginSpinner: githubLoginSpinnerReducer,
+  googleLoginSpinner: googleLoginSpinnerReducer,
+  loginInSpinner: simpleLoginSpinnerReducer,
 });

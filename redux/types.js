@@ -31,3 +31,6 @@ export const UpdateIsBookmarked = "UPDATE_IS_BOOKMARKED";
 export const UpdateSubmissionsList = "UPDATE_SUBMISSIONS_LIST";
 export const UpdateGetSubmissionsState = "UPDATE_GET_SUBMISSIONS_STATE";
 export const AppendSubmissionList = "APPEND_SUBMISSIONS_LIST";
+export const GithubLoginSpinner = "GITHUB_LOGIN_SPINNER";
+export const GoogleLoginSpinner = "GOOGLE_LOGIN_SPINNER";
+export const SimpleLoginSpinner = "SIMPLE_LOGIN_SPINNER";

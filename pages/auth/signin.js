@@ -10,22 +10,27 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import GitHubLogin from "react-github-login";
 import { AiFillGithub } from "react-icons/ai";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
 
-import { updateUserinfo } from "../../redux/actions";
+import { updateSignInSpinner, updateUserinfo } from "../../redux/actions";
 import Input from "../../components/Input";
 import { signinApi } from "../../components/api/apis";
 import Parsetoken from "../../components/Helper/Parsetoken";
 import SmoothList from "react-smooth-list";
 import { githubLogin, googleLogin } from "../../redux/actions/authenticate";
 
-function Signin() {
+function Signin(props) {
   const dispatch = useDispatch();
   const router = useRouter();
+  const antIcon = <LoadingOutlined style={{ fontSize: 20 }} spin />;
   let [formData, setFormData] = useState({
     email: "",
     password: "",
     remeberMe: false,
   });
+
+  const [githubSpinner, setGithubSpinner] = useState(false);
 
   let [showPassword, setShowPassword] = useState(false);
 
@@ -125,6 +130,7 @@ function Signin() {
   };
 
   const submitLoginForm = async (e) => {
+    dispatch(updateSignInSpinner(true));
     e.preventDefault();
     setIsDisabled(true);
     setIsError({
@@ -152,6 +158,7 @@ function Signin() {
       }
     }
     setIsDisabled(false);
+    dispatch(updateSignInSpinner(false));
     return;
   };
 
@@ -305,6 +312,7 @@ function Signin() {
                       ${isDisabled && "opacity-50 cursor-not-allowed"}
                     `}
                   >
+                    {props.signInSpinner ? <Spin indicator={antIcon} /> : <></>}{" "}
                     Sign In
                   </button>
 
@@ -316,7 +324,11 @@ function Signin() {
                         disabled={renderProps.disabled}
                         className="social-login-btn"
                       >
-                        <FcGoogle />
+                        {props.googleSpinner ? (
+                          <Spin indicator={antIcon} />
+                        ) : (
+                          <FcGoogle />
+                        )}
                         <span>Sign In </span>
                       </button>
                     )}
@@ -338,7 +350,13 @@ function Signin() {
                     }}
                     children={
                       <>
-                        <AiFillGithub />
+                        {props.githubSpinner ? (
+                          <Spin indicator={antIcon} />
+                        ) : (
+                          <AiFillGithub />
+                        )}
+                        {/* <AiFillGithub /> */}
+
                         <span>Sign In </span>
                       </>
                     }
@@ -373,6 +391,9 @@ Signin.getLayout = function PageLayout(page) {
 const mapStateToProps = (state) => {
   return {
     userInfo: state.userInfo,
+    googleSpinner: state.googleLoginSpinner,
+    githubSpinner: state.githubLoginSpinner,
+    signInSpinner: state.loginInSpinner,
   };
 };
 

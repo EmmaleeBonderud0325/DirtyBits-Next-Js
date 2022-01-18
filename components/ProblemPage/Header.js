@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { connect, useDispatch } from "react-redux";
 import { MdSaveAlt } from "react-icons/md";
 import { AiOutlineUpload } from "react-icons/ai";
 import { BsCloudArrowUp } from "react-icons/bs";
 import { Tooltip } from "antd";
 
 import { download } from "./Helper2";
-import { UserProfileDropDown } from "../UserProfileDropDown";
+import UserProfileDropDown from "../UserProfileDropDown";
 import { uploadCode } from "../../components/api/apis";
 import {
   changeEditorValue,
@@ -21,18 +21,10 @@ import Dropdown2 from "./Dropdown2";
 import FontDropdown from "./FontDropdown";
 import { message } from "antd";
 
-const Header = () => {
-  useEffect(() => {
-    console.log("header rendered");
-  }, []);
-
+function Header(props) {
   const dispatch = useDispatch();
-  const editorValue = useSelector((state) => state.editorValue);
-  const fontSize = useSelector((state) => state.fontSize);
-  const currTheme = useSelector((state) => state.themeValue);
-  const currLang = useSelector((state) => state.editorLanguage);
-  const userInfo = useSelector((state) => state.userData);
-  const id = useSelector((state) => state.problemPageProblemId);
+
+  const currLang = props.currLang;
 
   const uploadCloud = async () => {
     const key = "updatable";
@@ -46,10 +38,10 @@ const Header = () => {
     try {
       await uploadCode
         .post("/", {
-          code: editorValue,
-          language: currLang.label,
-          probId: id,
-          email: userInfo.email,
+          code: props.props.editorValue,
+          language: props.currLang.label,
+          probId: props.id,
+          email: props.userInfo.email,
         })
         .then(() => {
           message.success({
@@ -87,7 +79,7 @@ const Header = () => {
 
   const handleFileRead = (e) => {
     const content = fileReader.result;
-    dispatch(changeEditorValue(content));
+    dispatch(changeprops.EditorValue(content));
   };
 
   const uploadedfile = (e) => {
@@ -110,8 +102,8 @@ const Header = () => {
 
   const resetCode = () => {
     for (let i = 0; i < jsonData.language.length; i++) {
-      if (jsonData.language[i].label === currLang.label) {
-        dispatch(changeEditorValue(jsonData.language[i].pre));
+      if (jsonData.language[i].label === props.currLang.label) {
+        dispatch(changeprops.EditorValue(jsonData.language[i].pre));
         return;
       }
     }
@@ -119,19 +111,19 @@ const Header = () => {
 
   return (
     <div className="flex justify-around p-10">
-      {/* <FontDropdown fontSize={fontSize} setFontSize={changeFont} /> */}
+      {/* <FontDropdown fontSize={props.fontSize} setFontSize={changeFont} /> */}
       <Dropdown2
         dropdownType={"theme"}
-        currTheme={currTheme}
-        currLang={currLang}
+        currTheme={props.currTheme}
+        currLang={props.currLang}
         setCurrTheme={changeTheme}
         setCurrLang={changeLanguage}
         changeEditorValue={changeEditorValue}
       />
       <Dropdown2
         dropdownType={"language"}
-        currLang={currLang}
-        currTheme={currTheme}
+        currLang={props.currLang}
+        currTheme={props.currTheme}
         setCurrTheme={changeTheme}
         setCurrLang={changeLanguage}
         changeEditorValue={changeEditorValue}
@@ -139,47 +131,43 @@ const Header = () => {
       {/* TOP RIGHT ICONS */}
       <div className="space-x-1 flex items-center transition-all ease-in-out">
         <Tooltip className="bg-none" placement="top" title="Save">
-          <button className="circular-btn" onClick={uploadCloud}>
-            <BsCloudArrowUp className="absolute text-white text-2xl font-bold" />
-          </button>
+          <BsCloudArrowUp
+            onClick={uploadCloud}
+            className="text-white text-lg font-bold hover:cursor-pointer mr-2"
+          />
         </Tooltip>
 
         <Tooltip className="bg-none" placement="top" title="Upload">
-          <div className="group circular-btn ">
-            <label htmlFor="file-input">
-              <AiOutlineUpload className="group-hover:cursor-pointer text-white text-2xl font-bold" />
-            </label>
-            <input
-              type="file"
-              accept=".cpp, .c, .py, .java"
-              id="file-input"
-              onChange={(e) => uploadedfile(e)}
-              className="hidden "
-            />
-          </div>
+          <label htmlFor="file-input">
+            <AiOutlineUpload className="text-white text-lg font-bold hover:cursor-pointer mr-2" />
+          </label>
+          <input
+            type="file"
+            accept=".cpp, .c, .py, .java"
+            id="file-input"
+            onChange={(e) => uploadedfile(e)}
+            className="hidden "
+          />
         </Tooltip>
 
         <Tooltip className="bg-none" placement="top" title="Download Code">
-          <button
-            onClick={() => download("code" + currLang.ext, editorValue)}
-            className="circular-btn"
-          >
-            <MdSaveAlt className="absolute text-white text-2xl font-bold" />
-          </button>
+          <MdSaveAlt
+            onClick={() =>
+              download("code" + props.currLang.ext, props.editorValue)
+            }
+            className="text-white text-lg font-bold hover:cursor-pointer !mr-2"
+          />
         </Tooltip>
 
-        <div>
-          <button
+        <Tooltip className="bg-none" placement="top" title="Reset Code">
+          <AiOutlineSync
             onClick={() => resetCode()}
-            type="button"
-            className="circular-btn"
-          >
-            <AiOutlineSync className="absolute text-white text-2xl font-bold" />
-          </button>
-        </div>
+            className="text-white text-lg font-bold hover:cursor-pointer"
+          />
+        </Tooltip>
 
         <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 z-50">
-          {userInfo.is_logged_in && (
+          {props.userInfo.is_logged_in && (
             <UserProfileDropDown
               showUserName={false}
               redirectOnSignout={false}
@@ -189,6 +177,17 @@ const Header = () => {
       </div>
     </div>
   );
+}
+
+const mapStateToProps = (state) => {
+  return {
+    editorValue: state.editorValue,
+    fontSize: state.fontSize,
+    currTheme: state.themeValue,
+    currLang: state.editorLanguage,
+    userInfo: state.userData,
+    id: state.problemPageProblemId,
+  };
 };
 
-export default React.memo(Header);
+export default connect(mapStateToProps)(Header);

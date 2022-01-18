@@ -1,28 +1,29 @@
 import { useState, useEffect } from "react";
 import SplitPane, { Pane } from "react-split-pane";
+import { useDispatch, connect } from "react-redux";
+import { Spin } from "antd";
+
 import Editor from "./Editor";
 import Tabs from "../Tabs";
-import { useSelector, useDispatch } from "react-redux";
-import { Spin } from "antd";
 import {
   changeSubmissionsList,
   changeGetSubmissionsList,
 } from "../../redux/actions/ProblemPage";
 
-function Panel2() {
+function Panel2(props) {
   const dispatch = useDispatch();
+
   useEffect(() => {
     return () => {
       dispatch(changeGetSubmissionsList(true));
       dispatch(changeSubmissionsList(null));
     };
   }, []);
-  const isRendered = useSelector((state) =>
-    state.problemData.title !== "" ? true : false
-  );
+
   const [tabsValue, setTabsValue] = useState(0);
   const [resultData, setResultData] = useState({});
   const [running, setIsRunning] = useState(false);
+
   const tabsValueHandler = (value) => {
     setTabsValue(value);
   };
@@ -51,7 +52,7 @@ function Panel2() {
           className="scrollbar-hide"
           style={{ overflowY: "scroll", background: backgroundColor }}
         >
-          {isRendered ? (
+          {props.isRendered ? (
             <Tabs
               codeRunner={running}
               submissionData={resultData}
@@ -85,4 +86,10 @@ function Panel2() {
   );
 }
 
-export default Panel2;
+const mapStateToProps = (state) => {
+  return {
+    isRendered: state.problemData.title !== "" ? true : false,
+  };
+};
+
+export default connect(mapStateToProps)(Panel2);

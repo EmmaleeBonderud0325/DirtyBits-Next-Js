@@ -1,5 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState, memo } from "react";
+import { connect, useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
 import ReactHtmlParser from "react-html-parser";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
@@ -7,6 +7,8 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import SmoothList from "react-smooth-list";
+import { BsBookmarkCheck, BsBookmarkCheckFill } from "react-icons/bs";
+import { IoPlayBackOutline } from "react-icons/io5";
 
 import {
   AiOutlineDislike,
@@ -16,8 +18,6 @@ import {
   AiFillDislike,
   AiOutlineGlobal,
 } from "react-icons/ai";
-import { BsBookmarkCheck, BsBookmarkCheckFill } from "react-icons/bs";
-
 import IoTable from "./ProblemPage/IoTable";
 import Submissions from "./ProblemPage/submission";
 import {
@@ -25,7 +25,6 @@ import {
   upvoteHandler,
   downvoteHandler,
 } from "../redux/actions/ProblemPage";
-import { IoPlayBackOutline } from "react-icons/io5";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -62,25 +61,18 @@ function a11yProps(index) {
 
 function BasicTabs(props) {
   const dispatch = useDispatch();
-  const userSubmissions = useSelector((state) => state.submissionCount);
-  const questionData = useSelector((state) => state.problemData);
-  const isBookmarkSet = useSelector((state) => state.isBookmarked);
-  const upVote = useSelector((state) => state.upvoteCount);
-  const downVote = useSelector((state) => state.downvoteCount);
-  const isUpVoted = useSelector((state) => state.isUpvoted);
-  const isDownVoted = useSelector((state) => state.isDownvoted);
 
   const [inputTestCases, setInputTestCases] = useState([]);
   const [outputTestCases, setOutputTestCases] = useState([]);
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (_, newValue) => {
     props.currentTabFunction(newValue);
   };
 
   console.log("tabs currentTabvalue", props.currentTabValue);
   let level;
   let color;
-  switch (questionData.problem_level) {
+  switch (props.questionData.problem_level) {
     case "E":
       level = "Easy";
       color = "bg-green-600";
@@ -97,9 +89,9 @@ function BasicTabs(props) {
 
   const GetInputTestCases = async () => {
     var inputTestCases = [];
-    for (let i = 1; i <= questionData.sample_Tc; i++) {
+    for (let i = 1; i <= props.questionData.sample_Tc; i++) {
       const result = fetch(
-        `https://res.cloudinary.com/hhikcz56h/raw/upload/v1636969572/TestCases/${questionData.id}/sc-input${i}.txt`
+        `https://res.cloudinary.com/hhikcz56h/raw/upload/v1636969572/TestCases/${props.questionData.id}/sc-input${i}.txt`
       ).then((response) => {
         return response.text();
       });
@@ -113,9 +105,9 @@ function BasicTabs(props) {
 
   const GetOutputTestCases = async () => {
     var outputTestCases = [];
-    for (let i = 1; i <= questionData.sample_Tc; i++) {
+    for (let i = 1; i <= props.questionData.sample_Tc; i++) {
       const result = fetch(
-        `https://res.cloudinary.com/hhikcz56h/raw/upload/v1636969572/TestCases/${questionData.id}/sc-output${i}.txt`
+        `https://res.cloudinary.com/hhikcz56h/raw/upload/v1636969572/TestCases/${props.questionData.id}/sc-output${i}.txt`
       ).then((response) => {
         return response.text();
       });
@@ -147,7 +139,10 @@ function BasicTabs(props) {
           aria-label="basic tabs example"
         >
           <Tab label="Problem" {...a11yProps(0)} />
-          <Tab label={`Submissions ${userSubmissions}`} {...a11yProps(1)} />
+          <Tab
+            label={`Submissions ${props.userSubmissions}`}
+            {...a11yProps(1)}
+          />
           <Tab label="Discussion" {...a11yProps(2)} />
           <Tab label="Editorial" {...a11yProps(3)} />
         </Tabs>
@@ -170,8 +165,8 @@ function BasicTabs(props) {
           <SmoothList>
             <div className="font-medium text-lg text-[#a1acc0]">
               <div className="flex items-center space-x-3">
-                <span>{questionData.id}. </span>
-                <div>{questionData.title}</div>
+                <span>{props.questionData.id}. </span>
+                <div>{props.questionData.title}</div>
                 {/* BOOKMARK */}
                 <div
                   onClick={() => {
@@ -179,7 +174,7 @@ function BasicTabs(props) {
                   }}
                   className="inline-block cursor-pointer"
                 >
-                  {isBookmarkSet ? (
+                  {props.isBookmarkSet ? (
                     <BsBookmarkCheckFill className="text-lg" />
                   ) : (
                     <BsBookmarkCheck className="text-lg" />
@@ -202,8 +197,8 @@ function BasicTabs(props) {
               }}
               className="flex items-center space-x-1 cursor-pointer"
             >
-              <p>{isUpVoted ? <AiFillLike /> : <AiOutlineLike />}</p>
-              <p className="text-xs">{upVote}</p>
+              <p>{props.isUpVoted ? <AiFillLike /> : <AiOutlineLike />}</p>
+              <p className="text-xs">{props.upVote}</p>
             </div>
 
             <div
@@ -212,15 +207,19 @@ function BasicTabs(props) {
               }}
               className="flex items-center space-x-1 cursor-pointer"
             >
-              <p>{isDownVoted ? <AiFillDislike /> : <AiOutlineDislike />}</p>
-              <p className="text-xs">{downVote}</p>
+              <p>
+                {props.isDownVoted ? <AiFillDislike /> : <AiOutlineDislike />}
+              </p>
+              <p className="text-xs">{props.downVote}</p>
             </div>
 
             <div className="flex items-center space-x-1">
               <p>
                 <AiFillSignal />
               </p>
-              <p className="text-xs">Accuracy. {questionData.accuracy}%</p>
+              <p className="text-xs">
+                Accuracy. {props.questionData.accuracy}%
+              </p>
             </div>
 
             <div className="flex items-center space-x-1">
@@ -228,7 +227,7 @@ function BasicTabs(props) {
                 <AiOutlineGlobal />
               </p>
               <p className="text-xs">
-                Total Submissions. {questionData.totalSubmissions}
+                Total Submissions. {props.questionData.totalSubmissions}
               </p>
             </div>
           </div>
@@ -236,26 +235,26 @@ function BasicTabs(props) {
           {/* PROBLEM DESCRIPTION */}
           <SmoothList>
             <div className="">
-              {questionData.problem_statement &&
-                ReactHtmlParser(questionData.problem_statement)}
+              {props.questionData.problem_statement &&
+                ReactHtmlParser(props.questionData.problem_statement)}
             </div>
           </SmoothList>
 
           {/* PROBLEM NOTE IF ANY */}
-          {questionData.note && <p>Note: {questionData.note}</p>}
+          {props.questionData.note && <p>Note: {props.questionData.note}</p>}
 
           {/* INPUT FORMAT */}
           <h2 className="text-white">Input Format</h2>
           <pre>
-            {questionData.input_format &&
-              ReactHtmlParser(questionData.input_format)}
+            {props.questionData.input_format &&
+              ReactHtmlParser(props.questionData.input_format)}
           </pre>
 
           {/* OUTPUT FORMAT */}
           <h2 className="text-white">Output Format</h2>
           <pre>
-            {questionData.output_format &&
-              ReactHtmlParser(questionData.output_format)}
+            {props.questionData.output_format &&
+              ReactHtmlParser(props.questionData.output_format)}
           </pre>
 
           {/* SAMEPLE INPUT TEST CASES */}
@@ -275,11 +274,11 @@ function BasicTabs(props) {
           <SmoothList>
             <h2 className="text-white">Constraints:</h2>
             <pre>
-              {questionData.constraints &&
-                ReactHtmlParser(questionData.constraints)}
+              {props.questionData.constraints &&
+                ReactHtmlParser(props.questionData.constraints)}
             </pre>
-            <pre>Memory Limit: {questionData.memory_Limit} KB</pre>
-            <pre>Time Limit: {questionData.time_Limit}s</pre>
+            <pre>Memory Limit: {props.questionData.memory_Limit} KB</pre>
+            <pre>Time Limit: {props.questionData.time_Limit}s</pre>
           </SmoothList>
         </div>
       </TabPanel>
@@ -299,4 +298,16 @@ function BasicTabs(props) {
   );
 }
 
-export default memo(BasicTabs);
+const mapStateToProps = (state) => {
+  return {
+    userSubmissions: state.submissionCount,
+    questionData: state.problemData,
+    isBookmarkSet: state.isBookmarked,
+    upVote: state.upvoteCount,
+    downVote: state.downvoteCount,
+    isUpVoted: state.isUpvoted,
+    isDownVoted: state.isDownvoted,
+  };
+};
+
+export default connect(mapStateToProps)(BasicTabs);

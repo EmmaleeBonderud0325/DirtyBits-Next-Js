@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { Disclosure } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import { useRouter } from "next/router";
@@ -7,13 +7,11 @@ import Image from "next/image";
 
 import LoginButton from "./LoginButton";
 import logo2 from "../public/logo2.svg";
-import { UserProfileDropDown } from "./UserProfileDropDown";
+import UserProfileDropDown from "./UserProfileDropDown";
 import { classNames } from "./Helper/Classnames";
 
-function Navbar({ bg, fixedHeader }) {
+function Navbar(props) {
   const router = useRouter();
-
-  const isLoggedIn = useSelector((state) => state.userData.is_logged_in);
 
   const navigation = [
     {
@@ -44,8 +42,8 @@ function Navbar({ bg, fixedHeader }) {
   ];
 
   return (
-    <div className={fixedHeader}>
-      <Disclosure as="nav" className={bg}>
+    <div className={props.fixedHeader}>
+      <Disclosure as="nav" className={props.bg}>
         {({ open }) => (
           <>
             <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -91,7 +89,7 @@ function Navbar({ bg, fixedHeader }) {
                   </div>
                 </div>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                  {isLoggedIn ? (
+                  {props.isLoggedIn ? (
                     <UserProfileDropDown
                       showUserName={true}
                       redirectOnSignout={false}
@@ -133,4 +131,10 @@ function Navbar({ bg, fixedHeader }) {
   );
 }
 
-export default Navbar;
+const mapStateToProps = (state) => {
+  return {
+    isLoggedIn: state.userData.is_logged_in,
+  };
+};
+
+export default connect(mapStateToProps)(Navbar);

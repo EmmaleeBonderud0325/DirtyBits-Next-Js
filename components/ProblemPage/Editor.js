@@ -11,7 +11,7 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Cookies from "js-cookie";
-import { useDispatch, useSelector } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import GoogleLogin from "react-google-login";
 import { AiOutlineSend } from "react-icons/ai";
 
@@ -183,9 +183,8 @@ const Editor = (props) => {
     fontSize,
     problemPageProblemId,
     submissionCount,
-  } = useSelector((state) => state);
-
-  const email = useSelector((state) => state.userData.email);
+    email,
+  } = props;
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -520,4 +519,16 @@ const Editor = (props) => {
   );
 };
 
-export default memo(Editor);
+const mapStateToProps = (state) => {
+  return {
+    editorValue: state.editorValue,
+    themeValue: state.themeValue,
+    editorLanguage: state.editorLanguage,
+    fontSize: state.fontSize,
+    problemPageProblemId: state.problemPageProblemId,
+    submissionCount: state.submissionCount,
+    email: state.userData.email,
+  };
+};
+
+export default connect(mapStateToProps)(Editor);
