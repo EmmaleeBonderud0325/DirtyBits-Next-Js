@@ -60,11 +60,11 @@ function Header(props) {
   };
 
   const setLangFunction = (label) => {
+    console.log(label);
     for (let i = 0; i < jsonData.language.length; i++) {
       if (jsonData.language[i].label === label) {
         dispatch(
           changeLanguage({
-            currLang,
             value: jsonData.language[i].value,
             label: jsonData.language[i].label,
             ext: jsonData.language[i].ext,
@@ -88,16 +88,15 @@ function Header(props) {
     fileReader = new FileReader();
     fileReader.onloadend = handleFileRead;
     fileReader.readAsText(input_file);
-    var [_, extension] = input_file.name.split(".");
-    switch (extension) {
-      case "cpp":
-        setLangFunction("C++");
-      case "java":
-        setLangFunction("Java");
-      case "py":
-        setLangFunction("Python 3");
-      default:
-        setLangFunction("C");
+    var [filename, extension] = input_file.name.split(".");
+    if (extension === "cpp") {
+      setLangFunction("C++");
+    } else if (extension === "java") {
+      setLangFunction("Java");
+    } else if (extension === "py") {
+      setLangFunction("Python 3");
+    } else {
+      setLangFunction("C");
     }
   };
 
