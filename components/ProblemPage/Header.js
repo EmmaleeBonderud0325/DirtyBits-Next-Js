@@ -36,27 +36,27 @@ function Header(props) {
         marginTop: "2rem",
       },
     });
-    // try {
-    await uploadCode
-      .post("/", {
-        code: props.editorValue,
-        language: props.currLang.label,
-        probId: props.id,
-        email: props.userInfo.email,
-      })
-      .then(() => {
-        message.success({
-          content: " Code Uploaded Successfully",
-          key,
-          duration: 2,
-          style: {
-            marginTop: "2rem",
-          },
+    try {
+      await uploadCode
+        .post("/", {
+          code: props.editorValue,
+          language: props.currLang.label,
+          probId: props.id,
+          email: props.userInfo.email,
+        })
+        .then(() => {
+          message.success({
+            content: " Code Uploaded Successfully",
+            key,
+            duration: 2,
+            style: {
+              marginTop: "2rem",
+            },
+          });
         });
-      });
-    // } catch (e) {
-    //   message.error({ content: "Try Again !", key, duration: 2 });
-    // }
+    } catch (e) {
+      message.error({ content: "Try Again !", key, duration: 2 });
+    }
   };
 
   const setLangFunction = (label) => {
