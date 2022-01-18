@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 
 import {
   changeProblemPageProblemId,
@@ -8,13 +8,14 @@ import {
 } from "../../../redux/actions/ProblemPage";
 import Panel2 from "../../../components/ProblemPage/Panel2";
 
-function ProblemView({ id }) {
+function ProblemView({ id, title }) {
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(changeProblemPageProblemId(id));
     dispatch(getProblemPageProblemData(id));
   }, []);
-  const title = useSelector((state) => state.problemData.title);
+
   return (
     <div className="text-white">
       <Head>
@@ -31,7 +32,13 @@ ProblemView.getLayout = function PageLayout(page) {
   return <>{page}</>;
 };
 
-export default ProblemView;
+const mapStateToProps = (state) => {
+  return {
+    title: state.problemData.title,
+  };
+};
+
+export default connect(mapStateToProps)(ProblemView);
 
 export const getServerSideProps = async (ctx) => {
   return {
