@@ -5,7 +5,11 @@ import {
   logoutUser,
 } from "../../components/api/apis";
 import Parsetoken from "../../components/Helper/Parsetoken";
-import { updateUserinfo } from "./index";
+import {
+  updateGithubSpinner,
+  updateGoogleSpinner,
+  updateUserinfo,
+} from "./index";
 import Router from "next/router";
 import { openNotificationWithIcon } from "../../components/OpenNotification";
 
@@ -32,6 +36,7 @@ export const updatedata = (result, dispatch) => {
 };
 
 export const githubLogin = (auth_token) => async (dispatch, _) => {
+  dispatch(updateGithubSpinner(true));
   await githubLoginApi
     .post("/", { auth_token })
     .then((result) => {
@@ -48,9 +53,11 @@ export const githubLogin = (auth_token) => async (dispatch, _) => {
         console.error("Error", error);
       }
     });
+  dispatch(updateGithubSpinner(false));
 };
 
 export const googleLogin = (auth_token) => async (dispatch, _) => {
+  dispatch(updateGoogleSpinner(true));
   await googleLoginApi
     .post("/", { auth_token })
     .then((result) => {
@@ -67,6 +74,7 @@ export const googleLogin = (auth_token) => async (dispatch, _) => {
         console.error("Error", error);
       }
     });
+  dispatch(updateGoogleSpinner(false));
 };
 
 export const signoutUser = (redirectOnSignout) => async (dispatch, _) => {

@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+
 import { getProblemsList } from "../../components/api/apis";
 import {
   updateConstraints,
@@ -18,15 +20,36 @@ import {
   UpdateProblemList,
   updateMemoryLimit,
   updateTimeLimit,
+  GithubLoginSpinner,
+  GoogleLoginSpinner,
+  SimpleLoginSpinner,
 } from "../types";
-
 import { Updateproblemsstatus } from "../../components/Helper/Updateproblemsstatus";
-import Cookies from "js-cookie";
-// import { initial_state as userInitialState } from "../reducers/UserDataReducer";
 
 export const updateUserinfo = (newState) => {
   return {
     type: updateUserData,
+    payload: newState,
+  };
+};
+
+export const updateSignInSpinner = (newState) => {
+  return {
+    type: SimpleLoginSpinner,
+    payload: newState,
+  };
+};
+
+export const updateGoogleSpinner = (newState) => {
+  return {
+    type: GoogleLoginSpinner,
+    payload: newState,
+  };
+};
+
+export const updateGithubSpinner = (newState) => {
+  return {
+    type: GithubLoginSpinner,
     payload: newState,
   };
 };

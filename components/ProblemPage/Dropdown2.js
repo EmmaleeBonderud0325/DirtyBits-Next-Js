@@ -28,7 +28,7 @@ function Dropdown2(props) {
         }
       }
     } else {
-      const [key, value] = e.key.split("|");
+      const [_, value] = e.key.split("|");
       for (let i = 0; i < jsonData.language.length; i++) {
         if (jsonData.language[i].value === value) {
           dispatch(

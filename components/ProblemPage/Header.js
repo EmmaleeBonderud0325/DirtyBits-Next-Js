@@ -137,44 +137,38 @@ export const Header = () => {
       {/* TOP RIGHT ICONS */}
       <div className="space-x-1 flex items-center transition-all ease-in-out">
         <Tooltip className="bg-none" placement="top" title="Save">
-          <button className="circular-btn" onClick={uploadCloud}>
-            <BsCloudArrowUp className="absolute text-white text-2xl font-bold" />
-          </button>
+          <BsCloudArrowUp
+            onClick={uploadCloud}
+            className="text-white text-lg font-bold hover:cursor-pointer mr-2"
+          />
         </Tooltip>
 
         <Tooltip className="bg-none" placement="top" title="Upload">
-          <div className="circular-btn">
-            <label htmlFor="file-input">
-              <AiOutlineUpload className="absolute text-white text-2xl font-bold" />
-            </label>
-            <input
-              type="file"
-              accept=".cpp, .c, .py, .java"
-              id="file-input"
-              onChange={(e) => uploadedfile(e)}
-              className="hidden "
-            />
-          </div>
+          <label htmlFor="file-input">
+            <AiOutlineUpload className="text-white text-lg font-bold hover:cursor-pointer mr-2" />
+          </label>
+          <input
+            type="file"
+            accept=".cpp, .c, .py, .java"
+            id="file-input"
+            onChange={(e) => uploadedfile(e)}
+            className="hidden "
+          />
         </Tooltip>
 
         <Tooltip className="bg-none" placement="top" title="Download Code">
-          <button
+          <MdSaveAlt
             onClick={() => download("code" + currLang.ext, editorValue)}
-            className="circular-btn"
-          >
-            <MdSaveAlt className="absolute text-white text-2xl font-bold" />
-          </button>
+            className="text-white text-lg font-bold hover:cursor-pointer !mr-2"
+          />
         </Tooltip>
 
-        <div>
-          <button
+        <Tooltip className="bg-none" placement="top" title="Reset Code">
+          <AiOutlineSync
             onClick={() => resetCode()}
-            type="button"
-            className="circular-btn"
-          >
-            <AiOutlineSync className="absolute text-white text-2xl font-bold" />
-          </button>
-        </div>
+            className="text-white text-lg font-bold hover:cursor-pointer"
+          />
+        </Tooltip>
 
         <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 z-50">
           {userInfo.is_logged_in && (
