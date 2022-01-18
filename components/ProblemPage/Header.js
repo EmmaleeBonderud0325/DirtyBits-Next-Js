@@ -38,7 +38,7 @@ function Header(props) {
     try {
       await uploadCode
         .post("/", {
-          code: props.props.editorValue,
+          code: props.editorValue,
           language: props.currLang.label,
           probId: props.id,
           email: props.userInfo.email,
@@ -79,7 +79,7 @@ function Header(props) {
 
   const handleFileRead = (e) => {
     const content = fileReader.result;
-    dispatch(changeprops.EditorValue(content));
+    dispatch(changeEditorValue(content));
   };
 
   const uploadedfile = (e) => {
@@ -103,7 +103,7 @@ function Header(props) {
   const resetCode = () => {
     for (let i = 0; i < jsonData.language.length; i++) {
       if (jsonData.language[i].label === props.currLang.label) {
-        dispatch(changeprops.EditorValue(jsonData.language[i].pre));
+        dispatch(changeEditorValue(jsonData.language[i].pre));
         return;
       }
     }
