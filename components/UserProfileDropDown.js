@@ -12,7 +12,7 @@ function UserProfileDropDown(props) {
   const dispatch = useDispatch();
 
   const notificationHandler = () => {
-    if (!props.props.isAdmin) {
+    if (!props.isAdmin) {
       const message = "Not an Admin";
       const description =
         "You don't have enough privileges, because you are not an admin";

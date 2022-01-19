@@ -295,7 +295,7 @@ function Signin(props) {
                     </label>
                   </div>
                   <div className="text-sm">
-                    <Link href="/auth/changePassword">
+                    <Link href="/auth/resetpassword">
                       <a className="text-indigo-400 text-xs hover:text-black">
                         Forgot your password?
                       </a>

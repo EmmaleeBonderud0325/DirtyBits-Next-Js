@@ -212,6 +212,7 @@ const Editor = (props) => {
         language: editorLanguage.label,
       })
       .then((result) => {
+        console.log("result", result.data);
         setIsDisabled(false);
         setShowLoader(false);
         if (result.data["status"] !== "Accepted") {

@@ -100,6 +100,7 @@ export const getUserProfile = CreateAxiosRequest(BASE_URL + "auth/getProfile");
 export const getStaticData = CreateAxiosRequest(
   BASE_URL + "auth/getStaticData"
 );
+export const resetPassword = CreateAxiosRequest(BASE_URL + "auth/resetPass");
 
 export const getAllSubmissions = CreateAxiosRequest(
   PROBLEM_URL + "problems/getUserSubmissions"

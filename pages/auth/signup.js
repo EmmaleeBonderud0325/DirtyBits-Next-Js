@@ -499,13 +499,13 @@ function signup(props) {
                     )}
                   </div>
                 </div>
-                <div className="flex items-center justify-end">
+                {/* <div className="flex items-center justify-end">
                   <div className="text-sm">
                     <a href="#" className="text-custom-indigo">
                       Forgot your password?
                     </a>
                   </div>
-                </div>
+                </div> */}
                 <div>
                   <button
                     type="submit"

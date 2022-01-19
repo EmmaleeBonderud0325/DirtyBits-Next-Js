@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { changePass } from "../../components/api/apis";
-import Form from "../../components/Form";
+import { changePass } from "../../../components/api/apis";
+import Form from "../../../components/Form";
+import { openNotificationWithIcon } from "../../../components/OpenNotification";
 
 function changePassword() {
   let [mail, setMail] = useState("");
+  const [error, setError] = useState("");
 
   const sendData = async (e) => {
     e.preventDefault();
@@ -12,13 +14,27 @@ function changePassword() {
       await changePass
         .post("/", { email: mail })
         .then((result) => {
-          console.log("Password reset link is sent to the registered mail id");
+          openNotificationWithIcon(
+            "success",
+            "Password Reset Link",
+            "Password reset link is sent to the provided email address"
+          );
         })
         .catch(() => {
-          console.error("Invalid email !");
+          // openNotificationWithIcon(
+          //   "error",
+          //   "Password Reset Link",
+          //   "You cannot change the password of your registered google email id"
+          // );
+          setError("Invalid Email");
         });
     } catch (e) {
       console.error("server error !");
+      openNotificationWithIcon(
+        "error",
+        "Password Reset Link",
+        "There is an error Try Again Later"
+      );
     }
   };
 
@@ -37,6 +53,7 @@ function changePassword() {
       extraField={false}
       type="email"
       placeholder="Enter your email"
+      error={error}
     />
   );
 }
