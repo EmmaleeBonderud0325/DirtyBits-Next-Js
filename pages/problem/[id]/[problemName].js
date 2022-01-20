@@ -8,10 +8,13 @@ import {
 } from "../../../redux/actions/ProblemPage";
 import Panel2 from "../../../components/ProblemPage/Panel2";
 
-function ProblemView({ id, title }) {
+function ProblemView({ title }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const path = window.location.href;
+    path = path.split("/");
+    const id = path.at(-2);
     dispatch(changeProblemPageProblemId(id));
     dispatch(getProblemPageProblemData(id));
   }, []);
@@ -22,7 +25,7 @@ function ProblemView({ id, title }) {
         <title>{title}</title>
       </Head>
       <div>
-        <Panel2 id={id} />
+        <Panel2 />
       </div>
     </div>
   );
@@ -39,11 +42,3 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps)(ProblemView);
-
-export const getServerSideProps = async (ctx) => {
-  return {
-    props: {
-      id: ctx.query.id,
-    },
-  };
-};
