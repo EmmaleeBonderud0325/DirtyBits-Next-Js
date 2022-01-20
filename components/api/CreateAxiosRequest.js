@@ -47,10 +47,12 @@ export const CreateAxiosRequest = (baseURL) => {
             logoutUser(true);
             Router.push("/auth/signin");
           });
+      } else {
+        logoutUser(true);
+        Router.push("/auth/signin");
+        return Promise.reject(error);
       }
-      return Promise.reject(error);
     }
   );
-
   return newInstance;
 };
