@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { changePass } from "../../../components/api/apis";
 import Form from "../../../components/Form";
 import { openNotificationWithIcon } from "../../../components/OpenNotification";
+import Head from "next/head";
 
-function changePassword() {
+function ChangePassword() {
   let [mail, setMail] = useState("");
   const [error, setError] = useState("");
 
@@ -43,19 +44,24 @@ function changePassword() {
   }
 
   return (
-    <Form
-      send={sendData}
-      currentValue={mail}
-      buttonText="Send"
-      getValue={getEmailFieldValue}
-      title="Forgot Password ?"
-      description="Change your password a confirmation mail will be send to your registerd email"
-      extraField={false}
-      type="email"
-      placeholder="Enter your email"
-      error={error}
-    />
+    <>
+      <Head>
+        <title>Reset Password</title>
+      </Head>
+      <Form
+        send={sendData}
+        currentValue={mail}
+        buttonText="Send"
+        getValue={getEmailFieldValue}
+        title="Forgot Password ?"
+        description="Change your password a confirmation mail will be send to your registerd email"
+        extraField={false}
+        type="email"
+        placeholder="Enter your email"
+        error={error}
+      />
+    </>
   );
 }
 
-export default changePassword;
+export default ChangePassword;
