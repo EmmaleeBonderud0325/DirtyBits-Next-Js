@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React from "react";
 
 function IoTable({ inputData, outputData }) {
   return (
@@ -30,4 +30,4 @@ function IoTable({ inputData, outputData }) {
   );
 }
 
-export default memo(IoTable);
+export default IoTable;
