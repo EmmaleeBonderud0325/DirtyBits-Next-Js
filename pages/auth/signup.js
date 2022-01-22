@@ -335,11 +335,6 @@ function signup(props) {
                   </span>
                 </p>
               </SmoothList>
-              {/* <p className="pr-3">
-                Lorem ipsum is placeholder text commonly used in the graphic,
-                print, and publishing industries for previewing layouts and
-                visual mockups
-              </p> */}
             </div>
           </div>
           <div class="flexContainer self-center  z-10">
@@ -499,13 +494,6 @@ function signup(props) {
                     )}
                   </div>
                 </div>
-                {/* <div className="flex items-center justify-end">
-                  <div className="text-sm">
-                    <a href="#" className="text-custom-indigo">
-                      Forgot your password?
-                    </a>
-                  </div>
-                </div> */}
                 <div>
                   <button
                     type="submit"

@@ -2,6 +2,7 @@ import { useState } from "react";
 import Form from "../../../components/Form";
 import { resetPassword } from "../../../components/api/apis";
 import { openNotificationWithIcon } from "../../../components/OpenNotification";
+import Head from "next/head";
 
 const ConfirmPassword = ({ resetcode }) => {
   const [newPass, setNewPass] = useState("");
@@ -42,20 +43,25 @@ const ConfirmPassword = ({ resetcode }) => {
   };
 
   return (
-    <Form
-      send={sendData}
-      currentValue={newPass}
-      currentValue2={confirmPass}
-      buttonText="Confirm"
-      getValue={getNewPassValue}
-      getValue2={getConfirmPassValue}
-      title="Change Password"
-      description="Change your password"
-      extraField={true}
-      type="text"
-      placeholder="New password"
-      error={error}
-    />
+    <>
+      <Head>
+        <title>Reset Password</title>
+      </Head>
+      <Form
+        send={sendData}
+        currentValue={newPass}
+        currentValue2={confirmPass}
+        buttonText="Confirm"
+        getValue={getNewPassValue}
+        getValue2={getConfirmPassValue}
+        title="Change Password"
+        description="Change your password"
+        extraField={true}
+        type="text"
+        placeholder="New password"
+        error={error}
+      />
+    </>
   );
 };
 
