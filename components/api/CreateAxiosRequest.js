@@ -5,6 +5,7 @@ import { logoutUser } from "../../redux/actions";
 import Router from "next/router";
 
 export const CreateAxiosRequest = (baseURL) => {
+  console.log("called");
   const newInstance = axios.create({
     baseURL: baseURL,
     headers: {
