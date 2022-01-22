@@ -14,6 +14,8 @@ import {
   UpdateSubmissionsList,
   UpdateGetSubmissionsState,
   AppendSubmissionList,
+  UpdateInputTestCases,
+  UpdateOutputTestCases,
 } from "../types";
 import {
   getProblem,
@@ -23,6 +25,7 @@ import {
   handleBookmark,
   upAndDownVoteHandler,
 } from "../../components/api/apis";
+import { initial } from "../reducers/ProblemPageReducers/ProblemDataReducer";
 const jsonData = require("../../components/ProblemPage/data.json");
 
 export const changeEditorValue = (newState) => {
@@ -178,6 +181,50 @@ export const downvoteHandler = () => async (dispatch, getState) => {
   }
 };
 
+export const changeInputTestCases = (newState) => {
+  return {
+    type: UpdateInputTestCases,
+    payload: newState,
+  };
+};
+
+export const changeOutputTestCases = (newState) => {
+  return {
+    type: UpdateOutputTestCases,
+    payload: newState,
+  };
+};
+
+export const getInputTestCases = (id) => async (dispatch, getState) => {
+  var inputTestCases = [];
+  for (let i = 1; i <= getState().problemData.sample_Tc; i++) {
+    const result = fetch(
+      `https://res.cloudinary.com/hhikcz56h/raw/upload/v1636969572/TestCases/${id}/sc-input${i}.txt`
+    ).then((response) => {
+      return response.text();
+    });
+    await result.then((response) => {
+      inputTestCases.push(response);
+    });
+  }
+  dispatch(changeInputTestCases(inputTestCases));
+};
+
+export const getOutputTestCases = (id) => async (dispatch, getState) => {
+  var outputTestCases = [];
+  for (let i = 1; i <= getState().problemData.sample_Tc; i++) {
+    const result = fetch(
+      `https://res.cloudinary.com/hhikcz56h/raw/upload/v1636969572/TestCases/${id}/sc-output${i}.txt`
+    ).then((response) => {
+      return response.text();
+    });
+    await result.then((response) => {
+      outputTestCases.push(response);
+    });
+  }
+  dispatch(changeOutputTestCases(outputTestCases));
+};
+
 export const getProblemPageProblemData = (id) => async (dispatch, getState) => {
   try {
     const { data } = await getProblem.get(`/${id}/`);
@@ -205,6 +252,8 @@ export const getProblemPageProblemData = (id) => async (dispatch, getState) => {
           }
         }
       }
+      dispatch(getInputTestCases(id));
+      dispatch(getOutputTestCases(id));
       const problemData = await getProblemPageDataApi.get(`/${id}/`);
       dispatch(changeIsUpvoted(problemData.data.upvote));
       dispatch(changeIsDownvoted(problemData.data.downvote));
@@ -257,4 +306,12 @@ export const changeProblemPageProblemId = (newState) => {
     type: UpdateProblemPageProblemId,
     payload: newState,
   };
+};
+
+export const unMountEditorPage = () => (dispatch, _) => {
+  dispatch(changeGetSubmissionsList(true));
+  dispatch(changeSubmissionsList(null));
+  dispatch(changeProblemData(initial));
+  dispatch(changeInputTestCases([]));
+  dispatch(changeOutputTestCases([]));
 };

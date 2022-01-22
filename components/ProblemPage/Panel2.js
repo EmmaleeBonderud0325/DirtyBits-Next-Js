@@ -5,18 +5,14 @@ import { Spin } from "antd";
 
 import Editor from "./Editor";
 import Tabs from "../Tabs";
-import {
-  changeSubmissionsList,
-  changeGetSubmissionsList,
-} from "../../redux/actions/ProblemPage";
+import { unMountEditorPage } from "../../redux/actions/ProblemPage";
 
 function Panel2(props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
     return () => {
-      dispatch(changeGetSubmissionsList(true));
-      dispatch(changeSubmissionsList(null));
+      dispatch(unMountEditorPage());
     };
   }, []);
 
