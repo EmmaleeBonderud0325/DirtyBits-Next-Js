@@ -30,8 +30,6 @@ function Signin(props) {
     remeberMe: false,
   });
 
-  const [githubSpinner, setGithubSpinner] = useState(false);
-
   let [showPassword, setShowPassword] = useState(false);
 
   let [isError, setIsError] = useState({
