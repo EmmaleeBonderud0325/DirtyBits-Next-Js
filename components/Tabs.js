@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import SmoothList from "react-smooth-list";
 import { BsBookmarkCheck, BsBookmarkCheckFill } from "react-icons/bs";
 import { IoPlayBackOutline } from "react-icons/io5";
+import Link from "next/link";
 
 import {
   AiOutlineDislike,
@@ -108,13 +109,12 @@ function BasicTabs(props) {
           {/* PROBLEM TITLE */}
           <SmoothList>
             <div className="flex items-center gap-2 group">
-              <a
-                href="/problemset"
-                className="login-btn text-black group-hover:text-white bg-white flex items-center gap-2"
-              >
-                <IoPlayBackOutline className="text-base" />
-                <span>Problem Set</span>
-              </a>
+              <Link href="/problemset">
+                <a className="login-btn text-black group-hover:text-white bg-white flex items-center gap-2">
+                  <IoPlayBackOutline className="text-base" />
+                  <span>Problem Set</span>
+                </a>
+              </Link>
             </div>
           </SmoothList>
 

@@ -19,7 +19,7 @@ function IoTable({ inputData, outputData }) {
             <td class="w-full lg:w-auto p-3 text-white border border-white border-b block lg:table-cell relative lg:static">
               <pre>{inputData}</pre>
             </td>
-            <td class="w-full lg:w-auto p-3 text-white text-center border-white border border-b block lg:table-cell relative lg:static">
+            <td class="w-full lg:w-auto p-3 text-white border-white border border-b block lg:table-cell relative lg:static">
               <pre>{outputData}</pre>
               {/* <pre>output</pre> */}
             </td>
