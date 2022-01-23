@@ -352,7 +352,7 @@ function Signin(props) {
                     cookiePolicy={"single_host_origin"}
                   />
                   <GitHubLogin
-                    clientId="4070334dbe20cf539952"
+                    clientId={process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}
                     onSuccess={(response) => {
                       dispatch(githubLogin(response.code));
                     }}
