@@ -195,25 +195,3 @@ export const getProblems = () => async (dispatch, getState) => {
     console.error("Server Error in Problems List Fetching");
   }
 };
-
-export const logoutUser = () => async (dispatch, getState) => {
-  try {
-    await logoutUser
-      .post("/", { refresh_token: Cookies.get("refresh") })
-      .then(() => {
-        dispatch(
-          updateUserinfo({
-            is_logged_in: false,
-            is_admin: false,
-            email: "",
-            first_name: "",
-            last_name: "",
-            username: "",
-            profile_pic: "",
-          })
-        );
-      });
-  } catch {
-    console.error("Server Error in Problems List Fetching");
-  }
-};

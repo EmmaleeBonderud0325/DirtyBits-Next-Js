@@ -62,9 +62,6 @@ function a11yProps(index) {
 function BasicTabs(props) {
   const dispatch = useDispatch();
 
-  const [inputTestCases, setInputTestCases] = useState([]);
-  const [outputTestCases, setOutputTestCases] = useState([]);
-
   const handleChange = (_, newValue) => {
     props.currentTabFunction(newValue);
   };
@@ -86,47 +83,6 @@ function BasicTabs(props) {
       color = "bg-red-600";
       break;
   }
-
-  const GetInputTestCases = async () => {
-    var inputTestCases = [];
-    for (let i = 1; i <= props.questionData.sample_Tc; i++) {
-      const result = fetch(
-        `https://res.cloudinary.com/hhikcz56h/raw/upload/v1636969572/TestCases/${props.questionData.id}/sc-input${i}.txt`
-      ).then((response) => {
-        return response.text();
-      });
-      await result.then((response) => {
-        inputTestCases.push(response);
-      });
-    }
-    setInputTestCases(inputTestCases);
-    return;
-  };
-
-  const GetOutputTestCases = async () => {
-    var outputTestCases = [];
-    for (let i = 1; i <= props.questionData.sample_Tc; i++) {
-      const result = fetch(
-        `https://res.cloudinary.com/hhikcz56h/raw/upload/v1636969572/TestCases/${props.questionData.id}/sc-output${i}.txt`
-      ).then((response) => {
-        return response.text();
-      });
-      await result.then((response) => {
-        outputTestCases.push(response);
-      });
-    }
-    setOutputTestCases(outputTestCases);
-    return;
-  };
-
-  const getTestCases = () => {
-    GetInputTestCases();
-    GetOutputTestCases();
-  };
-
-  useEffect(() => {
-    getTestCases();
-  }, []);
 
   return (
     <Box sx={{ width: "100%", height: "100vh" }} className="scrollbar-hide">
@@ -260,12 +216,12 @@ function BasicTabs(props) {
           {/* SAMEPLE INPUT TEST CASES */}
           <SmoothList>
             <h2 className="text-white">Sample Test Cases</h2>
-            {inputTestCases.length > 0 &&
-              inputTestCases.map((val, idx) => (
+            {props.inputTestCases.length > 0 &&
+              props.inputTestCases.map((val, idx) => (
                 <IoTable
                   key={idx}
                   inputData={val}
-                  outputData={outputTestCases[idx]}
+                  outputData={props.outputTestCases[idx]}
                 />
               ))}
           </SmoothList>
@@ -307,6 +263,8 @@ const mapStateToProps = (state) => {
     downVote: state.downvoteCount,
     isUpVoted: state.isUpvoted,
     isDownVoted: state.isDownvoted,
+    inputTestCases: state.inputTestCases,
+    outputTestCases: state.outputTestCases,
   };
 };
 

@@ -27,6 +27,10 @@ import {
   googleLoginSpinnerReducer,
   simpleLoginSpinnerReducer,
 } from "./SigninSpinnerReducer";
+import {
+  InputTestCasesReducer,
+  OutputTestCasesReducer,
+} from "./ProblemPageReducers/TestCaseReducer";
 
 export default combineReducers({
   userData: userDataReducer,
@@ -45,6 +49,8 @@ export default combineReducers({
   isDownvoted: SetIsDownvotedReducer,
   submissionCount: submissionCountReducer,
   isBookmarked: SetIsBookmarkedReducer,
+  inputTestCases: InputTestCasesReducer,
+  outputTestCases: OutputTestCasesReducer,
   submissionsList: SubmissionsListReducer,
   getSubmissionsState: GetSubmissionsStateReducer,
   githubLoginSpinner: githubLoginSpinnerReducer,

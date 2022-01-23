@@ -1,18 +1,25 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { refreshTokenApi } from "./apis";
-import { logoutUser } from "../../redux/actions";
+import { signoutUser } from "../../redux/actions/authenticate";
 import Router from "next/router";
 
 export const CreateAxiosRequest = (baseURL) => {
-  console.log("called");
   const newInstance = axios.create({
     baseURL: baseURL,
     headers: {
       "Content-Type": "application/json",
-      Authorization: "JWT " + Cookies.get("access"),
     },
   });
+  newInstance.interceptors.request.use(
+    (config) => {
+      config.headers["Authorization"] = "JWT " + Cookies.get("access");
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
   newInstance.interceptors.response.use(
     (response) => response,
     (error) => {
@@ -45,11 +52,11 @@ export const CreateAxiosRequest = (baseURL) => {
           .catch((err) => {
             // LOGOUT AND REDIRECT TO SIGNIN AGAIN
             console.log(err);
-            logoutUser(true);
+            signoutUser(false);
             Router.push("/auth/signin");
           });
       } else {
-        logoutUser(true);
+        signoutUser(false);
         Router.push("/auth/signin");
         return Promise.reject(error);
       }

@@ -1,6 +1,6 @@
 import { UpdateProblemPageProblemData } from "../../types";
 
-let initial = {
+export const initial = {
   created_by: "",
   title: "",
   problem_statement: "",
