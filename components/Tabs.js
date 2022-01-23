@@ -7,9 +7,13 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import SmoothList from "react-smooth-list";
-import { BsBookmarkCheck, BsBookmarkCheckFill } from "react-icons/bs";
 import { IoPlayBackOutline } from "react-icons/io5";
 import Link from "next/link";
+import add from "../public/add.svg";
+import remove from "../public/remove.svg";
+import bar from "../public/bar.svg";
+import Image from "next/image";
+import global from "../public/global.svg";
 
 import {
   AiOutlineDislike,
@@ -131,9 +135,11 @@ function BasicTabs(props) {
                   className="inline-block cursor-pointer"
                 >
                   {props.isBookmarkSet ? (
-                    <BsBookmarkCheckFill className="text-lg" />
+                    <Image src={remove} width={30} height={30} />
                   ) : (
-                    <BsBookmarkCheck className="text-lg" />
+                    // <BsBookmarkCheckFill className="text-lg" />
+                    // <BsBookmarkCheck className="text-lg" />
+                    <Image src={add} width={30} height={30} />
                   )}
                 </div>
               </div>
@@ -171,7 +177,7 @@ function BasicTabs(props) {
 
             <div className="flex items-center space-x-1">
               <p>
-                <AiFillSignal />
+                <Image src={bar} width={30} height={30} />
               </p>
               <p className="text-xs">
                 Accuracy. {props.questionData.accuracy}%
@@ -180,7 +186,7 @@ function BasicTabs(props) {
 
             <div className="flex items-center space-x-1">
               <p>
-                <AiOutlineGlobal />
+                <Image src={global} width={30} height={30} />
               </p>
               <p className="text-xs">
                 Total Submissions. {props.questionData.totalSubmissions}

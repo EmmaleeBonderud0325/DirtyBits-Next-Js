@@ -21,6 +21,11 @@ const jsonData = require("./data.json");
 import Dropdown2 from "./Dropdown2";
 import FontDropdown from "./FontDropdown";
 import { message } from "antd";
+import Image from "next/image";
+import refresh from "../../public/refresh.svg";
+import downloadIcon from "../../public/download.svg";
+import uploadquestion from "../../public/uploadq.svg";
+import insert from "../../public/insert.svg";
 
 function Header(props) {
   const dispatch = useDispatch();
@@ -129,42 +134,76 @@ function Header(props) {
         changeEditorValue={changeEditorValue}
       />
       {/* TOP RIGHT ICONS */}
-      <div className="space-x-1 flex items-center transition-all ease-in-out">
-        <Tooltip className="bg-none" placement="top" title="Save">
-          <BsCloudArrowUp
+      <div className="space-x-4 flex items-center transition-all ease-in-out">
+        <Tooltip className="bg-none" placement="top" title="Save to Cloud">
+          {/* <BsCloudArrowUp
             onClick={uploadCloud}
             className="text-white text-lg font-bold hover:cursor-pointer mr-2"
+          /> */}
+          <Image
+            onClick={uploadCloud}
+            className="cursor-pointer"
+            src={uploadquestion}
+            width={20}
+            height={20}
           />
         </Tooltip>
 
-        <Tooltip className="bg-none" placement="top" title="Upload">
-          <label htmlFor="file-input">
-            <AiOutlineUpload className="text-white text-lg font-bold hover:cursor-pointer mr-2" />
-          </label>
-          <input
-            type="file"
-            accept=".cpp, .c, .py, .java"
-            id="file-input"
-            onChange={(e) => uploadedfile(e)}
-            className="hidden "
-          />
-        </Tooltip>
+        <div>
+          <Tooltip className="bg-none" placement="top" title="Upload file">
+            <label htmlFor="file-input">
+              {/* <AiOutlineUpload className="text-white text-lg font-bold hover:cursor-pointer mr-2" /> */}
+              <Image
+                className="cursor-pointer"
+                src={insert}
+                width={20}
+                height={20}
+              />
+            </label>
+            <input
+              type="file"
+              accept=".cpp, .c, .py, .java"
+              id="file-input"
+              onChange={(e) => uploadedfile(e)}
+              className="hidden "
+            />
+          </Tooltip>
+        </div>
 
-        <Tooltip className="bg-none" placement="top" title="Download Code">
-          <MdSaveAlt
+        <div>
+          <Tooltip className="bg-none" placement="top" title="Download Code">
+            {/* <MdSaveAlt
             onClick={() =>
               download("code" + props.currLang.ext, props.editorValue)
             }
             className="text-white text-lg font-bold hover:cursor-pointer !mr-2"
-          />
-        </Tooltip>
-
-        <Tooltip className="bg-none" placement="top" title="Reset Code">
-          <AiOutlineSync
+          /> */}
+            <Image
+              onClick={() =>
+                download("code" + props.currLang.ext, props.editorValue)
+              }
+              className="cursor-pointer"
+              src={downloadIcon}
+              width={20}
+              height={20}
+            />
+          </Tooltip>
+        </div>
+        <div>
+          <Tooltip className="bg-none group" placement="top" title="Reset Code">
+            {/* <AiOutlineSync
             onClick={() => resetCode()}
             className="text-white text-lg font-bold hover:cursor-pointer"
-          />
-        </Tooltip>
+          /> */}
+            <Image
+              onClick={() => resetCode()}
+              className="cursor-pointer"
+              src={refresh}
+              width={20}
+              height={20}
+            />
+          </Tooltip>
+        </div>
 
         <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 z-50">
           {props.userInfo.is_logged_in && (

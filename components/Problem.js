@@ -4,7 +4,14 @@ import Dropdown from "../components/Dropdown";
 import { motion } from "framer-motion";
 import Table from "../components/Table";
 import { connect } from "react-redux";
-import { DiReact } from "react-icons/di";
+import plus from "../public/plus.svg";
+import google from "../public/google.svg";
+import amazon from "../public/amazon.svg";
+import apple from "../public/apple.svg";
+import fb from "../public/fb.svg";
+import microsoft from "../public/microsoft.svg";
+import Image from "next/image";
+import CompanyTags from "./CompanyTags/CompanyTags";
 
 const variants = {
   visible: { opacity: 1 },
@@ -51,30 +58,12 @@ function Problem(props) {
     <div className="space-y-8 container p-10 mx-auto max-w-screen-xl">
       <motion.div animate={{ y: [20, 0, 0] }}>
         <div className="flex gap-10">
-          <div className="space-y-3 h-40 w-40 pb-2 opacity-60">
-            <div className="relative flex justify-center items-center h-full w-full rounded-md bg-gradient-to-r from-cyan-500 to-blue-500">
-              <DiReact className="absolute text-9xl text-white" />
-            </div>
-            <a href="/learning/reactjs" className="text-white text-center">
-              Learn React Development
-            </a>
-          </div>
-          <div className="space-y-3 h-40 w-40 pb-2 opacity-60">
-            <div className="relative flex justify-center items-center h-full w-full rounded-md bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
-              <DiReact className="absolute text-9xl text-white" />
-            </div>
-            <a href="/learning/reactjs" className="text-white text-center">
-              Learn React Development
-            </a>
-          </div>
-          <div className="space-y-3 h-40 w-40 pb-2 opacity-60">
-            <div className="relative flex justify-center items-center h-full w-full rounded-md bg-gradient-to-r from-green-400 to-green-300">
-              <DiReact className="absolute text-9xl text-white" />
-            </div>
-            <a href="/learning/reactjs" className="text-white text-center">
-              Learn React Development
-            </a>
-          </div>
+          <CompanyTags icon={google} title="Top google Questions" />
+          <CompanyTags icon={fb} title="Top facebook Questions" />
+          <CompanyTags icon={amazon} title="Top amazon Questions" />
+          <CompanyTags icon={microsoft} title="Top microsoft Questions" />
+          <CompanyTags icon={apple} title="Top apple Questions" />
+          <CompanyTags icon={plus} title="More" />
         </div>
       </motion.div>
       <hr style={{ color: "blue" }} />

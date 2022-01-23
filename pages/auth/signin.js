@@ -19,6 +19,8 @@ import { signinApi } from "../../components/api/apis";
 import Parsetoken from "../../components/Helper/Parsetoken";
 import SmoothList from "react-smooth-list";
 import { githubLogin, googleLogin } from "../../redux/actions/authenticate";
+import heroIcon from "../../public/collage.png";
+import Image from "next/image";
 
 function Signin(props) {
   const dispatch = useDispatch();
@@ -173,24 +175,28 @@ function Signin(props) {
 
         <div className="absolute md:bg-gradient-to-b from-black to-black opacity-75 lg:inset-0 z-0"></div>
         <div className="min-h-screen sm:flex sm:flex-row mx-0 justify-center space-x-48">
-          <div className="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
-            <div className="self-start hidden lg:flex flex-col  text-white">
-              <SmoothList>
-                <h1 className="loginSignUpHeading text-transparent bg-clip-text bg-gradient-to-r from-[#AE67FA] to-[#F49867]">
-                  Hola,
-                </h1>
-                <br />
-                <p className="text-6xl ">
-                  Welcome to{" "}
-                  <span>
-                    <Link href="/">
-                      <a className="text-custom-indigo font-bold font-dance text-7xl">
-                        DirtyBits
-                      </a>
-                    </Link>
-                  </span>
-                </p>
-              </SmoothList>
+          <div className="flex items-center">
+            <div className="">
+              <Image src={heroIcon} width={700} height={700} />
+            </div>
+
+            <div className="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
+              <div className="self-start hidden lg:flex flex-col  text-white">
+                <SmoothList>
+                  <h1 className="loginSignUpHeading text-transparent bg-clip-text bg-gradient-to-b from-[#ff54af]  to-[#996910]">
+                    Hola,
+                  </h1>
+                  <br />
+                  <div className=" flex space-x-6">
+                    <h2 className="text-white text-6xl">
+                      Welcome to{" "}
+                      <span className="text-custom-indigo font-extrabold">
+                        DiryBits
+                      </span>
+                    </h2>
+                  </div>
+                </SmoothList>
+              </div>
             </div>
           </div>
           <div className="flex justify-center self-center  z-10">

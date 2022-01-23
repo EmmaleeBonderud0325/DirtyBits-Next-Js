@@ -14,6 +14,7 @@ import Cookies from "js-cookie";
 import { connect, useDispatch } from "react-redux";
 import GoogleLogin from "react-google-login";
 import { AiOutlineSend } from "react-icons/ai";
+import terminal from "../../public/terminal.svg";
 
 import { base64_encode } from "./Helper2";
 require("codemirror/lib/codemirror.css");
@@ -35,6 +36,8 @@ import Header from "./Header";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import SmoothList from "react-smooth-list";
+import Image from "next/image";
+
 let CodeMirror = null;
 if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
   CodeMirror = require("react-codemirror2").Controlled;
@@ -397,7 +400,7 @@ const Editor = (props) => {
           type="button"
           class="flex items-center space-x-2"
         >
-          <BsTerminal />
+          <Image src={terminal} width={20} height={20} />
           <span className="font-semibold text-base">Console</span>
         </button>
         <div className="flex space-x-3">
