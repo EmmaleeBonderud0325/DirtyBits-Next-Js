@@ -338,7 +338,7 @@ function signup(props) {
                   <h2 className="text-white text-6xl">
                     Welcome to{" "}
                     <span className="text-custom-indigo font-extrabold">
-                      DirtyBits
+                      <a href="/">DirtyBits</a>
                     </span>
                   </h2>
                 </div>

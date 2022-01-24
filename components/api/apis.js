@@ -1,9 +1,9 @@
 import axios from "axios";
 import { CreateAxiosRequest } from "./CreateAxiosRequest";
 
-const BASE_URL = "https://db-auth.herokuapp.com/";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-const PROBLEM_URL = "https://db-code.herokuapp.com/";
+const PROBLEM_URL = process.env.NEXT_PUBLIC_PROBLEM_URL;
 
 const localhost = "http://localhost:8000/";
 

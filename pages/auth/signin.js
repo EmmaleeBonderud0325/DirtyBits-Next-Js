@@ -178,7 +178,7 @@ function Signin(props) {
           <div className="text-white text-xl text-center lg:hidden">
             Welcome to{" "}
             <span className="text-custom-indigo text-2xl font-semibold">
-              DirtyBits
+              <a href="/">DirtyBits</a>
             </span>
           </div>
           {/* HEADING FOR LARGER SIZE SCREENS */}
