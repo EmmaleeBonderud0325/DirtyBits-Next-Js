@@ -19,8 +19,6 @@ import { signinApi } from "../../components/api/apis";
 import Parsetoken from "../../components/Helper/Parsetoken";
 import SmoothList from "react-smooth-list";
 import { githubLogin, googleLogin } from "../../redux/actions/authenticate";
-import heroIcon from "../../public/collage.png";
-import Image from "next/image";
 
 function Signin(props) {
   const dispatch = useDispatch();
@@ -167,40 +165,43 @@ function Signin(props) {
       <Head>
         <title>Sign In to DirtyBits</title>
       </Head>
-      <div className="loginSignUp">
-        <div className="absolute w-60 h-60 rounded-xl bg-custom-indigo -top-5 -left-16 z-0 transform rotate-45 hidden md:block"></div>
-        <div className="absolute w-48 h-48 rounded-xl bg-custom-indigo -bottom-10 transform rotate-12 hidden md:block"></div>
-        <div className="w-40 h-40 absolute bg-custom-indigo rounded-full top-0 right-12 hidden md:block"></div>
-        <div className="w-20 h-40 absolute bg-custom-indigo rounded-full bottom-20 right-10 transform rotate-45 hidden md:block"></div>
+      <div className=" loginSignUp">
+        <div className="absolute w-60 h-60 rounded-xl bg-custom-indigo -top-5 -left-16 z-0 transform rotate-45 hidden md:hidden lg:block"></div>
+        <div className="absolute w-48 h-48 rounded-xl bg-custom-indigo -bottom-10 transform rotate-12 hidden md:hidden lg:block"></div>
+        <div className="w-40 h-40 absolute bg-custom-indigo rounded-full top-0 right-12 hidden md:hidden lg:block"></div>
+        <div className="w-20 h-40 absolute bg-custom-indigo rounded-full bottom-20 right-10 transform rotate-45 hidden md:hidden lg:block"></div>
 
         <div className="absolute md:bg-gradient-to-b from-black to-black opacity-75 lg:inset-0 z-0"></div>
-        <div className="min-h-screen sm:flex sm:flex-row mx-0 justify-center space-x-48">
-          <div className="flex items-center">
-            <div className="">
-              <Image src={heroIcon} width={700} height={700} />
-            </div>
 
-            <div className="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
-              <div className="self-start hidden lg:flex flex-col  text-white">
-                <SmoothList>
-                  <h1 className="loginSignUpHeading text-transparent bg-clip-text bg-gradient-to-b from-[#ff54af]  to-[#996910]">
-                    Hola,
-                  </h1>
-                  <br />
-                  <div className=" flex space-x-6">
-                    <h2 className="text-white text-6xl">
-                      Welcome to{" "}
-                      <span className="text-custom-indigo font-extrabold">
-                        DiryBits
-                      </span>
-                    </h2>
-                  </div>
-                </SmoothList>
-              </div>
+        <div className="lg:min-h-screen lg:flex lg:justify-center lg:space-x-48 p-8 space-y-5 lg:z-10">
+          {/* HEADING FOR SMALL SIZE SCREENS */}
+          <div className="text-white text-xl text-center lg:hidden">
+            Welcome to{" "}
+            <span className="text-custom-indigo text-2xl font-semibold">
+              DirtyBits
+            </span>
+          </div>
+          {/* HEADING FOR LARGER SIZE SCREENS */}
+          <div className="flex-col lg:flex hidden  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
+            <div className="self-start hidden lg:flex flex-col  text-white">
+              <SmoothList>
+                <h1 className="loginSignUpHeading text-transparent bg-clip-text bg-gradient-to-r from-[#AE67FA] to-[#F49867]">
+                  Hola,
+                </h1>
+                <br />
+                <div className=" flex space-x-6">
+                  <h2 className="text-white text-6xl">
+                    Welcome to{" "}
+                    <span className="text-custom-indigo font-extrabold">
+                      DirtyBits
+                    </span>
+                  </h2>
+                </div>
+              </SmoothList>
             </div>
           </div>
-          <div className="flex justify-center self-center  z-10">
-            <div className="p-12 lg:p-16 bg-white mx-auto rounded-2xl w-100 ">
+          <div className="flex lg:justify-center md:justify-start lg:self-center z-10">
+            <div className="p-10 lg:p-16 bg-white mx-auto rounded-2xl w-full lg:w-100 ">
               <div className="mb-4">
                 <h3 className="font-semibold text-2xl text-gray-800">
                   Sign In{" "}

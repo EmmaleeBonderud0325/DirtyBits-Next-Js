@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
 
-function leaderboard() {
+function Leaderboard() {
   return (
     <div className="flex lg:w-screen lg:h-screen h-screen w-screen">
       <Head>
@@ -12,4 +12,4 @@ function leaderboard() {
   );
 }
 
-export default leaderboard;
+export default Leaderboard;
