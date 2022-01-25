@@ -5,7 +5,7 @@ import Head from "next/head";
 import Problem from "../components/Problem";
 import { getProblems } from "../redux/actions";
 
-function practice() {
+function Practice() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProblems());
@@ -20,4 +20,4 @@ function practice() {
   );
 }
 
-export default practice;
+export default Practice;
