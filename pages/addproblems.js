@@ -24,7 +24,7 @@ function addproblems(props) {
 
 export const getServerSideProps = async (ctx) => {
   const response = await axios.get(
-    "https://db-code.herokuapp.com/problems/getTagListCreateProblem/"
+    "http://34.125.212.91/problems/getTagListCreateProblem/"
   );
   const parseData = response.data.results;
   let colourOptions = [];
