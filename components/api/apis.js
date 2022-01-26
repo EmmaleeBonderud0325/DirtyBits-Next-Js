@@ -4,7 +4,6 @@ import { CreateAxiosRequest } from "./CreateAxiosRequest";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const PROBLEM_URL = "https://db-code.herokuapp.com/";
-// const PROBLEM_URL = "http://34.125.212.91/";
 
 const localhost = "http://localhost:8000/";
 

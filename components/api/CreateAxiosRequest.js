@@ -26,7 +26,7 @@ export const CreateAxiosRequest = (baseURL) => {
       const originalRequest = error.config;
       if (
         error.response.status === 401 &&
-        originalRequest.url === baseURL + "token/refresh/"
+        originalRequest.url === baseURL + "auth/refresh/"
       ) {
         Router.push("/auth/signin");
         return Promise.reject(error);
@@ -52,12 +52,12 @@ export const CreateAxiosRequest = (baseURL) => {
           .catch((err) => {
             // LOGOUT AND REDIRECT TO SIGNIN AGAIN
             console.log(err);
-            signoutUser(false);
-            Router.push("/auth/signin");
+            // signoutUser(false);
+            // Router.push("/auth/signin");
           });
       } else {
-        signoutUser(false);
-        Router.push("/auth/signin");
+        // signoutUser(false);
+        // Router.push("/auth/signin");
         return Promise.reject(error);
       }
     }
