@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { refreshTokenApi } from "./apis";
-import { signoutUser } from "../../redux/actions/authenticate";
+// import { signoutUser } from "../../redux/actions/authenticate";
 import Router from "next/router";
 
 export const CreateAxiosRequest = (baseURL) => {
@@ -11,6 +11,7 @@ export const CreateAxiosRequest = (baseURL) => {
       "Content-Type": "application/json",
     },
   });
+
   newInstance.interceptors.request.use(
     (config) => {
       config.headers["Authorization"] = "JWT " + Cookies.get("access");
@@ -20,6 +21,7 @@ export const CreateAxiosRequest = (baseURL) => {
       return Promise.reject(error);
     }
   );
+
   newInstance.interceptors.response.use(
     (response) => response,
     (error) => {
