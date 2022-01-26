@@ -3,12 +3,14 @@ import { useDispatch } from "react-redux";
 import Head from "next/head";
 
 import Problem from "../components/Problem";
-import { getProblems } from "../redux/actions";
+import { getProblems, getTags } from "../redux/actions";
+
 
 function Practice() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProblems());
+    dispatch(getTags());
   }, []);
   return (
     <>
