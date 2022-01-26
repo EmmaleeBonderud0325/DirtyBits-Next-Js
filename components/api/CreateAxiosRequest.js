@@ -64,5 +64,6 @@ export const CreateAxiosRequest = (baseURL) => {
       }
     }
   );
+
   return newInstance;
 };
