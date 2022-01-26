@@ -237,7 +237,7 @@ const Editor = (props) => {
     }
     const encoded_mail = Encodemail(email);
     var socket = new WebSocket(
-      `ws://34.125.212.91/ws/runcode/${encoded_mail}/`
+      `wss://${process.env.NEXT_PUBLIC_PROBLEM_URL}/ws/runcode/${encoded_mail}/`
     );
     // var socket = new WebSocket(
     //   `ws://localhost:8000/ws/runcode/${encoded_mail}/`
