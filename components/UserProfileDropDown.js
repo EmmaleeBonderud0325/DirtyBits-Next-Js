@@ -7,6 +7,7 @@ import { useDispatch, connect } from "react-redux";
 import { openNotificationWithIcon } from "./OpenNotification";
 import Image from "next/image";
 import { classNames } from "./Helper/Classnames";
+import Link from "next/link";
 
 function UserProfileDropDown(props) {
   const dispatch = useDispatch();
@@ -73,19 +74,20 @@ function UserProfileDropDown(props) {
             </Menu.Item>
             <Menu.Item>
               {({ active }) => (
-                <a
-                  href={`${props.isAdmin ? "/addproblems" : "#"}`}
-                  onClick={notificationHandler}
-                  className={classNames(
-                    active ? "bg-gray-100" : "",
-                    "px-4 py-2 text-sm text-gray-700 flex items-center gap-2"
-                  )}
-                >
-                  <span>Add Problem</span>
-                  {!props.isAdmin && (
-                    <AiOutlineInfoCircle className="text-red-500 text-lg" />
-                  )}
-                </a>
+                <Link href={`${props.isAdmin ? "/addproblems" : "#"}`}>
+                  <a
+                    onClick={notificationHandler}
+                    className={classNames(
+                      active ? "bg-gray-100" : "",
+                      "px-4 py-2 text-sm text-gray-700 flex items-center gap-2"
+                    )}
+                  >
+                    <span>Add Problem</span>
+                    {!props.isAdmin && (
+                      <AiOutlineInfoCircle className="text-red-500 text-lg" />
+                    )}
+                  </a>
+                </Link>
               )}
             </Menu.Item>
             <Menu.Item>

@@ -25,6 +25,7 @@ import {
   SimpleLoginSpinner,
 } from "../types";
 import { Updateproblemsstatus } from "../../components/Helper/Updateproblemsstatus";
+import axios from "axios";
 
 export const updateUserinfo = (newState) => {
   return {
@@ -178,6 +179,13 @@ export const updateProblemList = (newState) => {
   };
 };
 
+export const getLatestTagsList = (newState) => {
+  return {
+    type: "GET_TAGS",
+    payload: newState,
+  };
+};
+
 export const updateProblemsStatus = () => async (dispatch, getState) => {
   let state = getState();
   const data = await Updateproblemsstatus(state.problemList);
@@ -193,5 +201,27 @@ export const getProblems = () => async (dispatch, getState) => {
     }
   } catch {
     console.error("Server Error in Problems List Fetching");
+  }
+};
+
+export const getTags = () => async (dispatch, getState) => {
+  console.log("action creator called");
+  try {
+    const response = await axios.get(
+      "https://db-code.herokuapp.com/problems/getTagListCreateProblem/"
+    );
+    console.log("response", response);
+    const parseData = response.data.results;
+    let colourOptions = [];
+    for (const data in parseData) {
+      let tempData = {};
+      tempData["value"] = parseData[data].id;
+      tempData["label"] = parseData[data].name;
+      tempData["color"] = "#4C0F89";
+      colourOptions.push(tempData);
+    }
+    dispatch(getLatestTagsList(colourOptions));
+  } catch (err) {
+    console.error(err.message);
   }
 };

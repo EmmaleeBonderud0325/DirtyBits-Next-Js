@@ -1,17 +1,17 @@
 import { SearchOutlined } from "@mui/icons-material";
-import { useState } from "react";
-import Dropdown from "../components/Dropdown";
+import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
-import Table from "../components/Table";
 import { connect } from "react-redux";
+import Dropdown from "../components/Dropdown";
+import Table from "../components/Table";
 import plus from "../public/plus.svg";
 import google from "../public/google.svg";
 import amazon from "../public/amazon.svg";
 import apple from "../public/apple.svg";
 import fb from "../public/fb.svg";
 import microsoft from "../public/microsoft.svg";
-import Image from "next/image";
 import CompanyTags from "./CompanyTags/CompanyTags";
+import { useSelector } from "react-redux";
 
 const variants = {
   visible: { opacity: 1 },
@@ -19,25 +19,23 @@ const variants = {
 };
 
 function Problem(props) {
-  const values = [
-    "Array",
-    "Object",
-    "String",
-    "Number",
-    "Boolean",
-    "Function",
-    "Undefined",
-    "Null",
-  ];
+  const values = useSelector((state) => state.tags);
 
   const [value, setValue] = useState("");
 
   const [difficulty, setDifficulty] = useState("Difficulty");
   const [status, setStatus] = useState("Status");
+  const [timeoutId, setTimeoutId] = useState();
 
-  const fetchQuestions = (e) => {
-    e.preventDefault();
+  const valueHandler = (e) => {
     setValue(e.target.value);
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    timeoutId = setTimeout(() => {
+      console.log("make req", e.target.value);
+    }, 2000);
+    setTimeoutId(timeoutId);
   };
 
   const filteredData = props.problemList.filter((val) =>
@@ -66,18 +64,21 @@ function Problem(props) {
           <CompanyTags icon={plus} title="More" />
         </div>
       </motion.div>
-      <hr style={{ color: "blue" }} />
+      <br />
+      <br />
+      <hr />
+      <br />
 
       <motion.div initial="hidden" animate="visible" variants={variants}>
         <div className="flex sm:w-3/4 xs:w-full space-x-4 overflow-x-scroll scrollbar-hide">
-          {values.map((value) => {
+          {values.map((item) => {
             return (
               <div
-                key={value}
+                key={item.value}
                 className="flex flex-col items-center justify-center text-white"
               >
-                <button className="text-base rounded-xl bg-gray-800 px-2 lg:px-4 lg:py-1 hover:scale-125 transition-all ease-out">
-                  {value}
+                <button className="text-base rounded-xl bg-custom-indigo opacity-90 px-2 lg:px-4 lg:py-1 hover:scale-105 transition-all ease-out">
+                  {item.label}
                 </button>
               </div>
             );
@@ -86,23 +87,22 @@ function Problem(props) {
       </motion.div>
 
       {/* SEARCH BAR */}
-      <motion.div initial="hidden" animate="visible" variants={variants}>
-        <div className="flex space-x-3">
-          <form
-            onSubmit={() => {}}
-            className="p-[.2rem] flex border-none rounded-xl focus:outline-none bg-gray-800 items-center max-w-screen-2xl"
-          >
-            <input
-              type="text"
-              className="bg-gray-800 outline-none text-white p-2 rounded-xl w-full caret-custom-bg"
-              placeholder="Search"
-              value={value}
-              onChange={(e) => fetchQuestions(e)}
-            />
-            <SearchOutlined className="text-white" />
-          </form>
-        </div>
-      </motion.div>
+
+      <div className="flex space-x-3 w-3/4">
+        <form
+          onSubmit={() => {}}
+          className="p-[.2rem] flex border-none rounded-xl focus:outline-none bg-gray-900 items-center w-1/2 border border-rose-600"
+        >
+          <SearchOutlined className="text-custom-indigo ml-1" />
+          <input
+            type="text"
+            className="bg-gray-900 placeholder:text-lg text-lg outline-none text-white p-2 rounded-lg w-full caret-custom-indigo"
+            placeholder="Search questions"
+            value={value}
+            onChange={valueHandler}
+          />
+        </form>
+      </div>
 
       {/* DROPDOWN SECITONS FOR DIFFICULTY , STATUS, TAGS */}
       <div className="flex space-x-2">
@@ -110,7 +110,7 @@ function Problem(props) {
           textColor={"text-white"}
           fieldName={"Difficulty"}
           fieldValues={["Easy", "Medium", "Hard"]}
-          bg={"bg-black"}
+          bg={"bg-gray-900"}
           hasAction={false}
           currentValue={difficulty}
           actionFunction={setDifficulty}
@@ -119,7 +119,7 @@ function Problem(props) {
           textColor={"text-white"}
           fieldName={"Status"}
           fieldValues={["ToDo", "Solved", "Attempted"]}
-          bg={"bg-black"}
+          bg={"bg-gray-900"}
           hasAction={false}
           currentValue={status}
           actionFunction={setStatus}
