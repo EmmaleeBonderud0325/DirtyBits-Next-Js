@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import Head from "next/head";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
+import { useState } from "react";
+import ReactDOM from "react-dom";
 
 import { TextEditor } from "./TextEditor";
 import Dropdown from "../Dropdown";
@@ -33,6 +35,8 @@ export const Page1 = (props) => {
   const problemData = useSelector((state) => state.addProblemData);
   const isAdmin = useSelector((state) => state.userData.is_admin);
 
+  const tags = useSelector((state) => state.tags);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -58,12 +62,8 @@ export const Page1 = (props) => {
           <Head>
             <title>Add Problem</title>
           </Head>
-          <div className="lg:container m-auto">
-            <div className="lg:pl-36 p-5 space-y-14">
-              <h1 className="text-center text-white font-extrabold text-4xl lg:text-[3rem] lg:text-left">
-                Add <span className="text-custom-bg">Problems</span>
-              </h1>
-              <hr />
+          <div className="">
+            <div className="">
               <form className="space-y-5">
                 <InputComponent
                   label={"Problem Title"}
@@ -107,7 +107,7 @@ export const Page1 = (props) => {
                     actionFunction={updateProblemLevel}
                   />
                 </div>
-                <MultiSelect label="Tags" value={props.tags} />
+                <MultiSelect label="Tags" value={tags} />
                 <InputComponent
                   label={"Time Limit"}
                   value={problemData.time_Limit}
