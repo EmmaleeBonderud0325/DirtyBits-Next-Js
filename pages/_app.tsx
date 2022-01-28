@@ -8,9 +8,7 @@ import "../styles/index.css";
 import { useRouter } from "next/router";
 import "antd/dist/antd.css";
 import "../styles/Editor.css";
-import "../styles/Steps.css";
 import "../styles/tinymce.css";
-import "../styles/Steps.css";
 import { NextPage } from "next";
 import { ReactNode } from "react";
 
