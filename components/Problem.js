@@ -12,10 +12,19 @@ import fb from "../public/fb.svg";
 import microsoft from "../public/microsoft.svg";
 import CompanyTags from "./CompanyTags/CompanyTags";
 import { useSelector } from "react-redux";
+import { MultiSelect } from "primereact/multiselect";
 
-const variants = {
-  visible: { opacity: 1 },
-  hidden: { opacity: 0 },
+import "primereact/resources/themes/mdc-dark-indigo/theme.css"; //theme
+import "primereact/resources/primereact.min.css"; //core css
+import "primeicons/primeicons.css"; //icons
+
+const styles = {
+  minWidth: "15rem",
+  padding: ".25rem .5rem",
+  borderRadius: "3px",
+  display: "inline-flex",
+  marginRight: ".5rem",
+  backgroundColor: "#111827",
 };
 
 function Problem(props) {
@@ -26,7 +35,7 @@ function Problem(props) {
   const [difficulty, setDifficulty] = useState("Difficulty");
   const [status, setStatus] = useState("Status");
   const [timeoutId, setTimeoutId] = useState();
-
+  const [selectedCities2, setSelectedCities2] = useState(null);
   const valueHandler = (e) => {
     setValue(e.target.value);
     if (timeoutId) {
@@ -37,6 +46,8 @@ function Problem(props) {
     }, 2000);
     setTimeoutId(timeoutId);
   };
+
+  console.log("selected cities", selectedCities2);
 
   const filteredData = props.problemList.filter((val) =>
     val.title.toLowerCase().includes(value.toLowerCase())
@@ -69,7 +80,17 @@ function Problem(props) {
       <hr />
       <br />
 
-      <motion.div initial="hidden" animate="visible" variants={variants}>
+      <MultiSelect
+        style={styles}
+        value={selectedCities2}
+        options={values}
+        onChange={(e) => setSelectedCities2(e.value)}
+        optionLabel="label"
+        placeholder="Select Tags"
+        display="chip"
+      />
+
+      {/* <motion.div initial="hidden" animate="visible" variants={variants}>
         <div className="flex sm:w-3/4 xs:w-full space-x-4 overflow-x-scroll scrollbar-hide">
           {values.map((item) => {
             return (
@@ -84,7 +105,7 @@ function Problem(props) {
             );
           })}
         </div>
-      </motion.div>
+      </motion.div> */}
 
       {/* SEARCH BAR */}
 
@@ -105,7 +126,7 @@ function Problem(props) {
       </div>
 
       {/* DROPDOWN SECITONS FOR DIFFICULTY , STATUS, TAGS */}
-      <div className="flex space-x-2">
+      {/* <div className="flex space-x-2">
         <Dropdown
           textColor={"text-white"}
           fieldName={"Difficulty"}
@@ -124,7 +145,7 @@ function Problem(props) {
           currentValue={status}
           actionFunction={setStatus}
         />
-      </div>
+      </div> */}
 
       <div className="flex flex-col">
         <Table list={questionsList} />
