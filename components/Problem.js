@@ -2,7 +2,6 @@ import { SearchOutlined } from "@mui/icons-material";
 import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { connect } from "react-redux";
-import Dropdown from "../components/Dropdown";
 import Table from "../components/Table";
 import plus from "../public/plus.svg";
 import google from "../public/google.svg";
@@ -13,6 +12,7 @@ import microsoft from "../public/microsoft.svg";
 import CompanyTags from "./CompanyTags/CompanyTags";
 import { useSelector } from "react-redux";
 import { MultiSelect } from "primereact/multiselect";
+import { filterProblemData } from "./api/apis";
 
 import "primereact/resources/themes/mdc-dark-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css"; //core css
@@ -35,14 +35,25 @@ function Problem(props) {
   const [difficulty, setDifficulty] = useState("Difficulty");
   const [status, setStatus] = useState("Status");
   const [timeoutId, setTimeoutId] = useState();
-  const [selectedCities2, setSelectedCities2] = useState(null);
+  const [selectedCities2, setSelectedCities2] = useState([]);
   const valueHandler = (e) => {
     setValue(e.target.value);
     if (timeoutId) {
       clearTimeout(timeoutId);
     }
-    timeoutId = setTimeout(() => {
-      console.log("make req", e.target.value);
+    timeoutId = setTimeout(async () => {
+      const data = {
+        keyword: value,
+        tags: selectedCities2,
+        difficulty: ["E"],
+      };
+      console.log("data sent", data);
+      const response = await filterProblemData.get("/", {
+        keyword: "binar",
+        tags: [1, 2, 3],
+        difficulty: ["E", "M"],
+      });
+      console.log("response problem", response.data);
     }, 2000);
     setTimeoutId(timeoutId);
   };
