@@ -1,5 +1,3 @@
-import Cookies from "js-cookie";
-
 import { getProblemsList } from "../../components/api/apis";
 import {
   updateConstraints,
@@ -205,12 +203,10 @@ export const getProblems = () => async (dispatch, getState) => {
 };
 
 export const getTags = () => async (dispatch, getState) => {
-  console.log("action creator called");
   try {
     const response = await axios.get(
       "https://db-code.herokuapp.com/problems/getTagListCreateProblem/"
     );
-    console.log("response", response);
     const parseData = response.data.results;
     let colourOptions = [];
     for (const data in parseData) {

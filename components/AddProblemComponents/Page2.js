@@ -174,7 +174,7 @@ export const Page2 = (props) => {
         })
         .then((result) => {
           if (result.status === 200) {
-            props.stepFunction(1);
+            props.setActiveIndex(0);
           }
         });
     } catch (err) {

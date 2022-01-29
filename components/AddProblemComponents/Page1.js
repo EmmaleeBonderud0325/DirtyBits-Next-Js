@@ -1,10 +1,8 @@
-import { ArrowForward } from "@mui/icons-material";
-import { useSelector } from "react-redux";
+import { ArrowForward, ErrorOutlineSharp } from "@mui/icons-material";
+import { connect } from "react-redux";
 import Head from "next/head";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
-import { useState } from "react";
-import ReactDOM from "react-dom";
 
 import { TextEditor } from "./TextEditor";
 import Dropdown from "../Dropdown";
@@ -31,23 +29,18 @@ const mapping = {
   H: "Hard",
 };
 
-export const Page1 = (props) => {
-  const problemData = useSelector((state) => state.addProblemData);
-  const isAdmin = useSelector((state) => state.userData.is_admin);
-
-  const tags = useSelector((state) => state.tags);
-
+function Page1(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await AddProblem.post("/", { data: problemData })
+      await AddProblem.post("/", { data: props.problemData })
         .then((result) => {
           console.log(result.data);
-          props.probIdFunction(result.data["id"]);
-          props.stepFunction(2);
+          props.setProblemId(result.data["id"]);
+          props.setActiveIndex(1);
         })
-        .catch(() => {
-          console.log("error");
+        .catch((err) => {
+          console.log(err);
         });
     } catch (e) {
       console.error("Token Error");
@@ -56,7 +49,7 @@ export const Page1 = (props) => {
 
   return (
     <>
-      {isAdmin ? (
+      {props.isAdmin ? (
         <>
           <ToastContainer theme="dark" />
           <Head>
@@ -67,7 +60,7 @@ export const Page1 = (props) => {
               <form className="space-y-5">
                 <InputComponent
                   label={"Problem Title"}
-                  value={problemData.title}
+                  value={props.problemData.title}
                   dispatch={updateProblemTitle}
                   type={"text"}
                   placeholder={"Title"}
@@ -78,7 +71,7 @@ export const Page1 = (props) => {
                 />
                 <TextAreaComponent
                   label="Note"
-                  value={problemData.note}
+                  value={props.problemData.note}
                   dispatch={updateProblemNote}
                 />
                 <TextEditor
@@ -103,21 +96,21 @@ export const Page1 = (props) => {
                     bg={"bg-white"}
                     textColor={"text-black"}
                     hasAction={true}
-                    currentValue={mapping[problemData.problem_level]}
+                    currentValue={mapping[props.problemData.problem_level]}
                     actionFunction={updateProblemLevel}
                   />
                 </div>
-                <MultiSelect label="Tags" value={tags} />
+                <MultiSelect label="Tags" value={props.tags} />
                 <InputComponent
                   label={"Time Limit"}
-                  value={problemData.time_Limit}
+                  value={props.problemData.time_Limit}
                   dispatch={updateProblemTimeLimit}
                   type={"number"}
                   placeholder={"in seconds"}
                 />
                 <InputComponent
                   label={"Memory Limit"}
-                  value={problemData.memory_Limit}
+                  value={props.problemData.memory_Limit}
                   dispatch={updateProblemMemoryLimit}
                   type={"number"}
                   placeholder={"in MB"}
@@ -137,8 +130,8 @@ export const Page1 = (props) => {
         </>
       ) : (
         <div
-          className={`bg-red-500 ${
-            isAdmin && "h-[840px]"
+          className={`bg-gray-500 ${
+            props.isAdmin && "h-[840px]"
           } flex items-center justify-center`}
         >
           <h1 className="text-white font-semibold text-4xl">
@@ -148,4 +141,14 @@ export const Page1 = (props) => {
       )}
     </>
   );
+}
+
+const mapStateToProps = (state) => {
+  return {
+    problemData: state.addProblemData,
+    isAdmin: state.userData.is_admin,
+    tags: state.tags,
+  };
 };
+
+export default connect(mapStateToProps)(Page1);

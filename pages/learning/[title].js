@@ -14,7 +14,7 @@ const Learning = () => {
           subclasses:
         </p>
 
-        <div class="mockup-code p-4 w-5/6">
+        <div className="mockup-code p-4 w-5/6">
           <pre>
             <code>{`class ShoppingList extends React.Component {
   render() {

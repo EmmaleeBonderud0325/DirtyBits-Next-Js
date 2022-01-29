@@ -346,11 +346,11 @@ function signup(props) {
             </div>
           </div>
 
-          <div class="flexContainer self-center  z-10">
-            <div class="p-5 md:p-9 bg-white mx-auto rounded-2xl w-100 -mt-14 mb-4 lg:m-0 md:m-0">
-              <div class="mb-4">
-                <h3 class="font-semibold text-2xl text-gray-800">Sign Up </h3>
-                <p class="text-gray-500">Please sign in to your account.</p>
+          <div className="flexContainer self-center  z-10">
+            <div className="p-5 md:p-9 bg-white mx-auto rounded-2xl w-100 -mt-14 mb-4 lg:m-0 md:m-0">
+              <div className="mb-4">
+                <h3 className="font-semibold text-2xl text-gray-800">Sign Up </h3>
+                <p className="text-gray-500">Please sign in to your account.</p>
               </div>
               <div className="space-y-5">
                 <div className="space-y-2">
@@ -455,9 +455,9 @@ function signup(props) {
                     )}
                   </div>
                 </div>
-                <div class="space-y-2">
+                <div className="space-y-2">
                   <label
-                    class={`text-sm font-medium ${passwordLabelColor} tracking-wide`}
+                    className={`text-sm font-medium ${passwordLabelColor} tracking-wide`}
                   >
                     Password
                   </label>
