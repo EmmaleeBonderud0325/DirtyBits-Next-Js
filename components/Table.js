@@ -27,7 +27,7 @@ function Table(props) {
         status = "➖";
         break;
       case "Solved":
-        status = "✔️";
+        status = "✅";
         break;
       case "Attempted":
         status = "❓";
@@ -49,7 +49,7 @@ function Table(props) {
             {problemLevel}
           </p>
         </td>
-        <td className="table-data cursor-default border-b border-slate-800">
+        <td className="table-data cursor-default border-b border-slate-800 text-lg">
           {status}
         </td>
       </tr>
