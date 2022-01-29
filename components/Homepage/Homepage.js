@@ -13,13 +13,14 @@ import { FaBlog } from "react-icons/fa";
 import { FiLayers } from "react-icons/fi";
 import himanshu from "../../public/himanshu.jpeg";
 import mohit from "../../public/mohit.jpg";
+import akshat from "../../public/akshat.jpeg";
 
 import Feature from "../Feature";
 
 export default function Homepage() {
   return (
     <>
-      <div class="relative space-y-8 container p-10 mx-auto max-w-screen-xl flex-col justify-center items-center">
+      <div className="relative space-y-8 container p-10 mx-auto max-w-screen-xl flex-col justify-center items-center">
         <Zoom>
           <div className="absolute hidden md:block opacity-70 top-[10rem] right-[30rem]">
             <Image
@@ -40,11 +41,11 @@ export default function Homepage() {
             />
           </div>
         </Zoom>
-        <div class="container px-4 sm:px-8 xl:px-20 mx-auto md:h-[1100px] h-[650px]">
+        <div className="container px-4 sm:px-8 xl:px-20 mx-auto md:h-[1100px] h-[650px]">
           <div className="hero-wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 items-start  md:items-center mt-[10rem]">
-            <div class="hero-text col-span-6 ">
+            <div className="hero-text col-span-6 ">
               <SmoothList>
-                <h1 class="text-4xl md:text-5xl lg:text-5xl max-w-xl text-white leading-tight text-transparent bg-clip-text bg-gradient-to-r from-[#AE67FA] to-[#F49867]">
+                <h1 className="text-4xl md:text-5xl lg:text-5xl max-w-xl text-white leading-tight text-transparent bg-clip-text bg-gradient-to-r from-[#AE67FA] to-[#F49867]">
                   Welcome to DirtyBits
                 </h1>
               </SmoothList>
@@ -72,7 +73,7 @@ export default function Homepage() {
               </SmoothList>
             </div>
 
-            <div class="hero-image col-span-6 md:block hidden">
+            <div className="hero-image col-span-6 md:block hidden">
               <Zoom>
                 <div className="">
                   <Image
@@ -155,30 +156,30 @@ export default function Homepage() {
 
         <div className="py-12 h-[700px]">
           <div className="">
-            <section class=" mx-auto px-4 sm:px-6 lg:px-4 py-12 space-y-20">
-              <div class="text-center pb-12">
-                <h1 class="font-bold text-3xl md:text-4xl lg:text-5xl font-heading text-white capitalize">
+            <section className=" mx-auto px-4 sm:px-6 lg:px-4 py-12 space-y-20">
+              <div className="text-center pb-12">
+                <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl font-heading text-white capitalize">
                   Check our Awesome{" "}
                   <span className="text-custom-indigo">team</span>
                 </h1>
               </div>
-              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-10">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 <Fade bottom>
-                  <div class="rounded-lg shadow-lg flex md:p-12 p-5 flex-col justify-center items-center">
-                    <div class="mb-8 round p-1 border-2 border-custom-indigo rounded-full">
+                  <div className="rounded-lg shadow-lg flex md:p-12 p-5 flex-col justify-center items-center">
+                    <div className="mb-8 round p-1 border-2 border-custom-indigo rounded-full">
                       <Image
-                        class="object-center object-cover rounded-full"
+                        className="object-center object-cover rounded-full"
                         src={himanshu}
                         alt="photo"
                         height={150}
                         width={150}
                       />
                     </div>
-                    <div class="text-center">
-                      <p class="text-xl text-white font-bold mb-2">
+                    <div className="text-center">
+                      <p className="text-xl text-white font-bold mb-2">
                         Himanshu Dhiman
                       </p>
-                      <p class="text-base text-slate-400 font-extrabold">
+                      <p className="text-base text-slate-400 font-extrabold">
                         Backend Developer / DevOps
                       </p>
                     </div>
@@ -186,21 +187,21 @@ export default function Homepage() {
                 </Fade>
 
                 <Fade bottom>
-                  <div class=" rounded-lg shadow-lg md:p-12 p-5 flex flex-col justify-center items-center">
-                    <div class="mb-8 p-1 border-2 border-custom-indigo rounded-full">
+                  <div className=" rounded-lg shadow-lg md:p-12 p-5 flex flex-col justify-center items-center">
+                    <div className="mb-8 p-1 border-2 border-custom-indigo rounded-full">
                       <Image
-                        class="object-center object-cover rounded-full"
+                        className="object-center object-cover rounded-full"
                         src={mohit}
                         alt="photo"
                         height={150}
                         width={150}
                       />
                     </div>
-                    <div class="text-center">
-                      <p class="text-xl text-white font-bold mb-2">
+                    <div className="text-center">
+                      <p className="text-xl text-white font-bold mb-2">
                         Mohit Singh Bisht
                       </p>
-                      <p class="text-base text-slate-400 font-extrabold">
+                      <p className="text-base text-slate-400 font-extrabold">
                         Frontend Developer / DevOps
                       </p>
                     </div>
@@ -208,21 +209,21 @@ export default function Homepage() {
                 </Fade>
 
                 <Fade bottom>
-                  <div class=" rounded-lg shadow-lg md:p-12 p-5 flex flex-col justify-center items-center">
-                    <div class="mb-8 p-1 border-2 border-custom-indigo rounded-full">
-                      <img
+                  <div className=" rounded-lg shadow-lg md:p-12 p-5 flex flex-col justify-center items-center">
+                    <div className="mb-8 p-1 border-2 border-custom-indigo rounded-full">
+                      <Image
                         className="object-center object-cover rounded-full"
-                        src="https://bestprofilepictures.com/wp-content/uploads/2021/06/Anonymous-Profile-Photo-1.jpg"
+                        src={akshat}
                         alt="photo"
-                        width={150}
                         height={150}
+                        width={150}
                       />
                     </div>
-                    <div class="text-center">
-                      <p class="text-xl text-white font-bold mb-2">
+                    <div className="text-center">
+                      <p className="text-xl text-white font-bold mb-2">
                         Akshat Jindal
                       </p>
-                      <p class="text-base text-slate-400 font-extrabold">
+                      <p className="text-base text-slate-400 font-extrabold">
                         Backend Developer
                       </p>
                     </div>
