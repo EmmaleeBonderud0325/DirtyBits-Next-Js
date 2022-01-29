@@ -3,7 +3,7 @@ import { CreateAxiosRequest } from "./CreateAxiosRequest";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-// const PROBLEM_URL = "https://db-code.herokuapp.com/";
+// const PROBLEM_URL = "http://localhost:8000/";
 const PROBLEM_URL = process.env.NEXT_PUBLIC_PROBLEM_URL;
 
 const localhost = "http://localhost:8000/";
@@ -54,6 +54,10 @@ export const verifyVerificationCode = axios.create({
 
 export const AddProblem = CreateAxiosRequest(
   PROBLEM_URL + "problems/addProblem"
+);
+
+export const UpdateProblem = CreateAxiosRequest(
+  PROBLEM_URL + "problems/updateProblem"
 );
 
 export const uploadTestCases = axios.create({
