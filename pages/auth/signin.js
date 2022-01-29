@@ -316,6 +316,7 @@ function Signin(props) {
                       transition ease-in duration-500
                       ${isDisabled && "opacity-50 cursor-not-allowed"}
                     `}
+                    autofocus
                   >
                     {props.signInSpinner ? (
                       <>

@@ -78,11 +78,11 @@ export const googleLogin = (auth_token) => async (dispatch, _) => {
 };
 
 export const signoutUser = (redirectOnSignout) => async (dispatch, _) => {
-  try {
-    logoutUser.post("/", { refresh_token: Cookies.get("refresh") });
-  } catch (err) {
-    console.error("error");
-  }
+  // try {
+  //   logoutUser.post("/", { refresh_token: Cookies.get("refresh") });
+  // } catch (err) {
+  //   console.error("error");
+  // }
   dispatch(
     updateUserinfo({
       is_logged_in: false,
