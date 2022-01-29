@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { uploadTestCases } from "../api/apis";
 import uuid from "react-uuid";
 import _ from "lodash";
@@ -7,35 +7,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { TiPlus } from "react-icons/ti";
 import { useDispatch } from "react-redux";
-import {
-  updateProblemTitle,
-  updateProblemNote,
-  updateProblemStatement,
-  updateProblemInputFormat,
-  updateProblemContraints,
-  updateProblemOutputFormat,
-  updateProblemMemoryLimit,
-  updateProblemTimeLimit,
-  updateProblemLevel,
-  updateProblemTags,
-} from "../../redux/actions";
+import { resetProblemPageData } from "../../redux/actions";
 
 export const Page2 = (props) => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    return () => {
-      dispatch(updateProblemTitle(""));
-      dispatch(updateProblemNote(""));
-      dispatch(updateProblemStatement(""));
-      dispatch(updateProblemInputFormat(""));
-      dispatch(updateProblemContraints(""));
-      dispatch(updateProblemOutputFormat(""));
-      dispatch(updateProblemMemoryLimit(null));
-      dispatch(updateProblemTimeLimit(null));
-      dispatch(updateProblemLevel("Difficulty"));
-      dispatch(updateProblemTags([]));
-    };
-  }, []);
   let [customTestCases, changeCustomTestCases] = useState([{ id: uuid() }]);
   let [testCases, changeTestCases] = useState([{ id: uuid() }]);
   const addNewFileInputSC = (e) => {
@@ -175,6 +150,7 @@ export const Page2 = (props) => {
         .then((result) => {
           if (result.status === 200) {
             props.setActiveIndex(0);
+            dispatch(resetProblemPageData());
           }
         });
     } catch (err) {

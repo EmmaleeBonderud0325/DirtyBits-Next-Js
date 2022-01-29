@@ -37,7 +37,11 @@ const StepsDemo = () => {
           readOnly={false}
         />
         {activeIndex === 0 ? (
-          <Page1 setProblemId={setProblemId} setActiveIndex={setActiveIndex} />
+          <Page1
+            problemId={problemId}
+            setProblemId={setProblemId}
+            setActiveIndex={setActiveIndex}
+          />
         ) : (
           <Page2 problemId={problemId} setActiveIndex={setActiveIndex} />
         )}

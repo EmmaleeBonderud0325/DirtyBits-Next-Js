@@ -18,7 +18,7 @@ import {
   updateProblemLevel,
 } from "../../redux/actions";
 import MultiSelect from "./MultiSelect";
-import { AddProblem } from "../api/apis";
+import { AddProblem, UpdateProblem } from "../api/apis";
 import { TextAreaComponent } from "./TextAreaComponent";
 import { InputComponent } from "./InputComponent";
 
@@ -33,15 +33,28 @@ function Page1(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await AddProblem.post("/", { data: props.problemData })
-        .then((result) => {
-          console.log(result.data);
-          props.setProblemId(result.data["id"]);
-          props.setActiveIndex(1);
+      if (props.problemId === null) {
+        await AddProblem.post("/", { data: props.problemData })
+          .then((result) => {
+            console.log(result.data);
+            props.setProblemId(result.data["id"]);
+            props.setActiveIndex(1);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        await UpdateProblem.post("/", {
+          data: { ...props.problemData, id: props.problemId },
         })
-        .catch((err) => {
-          console.log(err);
-        });
+          .then((result) => {
+            console.log(result.data);
+            props.setActiveIndex(1);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     } catch (e) {
       console.error("Token Error");
     }
@@ -66,6 +79,7 @@ function Page1(props) {
                   placeholder={"Title"}
                 />
                 <TextEditor
+                  initialValue={props.problemData.problem_statement}
                   label="Problem Statement"
                   dispatch={updateProblemStatement}
                 />
@@ -75,14 +89,17 @@ function Page1(props) {
                   dispatch={updateProblemNote}
                 />
                 <TextEditor
+                  initialValue={props.problemData.input_format}
                   label="Input Format"
                   dispatch={updateProblemInputFormat}
                 />
                 <TextEditor
+                  initialValue={props.problemData.constraints}
                   label="Constraints"
                   dispatch={updateProblemContraints}
                 />
                 <TextEditor
+                  initialValue={props.problemData.output_format}
                   label="Output Format"
                   dispatch={updateProblemOutputFormat}
                 />

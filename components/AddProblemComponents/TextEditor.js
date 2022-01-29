@@ -10,7 +10,7 @@ export const TextEditor = (props) => {
       </label>
       <Editor
         apiKey="g9fbihack52f29u89rqqazv3me0jk3xak5aged47rn1d7aaq"
-        initialValue=""
+        value={props.initialValue}
         init={{
           selector: "textarea#file-picker",
           height: 300,

@@ -221,3 +221,16 @@ export const getTags = () => async (dispatch, getState) => {
     console.error(err.message);
   }
 };
+
+export const resetProblemPageData = (dispatch, _) => {
+  dispatch(updateProblemTitle(""));
+  dispatch(updateProblemNote(""));
+  dispatch(updateProblemStatement(""));
+  dispatch(updateProblemInputFormat(""));
+  dispatch(updateProblemContraints(""));
+  dispatch(updateProblemOutputFormat(""));
+  dispatch(updateProblemMemoryLimit(null));
+  dispatch(updateProblemTimeLimit(null));
+  dispatch(updateProblemLevel("Difficulty"));
+  dispatch(updateProblemTags([]));
+};
