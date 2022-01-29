@@ -31,6 +31,7 @@ import {
   InputTestCasesReducer,
   OutputTestCasesReducer,
 } from "./ProblemPageReducers/TestCaseReducer";
+import { TagsReducer } from "./Tags";
 
 export default combineReducers({
   userData: userDataReducer,
@@ -56,4 +57,5 @@ export default combineReducers({
   githubLoginSpinner: githubLoginSpinnerReducer,
   googleLoginSpinner: googleLoginSpinnerReducer,
   loginInSpinner: simpleLoginSpinnerReducer,
+  tags: TagsReducer,
 });

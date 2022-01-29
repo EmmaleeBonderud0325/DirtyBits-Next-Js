@@ -311,32 +311,41 @@ function signup(props) {
       </Head>
       <ToastContainer theme="dark" />
       <div class="loginSignUp">
-        <div class="absolute w-60 h-60 rounded-xl bg-custom-indigo -top-5 -left-16 z-0 transform rotate-45 hidden md:block"></div>
-        <div class="absolute w-48 h-48 rounded-xl bg-custom-indigo -bottom-10 transform rotate-12 hidden md:block"></div>
-        <div class="w-40 h-40 absolute bg-custom-indigo rounded-full top-0 right-12 hidden md:block"></div>
-        <div class="w-20 h-40 absolute bg-custom-indigo rounded-full bottom-20 right-10 transform rotate-45 hidden md:block"></div>
-        <div class="absolute md:bg-gradient-to-b from-black to-black opacity-75 lg:inset-0 z-0"></div>
-        <div class="min-h-screen sm:flex sm:flex-row mx-0 justify-center">
-          <div class="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl z-10">
-            <div class="self-start hidden lg:flex flex-col  text-white ">
+        <div className="absolute w-60 h-60 rounded-xl bg-custom-indigo -top-5 -left-16 z-0 transform rotate-45 hidden md:hidden lg:block"></div>
+        <div className="absolute w-48 h-48 rounded-xl bg-custom-indigo -bottom-10 transform rotate-12 hidden md:hidden lg:block"></div>
+        <div className="w-40 h-40 absolute bg-custom-indigo rounded-full top-0 right-12 hidden md:hidden lg:block"></div>
+        <div className="w-20 h-40 absolute bg-custom-indigo rounded-full bottom-20 right-10 transform rotate-45 hidden md:hidden lg:block"></div>
+
+        <div className="absolute md:bg-gradient-to-b from-black to-black opacity-75 lg:inset-0 z-0"></div>
+
+        <div className="lg:min-h-screen lg:flex lg:justify-center lg:space-x-48 p-8 space-y-5 lg:z-10">
+          {/* HEADING FOR SMALL SIZE SCREENS */}
+          <div className="text-white text-xl text-center lg:hidden">
+            Welcome to{" "}
+            <span className="text-custom-indigo text-2xl font-semibold">
+              DirtyBits
+            </span>
+          </div>
+          {/* HEADING FOR LARGER SIZE SCREENS */}
+          <div className="flex-col lg:flex hidden  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
+            <div className="self-start hidden lg:flex flex-col  text-white">
               <SmoothList>
                 <h1 className="loginSignUpHeading text-transparent bg-clip-text bg-gradient-to-r from-[#AE67FA] to-[#F49867]">
                   Hola,
                 </h1>
                 <br />
-                <p className="text-6xl ">
-                  Welcome to{" "}
-                  <span>
-                    <Link href="/">
-                      <a className="text-custom-indigo font-bold font-dance text-7xl">
-                        DirtyBits
-                      </a>
-                    </Link>
-                  </span>
-                </p>
+                <div className=" flex space-x-6">
+                  <h2 className="text-white text-6xl">
+                    Welcome to{" "}
+                    <span className="text-custom-indigo font-extrabold">
+                      <a href="/">DirtyBits</a>
+                    </span>
+                  </h2>
+                </div>
               </SmoothList>
             </div>
           </div>
+
           <div class="flexContainer self-center  z-10">
             <div class="p-5 md:p-9 bg-white mx-auto rounded-2xl w-100 -mt-14 mb-4 lg:m-0 md:m-0">
               <div class="mb-4">

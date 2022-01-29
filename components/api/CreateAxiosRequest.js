@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { refreshTokenApi } from "./apis";
-import { signoutUser } from "../../redux/actions/authenticate";
+// import { signoutUser } from "../../redux/actions/authenticate";
 import Router from "next/router";
 
 export const CreateAxiosRequest = (baseURL) => {
@@ -11,6 +11,7 @@ export const CreateAxiosRequest = (baseURL) => {
       "Content-Type": "application/json",
     },
   });
+
   newInstance.interceptors.request.use(
     (config) => {
       config.headers["Authorization"] = "JWT " + Cookies.get("access");
@@ -20,13 +21,14 @@ export const CreateAxiosRequest = (baseURL) => {
       return Promise.reject(error);
     }
   );
+
   newInstance.interceptors.response.use(
     (response) => response,
     (error) => {
       const originalRequest = error.config;
       if (
         error.response.status === 401 &&
-        originalRequest.url === baseURL + "token/refresh/"
+        originalRequest.url === baseURL + "auth/refresh/"
       ) {
         Router.push("/auth/signin");
         return Promise.reject(error);
@@ -52,15 +54,16 @@ export const CreateAxiosRequest = (baseURL) => {
           .catch((err) => {
             // LOGOUT AND REDIRECT TO SIGNIN AGAIN
             console.log(err);
-            signoutUser(false);
-            Router.push("/auth/signin");
+            // signoutUser(false);
+            // Router.push("/auth/signin");
           });
       } else {
-        signoutUser(false);
-        Router.push("/auth/signin");
+        // signoutUser(false);
+        // Router.push("/auth/signin");
         return Promise.reject(error);
       }
     }
   );
+
   return newInstance;
 };

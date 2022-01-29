@@ -3,8 +3,9 @@ import Hero from "../components/Hero";
 import Head from "next/head";
 import Pricing from "../components/Pricing";
 import Features from "../components/Features";
+import Homepage from "../components/Homepage/Homepage";
 
-function index() {
+function Index() {
   return (
     <>
       <Head>
@@ -14,11 +15,14 @@ function index() {
           content="DirtyBits is the platform to help you enhance your skills, expand your knowledge and prepare for technical interviews."
         ></meta>
       </Head>
-      <Hero />
-      <Features />
-      <Pricing />
+      
+      <Homepage/>
+        {/* <Hero /> */}
+        {/* <Features /> */}
+        {/* <Team/> */}
+        {/* <Pricing /> */}
     </>
   );
 }
 
-export default index;
+export default Index;

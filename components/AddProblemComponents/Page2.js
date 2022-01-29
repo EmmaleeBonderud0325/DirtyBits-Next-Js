@@ -4,7 +4,6 @@ import uuid from "react-uuid";
 import _ from "lodash";
 import Head from "next/head";
 import { ToastContainer, toast } from "react-toastify";
-import { CloudUploadOutlined } from "@mui/icons-material";
 import "react-toastify/dist/ReactToastify.min.css";
 import { TiPlus } from "react-icons/ti";
 import { useDispatch } from "react-redux";
@@ -83,14 +82,14 @@ export const Page2 = (props) => {
     const sci = "sc-" + n.id + "-i";
     const sco = "sc-" + n.id + "-o";
     return (
-      <div className="overflow-hidden bg-slate-800 w-full p-4 space-y-3 rounded-2xl shadow-2xl">
+      <div className="overflow-hidden bg-slate-800 p-4 space-y-3 rounded-2xl shadow-2xl">
         <h1 className="lg:text-3xl text-white font-bold">
           Test Case - {idx + 1}
         </h1>
         <div className="each-custom space-y-2" id={n.id}>
           <div className="lg:flex justify-center lg:space-x-10">
             <div className="lg:space-x-6 ">
-              <label className="text-lg font-bold">Input</label>
+              <label className="text-lg font-bold text-white">Input</label>
               <input
                 type="file"
                 id={sci}
@@ -98,9 +97,9 @@ export const Page2 = (props) => {
                 className="filebtn"
               ></input>
             </div>
-            <span className="border-r-2 border-custom-bg hidden lg:block"></span>
-            <div className="lg:space-x-6 border-custom-bg">
-              <label className="text-lg font-bold">Output</label>
+            <span className="border-r-2 border-custom-indigo hidden lg:block"></span>
+            <div className="lg:space-x-6 border-custom-indigo">
+              <label className="text-lg font-bold text-white">Output</label>
               <input
                 type="file"
                 id={sco}
@@ -113,7 +112,7 @@ export const Page2 = (props) => {
             <button
               id={n.id}
               onClick={(e) => deleteFileSC(e)}
-              className="px-3 pb-1  bg-transparent rounded-full hover:bg-white hover:text-black transition-all duration-200 text-xl ease-in-out font-bold"
+              className="px-3 pb-1 text-white  bg-transparent rounded-full hover:bg-white hover:text-black transition-all duration-200 text-xl ease-in-out font-bold"
             >
               x
             </button>
@@ -132,7 +131,7 @@ export const Page2 = (props) => {
         <div className="each-custom" id={n.id}>
           <div className="lg:flex justify-center lg:space-x-10">
             <div className="lg:space-x-6 ">
-              <label className="text-lg font-bold">Input</label>
+              <label className="text-lg font-bold text-white">Input</label>
               <input
                 type="file"
                 id={tci}
@@ -140,9 +139,9 @@ export const Page2 = (props) => {
                 className="filebtn"
               ></input>
             </div>
-            <span className="border-r-2 border-custom-bg hidden lg:block"></span>
-            <div className="lg:space-x-6 border-custom-bg">
-              <label className="text-lg font-bold">Output</label>
+            <span className="border-r-2 border-custom-indigo hidden lg:block"></span>
+            <div className="lg:space-x-6 border-custom-indigo">
+              <label className="text-lg font-bold text-white">Output</label>
               <input
                 type="file"
                 id={tco}
@@ -155,7 +154,7 @@ export const Page2 = (props) => {
             <button
               id={n.id}
               onClick={(e) => deleteFileTC(e)}
-              className="px-3 pb-1  bg-transparent rounded-full hover:bg-white hover:text-black transition-all duration-200 text-xl ease-in-out font-bold"
+              className="px-3 pb-1  bg-transparent rounded-full hover:bg-white hover:text-black transition-all duration-200 text-xl ease-in-out font-bold text-white"
             >
               x
             </button>
@@ -215,13 +214,8 @@ export const Page2 = (props) => {
       <Head>
         <title>Add Test Cases</title>
       </Head>
-      <div className="lg:container m-auto">
-        <div className="lg:pl-36 p-5 space-y-14">
-          <h1 className="font-extrabold text-white text-center text-4xl lg:text-[3rem] lg:text-left">
-            Add <span className="text-custom-bg">Problems</span>{" "}
-            <CloudUploadOutlined className="text-[5rem]" />
-          </h1>
-          <hr />
+      <div className="">
+        <div className="space-y-14">
           <h3 className="font-bold text-white text-center text-2xl lg:text-[2rem] lg:text-left">
             Sample Test Cases
           </h3>
