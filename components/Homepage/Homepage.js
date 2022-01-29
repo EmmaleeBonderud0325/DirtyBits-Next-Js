@@ -11,6 +11,8 @@ import { MdLeaderboard } from "react-icons/md";
 import { GiLightningShield } from "react-icons/gi";
 import { FaBlog } from "react-icons/fa";
 import { FiLayers } from "react-icons/fi";
+import himanshu from "../../public/himanshu.jpeg";
+import mohit from "../../public/mohit.jpg";
 
 import Feature from "../Feature";
 
@@ -162,59 +164,67 @@ export default function Homepage() {
               </div>
               <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 <Fade bottom>
-                  <div class="bg-custom-indigo  rounded-lg shadow-lg flex md:p-12 p-5 flex-col justify-center items-center">
-                    <div class="mb-8">
-                      <img
-                        class="object-center object-cover rounded-full h-36 w-36"
-                        src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80"
+                  <div class="rounded-lg shadow-lg flex md:p-12 p-5 flex-col justify-center items-center">
+                    <div class="mb-8 round p-1 border-2 border-custom-indigo rounded-full">
+                      <Image
+                        class="object-center object-cover rounded-full"
+                        src={himanshu}
                         alt="photo"
+                        height={150}
+                        width={150}
                       />
                     </div>
                     <div class="text-center">
                       <p class="text-xl text-white font-bold mb-2">
-                        Dany Bailey
+                        Himanshu Dhiman
                       </p>
-                      <p class="text-base text-black font-extrabold">
-                        Software Engineer
+                      <p class="text-base text-slate-400 font-extrabold">
+                        Backend Developer / DevOps
                       </p>
                     </div>
                   </div>
                 </Fade>
 
                 <Fade bottom>
-                  <div class="bg-custom-indigo  rounded-lg shadow-lg md:p-12 p-5 flex flex-col justify-center items-center">
-                    <div class="mb-8">
-                      <img
-                        class="object-center object-cover rounded-full h-36 w-36"
-                        src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80"
+                  <div class=" rounded-lg shadow-lg md:p-12 p-5 flex flex-col justify-center items-center">
+                    <div class="mb-8 p-1 border-2 border-custom-indigo rounded-full">
+                      <Image
+                        class="object-center object-cover rounded-full"
+                        src={mohit}
                         alt="photo"
+                        height={150}
+                        width={150}
                       />
                     </div>
                     <div class="text-center">
                       <p class="text-xl text-white font-bold mb-2">
-                        Lucy Carter
+                        Mohit Singh Bisht
                       </p>
-                      <p class="text-base text-black font-extrabold">
-                        Graphic Designer
+                      <p class="text-base text-slate-400 font-extrabold">
+                        Frontend Developer / DevOps
                       </p>
                     </div>
                   </div>
                 </Fade>
 
                 <Fade bottom>
-                  <div class="bg-custom-indigo  rounded-lg shadow-lg md:p-12 p-5 flex flex-col justify-center items-center">
-                    <div class="mb-8">
+                  <div class=" rounded-lg shadow-lg md:p-12 p-5 flex flex-col justify-center items-center">
+                    <div class="mb-8 p-1 border-2 border-custom-indigo rounded-full">
                       <img
-                        class="object-center object-cover rounded-full h-36 w-36"
-                        src="https://images.unsplash.com/photo-1499952127939-9bbf5af6c51c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1176&q=80"
+                        className="object-center object-cover rounded-full"
+                        src="https://bestprofilepictures.com/wp-content/uploads/2021/06/Anonymous-Profile-Photo-1.jpg"
                         alt="photo"
+                        width={150}
+                        height={150}
                       />
                     </div>
                     <div class="text-center">
                       <p class="text-xl text-white font-bold mb-2">
-                        Jade Bradley
+                        Akshat Jindal
                       </p>
-                      <p class="text-base text-black font-extrabold">Dev Ops</p>
+                      <p class="text-base text-slate-400 font-extrabold">
+                        Backend Developer
+                      </p>
                     </div>
                   </div>
                 </Fade>
