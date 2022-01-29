@@ -48,11 +48,7 @@ function Problem(props) {
         difficulty: ["E"],
       };
       console.log("data sent", data);
-      const response = await filterProblemData.get("/", {
-        keyword: "binar",
-        tags: [1, 2, 3],
-        difficulty: ["E", "M"],
-      });
+      const response = await filterProblemData.post("/", data);
       console.log("response problem", response.data);
     }, 2000);
     setTimeoutId(timeoutId);

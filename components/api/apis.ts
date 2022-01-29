@@ -75,8 +75,9 @@ export const getProblemsStatus = CreateAxiosRequest(
 export const getProblem = axios.create({
   baseURL: PROBLEM_URL + "problems/getProblem",
 });
+
 export const filterProblemData = axios.create({
-  baseURL: PROBLEM_URL + "problems/getFilteredProblemsList/",
+  baseURL: PROBLEM_URL + "problems/getFilteredProblemsList",
 });
 
 export const runCode = CreateAxiosRequest(PROBLEM_URL + "core/compilecode");
