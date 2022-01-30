@@ -36,12 +36,11 @@ function Table(props) {
     return (
       <tr key={problem.id}>
         <td className="table-data text-white border-b border-slate-800">
-          <a
-            href={`/problem/${problem.id}/${problem.title}`}
-            className="text-white hover:bg-blue-dark"
-          >
-            {idx + 1} . {problem.title}
-          </a>
+          <Link href={`/problem/${problem.id}/${problem.title}`}>
+            <a className="text-white hover:bg-blue-dark">
+              {idx + 1} . {problem.title}
+            </a>
+          </Link>
         </td>
         <td className="py-4 px-6 border-b border-slate-800">
           <p
