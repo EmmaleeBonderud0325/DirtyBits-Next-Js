@@ -3,7 +3,7 @@ import { connect, useDispatch } from "react-redux";
 import moment from "moment";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { AiOutlineCloseCircle, AiOutlineInfoCircle } from "react-icons/ai";
-import { Spin } from "antd";
+import { Loading } from "@nextui-org/react";
 
 import { getSubmissionsListAction } from "../../redux/actions/ProblemPage";
 
@@ -124,7 +124,7 @@ const Submission = (props) => {
           {props.submissionList === null && (
             <div className="text-center w-full">
               <p className="text-white font-bold text-2xl p-4">
-                <Spin size="large" tip="Loading..."></Spin>
+                <Loading type="points-opacity" size="xl" />
               </p>
             </div>
           )}

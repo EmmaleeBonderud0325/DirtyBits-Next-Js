@@ -1,5 +1,5 @@
 import { SearchOutlined } from "@mui/icons-material";
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { connect } from "react-redux";
 import Table from "../components/Table";
@@ -13,6 +13,7 @@ import CompanyTags from "./CompanyTags/CompanyTags";
 import { useSelector } from "react-redux";
 import { MultiSelect } from "primereact/multiselect";
 import { filterProblemData } from "./api/apis";
+import WrapperLayout from "../Layout/Layout";
 
 import "primereact/resources/themes/mdc-dark-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css"; //core css
@@ -71,7 +72,7 @@ function Problem(props) {
   };
 
   return (
-    <div className="space-y-8 container p-10 mx-auto max-w-screen-xl">
+    <WrapperLayout>
       <motion.div animate={{ y: [20, 0, 0] }}>
         <div className="flex gap-10">
           <CompanyTags icon={google} title="Top google Questions" />
@@ -157,7 +158,7 @@ function Problem(props) {
       <div className="flex flex-col">
         <Table list={questionsList} />
       </div>
-    </div>
+    </WrapperLayout>
   );
 }
 

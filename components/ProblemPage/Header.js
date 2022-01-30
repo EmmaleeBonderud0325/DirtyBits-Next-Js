@@ -3,7 +3,6 @@ import { connect, useDispatch } from "react-redux";
 import { MdSaveAlt } from "react-icons/md";
 import { AiOutlineUpload } from "react-icons/ai";
 import { BsCloudArrowUp } from "react-icons/bs";
-import { Tooltip } from "antd";
 import _ from "lodash";
 
 import { download } from "./Helper2";
@@ -19,8 +18,6 @@ import { AiOutlineSync } from "react-icons/ai";
 const jsonData = require("./data.json");
 
 import Dropdown2 from "./Dropdown2";
-import FontDropdown from "./FontDropdown";
-import { message } from "antd";
 import Image from "next/image";
 import refresh from "../../public/refresh.svg";
 import downloadIcon from "../../public/download.svg";
@@ -135,74 +132,66 @@ function Header(props) {
       />
       {/* TOP RIGHT ICONS */}
       <div className="space-x-4 flex items-center transition-all ease-in-out">
-        <Tooltip className="bg-none" placement="top" title="Save to Cloud">
-          {/* <BsCloudArrowUp
+        {/* <BsCloudArrowUp
             onClick={uploadCloud}
             className="text-white text-lg font-bold hover:cursor-pointer mr-2"
           /> */}
-          <Image
-            onClick={uploadCloud}
-            className="cursor-pointer"
-            src={uploadquestion}
-            width={20}
-            height={20}
-          />
-        </Tooltip>
+        <Image
+          onClick={uploadCloud}
+          className="cursor-pointer"
+          src={uploadquestion}
+          width={20}
+          height={20}
+        />
 
         <div>
-          <Tooltip className="bg-none" placement="top" title="Upload file">
-            <label htmlFor="file-input">
-              {/* <AiOutlineUpload className="text-white text-lg font-bold hover:cursor-pointer mr-2" /> */}
-              <Image
-                className="cursor-pointer"
-                src={insert}
-                width={20}
-                height={20}
-              />
-            </label>
-            <input
-              type="file"
-              accept=".cpp, .c, .py, .java"
-              id="file-input"
-              onChange={(e) => uploadedfile(e)}
-              className="hidden "
+          <label htmlFor="file-input">
+            {/* <AiOutlineUpload className="text-white text-lg font-bold hover:cursor-pointer mr-2" /> */}
+            <Image
+              className="cursor-pointer"
+              src={insert}
+              width={20}
+              height={20}
             />
-          </Tooltip>
+          </label>
+          <input
+            type="file"
+            accept=".cpp, .c, .py, .java"
+            id="file-input"
+            onChange={(e) => uploadedfile(e)}
+            className="hidden "
+          />
         </div>
 
         <div>
-          <Tooltip className="bg-none" placement="top" title="Download Code">
-            {/* <MdSaveAlt
+          {/* <MdSaveAlt
             onClick={() =>
               download("code" + props.currLang.ext, props.editorValue)
             }
             className="text-white text-lg font-bold hover:cursor-pointer !mr-2"
           /> */}
-            <Image
-              onClick={() =>
-                download("code" + props.currLang.ext, props.editorValue)
-              }
-              className="cursor-pointer"
-              src={downloadIcon}
-              width={20}
-              height={20}
-            />
-          </Tooltip>
+          <Image
+            onClick={() =>
+              download("code" + props.currLang.ext, props.editorValue)
+            }
+            className="cursor-pointer"
+            src={downloadIcon}
+            width={20}
+            height={20}
+          />
         </div>
         <div>
-          <Tooltip className="bg-none group" placement="top" title="Reset Code">
-            {/* <AiOutlineSync
+          {/* <AiOutlineSync
             onClick={() => resetCode()}
             className="text-white text-lg font-bold hover:cursor-pointer"
           /> */}
-            <Image
-              onClick={() => resetCode()}
-              className="cursor-pointer"
-              src={refresh}
-              width={20}
-              height={20}
-            />
-          </Tooltip>
+          <Image
+            onClick={() => resetCode()}
+            className="cursor-pointer"
+            src={refresh}
+            width={20}
+            height={20}
+          />
         </div>
 
         <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 z-50">

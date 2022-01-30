@@ -10,8 +10,8 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import GitHubLogin from "react-github-login";
 import { AiFillGithub } from "react-icons/ai";
-import { LoadingOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
+
+import { Loading } from "@nextui-org/react";
 
 import { updateSignInSpinner, updateUserinfo } from "../../redux/actions";
 import Input from "../../components/Input";
@@ -23,7 +23,7 @@ import { githubLogin, googleLogin } from "../../redux/actions/authenticate";
 function Signin(props) {
   const dispatch = useDispatch();
   const router = useRouter();
-  const antIcon = <LoadingOutlined style={{ fontSize: 20 }} spin />;
+  const antIcon = <Loading type="points-opacity" size="sm" />;
   let [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -320,11 +320,10 @@ function Signin(props) {
                   >
                     {props.signInSpinner ? (
                       <>
-                        <Spin indicator={antIcon} className="mr-10" />
-                        <span>Signing in...</span>
+                        <span>{antIcon}</span>
                       </>
                     ) : (
-                      <span>Sign In</span>
+                      <span className="text-sm font-light">Sign In</span>
                     )}{" "}
                   </button>
 
@@ -338,13 +337,12 @@ function Signin(props) {
                       >
                         {props.googleSpinner ? (
                           <>
-                            <Spin indicator={antIcon} className="mr-10" />
-                            <span>Signing in...</span>
+                            <span>{antIcon}</span>
                           </>
                         ) : (
                           <>
                             <FcGoogle />
-                            <span>Sign In </span>
+                            <span className="text-sm font-light">Sign In</span>
                           </>
                         )}
                       </button>
@@ -369,13 +367,12 @@ function Signin(props) {
                       <>
                         {props.githubSpinner ? (
                           <>
-                            <Spin indicator={antIcon} className="mr-10" />
-                            <span>Signing in...</span>
+                            <span>{antIcon}</span>
                           </>
                         ) : (
                           <>
                             <AiFillGithub />
-                            <span>Sign In </span>
+                            <span className="text-sm font-light">Sign In</span>
                           </>
                         )}
                       </>

@@ -14,7 +14,7 @@ import { FiLayers } from "react-icons/fi";
 import himanshu from "../../public/himanshu.jpeg";
 import mohit from "../../public/mohit.jpg";
 import akshat from "../../public/akshat.jpeg";
-
+import { Loading, Button } from "@nextui-org/react";
 import Feature from "../Feature";
 
 export default function Homepage() {
@@ -93,8 +93,12 @@ export default function Homepage() {
         <div className="w-full mt-[20rem] h-full md:h-[1200px] ">
           <div className="space-y-16">
             <div className="lg:text-center space-y-16">
-              <h2 className="text-base lg:text-4xl text-center text-custom-indigo font-semibold tracking-wide uppercase">
-                Online Coding Platform
+              <h2 className="font-bold text-3xl md:text-4xl lg:text-5xl font-heading text-white capitalize">
+                Online{" "}
+                <span className="text-custom-indigo tracking-wider">
+                  Coding
+                </span>{" "}
+                Platform
               </h2>
               <p className="mt-2 text-3xl leading-8 font-bold tracking-tight text-white sm:text-2xl text-center uppercase">
                 Platform To Enhance Your Skills
@@ -241,7 +245,7 @@ export default function Homepage() {
                 <Fade bottom>
                   <div className="text-center font-semibold">
                     <h1 className="text-5xl">
-                      <span className="text-custom-indigo tracking-wide font-bold md:text-4xl lg:text-5xl">
+                      <span className="font-bold text-3xl md:text-4xl lg:text-5xl font-heading text-custom-indigo tracking-wider capitalize">
                         Flexible{" "}
                       </span>
                       <span className="text-white font-bold">Plans</span>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import SplitPane, { Pane } from "react-split-pane";
 import { useDispatch, connect } from "react-redux";
-import { Spin } from "antd";
+import { Loading } from "@nextui-org/react";
 
 import Editor from "./Editor";
 import Tabs from "../Tabs";
@@ -9,6 +9,7 @@ import { unMountEditorPage } from "../../redux/actions/ProblemPage";
 
 function Panel2(props) {
   const dispatch = useDispatch();
+  console.log("rendered panel2");
 
   useEffect(() => {
     return () => {
@@ -58,7 +59,7 @@ function Panel2(props) {
           ) : (
             <div className="h-[100vh] flex justify-center items-center w-full">
               <p className="text-white font-bold text-2xl p-4">
-                <Spin size="large" tip="Loading..."></Spin>
+                <Loading type="points-opacity" size="xl" />
               </p>
             </div>
           )}

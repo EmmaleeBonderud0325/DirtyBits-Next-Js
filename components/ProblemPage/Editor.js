@@ -3,7 +3,6 @@ import { BsTerminal } from "react-icons/bs";
 import { AiFillGithub } from "react-icons/ai";
 import { MdCreate } from "react-icons/md";
 import { VscRunAll } from "react-icons/vsc";
-import { Modal } from "antd";
 import { FcGoogle } from "react-icons/fc";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
@@ -33,10 +32,9 @@ import {
 import Encodemail from "../Helper/Encodemail";
 import Parsetoken from "../Helper/Parsetoken";
 import Header from "./Header";
-import { Spin } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
 import SmoothList from "react-smooth-list";
 import Image from "next/image";
+import { Loading } from "@nextui-org/react";
 
 let CodeMirror = null;
 if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
@@ -147,7 +145,7 @@ function a11yProps(index) {
 
 const Editor = (props) => {
   const dispatch = useDispatch();
-
+  console.log("editor rendered");
   const [isDisabled, setIsDisabled] = useState(false);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
   let [customInput, setCustomInput] = useState(false);
@@ -372,7 +370,7 @@ const Editor = (props) => {
     console.error("Google Authentication failed !");
   };
 
-  const antIcon = <LoadingOutlined style={{ fontSize: 20 }} spin />;
+  const antIcon = <Loading type="points-opacity" size="sm" />;
   return (
     <div
       style={{ height: "100vh" }}
@@ -411,7 +409,7 @@ const Editor = (props) => {
               disabled={isDisabled}
             >
               {isDisabled ? (
-                <Spin indicator={antIcon} />
+                <span>{antIcon}</span>
               ) : (
                 <VscRunAll className="text-lg group-hover:animate-bounce" />
               )}
@@ -431,7 +429,7 @@ const Editor = (props) => {
         </div>
       </div>
 
-      <Modal
+      {/* <Modal
         title="Login or SignUp to continue..."
         centered
         visible={isModalVisible}
@@ -472,7 +470,7 @@ const Editor = (props) => {
             </span>
           </button>
         </div>
-      </Modal>
+      </Modal> */}
 
       {showConsole && (
         <div className="relative bottom-0 w-full transition-all ease-in-out duration-75 p-2">

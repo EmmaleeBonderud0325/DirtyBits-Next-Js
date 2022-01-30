@@ -1,17 +1,18 @@
 import { createWrapper } from "next-redux-wrapper";
 import type { AppProps } from 'next/app'
-
+import { Toast } from 'primereact/toast';
+import { ToastContainer } from 'react-toastify';
 import Navbar from "../components/Navbar";
 // import Footer from "../components/Footer";
 import { store } from "../redux/store";
 import "../styles/index.css";
 import { useRouter } from "next/router";
-import "antd/dist/antd.css";
 import "../styles/Editor.css";
 import "../styles/tinymce.css";
 import { NextPage } from "next";
-import { ReactNode } from "react";
-
+import { ReactNode, useRef } from "react";
+import { NextUIProvider } from '@nextui-org/react';
+import 'react-toastify/dist/ReactToastify.css';
 
 type Page<P = {}> = NextPage<P> & {
   getLayout?: (page: ReactNode) => ReactNode;
@@ -22,6 +23,7 @@ type Props = AppProps & {
 }
 
 function MyApp({ Component, pageProps }: Props) {
+  
   if (typeof window !== "undefined") {
     import("tw-elements/dist/js/index.min.js");
   }
@@ -41,8 +43,20 @@ function MyApp({ Component, pageProps }: Props) {
   }
   return (
     <>
+    <NextUIProvider>
+      <ToastContainer position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+theme="dark"
+pauseOnHover/>
       <Navbar fixedHeader={fixedTop} bg={background} />
       <Component {...pageProps} />
+    </NextUIProvider>
     </>
   );
 }

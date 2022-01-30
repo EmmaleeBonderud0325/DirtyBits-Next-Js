@@ -1,3 +1,7 @@
+.root {
+  --main-color: #4a76a8;
+}
+
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap");
 
@@ -84,10 +88,53 @@ html {
 
 body {
   font-family: "Lato" !important;
-  background: radial-gradient(
-    circle at 60% 12%,
-    rgba(0, 40, 83, 1) 0%,
-    rgba(4, 12, 24, 1) 100%
+
+  /* ff 3.6+ */
+  background: -moz-linear-gradient(
+    18deg,
+    rgba(35, 1, 83, 1) 0%,
+    rgba(0, 0, 0, 1) 13%,
+    rgba(0, 0, 0, 1) 86%,
+    rgba(38, 8, 83, 1) 100%
+  );
+
+  /* safari 5.1+,chrome 10+ */
+  background: -webkit-linear-gradient(
+    18deg,
+    rgba(35, 1, 83, 1) 0%,
+    rgba(0, 0, 0, 1) 13%,
+    rgba(0, 0, 0, 1) 86%,
+    rgba(38, 8, 83, 1) 100%
+  );
+
+  /* opera 11.10+ */
+  background: -o-linear-gradient(
+    18deg,
+    rgba(35, 1, 83, 1) 0%,
+    rgba(0, 0, 0, 1) 13%,
+    rgba(0, 0, 0, 1) 86%,
+    rgba(38, 8, 83, 1) 100%
+  );
+
+  /* ie 6-9 */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#230153', endColorstr='#260853', GradientType=1 );
+
+  /* ie 10+ */
+  background: -ms-linear-gradient(
+    18deg,
+    rgba(35, 1, 83, 1) 0%,
+    rgba(0, 0, 0, 1) 13%,
+    rgba(0, 0, 0, 1) 86%,
+    rgba(38, 8, 83, 1) 100%
+  );
+
+  /* global 94%+ browsers support */
+  background: linear-gradient(
+    18deg,
+    rgba(35, 1, 83, 1) 0%,
+    rgba(0, 0, 0, 1) 13%,
+    rgba(0, 0, 0, 1) 86%,
+    rgba(38, 8, 83, 1) 100%
   );
   background-attachment: fixed;
 }
@@ -262,4 +309,16 @@ html::-webkit-scrollbar-thumb {
 .ant-message-notice-content {
   background: #1f1f1f !important;
   color: white !important;
+}
+
+.bg-main-color {
+  background-color: var(--main-color);
+}
+
+.text-main-color {
+  color: var(--main-color);
+}
+
+.border-main-color {
+  border-color: var(--main-color);
 }

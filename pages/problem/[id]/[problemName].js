@@ -22,7 +22,7 @@ function ProblemView({ title }) {
   return (
     <div className="text-white">
       <Head>
-        <title>{title}</title>
+        <title>{title ? title : "Loading..."}</title>
       </Head>
       <div>
         <Panel2 />
