@@ -14,6 +14,8 @@ import { connect, useDispatch } from "react-redux";
 import GoogleLogin from "react-google-login";
 import { AiOutlineSend } from "react-icons/ai";
 import terminal from "../../public/terminal.svg";
+import { Modal, Text, Input, Checkbox, Row, Button } from "@nextui-org/react";
+import { Grid } from "@nextui-org/react";
 
 import { base64_encode } from "./Helper2";
 require("codemirror/lib/codemirror.css");
@@ -176,6 +178,10 @@ const Editor = (props) => {
       );
     };
   }, []);
+
+  const closeHandler = () => {
+    setIsModalVisible(false);
+  };
 
   const {
     editorValue,
@@ -429,6 +435,90 @@ const Editor = (props) => {
         </div>
       </div>
 
+      <Modal
+        closeButton
+        blur
+        aria-labelledby="modal-title"
+        open={isModalVisible}
+        onClose={closeHandler}
+        style={{ background: "black", color: "white" }}
+      >
+        <Modal.Header>
+          <Text color="#fff" id="modal-title" size={18}>
+            Welcome to{" "}
+            <Text color="primary" b size={18}>
+              DirtyBits
+            </Text>
+          </Text>
+        </Modal.Header>
+        <Modal.Body>
+          <Input
+            style={{ color: "white" }}
+            clearable
+            bordered
+            fullWidth
+            color="primary"
+            size="lg"
+            placeholder="Email"
+            // contentLeft={<Mail />}
+          />
+          <Input
+            style={{ color: "white" }}
+            clearable
+            bordered
+            fullWidth
+            color="primary"
+            size="lg"
+            placeholder="Password"
+            // contentLeft={<Password />}
+          />
+          <Row justify="space-between">
+            <Checkbox>
+              <Text color="#fff" size={14}>
+                Remember me
+              </Text>
+            </Checkbox>
+            <Text color="#fff" size={14}>
+              Forgot password?
+            </Text>
+          </Row>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button auto flat color="error" onClick={closeHandler}>
+            Close
+          </Button>
+          <Button auto color="secondary" onClick={closeHandler}>
+            Sign in
+          </Button>
+        </Modal.Footer>
+        <Text color="#fff">OR</Text>
+        <div className="pb-3">
+          <Row justify="center">
+            <GoogleLogin
+              clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
+              render={(renderProps) => (
+                <button
+                  onClick={renderProps.onClick}
+                  disabled={renderProps.disabled}
+                  className="social-login-btn w-1/2 border border-white"
+                >
+                  <FcGoogle />
+                  <span>Login with Google</span>
+                </button>
+              )}
+              onSuccess={responseGoogleSuccess}
+              onFailure={responseGoogleFailure}
+              cookiePolicy={"single_host_origin"}
+            />
+          </Row>
+          <Row justify="center">
+            <button className="social-login-btn w-1/2 border border-white">
+              <AiFillGithub />
+              <span>Login with GitHub </span>
+            </button>
+          </Row>
+        </div>
+      </Modal>
       {/* <Modal
         title="Login or SignUp to continue..."
         centered

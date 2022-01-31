@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 import { TiPlus } from "react-icons/ti";
 import { useDispatch } from "react-redux";
 import { resetProblemPageData } from "../../redux/actions";
+import { Button } from "@nextui-org/react";
 
 export const Page2 = (props) => {
   const dispatch = useDispatch();
@@ -58,7 +59,7 @@ export const Page2 = (props) => {
     const sco = "sc-" + n.id + "-o";
     return (
       <div className="overflow-hidden bg-slate-800 p-4 space-y-3 rounded-2xl shadow-2xl">
-        <h1 className="lg:text-3xl text-white font-bold">
+        <h1 className="text-xl lg:text-[1.5rem] text-white font-light">
           Test Case - {idx + 1}
         </h1>
         <div className="each-custom space-y-2" id={n.id}>
@@ -102,7 +103,9 @@ export const Page2 = (props) => {
     const tco = "tc-" + n.id + "-o";
     return (
       <div className="overflow-hidden bg-slate-800 p-4 space-y-3 rounded-2xl shadow-2xl">
-        <h1 className="text-3xl text-white">Test Case - {idx + 1}</h1>
+        <h1 className="text-xl lg:text-[1.5rem] font-light text-white">
+          Test Case - {idx + 1}
+        </h1>
         <div className="each-custom" id={n.id}>
           <div className="lg:flex justify-center lg:space-x-10">
             <div className="lg:space-x-6 ">
@@ -192,14 +195,14 @@ export const Page2 = (props) => {
       </Head>
       <div className="">
         <div className="space-y-14">
-          <h3 className="font-bold text-white text-center text-2xl lg:text-[2rem] lg:text-left">
+          <h3 className="font-light text-white text-center text-2xl lg:text-[1.5rem] lg:text-left">
             Sample Test Cases
           </h3>
           {renderListSC}
           <button className="btn-purple" onClick={(e) => addNewFileInputSC(e)}>
             <TiPlus />{" "}
           </button>
-          <h3 className="font-bold text-white text-center text-2xl lg:text-[2rem] lg:text-left">
+          <h3 className="font-light text-white text-center text-2xl lg:text-[1.5rem] lg:text-left">
             Test Cases
           </h3>
           {renderListTC}
@@ -207,12 +210,15 @@ export const Page2 = (props) => {
             <TiPlus />{" "}
           </button>
           <div>
-            <button
+            {/* <button
               className="btn-purple text-white px-5 text-lg"
               onClick={submitted}
             >
               Upload{" "}
-            </button>
+            </button> */}
+            <Button onClick={submitted} auto color="gradient" rounded bordered>
+              Upload
+            </Button>
           </div>
         </div>
       </div>

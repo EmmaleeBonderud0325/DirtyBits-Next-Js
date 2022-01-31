@@ -14,7 +14,7 @@ const Feature = ({ name, description, icon, colorString, borderColor }) => {
                 {icon}
               </span>
             </div>
-            <h3 className="text-lg text-white tracking-wider font-semibold">
+            <h3 className="text-lg text-white tracking-wider font-light">
               {name}
             </h3>
           </div>
@@ -23,7 +23,7 @@ const Feature = ({ name, description, icon, colorString, borderColor }) => {
             className={`h-3 w-32 border-b-4 ${borderColor} rounded-sm`}
           ></div>
 
-          <p className="font-medium text-gray-400">{description}</p>
+          <p className="font-medium text-gray-400 font-lato">{description}</p>
         </div>
       </dl>
     </div>

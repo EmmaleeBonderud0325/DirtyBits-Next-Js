@@ -42,20 +42,20 @@ export default function Homepage() {
           </div>
         </Zoom>
         <div className="container px-4 sm:px-8 xl:px-20 mx-auto md:h-[1100px] h-[650px]">
-          <div className="hero-wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 items-start  md:items-center mt-[10rem]">
+          <div className="hero-wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 items-start  md:items-center lg:mt-[8rem] sm:mt[5rem]">
             <div className="hero-text col-span-6 ">
               <SmoothList>
-                <h1 className="text-4xl md:text-5xl lg:text-5xl max-w-xl text-white leading-tight text-transparent bg-clip-text bg-gradient-to-r from-[#AE67FA] to-[#F49867]">
+                <h1 className="text-4xl md:text-5xl lg:text-5xl max-w-xl text-white leading-tight text-transparent bg-clip-text bg-gradient-to-r from-[#AE67FA] to-[#F49867] font-light font-lato">
                   Welcome to DirtyBits
                 </h1>
               </SmoothList>
               <SmoothList>
-                <span className="block text-white font-light xl:block mt-5 text-xl md:text-4xl tracking-wider">
+                <span className="block text-white font-light xl:block mt-5 text-xl md:text-4xl tracking-wider font-lato">
                   Be a Coder with us.
                 </span>
               </SmoothList>
               <SmoothList>
-                <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0 font-lato">
                   First, solve the problem. Then, write the code.
                 </p>
               </SmoothList>
@@ -64,7 +64,7 @@ export default function Homepage() {
                   <div className="rounded-md shadow">
                     <a
                       href="/problemset"
-                      className="w-full flexContainer  px-8 py-3 border border-transparent text-base   rounded-full font-semibold text-black bg-white hover:opacity-70 hover:text-black md:py-4 md:text-lg md:px-10 shadow-xl shadow-white/20 transition-all ease-in-out duration-400 active:ring-4 active:ring-white/50"
+                      className="w-full flexContainer px-8 py-3 border border-transparent text-base   rounded-full font-light text-black bg-white hover:opacity-70 hover:text-black md:py-4 md:text-lg md:px-10 shadow-xl shadow-white/20 transition-all ease-in-out duration-400 active:ring-4 active:ring-white/50"
                     >
                       Explore Now
                     </a>
@@ -90,25 +90,25 @@ export default function Homepage() {
             </div>
           </div>
         </div>
-        <div className="w-full mt-[20rem] h-full md:h-[1200px] ">
+        <div className="w-full mt-[20rem] h-full  sm:px-8 xl:px-20 mx-auto md:h-[1100px] p-4 px-4">
           <div className="space-y-16">
-            <div className="lg:text-center space-y-16">
-              <h2 className="font-bold text-3xl md:text-4xl lg:text-5xl font-heading text-white capitalize">
+            <div className="lg:text-center text-center sm:space-y-10 lg:space-y-16">
+              <h2 className="font-bold text-xl md:text-4xl lg:text-5xl font-heading text-white capitalize">
                 Online{" "}
                 <span className="text-custom-indigo tracking-wider">
                   Coding
                 </span>{" "}
                 Platform
               </h2>
-              <p className="mt-2 text-3xl leading-8 font-bold tracking-tight text-white sm:text-2xl text-center uppercase">
+              <p className="mt-2 text-base leading-8 font-bold tracking-tight text-white sm:text-2xl text-center font-lato">
                 Platform To Enhance Your Skills
               </p>
-              <p className="mt-4 max-w-2xl lg:text-xl text-base text-center text-gray-500 lg:mx-auto">
+              <p className="mt-4 lg:text-lg text- text-center text-gray-500 lg:mx-auto">
                 SOME FEATURES
               </p>
             </div>
             {/* <div className="flex lg:flex-row lg:justify-center lg:items-center lg:space-x-20"> */}
-            <div className="grid lg:grid-cols-3 space-y-9 grid-rows-3 lg:space-y-0 justify-evenly">
+            <div className="grid lg:grid-cols-3 space-y-9 grid-rows-3 lg:space-y-0 justify-evenly gap-16">
               <Zoom>
                 <div>
                   <Feature
@@ -238,14 +238,14 @@ export default function Homepage() {
           </div>
         </div>
 
-        <div className="hidden lg:block bg-red-600">
+        <div className="hidden lg:block">
           <body className="font-sans">
             <div className="min-h-screen flex justify-center items-center">
               <div>
                 <Fade bottom>
                   <div className="text-center font-semibold">
                     <h1 className="text-5xl">
-                      <span className="font-bold text-3xl md:text-4xl lg:text-5xl font-heading text-custom-indigo tracking-wider capitalize">
+                      <span className="font-bold  text-3xl md:text-4xl lg:text-5xl font-heading text-custom-indigo tracking-wider capitalize">
                         Flexible{" "}
                       </span>
                       <span className="text-white font-bold">Plans</span>
