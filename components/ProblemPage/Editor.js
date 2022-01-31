@@ -37,6 +37,8 @@ import Header from "./Header";
 import SmoothList from "react-smooth-list";
 import Image from "next/image";
 import { Loading } from "@nextui-org/react";
+import GitHubLogin from "react-github-login";
+import { githubLogin, googleLogin } from "../../redux/actions/authenticate";
 
 let CodeMirror = null;
 if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
@@ -451,46 +453,16 @@ const Editor = (props) => {
             </Text>
           </Text>
         </Modal.Header>
-        <Modal.Body>
-          <Input
-            style={{ color: "white" }}
-            clearable
-            bordered
-            fullWidth
-            color="primary"
-            size="lg"
-            placeholder="Email"
-            // contentLeft={<Mail />}
-          />
-          <Input
-            style={{ color: "white" }}
-            clearable
-            bordered
-            fullWidth
-            color="primary"
-            size="lg"
-            placeholder="Password"
-            // contentLeft={<Password />}
-          />
-          <Row justify="space-between">
-            <Checkbox>
-              <Text color="#fff" size={14}>
-                Remember me
-              </Text>
-            </Checkbox>
-            <Text color="#fff" size={14}>
-              Forgot password?
-            </Text>
-          </Row>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button auto flat color="error" onClick={closeHandler}>
-            Close
-          </Button>
-          <Button auto color="secondary" onClick={closeHandler}>
-            Sign in
-          </Button>
-        </Modal.Footer>
+        <Row justify="center" className="mb-4">
+          <button className="social-login-btn bg-custom-yellow2 w-1/2 border border-white">
+            <MdCreate />
+            <span>
+              <a className="text-white hover:text-white" href="/auth/signup">
+                Sign Up
+              </a>
+            </span>
+          </button>
+        </Row>
         <Text color="#fff">OR</Text>
         <div className="pb-3">
           <Row justify="center">
@@ -503,7 +475,7 @@ const Editor = (props) => {
                   className="social-login-btn w-1/2 border border-white"
                 >
                   <FcGoogle />
-                  <span>Login with Google</span>
+                  <span className="text-sm font-light">Login with Google</span>
                 </button>
               )}
               onSuccess={responseGoogleSuccess}
@@ -512,10 +484,35 @@ const Editor = (props) => {
             />
           </Row>
           <Row justify="center">
-            <button className="social-login-btn w-1/2 border border-white">
-              <AiFillGithub />
-              <span>Login with GitHub </span>
-            </button>
+            <GitHubLogin
+              clientId={process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}
+              onSuccess={(response) => {
+                dispatch(githubLogin(response.code));
+              }}
+              onFailure={(response) => {
+                console.error(response);
+              }}
+              children={
+                <>
+                  {props.githubSpinner ? (
+                    <>
+                      <span>{antIcon}</span>
+                    </>
+                  ) : (
+                    <>
+                      <AiFillGithub />
+                      <span className="text-sm font-light">
+                        Login with GitHub
+                      </span>
+                    </>
+                  )}
+                </>
+              }
+              redirectUri=""
+              scope="read:user,user:email"
+              buttonText=""
+              className="social-login-btn w-1/2 border border-white"
+            />
           </Row>
         </div>
       </Modal>
