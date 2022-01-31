@@ -14,6 +14,8 @@ import { connect, useDispatch } from "react-redux";
 import GoogleLogin from "react-google-login";
 import { AiOutlineSend } from "react-icons/ai";
 import terminal from "../../public/terminal.svg";
+import { Modal, Text, Input, Checkbox, Row, Button } from "@nextui-org/react";
+import { Grid } from "@nextui-org/react";
 
 import { base64_encode } from "./Helper2";
 require("codemirror/lib/codemirror.css");
@@ -35,6 +37,8 @@ import Header from "./Header";
 import SmoothList from "react-smooth-list";
 import Image from "next/image";
 import { Loading } from "@nextui-org/react";
+import GitHubLogin from "react-github-login";
+import { githubLogin, googleLogin } from "../../redux/actions/authenticate";
 
 let CodeMirror = null;
 if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
@@ -176,6 +180,10 @@ const Editor = (props) => {
       );
     };
   }, []);
+
+  const closeHandler = () => {
+    setIsModalVisible(false);
+  };
 
   const {
     editorValue,
@@ -429,6 +437,85 @@ const Editor = (props) => {
         </div>
       </div>
 
+      <Modal
+        closeButton
+        blur
+        aria-labelledby="modal-title"
+        open={isModalVisible}
+        onClose={closeHandler}
+        style={{ background: "black", color: "white" }}
+      >
+        <Modal.Header>
+          <Text color="#fff" id="modal-title" size={18}>
+            Welcome to{" "}
+            <Text color="primary" b size={18}>
+              DirtyBits
+            </Text>
+          </Text>
+        </Modal.Header>
+        <Row justify="center" className="mb-4">
+          <button className="social-login-btn bg-custom-yellow2 w-1/2 border border-white">
+            <MdCreate />
+            <span>
+              <a className="text-white hover:text-white" href="/auth/signup">
+                Sign Up
+              </a>
+            </span>
+          </button>
+        </Row>
+        <Text color="#fff">OR</Text>
+        <div className="pb-3">
+          <Row justify="center">
+            <GoogleLogin
+              clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
+              render={(renderProps) => (
+                <button
+                  onClick={renderProps.onClick}
+                  disabled={renderProps.disabled}
+                  className="social-login-btn w-1/2 border border-white"
+                >
+                  <FcGoogle />
+                  <span className="text-sm font-light">Login with Google</span>
+                </button>
+              )}
+              onSuccess={responseGoogleSuccess}
+              onFailure={responseGoogleFailure}
+              cookiePolicy={"single_host_origin"}
+            />
+          </Row>
+          <Row justify="center">
+            <GitHubLogin
+              clientId={process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}
+              onSuccess={(response) => {
+                dispatch(githubLogin(response.code));
+              }}
+              onFailure={(response) => {
+                console.error(response);
+              }}
+              children={
+                <>
+                  {props.githubSpinner ? (
+                    <>
+                      <span>{antIcon}</span>
+                    </>
+                  ) : (
+                    <>
+                      <AiFillGithub />
+                      <span className="text-sm font-light">
+                        Login with GitHub
+                      </span>
+                    </>
+                  )}
+                </>
+              }
+              redirectUri=""
+              scope="read:user,user:email"
+              buttonText=""
+              className="social-login-btn w-1/2 border border-white"
+            />
+          </Row>
+        </div>
+      </Modal>
       {/* <Modal
         title="Login or SignUp to continue..."
         centered

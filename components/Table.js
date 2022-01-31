@@ -36,15 +36,16 @@ function Table(props) {
     return (
       <tr key={problem.id}>
         <td className="table-data text-white border-b border-slate-800">
-          <Link href={`/problem/${problem.id}/${problem.title}`}>
-            <a className="text-white hover:bg-blue-dark">
-              {idx + 1} . {problem.title}
-            </a>
-          </Link>
+          <a
+            href={`/problem/${problem.id}/${problem.title}`}
+            className="text-stone-200 hover:text-indigo-400 transition-all duration-200 ease-in text-sm"
+          >
+            {idx + 1} . {problem.title}
+          </a>
         </td>
         <td className="py-4 px-6 border-b border-slate-800">
           <p
-            className={` ${problemColor} font-bold py-1 px-3 rounded text-xs `}
+            className={` ${problemColor} font-light py-1 px-3 font-lato tracking-wider rounded text-xs `}
           >
             {problemLevel}
           </p>

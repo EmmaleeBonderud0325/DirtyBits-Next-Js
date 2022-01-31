@@ -28,24 +28,22 @@ const StepsDemo = () => {
 
   return (
     <WrapperLayout>
-      <div className="steps-demo h-full">
-        <Steps
-          className="mx-80"
-          model={items}
-          activeIndex={activeIndex}
-          onSelect={(e) => setActiveIndex(e.index)}
-          readOnly={false}
+      <Steps
+        className="mx-80"
+        model={items}
+        activeIndex={activeIndex}
+        onSelect={(e) => setActiveIndex(e.index)}
+        readOnly={false}
+      />
+      {activeIndex === 0 ? (
+        <Page1
+          problemId={problemId}
+          setProblemId={setProblemId}
+          setActiveIndex={setActiveIndex}
         />
-        {activeIndex === 0 ? (
-          <Page1
-            problemId={problemId}
-            setProblemId={setProblemId}
-            setActiveIndex={setActiveIndex}
-          />
-        ) : (
-          <Page2 problemId={problemId} setActiveIndex={setActiveIndex} />
-        )}
-      </div>
+      ) : (
+        <Page2 problemId={problemId} setActiveIndex={setActiveIndex} />
+      )}
     </WrapperLayout>
   );
 };

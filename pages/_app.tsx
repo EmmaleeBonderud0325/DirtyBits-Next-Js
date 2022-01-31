@@ -10,9 +10,9 @@ import { useRouter } from "next/router";
 import "../styles/Editor.css";
 import "../styles/tinymce.css";
 import { NextPage } from "next";
-import { ReactNode, useRef } from "react";
-import { NextUIProvider } from '@nextui-org/react';
+import { ReactNode } from "react";
 import 'react-toastify/dist/ReactToastify.css';
+import { createTheme, NextUIProvider } from "@nextui-org/react"
 
 type Page<P = {}> = NextPage<P> & {
   getLayout?: (page: ReactNode) => ReactNode;
@@ -21,6 +21,29 @@ type Page<P = {}> = NextPage<P> & {
 type Props = AppProps & {
   Component: Page;
 }
+
+const theme = createTheme({
+  type:'dark',
+  theme: {
+    colors: {
+      // brand colors
+      primaryLight: '#6366F1',
+      primary: '#6366F1',
+      primaryDark: '#6366F1',
+      secondary: '#fff',
+
+      background: '#1d1d1d',
+      gradient: 'linear-gradient(112deg, $blue100 -25%, $pink500 -10%, $purple500 80%)',
+      // you can also create your own color
+      myColor: '#6366F1',
+
+      // ...  more colors
+    },
+    space: {},
+    fonts: {}
+  }
+})
+
 
 function MyApp({ Component, pageProps }: Props) {
   
@@ -43,7 +66,7 @@ function MyApp({ Component, pageProps }: Props) {
   }
   return (
     <>
-    <NextUIProvider>
+    <NextUIProvider theme={theme}>
       <ToastContainer position="top-right"
 autoClose={5000}
 hideProgressBar={false}

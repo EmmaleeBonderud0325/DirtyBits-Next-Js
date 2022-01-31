@@ -88,55 +88,6 @@ html {
 
 body {
   font-family: "Lato" !important;
-
-  /* ff 3.6+ */
-  background: -moz-linear-gradient(
-    18deg,
-    rgba(35, 1, 83, 1) 0%,
-    rgba(0, 0, 0, 1) 13%,
-    rgba(0, 0, 0, 1) 86%,
-    rgba(38, 8, 83, 1) 100%
-  );
-
-  /* safari 5.1+,chrome 10+ */
-  background: -webkit-linear-gradient(
-    18deg,
-    rgba(35, 1, 83, 1) 0%,
-    rgba(0, 0, 0, 1) 13%,
-    rgba(0, 0, 0, 1) 86%,
-    rgba(38, 8, 83, 1) 100%
-  );
-
-  /* opera 11.10+ */
-  background: -o-linear-gradient(
-    18deg,
-    rgba(35, 1, 83, 1) 0%,
-    rgba(0, 0, 0, 1) 13%,
-    rgba(0, 0, 0, 1) 86%,
-    rgba(38, 8, 83, 1) 100%
-  );
-
-  /* ie 6-9 */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#230153', endColorstr='#260853', GradientType=1 );
-
-  /* ie 10+ */
-  background: -ms-linear-gradient(
-    18deg,
-    rgba(35, 1, 83, 1) 0%,
-    rgba(0, 0, 0, 1) 13%,
-    rgba(0, 0, 0, 1) 86%,
-    rgba(38, 8, 83, 1) 100%
-  );
-
-  /* global 94%+ browsers support */
-  background: linear-gradient(
-    18deg,
-    rgba(35, 1, 83, 1) 0%,
-    rgba(0, 0, 0, 1) 13%,
-    rgba(0, 0, 0, 1) 86%,
-    rgba(38, 8, 83, 1) 100%
-  );
-  background-attachment: fixed;
 }
 
 .cartoon {
@@ -262,53 +213,6 @@ html::-webkit-scrollbar-thumb {
   100% {
     width: 48px;
   }
-}
-
-.ant-modal-footer {
-  background-color: #1b1138 !important;
-}
-.ant-modal-header {
-  background-color: #1b1138 !important;
-}
-.ant-modal-title {
-  color: white !important;
-}
-.ant-modal-content {
-  border-radius: 30% !important;
-}
-.ant-modal-close-x,
-.ant-statistic-title {
-  color: white !important;
-}
-
-.ant-btn,
-.ant-dropdown-menu {
-  background-color: #000 !important;
-  color: white !important;
-  max-height: 400px;
-  overflow-y: auto;
-}
-
-.ant-dropdown-trigger {
-  width: 170px;
-}
-.ant-dropdown-menu-item,
-.ant-progress-text,
-.ant-result-title,
-.ant-result-subtitle,
-.ant-result-extra,
-.ant-notification-notice-message,
-.ant-notification-close-x,
-.ant-dropdown-menu-item-active {
-  color: white !important;
-}
-.ant-dropdown-menu-item-active {
-  background-color: gray !important;
-}
-
-.ant-message-notice-content {
-  background: #1f1f1f !important;
-  color: white !important;
 }
 
 .bg-main-color {

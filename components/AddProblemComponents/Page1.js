@@ -1,9 +1,13 @@
-import { ArrowForward, ErrorOutlineSharp } from "@mui/icons-material";
+import {
+  ArrowForward,
+  ArrowForwardRounded,
+  ErrorOutlineSharp,
+} from "@mui/icons-material";
 import { connect } from "react-redux";
 import Head from "next/head";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
-
+import { Button } from "@nextui-org/react";
 import { TextEditor } from "./TextEditor";
 import Dropdown from "../Dropdown";
 import {
@@ -133,13 +137,19 @@ function Page1(props) {
                   placeholder={"in MB"}
                 />
                 <div className="flex justify-center items-center ">
-                  <button
+                  {/* <button
                     className="btn-purple py-2 text-base space-x-3"
                     onClick={(e) => handleSubmit(e)}
                   >
                     <span>Add Test Case</span>
                     <ArrowForward className="text-sm" />
-                  </button>
+                  </button> */}
+                  <Button
+                    onClick={(e) => handleSubmit(e)}
+                    iconRight={<ArrowForward />}
+                  >
+                    Go Next
+                  </Button>
                 </div>
               </form>
             </div>
