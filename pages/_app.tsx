@@ -45,7 +45,6 @@ const theme = createTheme({
   },
 });
 
-
 function MyApp({ Component, pageProps }: Props) {
   if (typeof window !== "undefined") {
     import("tw-elements/dist/js/index.min.js");
@@ -66,22 +65,20 @@ function MyApp({ Component, pageProps }: Props) {
   }
   return (
     <>
-      <NextUIProvider theme={theme}>
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          theme="dark"
-          pauseOnHover
-        />
-        <Navbar fixedHeader={fixedTop} bg={background} />
-        <Component {...pageProps} />
-      </NextUIProvider>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        theme="dark"
+        pauseOnHover
+      />
+      <Navbar fixedHeader={fixedTop} bg={background} />
+      <Component {...pageProps} />
     </>
   );
 }
