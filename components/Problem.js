@@ -1,5 +1,5 @@
 import { SearchOutlined } from "@mui/icons-material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { connect } from "react-redux";
 import Table from "../components/Table";
@@ -36,7 +36,27 @@ function Problem(props) {
   const [difficulty, setDifficulty] = useState("Difficulty");
   const [status, setStatus] = useState("Status");
   const [timeoutId, setTimeoutId] = useState();
-  const [selectedCities2, setSelectedCities2] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [currentDataList, setCurrentDataList] = useState([]);
+
+  useEffect(() => {
+    async function getData() {
+      if (tags.length > 0) {
+        const response = await filterProblemData.post("/", {
+          keyword: value,
+          tags: tags,
+          difficulty: [],
+        });
+        setCurrentDataList(response.data);
+      } else {
+        setCurrentDataList(props.problemList);
+      }
+    }
+    getData();
+  }, [tags, props.problemList, value]);
+
+  console.log("current value", value);
+
   const valueHandler = (e) => {
     setValue(e.target.value);
     if (timeoutId) {
@@ -44,31 +64,17 @@ function Problem(props) {
     }
     timeoutId = setTimeout(async () => {
       const data = {
-        keyword: value,
-        tags: selectedCities2,
-        difficulty: ["E"],
+        keyword: e.target.value,
+        tags: tags,
+        difficulty: [],
       };
-      console.log("data sent", data);
+
+      console.log("send req ", e.target.value);
+
       const response = await filterProblemData.post("/", data);
-      console.log("response problem", response.data);
+      setCurrentDataList(response.data);
     }, 2000);
     setTimeoutId(timeoutId);
-  };
-
-  console.log("selected cities", selectedCities2);
-
-  const filteredData = props.problemList.filter((val) =>
-    val.title.toLowerCase().includes(value.toLowerCase())
-  );
-
-  const questionsList = () => {
-    if (value === "") {
-      return props.problemList;
-    } else if (filteredData.length > 0) {
-      return filteredData;
-    } else {
-      return [];
-    }
   };
 
   return (
@@ -90,30 +96,13 @@ function Problem(props) {
 
       <MultiSelect
         style={styles}
-        value={selectedCities2}
+        value={tags}
         options={values}
-        onChange={(e) => setSelectedCities2(e.value)}
+        onChange={(e) => setTags(e.value)}
         optionLabel="label"
         placeholder="Select Tags"
         display="chip"
       />
-
-      {/* <motion.div initial="hidden" animate="visible" variants={variants}>
-        <div className="flex sm:w-3/4 xs:w-full space-x-4 overflow-x-scroll scrollbar-hide">
-          {values.map((item) => {
-            return (
-              <div
-                key={item.value}
-                className="flex flex-col items-center justify-center text-white"
-              >
-                <button className="text-base rounded-xl bg-custom-indigo opacity-90 px-2 lg:px-4 lg:py-1 hover:scale-105 transition-all ease-out">
-                  {item.label}
-                </button>
-              </div>
-            );
-          })}
-        </div>
-      </motion.div> */}
 
       {/* SEARCH BAR */}
 
@@ -156,7 +145,7 @@ function Problem(props) {
       </div> */}
 
       <div className="flex flex-col">
-        <Table list={questionsList} />
+        <Table dataList={currentDataList} />
       </div>
     </WrapperLayout>
   );

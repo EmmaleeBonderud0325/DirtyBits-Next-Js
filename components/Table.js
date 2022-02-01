@@ -7,7 +7,7 @@ function Table(props) {
   let problemColor;
   let status;
 
-  let problemMarkup = props.list.map((problem, idx) => {
+  let problemMarkup = props.dataList.map((problem, idx) => {
     switch (problem.problem_level) {
       case "E":
         problemLevel = "Easy";
@@ -68,18 +68,21 @@ function Table(props) {
               <th className="table-heading">Status</th>
             </tr>
           </thead>
-          <tbody className="">{props.list.length > 0 && problemMarkup}</tbody>
+          <tbody className="">
+            {props.dataList.length > 0 && problemMarkup}
+          </tbody>
         </table>
       </div>
-      {props.list.length <= 0 && <TableLoader />}
+      {props.dataList.length <= 0 && <TableLoader />}
     </div>
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    list: state.problemList,
-  };
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     dataList: state.problemList,
+//   };
+// };
 
-export default connect(mapStateToProps)(Table);
+// export default connect(mapStateToProps)(Table);
+export default Table;
