@@ -88,6 +88,61 @@ html {
 
 body {
   font-family: "Lato" !important;
+  /* ff 3.6+ */
+  /* ff 3.6+ */
+  background: -moz-linear-gradient(
+    39deg,
+    rgba(53, 1, 107, 0.92) 0%,
+    rgba(0, 0, 0, 1) 6%,
+    rgba(0, 0, 0, 1) 38%,
+    rgba(0, 0, 0, 1) 91%,
+    rgba(77, 11, 147, 0.91) 100%
+  );
+
+  /* safari 5.1+,chrome 10+ */
+  background: -webkit-linear-gradient(
+    39deg,
+    rgba(53, 1, 107, 0.92) 0%,
+    rgba(0, 0, 0, 1) 6%,
+    rgba(0, 0, 0, 1) 38%,
+    rgba(0, 0, 0, 1) 91%,
+    rgba(77, 11, 147, 0.91) 100%
+  );
+
+  /* opera 11.10+ */
+  background: -o-linear-gradient(
+    39deg,
+    rgba(53, 1, 107, 0.92) 0%,
+    rgba(0, 0, 0, 1) 6%,
+    rgba(0, 0, 0, 1) 38%,
+    rgba(0, 0, 0, 1) 91%,
+    rgba(77, 11, 147, 0.91) 100%
+  );
+
+  /* ie 6-9 */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#35016B', endColorstr='#4D0B93', GradientType=1 );
+
+  /* ie 10+ */
+  background: -ms-linear-gradient(
+    39deg,
+    rgba(53, 1, 107, 0.92) 0%,
+    rgba(0, 0, 0, 1) 6%,
+    rgba(0, 0, 0, 1) 38%,
+    rgba(0, 0, 0, 1) 91%,
+    rgba(77, 11, 147, 0.91) 100%
+  );
+
+  /* global 94%+ browsers support */
+  background: linear-gradient(
+    39deg,
+    rgba(53, 1, 107, 0.92) 0%,
+    rgba(0, 0, 0, 1) 6%,
+    rgba(0, 0, 0, 1) 38%,
+    rgba(0, 0, 0, 1) 91%,
+    rgba(77, 11, 147, 0.91) 100%
+  );
+
+  background-attachment: fixed;
 }
 
 .cartoon {

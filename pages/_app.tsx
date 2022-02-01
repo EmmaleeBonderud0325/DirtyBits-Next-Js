@@ -66,7 +66,7 @@ function MyApp({ Component, pageProps }: Props) {
   }
   return (
     <>
-    <NextUIProvider theme={theme}>
+  
       <ToastContainer position="top-right"
 autoClose={5000}
 hideProgressBar={false}
@@ -79,7 +79,6 @@ theme="dark"
 pauseOnHover/>
       <Navbar fixedHeader={fixedTop} bg={background} />
       <Component {...pageProps} />
-    </NextUIProvider>
     </>
   );
 }

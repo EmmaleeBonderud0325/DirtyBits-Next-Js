@@ -97,7 +97,7 @@ function Navbar(props) {
                   ) : (
                     <div className="lg:space-x-3 flex">
                       <LoginButton url={"/auth/signin"} text="Login" />
-                      <span className="border-r border-white"></span>
+                      <span className="border-r border-gray-400"></span>
                       <LoginButton url={"/auth/signup"} text="Sign Up" />
                     </div>
                   )}
