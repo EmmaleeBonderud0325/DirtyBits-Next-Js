@@ -281,3 +281,12 @@ html::-webkit-scrollbar-thumb {
 .border-main-color {
   border-color: var(--main-color);
 }
+.tabview-custom {
+  vertical-align: middle;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.p-tabview-title {
+  margin-left: 0.5rem;
+}

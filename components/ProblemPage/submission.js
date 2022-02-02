@@ -76,7 +76,7 @@ const Submission = (props) => {
         </div>
       )}
       {Object.keys(props.result).length > 0 && (
-        <div className="w-full pl-4">
+        <div className="w-full pl-4 mb-5 leading-7">
           <div className="flex items-center gap-10">
             <p className={`${statusColor} text-2xl tracking-wider`}>
               {props.result.status}
