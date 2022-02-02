@@ -41,6 +41,39 @@ function Navbar(props) {
     },
   ];
 
+  const mobileNavigation = [
+    {
+      name: "Home",
+      href: "/",
+      current: router.pathname === "/" ? true : false,
+    },
+    {
+      name: "Compete",
+      href: "/compete",
+      current: router.pathname === "/compete" ? true : false,
+    },
+    {
+      name: "Practice",
+      href: "/problemset",
+      current: router.pathname === "/problemset" ? true : false,
+    },
+    {
+      name: "Leaderboard",
+      href: "/leaderboard",
+      current: router.pathname === "/leaderboard" ? true : false,
+    },
+    {
+      name: "Blogs",
+      href: "/blogs",
+      current: router.pathname === "/blogs" ? true : false,
+    },
+    {
+      name: "Log In / Sign Up",
+      href: "/auth/signin",
+      current: router.pathname === "/auth/signin" ? true : false,
+    },
+  ];
+
   return (
     <div className={props.fixedHeader}>
       <Disclosure as="nav" className={props.bg}>
@@ -95,7 +128,7 @@ function Navbar(props) {
                       redirectOnSignout={false}
                     />
                   ) : (
-                    <div className="lg:space-x-3 flex">
+                    <div className="lg:space-x-3 md:flex hidden">
                       <LoginButton url={"/auth/signin"} text="Login" />
                       <span className="border-r border-gray-400"></span>
                       <LoginButton url={"/auth/signup"} text="Sign Up" />
@@ -107,7 +140,7 @@ function Navbar(props) {
 
             <Disclosure.Panel className="sm:hidden bg-black">
               <div className="px-2 pt-2 pb-3 space-y-1">
-                {navigation.map((item) => (
+                {mobileNavigation.map((item) => (
                   <Link key={item.name} href={item.href}>
                     <a
                       className={classNames(
