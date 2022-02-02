@@ -6,7 +6,6 @@ import SmoothList from "react-smooth-list";
 import Zoom from "react-reveal/Zoom";
 import Reveal from "react-reveal/Reveal";
 import Fade from "react-reveal/Fade";
-import { ArrowForward, Check } from "@mui/icons-material";
 import { MdLeaderboard } from "react-icons/md";
 import { GiLightningShield } from "react-icons/gi";
 import { FaBlog } from "react-icons/fa";
@@ -14,8 +13,11 @@ import { FiLayers } from "react-icons/fi";
 import himanshu from "../../public/himanshu.jpeg";
 import mohit from "../../public/mohit.jpg";
 import akshat from "../../public/akshat.jpeg";
-import { Loading, Button } from "@nextui-org/react";
+import { BsCheck2 } from "react-icons/bs";
+import { AiOutlineArrowRight } from "react-icons/ai";
+
 import Feature from "../Feature";
+import Link from "next/link";
 
 export default function Homepage() {
   return (
@@ -28,6 +30,7 @@ export default function Homepage() {
               width={100}
               height={100}
               className="object-contain"
+              alt="message image"
             />
           </div>
         </Zoom>
@@ -38,6 +41,7 @@ export default function Homepage() {
               width={100}
               height={100}
               className="object-contain"
+              alt="calendar image"
             />
           </div>
         </Zoom>
@@ -62,12 +66,11 @@ export default function Homepage() {
               <SmoothList>
                 <div className="mt-8 flex justify-center lg:justify-start">
                   <div className="rounded-md shadow">
-                    <a
-                      href="/problemset"
-                      className="w-full flexContainer px-8 py-3 border border-transparent text-base   rounded-full font-light text-black bg-white hover:opacity-70 hover:text-black md:py-4 md:text-lg md:px-10 shadow-xl shadow-white/20 transition-all ease-in-out duration-400 active:ring-4 active:ring-white/50"
-                    >
-                      Explore Now
-                    </a>
+                    <Link href="/problemset">
+                      <a className="w-full flexContainer px-8 py-3 border border-transparent text-base   rounded-full font-light text-black bg-white hover:opacity-70 hover:text-black md:py-4 md:text-lg md:px-10 shadow-xl shadow-white/20 transition-all ease-in-out duration-400 active:ring-4 active:ring-white/50">
+                        Explore Now
+                      </a>
+                    </Link>
                   </div>
                 </div>
               </SmoothList>
@@ -272,9 +275,7 @@ export default function Homepage() {
                       <hr className="mt-4 border-1" />
                       <div className="pt-8">
                         <p className="font-semibold text-gray-400 text-left">
-                          <span className="material-icons align-middle">
-                            <Check />
-                          </span>
+                          <span className="material-icons align-middle"></span>
                           <span className="pl-2">
                             User Profile{" "}
                             <span className="text-black">access</span>
@@ -282,7 +283,7 @@ export default function Homepage() {
                         </p>
                         <p className="font-semibold text-gray-400 text-left pt-5">
                           <span className="material-icons align-middle">
-                            <Check />
+                            <BsCheck2 />
                           </span>
                           <span className="pl-2">
                             Add Problems{" "}
@@ -291,7 +292,7 @@ export default function Homepage() {
                         </p>
                         <p className="font-semibold text-gray-400 text-left pt-5">
                           <span className="material-icons align-middle">
-                            <Check />
+                            <BsCheck2 />
                           </span>
                           <span className="pl-2">
                             <span className="text-black">Dashboard</span> access
@@ -302,7 +303,7 @@ export default function Homepage() {
                           <p className="w-full py-4 bg-custom-indigo mt-8 rounded-xl text-white">
                             <span className="font-medium">Choose Plan</span>
                             <span className="pl-2 material-icons align-middle text-sm">
-                              <ArrowForward />
+                              <AiOutlineArrowRight />
                             </span>
                           </p>
                         </a>
@@ -323,7 +324,7 @@ export default function Homepage() {
                       <div className="pt-8">
                         <p className="font-semibold text-gray-400 text-left">
                           <span className="material-icons align-middle">
-                            <Check />
+                            <BsCheck2 />
                           </span>
                           <span className="pl-2">
                             User Profile{" "}
@@ -332,7 +333,7 @@ export default function Homepage() {
                         </p>
                         <p className="font-semibold text-gray-400 text-left pt-5">
                           <span className="material-icons align-middle">
-                            <Check />
+                            <BsCheck2 />
                           </span>
                           <span className="pl-2">
                             Add Problems{" "}
@@ -341,7 +342,7 @@ export default function Homepage() {
                         </p>
                         <p className="font-semibold text-gray-400 text-left pt-5">
                           <span className="material-icons align-middle">
-                            <Check />
+                            <BsCheck2 />
                           </span>
                           <span className="pl-2">
                             <span className="text-white">Dashboard</span> access
@@ -352,7 +353,7 @@ export default function Homepage() {
                           <p className="w-full py-4 bg-custom-indigo mt-8 rounded-xl text-white">
                             <span className="font-medium">Choose Plan</span>
                             <span className="pl-2 material-icons align-middle text-sm">
-                              <ArrowForward />
+                              <AiOutlineArrowRight />
                             </span>
                           </p>
                         </a>
@@ -378,7 +379,7 @@ export default function Homepage() {
                       <div className="pt-8">
                         <p className="font-semibold text-gray-400 text-left">
                           <span className="material-icons align-middle">
-                            <Check />
+                            <BsCheck2 />
                           </span>
                           <span className="pl-2">
                             User Profile{" "}
@@ -387,7 +388,7 @@ export default function Homepage() {
                         </p>
                         <p className="font-semibold text-gray-400 text-left pt-5">
                           <span className="material-icons align-middle">
-                            <Check />
+                            <BsCheck2 />
                           </span>
                           <span className="pl-2">
                             Add Problems{" "}
@@ -396,7 +397,7 @@ export default function Homepage() {
                         </p>
                         <p className="font-semibold text-gray-400 text-left pt-5">
                           <span className="material-icons align-middle">
-                            <Check />
+                            <BsCheck2 />
                           </span>
                           <span className="pl-2">
                             <span className="text-black">Dashboard</span> access
@@ -407,7 +408,7 @@ export default function Homepage() {
                           <p className="w-full py-4 bg-custom-indigo mt-8 rounded-xl text-white">
                             <span className="font-medium">Choose Plan</span>
                             <span className="pl-2 material-icons align-middle text-sm">
-                              <ArrowForward />
+                              <AiOutlineArrowRight />
                             </span>
                           </p>
                         </a>

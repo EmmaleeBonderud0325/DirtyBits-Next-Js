@@ -12,7 +12,7 @@ function ProblemView({ title }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const path = window.location.href;
+    let path = window.location.href;
     path = path.split("/");
     const id = path.at(-2);
     dispatch(changeProblemPageProblemId(id));

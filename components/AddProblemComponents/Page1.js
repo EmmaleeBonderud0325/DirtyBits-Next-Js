@@ -1,8 +1,3 @@
-import {
-  ArrowForward,
-  ArrowForwardRounded,
-  ErrorOutlineSharp,
-} from "@mui/icons-material";
 import { connect } from "react-redux";
 import Head from "next/head";
 import { ToastContainer } from "react-toastify";
@@ -144,12 +139,7 @@ function Page1(props) {
                     <span>Add Test Case</span>
                     <ArrowForward className="text-sm" />
                   </button> */}
-                  <Button
-                    onClick={(e) => handleSubmit(e)}
-                    iconRight={<ArrowForward />}
-                  >
-                    Go Next
-                  </Button>
+                  <Button onClick={(e) => handleSubmit(e)}>Go Next</Button>
                 </div>
               </form>
             </div>
@@ -162,7 +152,7 @@ function Page1(props) {
           } flex items-center justify-center`}
         >
           <h1 className="text-white font-semibold text-4xl">
-            You don't have enough privilege
+            You dont have enough privilege
           </h1>
         </div>
       )}

@@ -5,8 +5,6 @@ import { VscSettingsGear } from "react-icons/vsc";
 import { IoMdNotificationsOutline } from "react-icons/io";
 
 import Image from "next/image";
-import Chip from "@mui/material/Chip";
-import Badge from "@mui/material/Badge";
 
 import { XAxis, Tooltip, AreaChart, Area } from "recharts";
 import { getStaticData, getUserProfile } from "../../components/api/apis";
@@ -78,9 +76,6 @@ function Profile() {
               </div>
               <div className="right flex gap-4 text-white">
                 <VscSettingsGear className="text-lg" />
-                <Badge color="secondary" badgeContent={0} showZero>
-                  <IoMdNotificationsOutline className="text-lg" />
-                </Badge>
               </div>
             </header>
 
@@ -117,9 +112,11 @@ function Profile() {
                     </div>
                     <div className="lg:relative text-right w-full flex flex-col lg:items-end justify-center items-center">
                       <button className="bg-indigo-600 rounded-md px-1 py-1">
-                        <img
-                          className="h-5"
+                        <Image
                           src="https://img.icons8.com/emoji/48/000000/pencil-emoji.png"
+                          alt="edit button image"
+                          width={20}
+                          height={5}
                         />
                       </button>
                       <p className="font-semibold tracking-wider text-lg text-white">
@@ -129,10 +126,6 @@ function Profile() {
                       <p className="text-white">28, F</p>
                       <div className="lg:my-6 my-3 flex lg:flex-col lg:items-end items-center space-x-2">
                         <label className="text-gray-500 text-sm">Role</label>
-                        <Chip
-                          label={`${userInfo.is_admin ? "Admin" : "User"}`}
-                          color="success"
-                        />
                       </div>
                     </div>
                   </div>

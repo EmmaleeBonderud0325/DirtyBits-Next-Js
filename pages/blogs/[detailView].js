@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 import bg from "../../public/blog.jpeg";
 import { motion } from "framer-motion";
-import { Star } from "@mui/icons-material";
 
 const variants = {
   visible: { opacity: 1 },
@@ -45,9 +44,7 @@ function DetailView() {
               <span>•</span>
               <span> 4 min read</span>
             </p>
-            <p>
-              <Star />
-            </p>
+            <p>asd</p>
           </div>
         </div>
         <motion.div initial="hidden" animate="visible" variants={variants}>

@@ -1,11 +1,6 @@
 import { connect, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
 import ReactHtmlParser from "react-html-parser";
-import PropTypes from "prop-types";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+
 import SmoothList from "react-smooth-list";
 import { IoPlayBackOutline } from "react-icons/io5";
 import Link from "next/link";
@@ -14,17 +9,13 @@ import remove from "../public/remove.svg";
 import bar from "../public/bar.svg";
 import Image from "next/image";
 import global from "../public/global.svg";
-import lock from "../public/lock.svg";
-import { FcLock } from "react-icons/fc";
-import PhoneMissedIcon from "@mui/icons-material/PhoneMissed";
+
 import { useSelector } from "react-redux";
 import {
   AiOutlineDislike,
   AiOutlineLike,
-  AiFillSignal,
   AiFillLike,
   AiFillDislike,
-  AiOutlineGlobal,
 } from "react-icons/ai";
 import IoTable from "./ProblemPage/IoTable";
 import Submissions from "./ProblemPage/submission";
@@ -39,42 +30,6 @@ import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css"; //icons
 
 import { TabView, TabPanel as Panel } from "primereact/tabview";
-import { Button } from "primereact/button";
-import { SplitButton } from "primereact/splitbutton";
-import { Avatar } from "primereact/avatar";
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
 
 function BasicTabs(props) {
   const dispatch = useDispatch();
@@ -102,10 +57,8 @@ function BasicTabs(props) {
       break;
   }
 
-  console.log("login", is_logged_in);
-
   return (
-    <Box sx={{ width: "100%", height: "100vh" }} className="scrollbar-hide">
+    <div style={{ width: "100%", height: "100vh" }} className="scrollbar-hide">
       {/* <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={props.currentTabValue}
@@ -309,11 +262,16 @@ function BasicTabs(props) {
                     } `}
                   >
                     {props.isBookmarkSet ? (
-                      <Image src={remove} width={30} height={30} />
+                      <Image
+                        src={remove}
+                        width={30}
+                        height={30}
+                        alt="bookmark"
+                      />
                     ) : (
                       // <BsBookmarkCheckFill className="text-lg" />
                       // <BsBookmarkCheck className="text-lg" />
-                      <Image src={add} width={30} height={30} />
+                      <Image src={add} width={30} height={30} alt="bookmark" />
                     )}
                   </div>
                 </div>
@@ -351,7 +309,12 @@ function BasicTabs(props) {
 
               <div className="flex items-center space-x-1">
                 <p>
-                  <Image src={bar} width={30} height={30} />
+                  <Image
+                    src={bar}
+                    width={30}
+                    height={30}
+                    alt="accuracy graph image"
+                  />
                 </p>
                 <p className="text-xs">
                   Accuracy. {props.questionData.accuracy}%
@@ -360,7 +323,12 @@ function BasicTabs(props) {
 
               <div className="flex items-center space-x-1">
                 <p>
-                  <Image src={global} width={30} height={30} />
+                  <Image
+                    src={global}
+                    width={30}
+                    height={30}
+                    alt="total submission image"
+                  />
                 </p>
                 <p className="text-xs">
                   Total Submissions. {props.questionData.totalSubmissions}
@@ -435,7 +403,7 @@ function BasicTabs(props) {
           <p>Editorial</p>
         </Panel>
       </TabView>
-    </Box>
+    </div>
   );
 }
 

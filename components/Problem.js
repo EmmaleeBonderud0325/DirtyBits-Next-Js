@@ -1,4 +1,4 @@
-import { SearchOutlined } from "@mui/icons-material";
+import { AiOutlineSearch } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { connect } from "react-redux";
@@ -111,7 +111,7 @@ function Problem(props) {
           onSubmit={() => {}}
           className="p-[.2rem] flex border-none rounded-xl focus:outline-none bg-gray-900 items-center w-1/2 border border-rose-600"
         >
-          <SearchOutlined className="text-custom-indigo ml-1" />
+          <AiOutlineSearch className="text-custom-indigo ml-1 text-xl" />
           <input
             type="text"
             className="bg-gray-900 placeholder:text-lg text-lg outline-none text-white p-2 rounded-lg w-full caret-custom-indigo"

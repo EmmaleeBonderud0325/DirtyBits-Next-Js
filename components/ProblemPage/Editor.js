@@ -1,15 +1,11 @@
-import { useState, useEffect, memo } from "react";
+import { useState, useEffect } from "react";
 import { AiFillGithub } from "react-icons/ai";
 import { MdCreate } from "react-icons/md";
 import { VscRunAll } from "react-icons/vsc";
 import { FcGoogle } from "react-icons/fc";
-import PropTypes from "prop-types";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+
 import Cookies from "js-cookie";
-import { connect, useDispatch } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import GoogleLogin from "react-google-login";
 import { AiOutlineSend } from "react-icons/ai";
 import terminal from "../../public/terminal.svg";
@@ -37,7 +33,8 @@ import Image from "next/image";
 import { Loading } from "@nextui-org/react";
 import GitHubLogin from "react-github-login";
 import { githubLogin, googleLogin } from "../../redux/actions/authenticate";
-
+import Link from "next/link";
+import { TabView, TabPanel as Panel } from "primereact/tabview";
 let CodeMirror = null;
 if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
   CodeMirror = require("react-codemirror2").Controlled;
@@ -113,42 +110,11 @@ if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
   require("codemirror/addon/scroll/simplescrollbars");
 }
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
-
 const Editor = (props) => {
   const dispatch = useDispatch();
   console.log("editor rendered");
   const [isDisabled, setIsDisabled] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
   let [customInput, setCustomInput] = useState(false);
   let [inputValue, changeInputValue] = useState("");
@@ -161,6 +127,8 @@ const Editor = (props) => {
   const [value, setValue] = useState(0);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const { is_logged_in } = useSelector((state) => state.userData);
 
   useEffect(() => {
     return () => {
@@ -211,6 +179,7 @@ const Editor = (props) => {
     }
     setShowLoader(true);
     setShowConsole(true);
+    setActiveIndex(1);
 
     await runTestCases
       .post("/", {
@@ -378,6 +347,12 @@ const Editor = (props) => {
   };
 
   const antIcon = <Loading type="points-opacity" size="sm" />;
+
+  const handleConsole = () => {
+    setActiveIndex(1);
+    setShowConsole(!showConsole);
+  };
+
   return (
     <div
       style={{ height: "100vh" }}
@@ -402,11 +377,11 @@ const Editor = (props) => {
 
       <div className="editor-options-container mt-10 flex space-x-5 justify-between items-center p-2">
         <button
-          onClick={() => setShowConsole(!showConsole)}
+          onClick={handleConsole}
           type="button"
-          class="flex items-center space-x-2"
+          className="flex items-center space-x-2"
         >
-          <Image src={terminal} width={20} height={20} />
+          <Image src={terminal} width={20} height={20} alt="terminal image" />
           <span className="font-semibold text-base">Console</span>
         </button>
         <div className="flex space-x-3">
@@ -461,9 +436,9 @@ const Editor = (props) => {
           <button className="social-login-btn bg-custom-yellow2 w-1/2 border border-white">
             <MdCreate />
             <span>
-              <a className="text-white hover:text-white" href="/auth/signup">
-                Sign Up
-              </a>
+              <Link href="/auth/signup">
+                <a className="text-white hover:text-white">Sign Up</a>
+              </Link>
             </span>
           </button>
         </Row>
@@ -563,7 +538,7 @@ const Editor = (props) => {
         </div>
       </Modal> */}
 
-      {showConsole && (
+      {/* {showConsole && (
         <div className="relative bottom-0 w-full transition-all ease-in-out duration-75 p-2">
           <Box sx={{ width: "100%" }}>
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -602,11 +577,46 @@ const Editor = (props) => {
                 placeholder="Custom Input here"
                 value={inputValue}
                 onChange={(e) => changeInputValue(e.target.value)}
-                spellcheck="false"
+                spellCheck="false"
               ></textarea>
             </TabPanel>
           </Box>
         </div>
+      )} */}
+      {showConsole && (
+        <TabView
+          activeIndex={activeIndex}
+          onTabChange={(e) => setActiveIndex(e.index)}
+          className="tabview-custom"
+        >
+          {" "}
+          <Panel
+            disabled={!is_logged_in}
+            header="Output"
+            leftIcon={!is_logged_in && "pi pi-lock"}
+          >
+            {showLoader ? (
+              <span className="loader"></span>
+            ) : (
+              <pre className="text-left font-bold">{outputValue}</pre>
+            )}
+          </Panel>
+          <Panel
+            disabled={!is_logged_in}
+            header="Input"
+            leftIcon={!is_logged_in && "pi pi-lock"}
+          >
+            <textarea
+              className="w-full placeholder:text-base placeholder:p-2 bg-gray-800 outline-none rounded-lg p-1 text-lg"
+              rows="6"
+              id="input-btn"
+              placeholder="Custom Input here"
+              value={inputValue}
+              onChange={(e) => changeInputValue(e.target.value)}
+              spellCheck="false"
+            ></textarea>
+          </Panel>
+        </TabView>
       )}
     </div>
   );
