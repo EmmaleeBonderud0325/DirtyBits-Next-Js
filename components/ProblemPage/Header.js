@@ -1,8 +1,5 @@
 import React from "react";
-import { connect, useDispatch } from "react-redux";
-import { MdSaveAlt } from "react-icons/md";
-import { AiOutlineUpload } from "react-icons/ai";
-import { BsCloudArrowUp } from "react-icons/bs";
+import { connect, useDispatch, useSelector } from "react-redux";
 import _ from "lodash";
 
 import { download } from "./Helper2";
@@ -12,9 +9,7 @@ import {
   changeEditorValue,
   changeTheme,
   changeLanguage,
-  changeFont,
 } from "../../redux/actions/ProblemPage";
-import { AiOutlineSync } from "react-icons/ai";
 const jsonData = require("./data.json");
 
 import Dropdown2 from "./Dropdown2";
@@ -23,10 +18,11 @@ import refresh from "../../public/refresh.svg";
 import downloadIcon from "../../public/download.svg";
 import uploadquestion from "../../public/uploadq.svg";
 import insert from "../../public/insert.svg";
+import { Tooltip } from "@nextui-org/react";
 
 function Header(props) {
   const dispatch = useDispatch();
-
+  const is_logged_in = useSelector((state) => state.userData.is_logged_in);
   const currLang = props.currLang;
 
   const uploadCloud = async () => {
@@ -131,78 +127,73 @@ function Header(props) {
         changeEditorValue={changeEditorValue}
       />
       {/* TOP RIGHT ICONS */}
-      <div className="space-x-4 flex items-center transition-all ease-in-out">
-        {/* <BsCloudArrowUp
-            onClick={uploadCloud}
-            className="text-white text-lg font-bold hover:cursor-pointer mr-2"
-          /> */}
-        <Image
-          onClick={uploadCloud}
-          className="cursor-pointer"
-          src={uploadquestion}
-          width={20}
-          height={20}
-        />
-
-        <div>
-          <label htmlFor="file-input">
-            {/* <AiOutlineUpload className="text-white text-lg font-bold hover:cursor-pointer mr-2" /> */}
+      {is_logged_in && (
+        <div className="space-x-4 flex items-center transition-all ease-in-out">
+          <Tooltip content="Upload Code to cloud" color="secondary">
             <Image
+              onClick={uploadCloud}
               className="cursor-pointer"
-              src={insert}
+              src={uploadquestion}
               width={20}
               height={20}
             />
-          </label>
-          <input
-            type="file"
-            accept=".cpp, .c, .py, .java"
-            id="file-input"
-            onChange={(e) => uploadedfile(e)}
-            className="hidden "
-          />
-        </div>
+          </Tooltip>
 
-        <div>
-          {/* <MdSaveAlt
-            onClick={() =>
-              download("code" + props.currLang.ext, props.editorValue)
-            }
-            className="text-white text-lg font-bold hover:cursor-pointer !mr-2"
-          /> */}
-          <Image
-            onClick={() =>
-              download("code" + props.currLang.ext, props.editorValue)
-            }
-            className="cursor-pointer"
-            src={downloadIcon}
-            width={20}
-            height={20}
-          />
-        </div>
-        <div>
-          {/* <AiOutlineSync
-            onClick={() => resetCode()}
-            className="text-white text-lg font-bold hover:cursor-pointer"
-          /> */}
-          <Image
-            onClick={() => resetCode()}
-            className="cursor-pointer"
-            src={refresh}
-            width={20}
-            height={20}
-          />
-        </div>
+          <div>
+            <Tooltip content="Import File" color="secondary">
+              <label htmlFor="file-input">
+                <Image
+                  className="cursor-pointer"
+                  src={insert}
+                  width={20}
+                  height={20}
+                />
+              </label>
+              <input
+                type="file"
+                accept=".cpp, .c, .py, .java"
+                id="file-input"
+                onChange={(e) => uploadedfile(e)}
+                className="hidden "
+              />
+            </Tooltip>
+          </div>
 
-        <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 z-50">
-          {props.userInfo.is_logged_in && (
-            <UserProfileDropDown
-              showUserName={false}
-              redirectOnSignout={false}
-            />
-          )}
+          <div>
+            <Tooltip content="Download Code" color="secondary">
+              <Image
+                onClick={() =>
+                  download("code" + props.currLang.ext, props.editorValue)
+                }
+                className="cursor-pointer"
+                src={downloadIcon}
+                width={20}
+                height={20}
+              />
+            </Tooltip>
+          </div>
+          <div>
+            <Tooltip content="Reset Code" color="secondary">
+              <Image
+                onClick={() => resetCode()}
+                className="cursor-pointer"
+                src={refresh}
+                width={20}
+                height={20}
+              />
+            </Tooltip>
+          </div>
+
+          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 z-50">
+            {props.userInfo.is_logged_in && (
+              <UserProfileDropDown
+                showUserName={false}
+                redirectOnSignout={false}
+              />
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
