@@ -23,7 +23,8 @@ import {
   SimpleLoginSpinner,
 } from "../types";
 import { Updateproblemsstatus } from "../../components/Helper/Updateproblemsstatus";
-import axios from "axios";
+import { getTagsApi } from "../../components/api/apis";
+import ReactHtmlParser from "react-html-parser";
 
 export const updateUserinfo = (newState) => {
   return {
@@ -202,11 +203,9 @@ export const getProblems = () => async (dispatch, getState) => {
   }
 };
 
-export const getTags = () => async (dispatch, getState) => {
+export const getTags = () => async (dispatch, _) => {
   try {
-    const response = await axios.get(
-      "https://db-code.herokuapp.com/problems/getTagListCreateProblem/"
-    );
+    const response = await getTagsApi.get("/");
     const parseData = response.data.results;
     let colourOptions = [];
     for (const data in parseData) {
@@ -222,7 +221,7 @@ export const getTags = () => async (dispatch, getState) => {
   }
 };
 
-export const resetProblemPageData = (dispatch, _) => {
+export const resetProblemPageData = () => async (dispatch, _) => {
   dispatch(updateProblemTitle(""));
   dispatch(updateProblemNote(""));
   dispatch(updateProblemStatement(""));

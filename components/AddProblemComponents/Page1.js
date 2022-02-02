@@ -25,6 +25,7 @@ import MultiSelect from "./MultiSelect";
 import { AddProblem, UpdateProblem } from "../api/apis";
 import { TextAreaComponent } from "./TextAreaComponent";
 import { InputComponent } from "./InputComponent";
+import { uploadImage } from "../api/apis";
 
 const mapping = {
   Difficulty: "Difficulty",
@@ -33,12 +34,55 @@ const mapping = {
   H: "Hard",
 };
 
+const parseImages = async (ParseData, public_ids) => {
+  const parser = new DOMParser();
+  var document = parser.parseFromString(ParseData, "text/html");
+  var imageTags = document.getElementsByTagName("img");
+  for (let i = 0; i < imageTags.length; i++) {
+    if (!imageTags[i].src.startsWith("http")) {
+      await uploadImage
+        .post("/", {
+          image: imageTags[i].src,
+        })
+        .then((res) => {
+          imageTags[i].setAttribute("src", res.data.url);
+          public_ids.push(res.data.public_id);
+        });
+    }
+  }
+  return document.getElementsByTagName("body")[0].innerHTML;
+};
+
 function Page1(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
+    var public_ids = [];
+    props.problemData.problem_statement = await parseImages(
+      props.problemData.problem_statement,
+      public_ids
+    );
+    props.problemData.input_format = await parseImages(
+      props.problemData.input_format,
+      public_ids
+    );
+    props.problemData.constraints = await parseImages(
+      props.problemData.constraints,
+      public_ids
+    );
+    props.problemData.output_format = await parseImages(
+      props.problemData.output_format,
+      public_ids
+    );
+    console.log(public_ids);
+    console.log(props.problemData);
     try {
       if (props.problemId === null) {
-        await AddProblem.post("/", { data: props.problemData })
+        await AddProblem.post("/", {
+          data: {
+            ...props.problemData,
+            public_ids: public_ids,
+          },
+        })
           .then((result) => {
             console.log(result.data);
             props.setProblemId(result.data["id"]);
@@ -49,7 +93,11 @@ function Page1(props) {
           });
       } else {
         await UpdateProblem.post("/", {
-          data: { ...props.problemData, id: props.problemId },
+          data: {
+            ...props.problemData,
+            id: props.problemId,
+            public_ids: public_ids,
+          },
         })
           .then((result) => {
             console.log(result.data);
