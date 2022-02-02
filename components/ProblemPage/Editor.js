@@ -1,5 +1,4 @@
 import { useState, useEffect, memo } from "react";
-import { BsTerminal } from "react-icons/bs";
 import { AiFillGithub } from "react-icons/ai";
 import { MdCreate } from "react-icons/md";
 import { VscRunAll } from "react-icons/vsc";
@@ -14,8 +13,7 @@ import { connect, useDispatch } from "react-redux";
 import GoogleLogin from "react-google-login";
 import { AiOutlineSend } from "react-icons/ai";
 import terminal from "../../public/terminal.svg";
-import { Modal, Text, Input, Checkbox, Row, Button } from "@nextui-org/react";
-import { Grid } from "@nextui-org/react";
+import { Modal, Text, Row } from "@nextui-org/react";
 
 import { base64_encode } from "./Helper2";
 require("codemirror/lib/codemirror.css");
@@ -237,6 +235,7 @@ const Editor = (props) => {
   const handleSubmitCode = async () => {
     setIsSubmitDisabled(true);
     if (!Cookies.get("refresh")) {
+      setIsModalVisible(true);
       setIsSubmitDisabled(false);
       console.error("Login Required !!");
       return;
@@ -385,6 +384,7 @@ const Editor = (props) => {
       className="problem-page-right-container p-2"
     >
       <Header />
+
       <div>
         {CodeMirror && (
           <CodeMirror
@@ -417,11 +417,15 @@ const Editor = (props) => {
               disabled={isDisabled}
             >
               {isDisabled ? (
-                <span>{antIcon}</span>
+                <span className="w-[51px] flex justify-center items-center h-5">
+                  {<Loading type="spinner" size="sm" />}
+                </span>
               ) : (
-                <VscRunAll className="text-lg group-hover:animate-bounce" />
+                <>
+                  <VscRunAll className="text-lg group-hover:animate-bounce" />
+                  <span>Run</span>
+                </>
               )}
-              <span>Run</span>
             </button>
           </SmoothList>
           <SmoothList>
