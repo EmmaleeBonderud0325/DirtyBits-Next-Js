@@ -51,6 +51,42 @@ const parseImages = async (ParseData, public_ids) => {
 function Page1(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (props.problemData.title === "") {
+      console.error("Title can't be Empty");
+      return;
+    }
+    if (props.problemData.problem_statement === "") {
+      console.error("Problem Statement Required");
+      return;
+    }
+    if (props.problemData.input_format === "") {
+      console.error("Input Format Required");
+      return;
+    }
+    if (props.problemData.constraints === "") {
+      console.error("Constraints Required");
+      return;
+    }
+    if (props.problemData.output_format === "") {
+      console.error("Output Format Required");
+      return;
+    }
+    if (props.problemData.problem_level === "Difficulty") {
+      console.error("Problem Level Required");
+      return;
+    }
+    if (props.problemData.tags.length === 0) {
+      console.error("Tags Required");
+      return;
+    }
+    if (props.problemData.memory_Limit === null) {
+      console.error("Memory Limit Required");
+      return;
+    }
+    if (props.problemData.time_Limit === null) {
+      console.error("Time Limit Required");
+      return;
+    }
     var public_ids = [];
     props.problemData.problem_statement = await parseImages(
       props.problemData.problem_statement,
@@ -68,8 +104,6 @@ function Page1(props) {
       props.problemData.output_format,
       public_ids
     );
-    console.log(public_ids);
-    console.log(props.problemData);
     try {
       if (props.problemId === null) {
         await AddProblem.post("/", {
@@ -95,7 +129,6 @@ function Page1(props) {
           },
         })
           .then((result) => {
-            console.log(result.data);
             props.setActiveIndex(1);
           })
           .catch((err) => {
