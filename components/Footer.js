@@ -10,7 +10,7 @@ function Footer() {
               <a className="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-10 h-10 text-white p-2 bg-pink-600 rounded-full"
+                  className="w-10 h-10 text-white p-2 bg-custom-indigo rounded-full"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -22,7 +22,7 @@ function Footer() {
                     d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"
                   />
                 </svg>
-                <span className="ml-3 text-xl text-white">DEV</span>
+                <span className="ml-3 text-xl text-white">DirtyBits</span>
               </a>
               <p className="mt-2 text-sm text-white">
                 Air plant banjo lyft occupy retro adaptogen indego
@@ -142,7 +142,7 @@ function Footer() {
           <div className="bg-black">
             <div className="container mx-auto py-4 px-5 flex flex-wrap flex-col sm:flex-row">
               <p className="text-white text-sm text-center sm:text-left">
-                © 2020 Dev —
+                © 2022 DirtyBits —
                 <a
                   href="https://twitter.com/knyttneve"
                   rel="noopener noreferrer"

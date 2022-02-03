@@ -99,6 +99,7 @@ function Navbar(props) {
                       src={logo2}
                       width={300}
                       height={50}
+                      alt="brand logo"
                     />
                   </div>
                   <div className="hidden sm:block sm:ml-6">
@@ -129,9 +130,19 @@ function Navbar(props) {
                     />
                   ) : (
                     <div className="lg:space-x-3 md:flex hidden">
-                      <LoginButton url={"/auth/signin"} text="Login" />
+                      <LoginButton
+                        url={"/auth/signin"}
+                        color="#6366F1"
+                        textColor="#fff"
+                        text="Login"
+                      />
                       <span className="border-r border-gray-400"></span>
-                      <LoginButton url={"/auth/signup"} text="Sign Up" />
+                      <LoginButton
+                        url={"/auth/signup"}
+                        color="#fff"
+                        textColor="#000"
+                        text="Sign Up"
+                      />
                     </div>
                   )}
                 </div>

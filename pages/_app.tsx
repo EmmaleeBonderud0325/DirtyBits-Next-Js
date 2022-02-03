@@ -2,7 +2,7 @@ import { createWrapper } from "next-redux-wrapper";
 import type { AppProps } from 'next/app'
 import { ToastContainer } from 'react-toastify';
 import Navbar from "../components/Navbar";
-// import Footer from "../components/Footer";
+import Footer from "../components/Footer";
 import { store } from "../redux/store";
 import "../styles/index.css";
 import { useRouter } from "next/router";
@@ -13,6 +13,8 @@ import { ReactNode } from "react";
 import 'react-toastify/dist/ReactToastify.css';
 import { ChakraProvider } from '@chakra-ui/react'
 import theme from '../theme/theme'
+import NextNProgress from 'nextjs-progressbar';
+
 
 type Page<P = {}> = NextPage<P> & {
   getLayout?: (page: ReactNode) => ReactNode;
@@ -44,7 +46,7 @@ function MyApp({ Component, pageProps }: Props) {
   return (
     <>
   <ChakraProvider theme={theme}>
-
+  <NextNProgress height={2} color="#6366F1"/>
       <ToastContainer position="top-right"
 autoClose={5000}
 hideProgressBar={false}

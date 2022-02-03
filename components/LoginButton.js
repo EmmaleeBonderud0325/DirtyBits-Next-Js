@@ -2,10 +2,20 @@ import React from "react";
 import Link from "next/link";
 import { Button } from "@nextui-org/react";
 
-function LoginButton({ url, text }) {
+function LoginButton({ url, text, color, textColor }) {
   return (
     <Link href={url}>
-      <a className="login-btn bg-white text-black">{text}</a>
+      <Button
+        css={{
+          background: color,
+          color: textColor,
+        }}
+        auto
+        color="primary"
+        rounded
+      >
+        {text}
+      </Button>
     </Link>
   );
 }
