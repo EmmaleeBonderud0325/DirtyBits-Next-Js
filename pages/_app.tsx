@@ -18,11 +18,11 @@ import NextNProgress from 'nextjs-progressbar';
 
 type Page<P = {}> = NextPage<P> & {
   getLayout?: (page: ReactNode) => ReactNode;
-}
+};
 
 type Props = AppProps & {
   Component: Page;
-}
+};
 
 function MyApp({ Component, pageProps }: Props) {
   const router = useRouter();
@@ -35,7 +35,7 @@ function MyApp({ Component, pageProps }: Props) {
   }
 
   let background: string;
-  
+
   let fixedTop = "";
   if (router.pathname === "/") {
     background = "bg-transparent-800 w-screen absolute z-50";

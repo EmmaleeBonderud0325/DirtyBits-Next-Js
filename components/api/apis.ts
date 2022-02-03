@@ -52,9 +52,17 @@ export const verifyVerificationCode = axios.create({
   baseURL: BASE_URL + "auth/verifyUser",
 });
 
+export const getTagsApi = axios.create({
+  baseURL: PROBLEM_URL + "problems/getTagListCreateProblem",
+});
+
 export const AddProblem = CreateAxiosRequest(
   PROBLEM_URL + "problems/addProblem"
 );
+
+export const uploadImage = axios.create({
+  baseURL: BASE_URL + "auth/uploadCloudinary",
+});
 
 export const UpdateProblem = CreateAxiosRequest(
   PROBLEM_URL + "problems/updateProblem"
