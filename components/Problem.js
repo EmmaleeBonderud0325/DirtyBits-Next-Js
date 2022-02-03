@@ -18,6 +18,7 @@ import WrapperLayout from "../Layout/Layout";
 import "primereact/resources/themes/mdc-dark-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css"; //icons
+import { Paginator } from "primereact/paginator";
 
 const styles = {
   minWidth: "15rem",

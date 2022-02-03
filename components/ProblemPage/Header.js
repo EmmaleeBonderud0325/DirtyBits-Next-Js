@@ -136,6 +136,7 @@ function Header(props) {
               src={uploadquestion}
               width={20}
               height={20}
+              alt="upload code"
             />
           </Tooltip>
 
@@ -147,6 +148,7 @@ function Header(props) {
                   src={insert}
                   width={20}
                   height={20}
+                  alt="import file"
                 />
               </label>
               <input
@@ -169,6 +171,7 @@ function Header(props) {
                 src={downloadIcon}
                 width={20}
                 height={20}
+                alt="download code"
               />
             </Tooltip>
           </div>
@@ -180,6 +183,7 @@ function Header(props) {
                 src={refresh}
                 width={20}
                 height={20}
+                alt="reset code"
               />
             </Tooltip>
           </div>

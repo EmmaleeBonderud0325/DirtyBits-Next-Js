@@ -35,13 +35,16 @@ function MyApp({ Component, pageProps }: Props) {
   }
 
   let background: string;
-
   let fixedTop = "";
+  let footer : JSX.Element;
+  
   if (router.pathname === "/") {
     background = "bg-transparent-800 w-screen absolute z-50";
+    footer = <Footer/>
   } else {
     background = "bg-black border-b-1 border-gray-500 w-screen z-50";
     fixedTop = "sticky top-0 z-50";
+    footer = null
   }
   return (
     <>
@@ -60,6 +63,7 @@ pauseOnHover/>
       <Navbar fixedHeader={fixedTop} bg={background} />
       <Component {...pageProps} />
 </ChakraProvider>
+      {footer}
     </>
   );
 }

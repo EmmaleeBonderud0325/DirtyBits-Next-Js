@@ -1,8 +1,21 @@
 import TableLoader from "./TableLoader";
 import { connect } from "react-redux";
 import Link from "next/link";
+import "primereact/resources/themes/mdc-dark-indigo/theme.css"; //theme
+import "primereact/resources/primereact.min.css"; //core css
+import "primeicons/primeicons.css"; //icons
+import { Paginator } from "primereact/paginator";
+import { useState } from "react";
 
 function Table(props) {
+  const [basicFirst, setBasicFirst] = useState(0);
+  const [basicRows, setBasicRows] = useState(10);
+  const onBasicPageChange = (event) => {
+    setBasicFirst(event.first);
+    setBasicRows(event.rows);
+    console.log("request for", event.page + 1);
+  };
+
   let problemLevel;
   let problemColor;
   let status;
@@ -74,6 +87,13 @@ function Table(props) {
         </table>
       </div>
       {props.dataList.length <= 0 && <TableLoader />}
+      <Paginator
+        first={basicFirst}
+        rows={basicRows}
+        totalRecords={120}
+        rowsPerPageOptions={[10, 20, 30]}
+        onPageChange={onBasicPageChange}
+      ></Paginator>
     </div>
   );
 }

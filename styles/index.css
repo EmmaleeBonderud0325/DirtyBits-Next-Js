@@ -290,3 +290,10 @@ html::-webkit-scrollbar-thumb {
 .p-tabview-title {
   margin-left: 0.5rem;
 }
+
+.p-paginator {
+  background: transparent !important;
+}
+.p-dropdown {
+  background: transparent !important;
+}
