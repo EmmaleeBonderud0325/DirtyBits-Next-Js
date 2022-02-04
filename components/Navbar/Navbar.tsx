@@ -37,14 +37,24 @@ import { signoutUser } from "../../redux/actions/authenticate";
 import { useDispatch } from 'react-redux';
 import { openNotificationWithIcon } from "../OpenNotification";
 import { AiOutlineInfoCircle } from "react-icons/ai";
+import React, { useRef } from 'react';
+import { Menu as PrimeMenu } from 'primereact/menu';
+import { Button as Btn } from 'primereact/button';
+import { Toast } from 'primereact/toast';
+
+import "primereact/resources/themes/lara-light-indigo/theme.css";  //theme
+import "primereact/resources/primereact.min.css";                  //core css
+import "primeicons/primeicons.css";                   
+
   export default function WithSubnavigation() {
       const dispatch = useDispatch()
     const { isOpen, onToggle } = useDisclosure();
     const isHidden = useBreakpointValue({ base: true, md: false })
+    console.log('is hideen', isHidden)
     // @ts-ignore
     const {is_logged_in, profile_pic, username, is_admin} = useSelector(state => state.userData)
 
-
+    const menu = useRef(null);
     const addProblemPageHandler = () => {
       if(is_admin){
         Router.push('/addproblems')
@@ -56,9 +66,35 @@ import { AiOutlineInfoCircle } from "react-icons/ai";
         );
       }
     }
-    
+    const toast = useRef(null);
+    const items = [
+      {
+          items: [
+              {
+                  label: 'Your profile',
+                 
+                  command: () => {
+                    Router.push(`/profile/${username}`)
+                  }
+              },
+              {
+                  label: 'Add problems',
+                  command: () => {
+                    addProblemPageHandler()
+                  }
+              },
+              {
+                  label: 'Log Out',                  
+                  command: () => {
+                    dispatch(signoutUser())
+                  }
+              }
+          ]
+      },
+   
+  ];
     return (
-      <Container maxW={'container.xl'}>
+      <Container maxW={'container.xl'} className="overflow-hidden">
       <Box>
         <Flex
           bg={useColorModeValue('white', 'gray.800')}
@@ -104,7 +140,7 @@ import { AiOutlineInfoCircle } from "react-icons/ai";
           
 
           <Stack
-          className='space-x-4'
+          className='space-x-4 '
                     flex={{ base: 1, md: 0 }}
                     justify={'flex-end'}
                     direction={'row'}
@@ -113,23 +149,27 @@ import { AiOutlineInfoCircle } from "react-icons/ai";
                     
                     >
                   {is_logged_in ? (
-                     <Menu>
-                     <MenuButton>
-                         <Flex direction={'row'} alignItems={'center'}>
-                                <Avatar size="lg" src={profile_pic} color="secondary" bordered squared/>
-                                <Text hidden={isHidden} fontWeight={'semibold'} casing='capitalize' marginLeft={'1'}>{username}</Text>
+                  //    <Menu>
+                  //    <MenuButton>
+                  //        <Flex direction={'row'} alignItems={'center'}>
+                  //               <Avatar size="lg" src={profile_pic} color="secondary" bordered squared/>
+                  //               <Text hidden={isHidden} fontWeight={'semibold'} casing='capitalize' marginLeft={'1'}>{username}</Text>
 
-                         </Flex>
-                     </MenuButton>
-                     <MenuList>
+                  //        </Flex>
+                  //    </MenuButton>
+                  //    <MenuList>
                    
-                         <MenuItem onClick={() => Router.push(`/profile/${username}`)}>Your Profile</MenuItem>
-                         <MenuItem onClick={addProblemPageHandler}>Add Problems{!is_admin &&<AiOutlineInfoCircle className="text-yellow-200 ml-2 text-lg" />}</MenuItem>
+                  //        <MenuItem onClick={() => Router.push(`/profile/${username}`)}>Your Profile</MenuItem>
+                  //        <MenuItem onClick={addProblemPageHandler}>Add Problems{!is_admin &&<AiOutlineInfoCircle className="text-yellow-200 ml-2 text-lg" />}</MenuItem>
         
-                       <MenuDivider />
-                         <MenuItem onClick={() => dispatch(signoutUser())}>Log Out</MenuItem>
-                     </MenuList>
-                   </Menu>
+                  //      <MenuDivider />
+                  //        <MenuItem onClick={() => dispatch(signoutUser())}>Log Out</MenuItem>
+                  //    </MenuList>
+                  //  </Menu>
+                  <>
+                  <PrimeMenu model={items} popup ref={menu} id="popup_menu" />
+                <Btn label={!isHidden && username} icon={<Avatar size="lg" src={profile_pic} color="secondary" bordered squared/>} onClick={(event) => menu.current.toggle(event)} aria-controls="popup_menu" aria-haspopup />
+                  </>
                   ): (
                    <div className='md:flex space-x-4 items-center hidden'>
                    <NextLink href='/auth/signin'>
