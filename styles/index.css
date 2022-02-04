@@ -304,6 +304,9 @@ html::-webkit-scrollbar-thumb {
 
 .css-1553k70 {
   height: 1px !important;
+  border-bottom: none !important;
+  border-style: none !important;
+  border-color: none !important;
 }
 .chakra-stack .css-379x9j {
   visibility: hidden;
@@ -315,6 +318,34 @@ html::-webkit-scrollbar-thumb {
   background: none !important;
 }
 
-.css-1553k70 {
+.p-button {
   border: none !important;
+  background: none !important;
+  padding: none !important;
+}
+.p-button-label {
+  margin-left: 5px !important;
+  color: white !important;
+}
+.p-menu .p-submenu-header {
+  padding: 0 !important;
+}
+
+.p-menu.p-menu-overlay {
+  background: #2d3748 !important;
+  border: 0 none !important;
+  color: white !important;
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14),
+    0 1px 10px 0 rgba(0, 0, 0, 0.12) !important;
+}
+.p-menu .p-menuitem-link .p-menuitem-text {
+  color: white !important;
+  font-size: 14px;
+}
+
+.p-menu .p-menuitem-link:not(.p-disabled):hover {
+  background: #2d3748 !important;
+}
+.p-button.p-button-icon-only {
+  width: 4rem !important;
 }
