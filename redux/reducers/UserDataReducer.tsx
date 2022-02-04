@@ -2,16 +2,12 @@ import Cookies from "js-cookie";
 
 import { updateUserData } from "../types";
 import Parsetoken from "../../components/Helper/Parsetoken";
+import { userDataType } from "../interfaces";
 
-interface userDataType {
-  is_logged_in: boolean;
-  is_admin: boolean;
-  email: string;
-  first_name: string;
-  last_name: string;
-  username: string;
-  profile_pic: string;
-}
+type Action = {
+  type: string;
+  payload: userDataType;
+};
 
 const initial_state: userDataType = {
   is_logged_in: false,
@@ -39,7 +35,10 @@ if (refresh_token) {
   }
 }
 
-export const userDataReducer = (state = initial_state, action) => {
+export const userDataReducer = (
+  state: userDataType = initial_state,
+  action: Action
+) => {
   switch (action.type) {
     case updateUserData:
       return {

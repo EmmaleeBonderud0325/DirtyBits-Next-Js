@@ -37,64 +37,65 @@ import { signoutUser } from "../../redux/actions/authenticate";
 import { useDispatch } from "react-redux";
 import { openNotificationWithIcon } from "../OpenNotification";
 import { AiOutlineInfoCircle } from "react-icons/ai";
-import React, { useRef } from 'react';
-import { Menu as PrimeMenu } from 'primereact/menu';
-import { Button as Btn } from 'primereact/button';
-import { Toast } from 'primereact/toast';
+import React, { useRef } from "react";
+import { Menu as PrimeMenu } from "primereact/menu";
+import { Button as Btn } from "primereact/button";
+import { Toast } from "primereact/toast";
 
-import "primereact/resources/themes/lara-light-indigo/theme.css";  //theme
-import "primereact/resources/primereact.min.css";                  //core css
-import "primeicons/primeicons.css";                   
+import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
+import "primereact/resources/primereact.min.css"; //core css
+import "primeicons/primeicons.css";
 
-  export default function WithSubnavigation() {
-      const dispatch = useDispatch()
-    const { isOpen, onToggle } = useDisclosure();
-    const isHidden = useBreakpointValue({ base: true, md: false })
-    console.log('is hideen', isHidden)
-    // @ts-ignore
-    const {is_logged_in, profile_pic, username, is_admin} = useSelector(state => state.userData)
+export default function WithSubnavigation() {
+  const dispatch = useDispatch();
+  const { isOpen, onToggle } = useDisclosure();
+  const isHidden = useBreakpointValue({ base: true, md: false });
+  console.log("is hideen", isHidden);
+  // @ts-ignore
+  const { is_logged_in, profile_pic, username, is_admin } = useSelector(
+    (state) => state.userData
+  );
 
-    const menu = useRef(null);
-    const addProblemPageHandler = () => {
-      if(is_admin){
-        Router.push('/addproblems')
-      }else {
-        openNotificationWithIcon(
-          "info",
-          "Not an Admin",
-          "You don't have enough privileges, because you are not an admin"
-        );
-      }
+  const menu = useRef(null);
+  const addProblemPageHandler = () => {
+    if (is_admin) {
+      Router.push("/addproblems");
+    } else {
+      openNotificationWithIcon(
+        "info",
+        "Not an Admin",
+        "You don't have enough privileges, because you are not an admin"
+      );
     }
-    const toast = useRef(null);
-    const items = [
-      {
-          items: [
-              {
-                  label: 'Your profile',
-                 
-                  command: () => {
-                    Router.push(`/profile/${username}`)
-                  }
-              },
-              {
-                  label: 'Add problems',
-                  command: () => {
-                    addProblemPageHandler()
-                  }
-              },
-              {
-                  label: 'Log Out',                  
-                  command: () => {
-                    dispatch(signoutUser())
-                  }
-              }
-          ]
-      },
-   
+  };
+  const toast = useRef(null);
+  const items = [
+    {
+      items: [
+        {
+          label: "Your profile",
+
+          command: () => {
+            Router.push(`/profile/${username}`);
+          },
+        },
+        {
+          label: "Add problems",
+          command: () => {
+            addProblemPageHandler();
+          },
+        },
+        {
+          label: "Log Out",
+          command: () => {
+            dispatch(signoutUser());
+          },
+        },
+      ],
+    },
   ];
-    return (
-      <Container maxW={'container.xl'} className="overflow-hidden">
+  return (
+    <Container maxW={"container.xl"} className="overflow-hidden">
       <Box>
         <Flex
           bg={useColorModeValue("white", "gray.800")}
@@ -148,59 +149,49 @@ import "primeicons/primeicons.css";
           </Flex>
 
           <Stack
-          className='space-x-4 '
-                    flex={{ base: 1, md: 0 }}
-                    justify={'flex-end'}
-                    direction={'row'}
-                    spacing={1}
-                    alignItems={'center'}
-                    
-                    >
-                  {is_logged_in ? (
-                  //    <Menu>
-                  //    <MenuButton>
-                  //        <Flex direction={'row'} alignItems={'center'}>
-                  //               <Avatar size="lg" src={profile_pic} color="secondary" bordered squared/>
-                  //               <Text hidden={isHidden} fontWeight={'semibold'} casing='capitalize' marginLeft={'1'}>{username}</Text>
+            className="space-x-4 "
+            flex={{ base: 1, md: 0 }}
+            justify={"flex-end"}
+            direction={"row"}
+            spacing={1}
+            alignItems={"center"}
+          >
+            {is_logged_in ? (
+              //    <Menu>
+              //    <MenuButton>
+              //        <Flex direction={'row'} alignItems={'center'}>
+              //               <Avatar size="lg" src={profile_pic} color="secondary" bordered squared/>
+              //               <Text hidden={isHidden} fontWeight={'semibold'} casing='capitalize' marginLeft={'1'}>{username}</Text>
 
-                  //        </Flex>
-                  //    </MenuButton>
-                  //    <MenuList>
-                   
-                  //        <MenuItem onClick={() => Router.push(`/profile/${username}`)}>Your Profile</MenuItem>
-                  //        <MenuItem onClick={addProblemPageHandler}>Add Problems{!is_admin &&<AiOutlineInfoCircle className="text-yellow-200 ml-2 text-lg" />}</MenuItem>
-        
-                  //      <MenuDivider />
-                  //        <MenuItem onClick={() => dispatch(signoutUser())}>Log Out</MenuItem>
-                  //    </MenuList>
-                  //  </Menu>
-                  <>
-                  <PrimeMenu model={items} popup ref={menu} id="popup_menu" />
-                <Btn label={!isHidden && username} icon={<Avatar size="lg" src={profile_pic} color="secondary" bordered squared/>} onClick={(event) => menu.current.toggle(event)} aria-controls="popup_menu" aria-haspopup />
-                  </>
-                  ): (
-                   <div className='md:flex space-x-4 items-center hidden'>
-                   <NextLink href='/auth/signin'>
-                    <Button
-                   
-                      fontSize={'sm'}
-                      fontWeight={400}
-                      variant={'link'}
-                      _hover={{
-                          textDecoration:'none'
-                        }}
-                      >
-                      Sign In
-                    </Button>
-                    </NextLink>
-                    <Divider h={8} orientation='vertical' />
+              //        </Flex>
+              //    </MenuButton>
+              //    <MenuList>
 
-                  <MenuDivider />
-                  <MenuItem onClick={() => dispatch(signoutUser())}>
-                    Log Out
-                  </MenuItem>
-                </MenuList>
-              </Menu>
+              //        <MenuItem onClick={() => Router.push(`/profile/${username}`)}>Your Profile</MenuItem>
+              //        <MenuItem onClick={addProblemPageHandler}>Add Problems{!is_admin &&<AiOutlineInfoCircle className="text-yellow-200 ml-2 text-lg" />}</MenuItem>
+
+              //      <MenuDivider />
+              //        <MenuItem onClick={() => dispatch(signoutUser())}>Log Out</MenuItem>
+              //    </MenuList>
+              //  </Menu>
+              <>
+                <PrimeMenu model={items} popup ref={menu} id="popup_menu" />
+                <Btn
+                  label={!isHidden && username}
+                  icon={
+                    <Avatar
+                      size="lg"
+                      src={profile_pic}
+                      color="secondary"
+                      bordered
+                      squared
+                    />
+                  }
+                  onClick={(event) => menu.current.toggle(event)}
+                  aria-controls="popup_menu"
+                  aria-haspopup
+                />
+              </>
             ) : (
               <div className="md:flex space-x-4 items-center hidden">
                 <NextLink href="/auth/signin">

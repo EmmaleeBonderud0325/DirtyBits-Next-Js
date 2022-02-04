@@ -110,7 +110,7 @@ function Signin(props) {
         updateUserinfo({
           is_logged_in: true,
           is_admin: data.is_admin,
-          email: data.user_mail,
+          email: data.email,
           first_name: data.first_name,
           last_name: data.last_name,
           username: data.username,
