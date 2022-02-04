@@ -3,7 +3,17 @@ import Cookies from "js-cookie";
 import { updateUserData } from "../types";
 import Parsetoken from "../../components/Helper/Parsetoken";
 
-const initial_state = {
+interface userDataType {
+  is_logged_in: boolean;
+  is_admin: boolean;
+  email: string;
+  first_name: string;
+  last_name: string;
+  username: string;
+  profile_pic: string;
+}
+
+const initial_state: userDataType = {
   is_logged_in: false,
   is_admin: false,
   email: "",
@@ -16,10 +26,10 @@ const initial_state = {
 let refresh_token = Cookies.get("refresh");
 if (refresh_token) {
   try {
-    const data = Parsetoken(refresh_token);
+    let data: userDataType = Parsetoken(refresh_token);
     initial_state.is_logged_in = true;
     initial_state.is_admin = data.is_admin;
-    initial_state.email = data.user_mail;
+    initial_state.email = data.email;
     initial_state.first_name = data.first_name;
     initial_state.last_name = data.last_name;
     initial_state.username = data.username;
