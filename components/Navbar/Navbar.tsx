@@ -53,7 +53,7 @@ export default function WithSubnavigation() {
   console.log("is hideen", isHidden);
   // @ts-ignore
   const { is_logged_in, profile_pic, username, is_admin } = useSelector(
-    (state) => state.userData
+    (state: any) => state.userData
   );
 
   const menu = useRef(null);
