@@ -3,6 +3,7 @@
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap");
 
 @import "tailwindcss/base";
@@ -87,7 +88,7 @@ html {
 }
 
 body {
-  font-family: "Lato" !important;
+  font-family: "Lato", "Montserrat", sans-serif !important;
   /* ff 3.6+ */
   /* ff 3.6+ */
   background: -moz-linear-gradient(
