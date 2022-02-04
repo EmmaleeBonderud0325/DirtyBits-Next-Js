@@ -199,7 +199,7 @@ export const getInputTestCases = (id) => async (dispatch, getState) => {
   var inputTestCases = [];
   for (let i = 1; i <= getState().problemData.sample_Tc; i++) {
     const result = fetch(
-      `https://res.cloudinary.com/hhikcz56h/raw/upload/v1636969572/TestCases/${id}/sc-input${i}.txt`
+      `${process.env.NEXT_PUBLIC_TEST_CASES}${id}/sc-input${i}.txt`
     ).then((response) => {
       return response.text();
     });

@@ -11,7 +11,7 @@ let initial: problemListType[] = [];
 export const ProblemListReducer = (
   state: problemListType[] = initial,
   action: Action
-) => {
+): problemListType[] => {
   switch (action.type) {
     case UpdateProblemList:
       return action.payload;

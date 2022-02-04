@@ -1,12 +1,12 @@
 import { UpdateInputTestCases, UpdateOutputTestCases } from "../../types";
 
-let InputTestCases_initial_state = [];
-let OutputTestCases_initial_state = [];
+let InputTestCases_initial_state: string[] = [];
+let OutputTestCases_initial_state: string[] = [];
 
 export const InputTestCasesReducer = (
-  state = InputTestCases_initial_state,
-  action
-) => {
+  state: string[] = InputTestCases_initial_state,
+  action: { type: string; payload: string[] }
+): string[] => {
   switch (action.type) {
     case UpdateInputTestCases:
       return action.payload;
@@ -16,9 +16,9 @@ export const InputTestCasesReducer = (
 };
 
 export const OutputTestCasesReducer = (
-  state = OutputTestCases_initial_state,
-  action
-) => {
+  state: string[] = OutputTestCases_initial_state,
+  action: { type: string; payload: string[] }
+): string[] => {
   switch (action.type) {
     case UpdateOutputTestCases:
       return action.payload;

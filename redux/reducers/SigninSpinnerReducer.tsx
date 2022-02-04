@@ -16,7 +16,7 @@ type Action = {
 export const simpleLoginSpinnerReducer = (
   state: boolean = signIn_initialState,
   action: Action
-) => {
+): boolean => {
   switch (action.type) {
     case SimpleLoginSpinner:
       return action.payload;
@@ -28,7 +28,7 @@ export const simpleLoginSpinnerReducer = (
 export const githubLoginSpinnerReducer = (
   state: boolean = githubLogin_initialState,
   action: Action
-) => {
+): boolean => {
   switch (action.type) {
     case GithubLoginSpinner:
       return action.payload;
@@ -40,7 +40,7 @@ export const githubLoginSpinnerReducer = (
 export const googleLoginSpinnerReducer = (
   state: boolean = googleLogin_initialState,
   action: Action
-) => {
+): boolean => {
   switch (action.type) {
     case GoogleLoginSpinner:
       return action.payload;

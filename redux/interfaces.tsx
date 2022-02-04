@@ -54,3 +54,9 @@ export interface addProblemType {
   memory_Limit: number | null;
   time_Limit: number | null;
 }
+
+export interface themeType {
+  label: string;
+  value: string;
+  type: string;
+}
