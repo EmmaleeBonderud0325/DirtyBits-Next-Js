@@ -82,6 +82,9 @@
   padding: 0;
   box-sizing: border-box;
 }
+*:focus {
+  box-shadow: none !important;
+}
 
 html {
   overflow-x: hidden;
@@ -297,4 +300,21 @@ html::-webkit-scrollbar-thumb {
 }
 .p-dropdown {
   background: transparent !important;
+}
+
+.css-1553k70 {
+  height: 1px !important;
+}
+.chakra-stack .css-379x9j {
+  visibility: hidden;
+}
+.css-73pxpg,
+.css-pwz031,
+.tw-ring-color {
+  outline: none !important;
+  background: none !important;
+}
+
+.css-1553k70 {
+  border: none !important;
 }

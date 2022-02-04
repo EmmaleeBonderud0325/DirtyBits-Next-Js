@@ -1,7 +1,8 @@
 import { createWrapper } from "next-redux-wrapper";
 import type { AppProps } from 'next/app'
 import { ToastContainer } from 'react-toastify';
-import Navbar from "../components/Navbar";
+// import Navbar from "../components/Navbar";
+import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer";
 import { store } from "../redux/store";
 import "../styles/index.css";
@@ -60,7 +61,8 @@ pauseOnFocusLoss
 draggable
 theme="dark"
 pauseOnHover/>
-      <Navbar fixedHeader={fixedTop} bg={background} />
+      {/* <Navbar fixedHeader={fixedTop} bg={background} /> */}
+      <Navbar/>
       <Component {...pageProps} />
 </ChakraProvider>
       {footer}
