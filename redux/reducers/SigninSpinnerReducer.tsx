@@ -4,13 +4,18 @@ import {
   SimpleLoginSpinner,
 } from "../types";
 
-const signIn_initialState = false;
-const githubLogin_initialState = false;
-const googleLogin_initialState = false;
+const signIn_initialState: boolean = false;
+const githubLogin_initialState: boolean = false;
+const googleLogin_initialState: boolean = false;
+
+type Action = {
+  type: string;
+  payload: boolean;
+};
 
 export const simpleLoginSpinnerReducer = (
-  state = signIn_initialState,
-  action
+  state: boolean = signIn_initialState,
+  action: Action
 ) => {
   switch (action.type) {
     case SimpleLoginSpinner:
@@ -21,8 +26,8 @@ export const simpleLoginSpinnerReducer = (
 };
 
 export const githubLoginSpinnerReducer = (
-  state = githubLogin_initialState,
-  action
+  state: boolean = githubLogin_initialState,
+  action: Action
 ) => {
   switch (action.type) {
     case GithubLoginSpinner:
@@ -33,8 +38,8 @@ export const githubLoginSpinnerReducer = (
 };
 
 export const googleLoginSpinnerReducer = (
-  state = googleLogin_initialState,
-  action
+  state: boolean = googleLogin_initialState,
+  action: Action
 ) => {
   switch (action.type) {
     case GoogleLoginSpinner:

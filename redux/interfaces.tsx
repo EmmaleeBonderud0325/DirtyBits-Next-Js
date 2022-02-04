@@ -21,3 +21,36 @@ export interface signupErrorType {
   password: Error;
   confirmPassword: Error;
 }
+
+export interface tagsType {
+  value: number;
+  label: string;
+  color: string;
+}
+
+type problemTags = {
+  id: number;
+  name: string;
+};
+
+export interface problemListType {
+  id: number;
+  title: string;
+  tags: problemTags[];
+  totalSubmissions: number;
+  problem_level: string;
+  solved: string;
+}
+
+export interface addProblemType {
+  title: string;
+  problem_statement: string;
+  note: string;
+  input_format: string;
+  constraints: string;
+  output_format: string;
+  problem_level: string;
+  tags: number[];
+  memory_Limit: number | null;
+  time_Limit: number | null;
+}

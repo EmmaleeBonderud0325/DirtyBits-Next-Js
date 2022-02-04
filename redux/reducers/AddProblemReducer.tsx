@@ -10,8 +10,14 @@ import {
   updateMemoryLimit,
   updateTimeLimit,
 } from "../types";
+import { addProblemType } from "../interfaces";
 
-let initial = {
+type Action = {
+  type: string;
+  payload: string | null | number | number[];
+};
+
+let initial: addProblemType = {
   title: "",
   problem_statement: "",
   note: "",
@@ -24,7 +30,10 @@ let initial = {
   time_Limit: null,
 };
 
-export const AddProblemReducer = (state = initial, action) => {
+export const AddProblemReducer = (
+  state: addProblemType = initial,
+  action: Action
+) => {
   switch (action.type) {
     case updateTitle:
       return { ...state, title: action.payload };
