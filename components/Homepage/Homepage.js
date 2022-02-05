@@ -42,21 +42,25 @@ export default function Homepage() {
             />
           </div>
         </Zoom>
-        <div className="container px-4 sm:px-8 xl:px-20 mx-auto md:h-[1100px] h-[650px]">
+        <div className="container md:px-4 sm:px-8 xl:px-20 mx-auto md:h-[1100px] h-[650px]">
           <div className="hero-wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 items-start  md:items-center lg:mt-[8rem] sm:mt[5rem]">
             <div className="hero-text col-span-6 ">
               <SmoothList>
-                <h1 className="text-4xl md:text-5xl lg:text-5xl max-w-xl text-white leading-tight text-transparent bg-clip-text bg-gradient-to-r from-[#AE67FA] to-[#F49867] font-light font-lato">
+                <h1 className="text-5xl lg:block hidden max-w-xl text-white leading-tight text-transparent bg-clip-text bg-gradient-to-r from-[#AE67FA] to-[#F49867] font-light font-lato">
+                  Welcome to DirtyBits
+                </h1>
+                {/* For Mobile */}
+                <h1 className="text-3xl md:hidden text-white leading-tight text-transparent bg-clip-text bg-gradient-to-r from-[#AE67FA] to-[#F49867] font-light font-lato text-center">
                   Welcome to DirtyBits
                 </h1>
               </SmoothList>
               <SmoothList>
-                <span className="block text-white font-light xl:block mt-5 text-xl md:text-4xl tracking-wider font-lato">
+                <span className="block text-center md:text-left text-white font-light xl:block mt-5 text-xl md:text-4xl tracking-wider font-lato">
                   Be a Coder with us.
                 </span>
               </SmoothList>
               <SmoothList>
-                <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0 font-lato">
+                <p className="mt-3 text-base text-center md:text-left text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0 font-lato">
                   First, solve the problem. Then, write the code.
                 </p>
               </SmoothList>
@@ -71,6 +75,20 @@ export default function Homepage() {
                   </div>
                 </div>
               </SmoothList>
+
+              <Zoom>
+                <div className="md:hidden">
+                  <Image
+                    className=""
+                    src={hero}
+                    alt="hero section image"
+                    width={600}
+                    height={700}
+                    priority
+                    placeholder="blur"
+                  />
+                </div>
+              </Zoom>
             </div>
 
             <div className="hero-image col-span-6 md:block hidden">
@@ -90,16 +108,15 @@ export default function Homepage() {
             </div>
           </div>
         </div>
-        <div className="w-full mt-[20rem] h-full  sm:px-8 xl:px-20 mx-auto md:h-[1100px] p-4 px-4">
+        <div className="w-full  h-full  sm:px-8 xl:px-20 mx-auto md:h-[1100px] p-4 px-4 ">
           <div className="space-y-16">
-            <div className="lg:text-center text-center sm:space-y-10 lg:space-y-16">
-              <h2 className="font-bold text-xl md:text-4xl lg:text-5xl font-heading text-white capitalize">
-                Online{" "}
+            <div className="text-center sm:space-y-10 lg:space-y-16">
+              <div className="flex space-x-2 justify-center items-center font-bold text-3xl md:text-4xl lg:text-5xl font-heading text-white capitalize">
+                <h2 className="">Coding</h2>
                 <span className="text-custom-indigo tracking-wider">
-                  Coding
+                  Platform
                 </span>{" "}
-                Platform
-              </h2>
+              </div>
               <p className="mt-2 text-base leading-8 font-bold tracking-tight text-white sm:text-2xl text-center font-lato">
                 Platform To Enhance Your Skills
               </p>
@@ -108,9 +125,9 @@ export default function Homepage() {
               </p>
             </div>
             {/* <div className="flex lg:flex-row lg:justify-center lg:items-center lg:space-x-20"> */}
-            <div className="grid lg:grid-cols-3 space-y-9 grid-rows-3 lg:space-y-0 justify-evenly gap-16">
+            <div className="grid lg:grid-cols-3 space-y-9 grid-rows-4 lg:space-y-0 md:justify-evenly  gap-16">
               <Zoom>
-                <div>
+                <div className="">
                   <Feature
                     name="Fast Judge Server"
                     description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it"

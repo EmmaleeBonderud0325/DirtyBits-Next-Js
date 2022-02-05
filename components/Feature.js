@@ -1,12 +1,12 @@
 const Feature = ({ name, description, icon, colorString, borderColor }) => {
   return (
-    <div className="mt-10 group">
+    <div className="group h-full overflow-hidden">
       <dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
         <div
           key={name}
-          className="h-72 w-11/12 lg:w-80  flex flex-col justify-center items-start p-3 space-y-3"
+          className="lg:w-80  flex flex-col justify-center items-center md:items-start p-3 space-y-3"
         >
-          <div className="flex flex-col justify-center items-start space-y-3">
+          <div className="flex flex-col justify-center items-center md:items-start space-y-3 w-full">
             <div
               className={` flex justify-center items-center h-24 w-24 bg-gradient-to-b ${colorString} rounded-full text-[50px]`}
             >
@@ -23,7 +23,9 @@ const Feature = ({ name, description, icon, colorString, borderColor }) => {
             className={`h-3 w-32 border-b-4 ${borderColor} rounded-sm`}
           ></div>
 
-          <p className="font-medium text-gray-400 font-lato">{description}</p>
+          <p className="font-medium text-center md:text-left text-gray-400 font-lato">
+            {description}
+          </p>
         </div>
       </dl>
     </div>

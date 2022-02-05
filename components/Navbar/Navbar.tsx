@@ -255,7 +255,7 @@ const DesktopNav = () => {
                 fontWeight={500}
                 color={linkColor}
                 _hover={{
-                  borderBottom: "2px solid indigo",
+                  borderBottom: "2px solid white",
                   // textDecoration: 'underline',
                   color: linkHoverColor,
                 }}
