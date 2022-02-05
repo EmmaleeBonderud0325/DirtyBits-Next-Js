@@ -15,12 +15,6 @@ import {
   useBreakpointValue,
   useDisclosure,
   Container,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuGroup,
-  MenuDivider,
   Divider,
 } from "@chakra-ui/react";
 import {
@@ -36,17 +30,18 @@ import NextLink from "next/link";
 import { signoutUser } from "../../redux/actions/authenticate";
 import { useDispatch } from "react-redux";
 import { openNotificationWithIcon } from "../OpenNotification";
-import { AiOutlineInfoCircle } from "react-icons/ai";
+
 import React, { useRef } from "react";
 import { Menu as PrimeMenu } from "primereact/menu";
 import { Button as Btn } from "primereact/button";
-import { Toast } from "primereact/toast";
+
 
 import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css";
 
 export default function WithSubnavigation() {
+  console.log('navbar rendered')
   const dispatch = useDispatch();
   const { isOpen, onToggle } = useDisclosure();
   const isHidden = useBreakpointValue({ base: true, md: false });
@@ -68,7 +63,6 @@ export default function WithSubnavigation() {
       );
     }
   };
-  const toast = useRef(null);
   const items = [
     {
       items: [

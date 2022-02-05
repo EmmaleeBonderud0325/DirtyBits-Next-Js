@@ -310,7 +310,7 @@ function signup(props) {
         <title>Sign Up to DirtyBits</title>
       </Head>
       <ToastContainer theme="dark" />
-      <div class="loginSignUp">
+      <div className="loginSignUp">
         <div className="absolute w-60 h-60 rounded-xl bg-custom-indigo -top-5 -left-16 z-0 transform rotate-45 hidden md:hidden lg:block"></div>
         <div className="absolute w-48 h-48 rounded-xl bg-custom-indigo -bottom-10 transform rotate-12 hidden md:hidden lg:block"></div>
         <div className="w-40 h-40 absolute bg-custom-indigo rounded-full top-0 right-12 hidden md:hidden lg:block"></div>

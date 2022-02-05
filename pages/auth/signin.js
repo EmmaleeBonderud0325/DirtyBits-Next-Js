@@ -165,7 +165,7 @@ function Signin(props) {
       <Head>
         <title>Sign In to DirtyBits</title>
       </Head>
-      <div className=" loginSignUp">
+      <div className="loginSignUp">
         <div className="absolute w-60 h-60 rounded-xl bg-custom-indigo -top-5 -left-16 z-0 transform rotate-45 hidden md:hidden lg:block"></div>
         <div className="absolute w-48 h-48 rounded-xl bg-custom-indigo -bottom-10 transform rotate-12 hidden md:hidden lg:block"></div>
         <div className="w-40 h-40 absolute bg-custom-indigo rounded-full top-0 right-12 hidden md:hidden lg:block"></div>
@@ -178,7 +178,9 @@ function Signin(props) {
           <div className="text-white text-xl text-center lg:hidden">
             Welcome to{" "}
             <span className="text-custom-indigo text-2xl font-semibold">
-              <a href="/">DirtyBits</a>
+              <Link href="/">
+                <a>DirtyBits</a>
+              </Link>
             </span>
           </div>
           {/* HEADING FOR LARGER SIZE SCREENS */}
@@ -193,7 +195,9 @@ function Signin(props) {
                   <h2 className="text-white text-6xl">
                     Welcome to{" "}
                     <span className="text-custom-indigo font-extrabold">
-                      <a href="/">DirtyBits</a>
+                      <Link href="/">
+                        <a>DirtyBits</a>
+                      </Link>
                     </span>
                   </h2>
                 </div>
@@ -316,7 +320,7 @@ function Signin(props) {
                       transition ease-in duration-500
                       ${isDisabled && "opacity-50 cursor-not-allowed"}
                     `}
-                    autofocus
+                    autoFocus
                   >
                     {props.signInSpinner ? (
                       <>
@@ -363,30 +367,25 @@ function Signin(props) {
                     onFailure={(response) => {
                       console.error(response);
                     }}
-                    children={
-                      <>
-                        {props.githubSpinner ? (
-                          <>
-                            <span>{antIcon}</span>
-                          </>
-                        ) : (
-                          <>
-                            <AiFillGithub />
-                            <span className="text-sm font-light">Sign In</span>
-                          </>
-                        )}
-                      </>
-                    }
                     redirectUri=""
                     scope="read:user,user:email"
                     buttonText=""
                     className="social-login-btn"
-                  />
+                  >
+                    {props.githubSpinner ? (
+                      <span>{antIcon}</span>
+                    ) : (
+                      <>
+                        <AiFillGithub />
+                        <span className="text-sm font-light">Sign In</span>
+                      </>
+                    )}
+                  </GitHubLogin>
                 </div>
               </div>
               <div className="pt-5 text-center text-gray-400 text-xs">
                 <span>
-                  Don't have account ?{" "}
+                  Don&apos;t have account ?{" "}
                   <Link href="/auth/signup">
                     <a className="text-custom-indigo hover:text-black">
                       Sign Up
