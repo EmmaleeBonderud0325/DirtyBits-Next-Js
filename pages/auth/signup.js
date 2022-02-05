@@ -1,12 +1,13 @@
 import React, { useState, useCallback } from "react";
-import Link from "next/link";
-import { validate } from "email-validator";
+import { useRouter } from "next/router";
 import Head from "next/head";
+import Link from "next/link";
+
+import { validate } from "email-validator";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
-import { useRouter } from "next/router";
 import { connect, useDispatch } from "react-redux";
-
+import SmoothList from "react-smooth-list";
 var debounce = require("lodash.debounce");
 
 import Input from "../../components/Input";
@@ -15,7 +16,6 @@ import {
   validateEmail,
   createUser,
 } from "../../components/api/apis";
-
 import {
   updateFirstNameError,
   updateLastNameError,
@@ -24,9 +24,8 @@ import {
   updatePasswordError,
   updateConfirmPasswordError,
 } from "../../redux/actions";
-import SmoothList from "react-smooth-list";
 
-function signup(props) {
+function Signup(props) {
   const dispatch = useDispatch();
   const notifyError = () =>
     toast.error("Try Again", {
@@ -323,7 +322,9 @@ function signup(props) {
           <div className="text-white text-xl text-center lg:hidden">
             Welcome to{" "}
             <span className="text-custom-indigo text-2xl font-semibold">
-              <a href="/">DirtyBits</a>
+              <Link href="/">
+                <a>DirtyBits</a>
+              </Link>
             </span>
           </div>
           {/* HEADING FOR LARGER SIZE SCREENS */}
@@ -338,7 +339,9 @@ function signup(props) {
                   <h2 className="text-white text-6xl">
                     Welcome to{" "}
                     <span className="text-custom-indigo font-extrabold">
-                      <a href="/">DirtyBits</a>
+                      <Link href="/">
+                        <a>DirtyBits</a>
+                      </Link>
                     </span>
                   </h2>
                 </div>
@@ -533,7 +536,7 @@ function signup(props) {
   );
 }
 
-signup.getLayout = function PageLayout(page) {
+Signup.getLayout = function PageLayout(page) {
   return <>{page}</>;
 };
 
@@ -550,4 +553,4 @@ export default connect(mapStateToProps, {
   updateUsernameError,
   updatePasswordError,
   updateConfirmPasswordError,
-})(signup);
+})(Signup);

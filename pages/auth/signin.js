@@ -1,23 +1,23 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import GoogleLogin from "react-google-login";
-import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
-import { validate } from "email-validator";
-import { FcGoogle } from "react-icons/fc";
-import Cookies from "js-cookie";
-import { connect, useDispatch } from "react-redux";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import GitHubLogin from "react-github-login";
-import { AiFillGithub } from "react-icons/ai";
 
 import { Loading } from "@nextui-org/react";
+import GoogleLogin from "react-google-login";
+import GitHubLogin from "react-github-login";
+import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
+import { validate } from "email-validator";
+import Cookies from "js-cookie";
+import { connect, useDispatch } from "react-redux";
+import { FcGoogle } from "react-icons/fc";
+import { AiFillGithub } from "react-icons/ai";
+import SmoothList from "react-smooth-list";
 
 import { updateSignInSpinner, updateUserinfo } from "../../redux/actions";
 import Input from "../../components/Input";
 import { signinApi } from "../../components/api/apis";
 import Parsetoken from "../../components/Helper/Parsetoken";
-import SmoothList from "react-smooth-list";
 import { githubLogin, googleLogin } from "../../redux/actions/authenticate";
 
 function Signin(props) {

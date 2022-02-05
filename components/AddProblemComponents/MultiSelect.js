@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+
 import chroma from "chroma-js";
 import Select from "react-select";
 import { connect, useDispatch } from "react-redux";

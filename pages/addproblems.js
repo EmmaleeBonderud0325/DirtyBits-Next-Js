@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getTags } from "../redux/actions/index";
 import New from "../components/AddProblemComponents/New";
 
-function addproblems() {
+function Addproblems() {
   const dispatch = useDispatch();
   const tags = useSelector((state) => state.tags);
 
@@ -19,4 +19,4 @@ function addproblems() {
   );
 }
 
-export default addproblems;
+export default Addproblems;

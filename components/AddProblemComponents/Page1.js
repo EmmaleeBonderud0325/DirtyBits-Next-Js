@@ -1,8 +1,10 @@
-import { connect } from "react-redux";
 import Head from "next/head";
+
+import { connect } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { Button } from "@nextui-org/react";
+
 import { TextEditor } from "./TextEditor";
 import Dropdown from "../Dropdown";
 import {

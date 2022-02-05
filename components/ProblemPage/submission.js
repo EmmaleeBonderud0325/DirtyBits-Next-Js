@@ -36,16 +36,18 @@ const Submission = (props) => {
       }
 
       return (
-        <tr class="text-white">
+        <tr className="text-white" key={submission.submission_Date_Time}>
           <td
-            class={`px-4 py-3 font-semibold ${color} text-sm flex items-center gap-2`}
+            className={`px-4 py-3 font-semibold ${color} text-sm flex items-center gap-2`}
           >
             {status}
             {submission.status}
           </td>
-          <td class="px-4 py-3 text-ms font-semibold ">{submission.score}</td>
-          <td class="px-4 py-3 text-xs ">{submission.language}</td>
-          <td class="px-4 py-3 text-sm ">
+          <td className="px-4 py-3 text-ms font-semibold ">
+            {submission.score}
+          </td>
+          <td className="px-4 py-3 text-xs ">{submission.language}</td>
+          <td className="px-4 py-3 text-sm ">
             {moment(submission.submission_Date_Time).format(
               "MMMM Do YYYY, h:mm:ss a"
             )}
@@ -69,7 +71,7 @@ const Submission = (props) => {
     }
   }
   return (
-    <section class="container mx-auto p-6 font-mono scrollbar-hide">
+    <section className="container mx-auto p-6 font-mono scrollbar-hide">
       {props.isRunning && (
         <div className="pl-5 h-36">
           <span className="loader"></span>
@@ -106,18 +108,18 @@ const Submission = (props) => {
           </p>
         </div>
       )}
-      <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg scrollbar-hide">
-        <div class="w-full overflow-x-hidden">
-          <table class="w-full">
+      <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg scrollbar-hide">
+        <div className="w-full overflow-x-hidden">
+          <table className="w-full">
             <thead>
-              <tr class="text-md font-semibold tracking-wide text-left text-gray-500 bg-slate-800 uppercase border-b border-gray-600">
-                <th class="px-4 py-3">Result</th>
-                <th class="px-4 py-3">Score</th>
-                <th class="px-4 py-3">Language</th>
-                <th class="px-4 py-3">Time</th>
+              <tr className="text-md font-semibold tracking-wide text-left text-gray-500 bg-slate-800 uppercase border-b border-gray-600">
+                <th className="px-4 py-3">Result</th>
+                <th className="px-4 py-3">Score</th>
+                <th className="px-4 py-3">Language</th>
+                <th className="px-4 py-3">Time</th>
               </tr>
             </thead>
-            <tbody class="bg-slate-800">
+            <tbody className="bg-slate-800">
               {props.submissionList !== null && listRowHandler()}
             </tbody>
           </table>

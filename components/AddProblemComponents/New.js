@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+
 import { Steps } from "primereact/steps";
 import "primereact/resources/themes/mdc-dark-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css"; //icons
+
 import WrapperLayout from "../../Layout/Layout";
 import Page1 from "./Page1";
 import { Page2 } from "./Page2";
