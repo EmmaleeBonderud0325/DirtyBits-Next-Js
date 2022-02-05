@@ -7,17 +7,30 @@ import {
   UpdateIsBookmarked,
 } from "../../types";
 
-let upvote_initial = 0;
-let isUpvoted_initial = false;
+type ActionNumber = {
+  type: string;
+  payload: number;
+};
 
-let downvote_initial = 0;
-let isDownvoted_initial = false;
+type ActionBoolean = {
+  type: string;
+  payload: boolean;
+};
 
-let submissionCount_initial = 0;
+let upvote_initial: number = 0;
+let isUpvoted_initial: boolean = false;
 
-let isBookmarked_initial = false;
+let downvote_initial: number = 0;
+let isDownvoted_initial: boolean = false;
 
-export const UpvoteReducer = (state = upvote_initial, action) => {
+let submissionCount_initial: number = 0;
+
+let isBookmarked_initial: boolean = false;
+
+export const UpvoteReducer = (
+  state: number = upvote_initial,
+  action: ActionNumber
+): number => {
   switch (action.type) {
     case UpdateUpvotes:
       return action.payload;
@@ -26,7 +39,10 @@ export const UpvoteReducer = (state = upvote_initial, action) => {
   }
 };
 
-export const SetIsUpvotedReducer = (state = isUpvoted_initial, action) => {
+export const SetIsUpvotedReducer = (
+  state: boolean = isUpvoted_initial,
+  action: ActionBoolean
+): boolean => {
   switch (action.type) {
     case UpdateIsUpvoted:
       return action.payload;
@@ -35,7 +51,10 @@ export const SetIsUpvotedReducer = (state = isUpvoted_initial, action) => {
   }
 };
 
-export const DownvoteReducer = (state = downvote_initial, action) => {
+export const DownvoteReducer = (
+  state: number = downvote_initial,
+  action: ActionNumber
+): number => {
   switch (action.type) {
     case UpdateDownvotes:
       return action.payload;
@@ -44,7 +63,10 @@ export const DownvoteReducer = (state = downvote_initial, action) => {
   }
 };
 
-export const SetIsDownvotedReducer = (state = isDownvoted_initial, action) => {
+export const SetIsDownvotedReducer = (
+  state: boolean = isDownvoted_initial,
+  action: ActionBoolean
+): boolean => {
   switch (action.type) {
     case UpdateIsDownvoted:
       return action.payload;
@@ -54,9 +76,9 @@ export const SetIsDownvotedReducer = (state = isDownvoted_initial, action) => {
 };
 
 export const submissionCountReducer = (
-  state = submissionCount_initial,
-  action
-) => {
+  state: number = submissionCount_initial,
+  action: ActionNumber
+): number => {
   switch (action.type) {
     case UpdateSubmissionCount:
       return action.payload;
@@ -66,9 +88,9 @@ export const submissionCountReducer = (
 };
 
 export const SetIsBookmarkedReducer = (
-  state = isBookmarked_initial,
-  action
-) => {
+  state: boolean = isBookmarked_initial,
+  action: ActionBoolean
+): boolean => {
   switch (action.type) {
     case UpdateIsBookmarked:
       return action.payload;
