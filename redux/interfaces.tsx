@@ -74,3 +74,27 @@ export interface submissionsList {
   total_scrore: number;
   submission_Date_Time: string;
 }
+
+export interface problemDataTypes {
+  created_by: string;
+  title: string;
+  problem_statement: string;
+  note: string;
+  input_format: string;
+  constraints: string;
+  output_format: string;
+  max_score: number;
+  tags: any;
+  problem_level: string;
+  accuracy: string;
+  totalSubmissions: number;
+  sample_Tc: number;
+  total_Tc: number;
+  created_At: string;
+  memory_Limit: number;
+  time_Limit: number;
+  publically_visible: boolean;
+  approved_by_admin: boolean;
+  up_votes: number;
+  down_votes: number;
+}
