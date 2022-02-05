@@ -12,6 +12,7 @@ type Action = {
 const initial_state: userDataType = {
   is_logged_in: false,
   is_admin: false,
+  is_verified: false,
   email: "",
   first_name: "",
   last_name: "",
@@ -24,6 +25,7 @@ if (refresh_token) {
   try {
     let data: userDataType = Parsetoken(refresh_token);
     initial_state.is_logged_in = true;
+    initial_state.is_verified = data.is_verified;
     initial_state.is_admin = data.is_admin;
     initial_state.email = data.email;
     initial_state.first_name = data.first_name;

@@ -17,6 +17,7 @@
     "@heroicons/react": "^1.0.4",
     "@nextui-org/react": "^1.0.2-beta.3",
     "@tinymce/tinymce-react": "^3.13.0",
+    "@types/codemirror": "^5.60.5",
     "@types/js-cookie": "^3.0.1",
     "@types/react-redux": "^7.1.22",
     "@types/redux": "^3.6.0",

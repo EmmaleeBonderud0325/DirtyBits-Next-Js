@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, FC, ReactElement } from "react";
 import { AiFillGithub } from "react-icons/ai";
 import { MdCreate } from "react-icons/md";
 import { VscRunAll } from "react-icons/vsc";
@@ -13,11 +13,7 @@ import { Modal, Text, Row } from "@nextui-org/react";
 
 import { base64_encode } from "./Helper2";
 require("codemirror/lib/codemirror.css");
-import {
-  googleLoginApi,
-  runTestCases,
-  submitCode,
-} from "../../components/api/apis";
+import { googleLoginApi, runTestCases, submitCode } from "../api/apis";
 import { updateUserinfo } from "../../redux/actions";
 import {
   changeEditorValue,
@@ -35,6 +31,14 @@ import GitHubLogin from "react-github-login";
 import { githubLogin, googleLogin } from "../../redux/actions/authenticate";
 import Link from "next/link";
 import { TabView, TabPanel as Panel } from "primereact/tabview";
+import {
+  editorLanguage,
+  submissionResult,
+  submissionsList,
+  themeType,
+  userDataType,
+} from "../../redux/interfaces";
+import { IRootState } from "../../redux/reducers";
 let CodeMirror = null;
 if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
   CodeMirror = require("react-codemirror2").Controlled;
@@ -110,25 +114,39 @@ if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
   require("codemirror/addon/scroll/simplescrollbars");
 }
 
-const Editor = (props) => {
+interface Props {
+  editorValue: string;
+  themeValue: themeType;
+  editorLanguage: editorLanguage;
+  fontSize: string;
+  problemPageProblemId: number;
+  submissionCount: number;
+  email: string;
+  codeRunner: (value: boolean) => void;
+  result: (value: submissionResult) => void;
+  currentTabFunction: (value: number) => void;
+  githubSpinner?: any;
+}
+
+const Editor: FC<Props> = (props): ReactElement => {
   const dispatch = useDispatch();
   console.log("editor rendered");
-  const [isDisabled, setIsDisabled] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
-  let [customInput, setCustomInput] = useState(false);
-  let [inputValue, changeInputValue] = useState("");
-  let [outputValue, changeOutputValue] = useState(
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(false);
+  let [customInput, setCustomInput] = useState<boolean>(false);
+  let [inputValue, changeInputValue] = useState<string>("");
+  let [outputValue, changeOutputValue] = useState<string>(
     "You must run your code first."
   );
-  let [showMode, changeShowMode] = useState(true);
-  const [showConsole, setShowConsole] = useState(false);
-  let [showLoader, setShowLoader] = useState(false);
-  const [value, setValue] = useState(0);
+  let [showMode, changeShowMode] = useState<boolean>(true);
+  const [showConsole, setShowConsole] = useState<boolean>(false);
+  let [showLoader, setShowLoader] = useState<boolean>(false);
+  const [value, setValue] = useState<number>(0);
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
-  const { is_logged_in } = useSelector((state) => state.userData);
+  const { is_logged_in } = useSelector((state: IRootState) => state.userData);
 
   useEffect(() => {
     return () => {
@@ -147,7 +165,7 @@ const Editor = (props) => {
     };
   }, []);
 
-  const closeHandler = () => {
+  const closeHandler = (): void => {
     setIsModalVisible(false);
   };
 
@@ -161,13 +179,13 @@ const Editor = (props) => {
     email,
   } = props;
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  // const handleChange = (event, newValue) => {
+  //   setValue(newValue);
+  // };
 
-  const changeCode = (data) => {
-    dispatch(changeEditorValue(data));
-  };
+  // const changeCode = (data) => {
+  //   dispatch(changeEditorValue(data));
+  // };
 
   const handleRunCode = async () => {
     setIsDisabled(true);
@@ -219,7 +237,7 @@ const Editor = (props) => {
     socket.onopen = async function (e) {
       props.currentTabFunction(1);
       props.codeRunner(true);
-      props.result({});
+      // props.result({});
       console.log("opened");
       await submitCode.post("/", {
         problem_Id: problemPageProblemId,
@@ -235,10 +253,11 @@ const Editor = (props) => {
       }
       if (!data["is_testcase"]) {
         dispatch(changeSubmissionCount(submissionCount + 1));
-        var problemResult = JSON.parse(data["text"]);
-        problemResult = problemResult[0]["fields"];
+        var problemResult: submissionResult = JSON.parse(data["text"])[0][
+          "fields"
+        ];
         props.result(problemResult);
-        var appendData = {
+        var appendData: submissionsList = {
           status: problemResult.status,
           score: problemResult.score,
           language: problemResult.language,
@@ -285,10 +304,10 @@ const Editor = (props) => {
     styleActiveLine: true,
     styleActiveSelected: true,
     extraKeys: {
-      F11: (cm) => {
+      F11: (cm: any) => {
         cm.setOption("fullScreen", !cm.getOption("fullScreen"));
       },
-      Esc: (cm) => {
+      Esc: (cm: any) => {
         if (cm.getOption("fullScreen")) {
           cm.setOption("fullScreen", false);
         }
@@ -297,26 +316,27 @@ const Editor = (props) => {
     },
   };
 
-  const handeCustomInput = (e) => {
-    setCustomInput(!customInput);
-  };
+  // const handeCustomInput = (e) => {
+  //   setCustomInput(!customInput);
+  // };
 
-  const handleShowMode = (e) => {
-    const ele_id = e.target.id;
-    if (ele_id === "simple-tab-0") {
-      changeShowMode(true);
-    } else {
-      changeShowMode(false);
-    }
-  };
+  // const handleShowMode = (e) => {
+  //   const ele_id = e.target.id;
+  //   if (ele_id === "simple-tab-0") {
+  //     changeShowMode(true);
+  //   } else {
+  //     changeShowMode(false);
+  //   }
+  // };
 
   const responseGoogleSuccess = async (data) => {
     try {
       await googleLoginApi
         .post("/", { auth_token: data["tokenId"] })
-        .then((result) => {
-          const { access, refresh } = result.data;
-          const data = Parsetoken(access);
+        .then((result: any) => {
+          let access: string = result.data.access;
+          let refresh: string = result.data.refresh;
+          const data: userDataType = Parsetoken(access);
           if (data.is_verified) {
             setIsModalVisible(false);
             Cookies.set("access", access);
@@ -324,8 +344,9 @@ const Editor = (props) => {
             dispatch(
               updateUserinfo({
                 is_logged_in: true,
+                is_verified: data.is_verified,
                 is_admin: data.is_admin,
-                email: data.user_mail,
+                email: data.email,
                 first_name: data.first_name,
                 last_name: data.last_name,
                 username: data.username,
@@ -366,7 +387,9 @@ const Editor = (props) => {
             className={`my-code-editor scrollbar-hide text-[${fontSize}]`}
             value={editorValue}
             options={options}
-            onBeforeChange={(editor, data, value) => changeCode(value)}
+            onBeforeChange={(_: any, __: any, value: string) => {
+              dispatch(changeEditorValue(value));
+            }}
             //   onChange={(editor, data, value) => changeCode(value)}
             // onKeyUp={(editor, event) => {
             //   handleKeyUp(editor, event);
@@ -608,7 +631,7 @@ const Editor = (props) => {
           >
             <textarea
               className="w-full placeholder:text-base placeholder:p-2 bg-gray-800 outline-none rounded-lg p-1 text-lg"
-              rows="6"
+              rows={6}
               id="input-btn"
               placeholder="Custom Input here"
               value={inputValue}

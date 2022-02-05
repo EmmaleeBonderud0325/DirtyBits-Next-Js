@@ -1,5 +1,6 @@
 export interface userDataType {
   is_logged_in: boolean;
+  is_verified: boolean;
   is_admin: boolean;
   email: string;
   first_name: string;
@@ -71,7 +72,7 @@ export interface submissionsList {
   language: string;
   status: string;
   score: number;
-  total_scrore: number;
+  total_score: number;
   submission_Date_Time: string;
 }
 
@@ -97,4 +98,19 @@ export interface problemDataTypes {
   approved_by_admin: boolean;
   up_votes: number;
   down_votes: number;
+}
+
+export interface submissionResult {
+  created_By: string;
+  problem_Id: number;
+  language: string;
+  task_id: string;
+  code: string;
+  status: string;
+  error: string;
+  test_Cases_Passed: number;
+  total_Test_Cases: number;
+  score: number;
+  total_score: number;
+  submission_Date_Time: string;
 }
