@@ -60,3 +60,9 @@ export interface themeType {
   value: string;
   type: string;
 }
+
+export interface editorLanguage {
+  label: string;
+  value: string;
+  ext: string;
+}
