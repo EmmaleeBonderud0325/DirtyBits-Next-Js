@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { ReactElement, useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
 import moment from "moment";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
@@ -6,8 +6,16 @@ import { AiOutlineCloseCircle, AiOutlineInfoCircle } from "react-icons/ai";
 import { Loading } from "@nextui-org/react";
 
 import { getSubmissionsListAction } from "../../redux/actions/ProblemPage";
+import { submissionsListI } from "../../redux/interfaces";
+import { IRootState } from "../../redux/reducers";
 
-const Submission = (props) => {
+interface Props {
+  submissionList: submissionsListI[];
+  isRunning: boolean;
+  result: submissionsListI;
+}
+
+const Submission = (props: Props): ReactElement => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -16,8 +24,8 @@ const Submission = (props) => {
 
   const listRowHandler = () => {
     let rowMarkup = props.submissionList.map((submission) => {
-      let color;
-      let status;
+      let color: string;
+      let status: ReactElement;
       switch (submission.status) {
         case "Accepted":
           status = <IoMdCheckmarkCircleOutline />;
@@ -143,7 +151,7 @@ const Submission = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: IRootState) => {
   return {
     submissionList: state.submissionsList,
   };

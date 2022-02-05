@@ -1,16 +1,19 @@
 import React, { useState, useEffect, FC, ReactElement } from "react";
+import Image from "next/image";
+import Link from "next/link";
+
+import Cookies from "js-cookie";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { Modal, Text, Row } from "@nextui-org/react";
+import { Loading } from "@nextui-org/react";
 import { AiFillGithub } from "react-icons/ai";
 import { MdCreate } from "react-icons/md";
 import { VscRunAll } from "react-icons/vsc";
 import { FcGoogle } from "react-icons/fc";
-
-import Cookies from "js-cookie";
-import { connect, useDispatch, useSelector } from "react-redux";
 import GoogleLogin from "react-google-login";
 import { AiOutlineSend } from "react-icons/ai";
-import terminal from "../../public/terminal.svg";
-import { Modal, Text, Row } from "@nextui-org/react";
 
+import terminal from "../../public/terminal.svg";
 import { base64_encode } from "./Helper2";
 require("codemirror/lib/codemirror.css");
 import { googleLoginApi, runTestCases, submitCode } from "../api/apis";
@@ -25,20 +28,18 @@ import Encodemail from "../Helper/Encodemail";
 import Parsetoken from "../Helper/Parsetoken";
 import Header from "./Header";
 import SmoothList from "react-smooth-list";
-import Image from "next/image";
-import { Loading } from "@nextui-org/react";
 import GitHubLogin from "react-github-login";
 import { githubLogin, googleLogin } from "../../redux/actions/authenticate";
-import Link from "next/link";
 import { TabView, TabPanel as Panel } from "primereact/tabview";
 import {
-  editorLanguage,
-  submissionResult,
-  submissionsList,
-  themeType,
-  userDataType,
+  editorLanguageI,
+  submissionResultI,
+  submissionsListI,
+  themeI,
+  userDataI,
 } from "../../redux/interfaces";
 import { IRootState } from "../../redux/reducers";
+
 let CodeMirror = null;
 if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
   CodeMirror = require("react-codemirror2").Controlled;
@@ -116,14 +117,14 @@ if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
 
 interface Props {
   editorValue: string;
-  themeValue: themeType;
-  editorLanguage: editorLanguage;
+  themeValue: themeI;
+  editorLanguage: editorLanguageI;
   fontSize: string;
   problemPageProblemId: number;
   submissionCount: number;
   email: string;
   codeRunner: (value: boolean) => void;
-  result: (value: submissionResult) => void;
+  result: (value: submissionResultI) => void;
   currentTabFunction: (value: number) => void;
   githubSpinner?: any;
 }
@@ -160,6 +161,7 @@ const Editor: FC<Props> = (props): ReactElement => {
           label: "C++",
           value: "text/x-c++src",
           ext: ".cpp",
+          icon: "SiCplusplus",
         })
       );
     };
@@ -253,11 +255,11 @@ const Editor: FC<Props> = (props): ReactElement => {
       }
       if (!data["is_testcase"]) {
         dispatch(changeSubmissionCount(submissionCount + 1));
-        var problemResult: submissionResult = JSON.parse(data["text"])[0][
+        var problemResult: submissionResultI = JSON.parse(data["text"])[0][
           "fields"
         ];
         props.result(problemResult);
-        var appendData: submissionsList = {
+        var appendData: submissionsListI = {
           status: problemResult.status,
           score: problemResult.score,
           language: problemResult.language,
@@ -336,7 +338,7 @@ const Editor: FC<Props> = (props): ReactElement => {
         .then((result: any) => {
           let access: string = result.data.access;
           let refresh: string = result.data.refresh;
-          const data: userDataType = Parsetoken(access);
+          const data: userDataI = Parsetoken(access);
           if (data.is_verified) {
             setIsModalVisible(false);
             Cookies.set("access", access);

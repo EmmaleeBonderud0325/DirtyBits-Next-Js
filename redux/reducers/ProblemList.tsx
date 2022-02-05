@@ -1,17 +1,17 @@
 import { UpdateProblemList } from "../types";
-import { problemListType } from "../interfaces";
+import { problemListI } from "../interfaces";
 
 type Action = {
   type: string;
-  payload: problemListType[];
+  payload: problemListI[];
 };
 
-let initial: problemListType[] = [];
+let initial: problemListI[] = [];
 
 export const ProblemListReducer = (
-  state: problemListType[] = initial,
+  state: problemListI[] = initial,
   action: Action
-): problemListType[] => {
+): problemListI[] => {
   switch (action.type) {
     case UpdateProblemList:
       return action.payload;

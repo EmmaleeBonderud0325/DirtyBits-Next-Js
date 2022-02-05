@@ -1,17 +1,31 @@
-import React from "react";
+import { FC, ReactElement } from "react";
+
+import { useDispatch } from "react-redux";
 import { SiPython, SiCplusplus, SiJava } from "react-icons/si";
 import { IoMoonOutline } from "react-icons/io5";
 import { MdOutlineWbSunny } from "react-icons/md";
-import { useDispatch } from "react-redux";
-import { DropdownV3 } from "../Dropdown/DropdownV3";
 
-const jsonData = require("./data.json");
+import { DropdownV3 } from "./DropdownV3";
+import jsonData from "./data.json";
+import { editorLanguageI, themeI } from "../../redux/interfaces";
 
-function Dropdown2(props) {
+interface Props {
+  dropdownType: string;
+  currTheme: themeI;
+  currLang: editorLanguageI;
+  setCurrTheme: (newState: themeI) => { type: string; payload: themeI };
+  setCurrLang: (newState: editorLanguageI) => {
+    type: string;
+    payload: editorLanguageI;
+  };
+  changeEditorValue: (newState: string) => { type: string; payload: string };
+}
+
+export const Dropdown2: FC<Props> = (props): ReactElement => {
   const dispatch = useDispatch();
-  function handleMenuClick(e) {
+  function handleMenuClick(e: any) {
     if (props.dropdownType === "theme") {
-      const [key, value] = e.key.split("|");
+      const [_, value] = e.key.split("|");
       for (let i = 0; i < jsonData.theme.length; i++) {
         if (jsonData.theme[i].value === value) {
           dispatch(
@@ -35,7 +49,7 @@ function Dropdown2(props) {
               value: jsonData.language[i].value,
               label: jsonData.language[i].label,
               ext: jsonData.language[i].ext,
-              icon: jsonData.language[i].icon,
+              icon: jsonData.language[i].iconClass,
             })
           );
           dispatch(props.changeEditorValue(jsonData.language[i].pre));
@@ -45,7 +59,7 @@ function Dropdown2(props) {
     }
   }
 
-  const getLangIconClass = (label) => {
+  const getLangIconClass = (label: string): ReactElement => {
     if (label === "C++" || label === "C") {
       return <SiCplusplus />;
     }
@@ -57,7 +71,7 @@ function Dropdown2(props) {
     }
   };
 
-  const getThemeIconClass = (type) => {
+  const getThemeIconClass = (type: string): ReactElement => {
     if (type == "dark") {
       return <IoMoonOutline />;
     } else {
@@ -70,7 +84,7 @@ function Dropdown2(props) {
       return (
         <li
           key={item.label + "|" + item.value}
-          icon={getThemeIconClass(item.type)}
+          data-icon={getThemeIconClass(item.type)}
         >
           <div className="flex items-center space-x-2">
             <span>{getThemeIconClass(item.type)}</span>
@@ -87,7 +101,7 @@ function Dropdown2(props) {
       return (
         <li
           key={item.ext + "|" + item.value}
-          icon={getLangIconClass(item.label)}
+          data-icon={getLangIconClass(item.label)}
           className=""
         >
           <div className="flex items-center space-x-2">
@@ -116,6 +130,4 @@ function Dropdown2(props) {
       />
     </div>
   );
-}
-
-export default Dropdown2;
+};

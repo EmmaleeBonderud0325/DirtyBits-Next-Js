@@ -35,13 +35,12 @@ import React, { useRef } from "react";
 import { Menu as PrimeMenu } from "primereact/menu";
 import { Button as Btn } from "primereact/button";
 
-
 import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css";
 
 export default function WithSubnavigation() {
-  console.log('navbar rendered')
+  console.log("navbar rendered");
   const dispatch = useDispatch();
   const { isOpen, onToggle } = useDisclosure();
   const isHidden = useBreakpointValue({ base: true, md: false });
@@ -82,7 +81,7 @@ export default function WithSubnavigation() {
         {
           label: "Log Out",
           command: () => {
-            dispatch(signoutUser());
+            dispatch(signoutUser(false));
           },
         },
       ],

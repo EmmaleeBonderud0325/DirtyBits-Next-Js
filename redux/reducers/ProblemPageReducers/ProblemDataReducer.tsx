@@ -1,12 +1,13 @@
-import { problemDataTypes } from "../../interfaces";
+import { problemDataI } from "../../interfaces";
 import { UpdateProblemPageProblemData } from "../../types";
 
 type Action = {
   type: string;
-  payload: problemDataTypes;
+  payload: problemDataI;
 };
 
-export const initial: problemDataTypes = {
+export const initial: problemDataI = {
+  id: null,
   created_by: "",
   title: "",
   problem_statement: "",
@@ -15,7 +16,8 @@ export const initial: problemDataTypes = {
   constraints: "",
   output_format: "",
   max_score: 0,
-  tags: "",
+  tags: [],
+  company_tags: [],
   problem_level: "",
   accuracy: "",
   totalSubmissions: 0,
@@ -31,9 +33,9 @@ export const initial: problemDataTypes = {
 };
 
 export const ProblemDataReducer = (
-  state: problemDataTypes = initial,
+  state: problemDataI = initial,
   action: Action
-): problemDataTypes => {
+): problemDataI => {
   switch (action.type) {
     case UpdateProblemPageProblemData:
       return action.payload;

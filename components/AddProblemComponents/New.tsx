@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FC, ReactElement, useState } from "react";
 
 import { Steps } from "primereact/steps";
 import "primereact/resources/themes/mdc-dark-indigo/theme.css"; //theme
@@ -9,20 +9,20 @@ import WrapperLayout from "../../Layout/Layout";
 import Page1 from "./Page1";
 import { Page2 } from "./Page2";
 
-const StepsDemo = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [problemId, setProblemId] = useState(null);
+const StepsDemo: FC = (): ReactElement => {
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [problemId, setProblemId] = useState<null | number>(null);
 
   const items = [
     {
       label: "Add Problem",
-      command: (event) => {
+      command: (_: any) => {
         setActiveIndex(0);
       },
     },
     {
       label: "Add Test Cases",
-      command: (event) => {
+      command: (_: any) => {
         setActiveIndex(1);
       },
     },

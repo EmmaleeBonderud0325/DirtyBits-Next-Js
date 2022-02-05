@@ -1,17 +1,23 @@
 import Cookies from "js-cookie";
 import { getProblemsStatus } from "../api/apis";
 import cloneDeep from "lodash/cloneDeep";
+import { problemListI } from "../../redux/interfaces";
 
-export const Updateproblemsstatus = async (data) => {
+interface ResponseI {
+  id: number;
+  solved: string;
+}
+
+export const Updateproblemsstatus = async (data: problemListI[]) => {
   let refresh_token = Cookies.get("refresh");
   if (refresh_token) {
-    let idArray = [];
+    let idArray:number[] = [];
     for (let i = 0; i < data.length; i++) {
       idArray.push(data[i].id);
     }
     let oldState = cloneDeep(data);
     try {
-      let response = await getProblemsStatus.post("/", {
+      let response = await getProblemsStatus.post<ResponseI[]>("/", {
         data: { ids: idArray },
       });
       for (let i = 0; i < oldState.length; i++) {

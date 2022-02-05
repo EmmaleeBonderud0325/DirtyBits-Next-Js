@@ -1,21 +1,21 @@
-import { themeType } from "../../interfaces";
+import { themeI } from "../../interfaces";
 import { UpdateEditorTheme } from "../../types";
 
 type Action = {
   type: string;
-  payload: themeType;
+  payload: themeI;
 };
 
-let initial: themeType = {
+let initial: themeI = {
   label: "Dracula",
   value: "dracula",
   type: "dark",
 };
 
 export const ThemeReducer = (
-  state: themeType = initial,
+  state: themeI = initial,
   action: Action
-): themeType => {
+): themeI => {
   switch (action.type) {
     case UpdateEditorTheme:
       return action.payload;

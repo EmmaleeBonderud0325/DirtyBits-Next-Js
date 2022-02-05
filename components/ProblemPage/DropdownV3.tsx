@@ -1,9 +1,17 @@
-export const DropdownV3 = (props) => {
+import { FC, ReactElement } from "react";
+
+interface Props {
+  label: string;
+  list: JSX.Element[];
+  handleClick: (item: JSX.Element) => any;
+}
+
+export const DropdownV3: FC<Props> = (props): ReactElement => {
   return (
     <>
-      <div class="flex justify-center">
+      <div className="flex justify-center">
         <div>
-          <div class="dropdown relative">
+          <div className="dropdown relative">
             <button
               className="dropdown-toggle login-btn bg-white text-black"
               type="button"
@@ -18,7 +26,7 @@ export const DropdownV3 = (props) => {
                   focusable="false"
                   data-prefix="fas"
                   data-icon="caret-down"
-                  class="w-2 ml-2"
+                  className="w-2 ml-2"
                   role="img"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 320 512"
@@ -31,15 +39,15 @@ export const DropdownV3 = (props) => {
               </div>
             </button>
             <ul
-              class="dropdown-menu min-w-full absolute hidden bg-white text-base z-50 float-left py-2 list-none text-left rounded-lg shadow-lg mt-1 hidden m-0 bg-clip-padding border-none bg-gray-800 max-h-60 overflow-scroll scrollbar-hide"
+              className="dropdown-menu min-w-full absolute bg-white text-base z-50 float-left py-2 list-none text-left rounded-lg shadow-lg mt-1 hidden m-0 bg-clip-padding border-none max-h-60 overflow-scroll scrollbar-hide"
               aria-labelledby="dropdownMenuButton2"
             >
-              {props.list.map((item) => {
+              {props.list.map((item: JSX.Element) => {
                 if (item.key !== null) {
                   return (
                     <li onClick={() => props.handleClick(item)}>
                       <a
-                        class="dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-300 hover:bg-gray-700 hover:text-white focus:text-white focus:bg-gray-700 active:bg-indigo-600"
+                        className="dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-300 hover:bg-gray-700 hover:text-white focus:text-white focus:bg-gray-700 active:bg-indigo-600"
                         href="#"
                       >
                         {item.props.children}

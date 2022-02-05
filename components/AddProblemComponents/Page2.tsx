@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { FC, ReactElement, useState } from "react";
 import { uploadTestCases } from "../api/apis";
 import uuid from "react-uuid";
 import _ from "lodash";
@@ -10,18 +10,25 @@ import { useDispatch } from "react-redux";
 import { resetProblemPageData } from "../../redux/actions";
 import { Button } from "@nextui-org/react";
 
-export const Page2 = (props) => {
+interface Props {
+  problemId: number;
+  setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
+}
+
+export const Page2: FC<Props> = (props): ReactElement => {
   const dispatch = useDispatch();
-  let [customTestCases, changeCustomTestCases] = useState([{ id: uuid() }]);
-  let [testCases, changeTestCases] = useState([{ id: uuid() }]);
-  const addNewFileInputSC = (e) => {
+  let [customTestCases, changeCustomTestCases] = useState<any>([
+    { id: uuid() },
+  ]);
+  let [testCases, changeTestCases] = useState<any>([{ id: uuid() }]);
+  const addNewFileInputSC = (e: any) => {
     e.preventDefault();
     const inputID = uuid();
     const newInputs = customTestCases.concat({ id: inputID });
     changeCustomTestCases(newInputs);
   };
 
-  const deleteFileSC = (e) => {
+  const deleteFileSC = (e: any) => {
     e.preventDefault();
     let temp = _.cloneDeep(customTestCases);
     var id = e.target.id;
@@ -34,7 +41,7 @@ export const Page2 = (props) => {
     changeCustomTestCases(temp);
   };
 
-  const deleteFileTC = (e) => {
+  const deleteFileTC = (e: any) => {
     e.preventDefault();
     let temp = _.cloneDeep(testCases);
     var id = e.target.id;
@@ -160,27 +167,32 @@ export const Page2 = (props) => {
       console.log("Error", err.message);
     }
   };
-  const submitted = (e) => {
+  const submitted = (e: any) => {
     e.preventDefault();
     const data = new FormData();
     data.append("custom_test_cases", customTestCases.length);
     data.append("test_cases", testCases.length);
-    data.append("probId", props.problemId);
+    data.append("probId", props.problemId.toString());
     for (var i = 0; i < customTestCases.length; i++) {
       const input_file = document.getElementById(
         "sc-" + customTestCases[i].id + "-i"
+        // @ts-ignore
       ).files[0];
       const output_file = document.getElementById(
         "sc-" + customTestCases[i].id + "-o"
+        // @ts-ignore
       ).files[0];
       data.append("sc-input" + (i + 1), input_file);
       data.append("sc-output" + (i + 1), output_file);
     }
     for (var i = 0; i < testCases.length; i++) {
-      const input_file = document.getElementById("tc-" + testCases[i].id + "-i")
-        .files[0];
+      const input_file = document.getElementById(
+        "tc-" + testCases[i].id + "-i"
+        // @ts-ignore
+      ).files[0];
       const output_file = document.getElementById(
         "tc-" + testCases[i].id + "-o"
+        // @ts-ignore
       ).files[0];
       data.append("tc-input" + (i + 1), input_file);
       data.append("tc-output" + (i + 1), output_file);
@@ -210,12 +222,6 @@ export const Page2 = (props) => {
             <TiPlus />{" "}
           </button>
           <div>
-            {/* <button
-              className="btn-purple text-white px-5 text-lg"
-              onClick={submitted}
-            >
-              Upload{" "}
-            </button> */}
             <Button onClick={submitted} auto color="gradient" rounded bordered>
               Upload
             </Button>

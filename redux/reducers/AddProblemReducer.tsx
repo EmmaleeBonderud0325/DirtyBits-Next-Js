@@ -10,14 +10,14 @@ import {
   updateMemoryLimit,
   updateTimeLimit,
 } from "../types";
-import { addProblemType } from "../interfaces";
+import { addProblemI } from "../interfaces";
 
 type Action = {
   type: string;
   payload: string | null | number | number[];
 };
 
-let initial: addProblemType = {
+let initial: addProblemI = {
   title: "",
   problem_statement: "",
   note: "",
@@ -31,7 +31,7 @@ let initial: addProblemType = {
 };
 
 export const AddProblemReducer = (
-  state: addProblemType = initial,
+  state: addProblemI = initial,
   action: Action
 ) => {
   switch (action.type) {

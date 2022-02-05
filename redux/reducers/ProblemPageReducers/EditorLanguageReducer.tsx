@@ -1,23 +1,24 @@
-import { editorLanguage } from "../../interfaces";
+import { editorLanguageI } from "../../interfaces";
 import { UpdateEditorLanguage } from "../../types";
 
 type Action = {
   type: string;
-  payload: editorLanguage;
+  payload: editorLanguageI;
 };
 
-let initial: editorLanguage = {
+let initial: editorLanguageI = {
   label: "C++",
   value: "text/x-c++src",
   ext: ".cpp",
+  icon: "SiCplusplus",
 };
 
 export const EditorLanguageReducer = (
-  state: editorLanguage = initial,
+  state: editorLanguageI = initial,
   action: Action
-): editorLanguage => {
+): editorLanguageI => {
   switch (action.type) {
-    case UpdateEditorLanguage:  
+    case UpdateEditorLanguage:
       return action.payload;
     default:
       return state;

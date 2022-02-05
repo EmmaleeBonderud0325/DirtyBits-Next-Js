@@ -2,14 +2,14 @@ import Cookies from "js-cookie";
 
 import { updateUserData } from "../types";
 import Parsetoken from "../../components/Helper/Parsetoken";
-import { userDataType } from "../interfaces";
+import { userDataI } from "../interfaces";
 
 type Action = {
   type: string;
-  payload: userDataType;
+  payload: userDataI;
 };
 
-const initial_state: userDataType = {
+const initial_state: userDataI = {
   is_logged_in: false,
   is_admin: false,
   is_verified: false,
@@ -23,7 +23,7 @@ const initial_state: userDataType = {
 let refresh_token = Cookies.get("refresh");
 if (refresh_token) {
   try {
-    let data: userDataType = Parsetoken(refresh_token);
+    let data: userDataI = Parsetoken(refresh_token);
     initial_state.is_logged_in = true;
     initial_state.is_verified = data.is_verified;
     initial_state.is_admin = data.is_admin;
@@ -38,7 +38,7 @@ if (refresh_token) {
 }
 
 export const userDataReducer = (
-  state: userDataType = initial_state,
+  state: userDataI = initial_state,
   action: Action
 ) => {
   switch (action.type) {
@@ -47,6 +47,7 @@ export const userDataReducer = (
         ...state,
         is_logged_in: action.payload.is_logged_in,
         is_admin: action.payload.is_admin,
+        is_verified: action.payload.is_verified,
         email: action.payload.email,
         first_name: action.payload.first_name,
         last_name: action.payload.last_name,

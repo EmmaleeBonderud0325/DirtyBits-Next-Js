@@ -36,3 +36,4 @@ export const GoogleLoginSpinner = "GOOGLE_LOGIN_SPINNER";
 export const SimpleLoginSpinner = "SIMPLE_LOGIN_SPINNER";
 export const UpdateInputTestCases = "UPDATE_INPUT_TEST_CASES";
 export const UpdateOutputTestCases = "UPDATE_OUTPUT_TEST_CASES";
+export const UpdateTags = "UPDATE_TAGS";

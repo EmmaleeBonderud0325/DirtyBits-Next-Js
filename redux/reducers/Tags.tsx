@@ -1,15 +1,16 @@
-import { tagsType } from "../interfaces";
+import { tagsI } from "../interfaces";
+import { UpdateTags } from "../types";
 
 type Action = {
   type: string;
-  payload: tagsType;
+  payload: tagsI;
 };
 
-const initalState: tagsType[] = [];
+const initalState: tagsI[] = [];
 
 export const TagsReducer = (state = initalState, action: Action) => {
   switch (action.type) {
-    case "GET_TAGS":
+    case UpdateTags:
       return action.payload;
     default:
       return state;

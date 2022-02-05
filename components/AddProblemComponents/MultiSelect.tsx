@@ -1,21 +1,29 @@
-import React from "react";
+import React, { ReactElement } from "react";
 
 import chroma from "chroma-js";
 import Select from "react-select";
 import { connect, useDispatch } from "react-redux";
 
 import { updateProblemTags } from "../../redux/actions";
+import { tagsI } from "../../redux/interfaces";
+import { IRootState } from "../../redux/reducers";
 
-function MultiSelect(props) {
+interface Props {
+  label: string;
+  value: tagsI[];
+  tagsValue: string | number | number[];
+}
+
+function MultiSelect(props: Props): ReactElement {
   const dispatch = useDispatch();
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     dispatch(updateProblemTags(Array.isArray(e) ? e.map((x) => x.value) : []));
   };
 
   const colourOptions = props.value;
   const colourStyles = {
-    control: (styles) => ({ ...styles, backgroundColor: "white" }),
-    option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+    control: (styles: any) => ({ ...styles, backgroundColor: "white" }),
+    option: (styles: any, { data, isDisabled, isFocused, isSelected }) => {
       const color = chroma(data.color);
       return {
         ...styles,
@@ -76,6 +84,7 @@ function MultiSelect(props) {
         isMulti
         name="colors"
         value={colourOptions.filter((obj) =>
+          // @ts-ignore
           props.tagsValue.includes(obj.value)
         )}
         onChange={handleChange}
@@ -88,7 +97,7 @@ function MultiSelect(props) {
   );
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: IRootState) => {
   return {
     tagsValue: state.addProblemData.tags,
   };

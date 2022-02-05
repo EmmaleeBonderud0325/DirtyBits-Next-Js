@@ -1,3 +1,4 @@
+import React from "react";
 import Head from "next/head";
 
 import { connect } from "react-redux";
@@ -23,6 +24,8 @@ import { AddProblem, UpdateProblem } from "../api/apis";
 import { TextAreaComponent } from "./TextAreaComponent";
 import { InputComponent } from "./InputComponent";
 import { uploadImage } from "../api/apis";
+import { IRootState } from "../../redux/reducers";
+import { addProblemI, tagsI } from "../../redux/interfaces";
 
 const mapping = {
   Difficulty: "Difficulty",
@@ -31,14 +34,19 @@ const mapping = {
   H: "Hard",
 };
 
-const parseImages = async (ParseData, public_ids) => {
+interface UploadCloudinaryI {
+  url: string;
+  public_id: string;
+}
+
+const parseImages = async (ParseData: string, public_ids: string[]) => {
   const parser = new DOMParser();
   var document = parser.parseFromString(ParseData, "text/html");
   var imageTags = document.getElementsByTagName("img");
   for (let i = 0; i < imageTags.length; i++) {
     if (!imageTags[i].src.startsWith("http")) {
       await uploadImage
-        .post("/", {
+        .post<UploadCloudinaryI>("/", {
           image: imageTags[i].src,
         })
         .then((res) => {
@@ -50,8 +58,17 @@ const parseImages = async (ParseData, public_ids) => {
   return document.getElementsByTagName("body")[0].innerHTML;
 };
 
-function Page1(props) {
-  const handleSubmit = async (e) => {
+interface Props {
+  problemId: number | null;
+  setProblemId: React.Dispatch<React.SetStateAction<number>>;
+  setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
+  problemData: addProblemI;
+  isAdmin: boolean;
+  tags: tagsI[];
+}
+
+function Page1(props: Props) {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (props.problemData.title === "") {
       console.error("Title can't be Empty");
@@ -89,7 +106,7 @@ function Page1(props) {
       console.error("Time Limit Required");
       return;
     }
-    var public_ids = [];
+    var public_ids: string[] = [];
     props.problemData.problem_statement = await parseImages(
       props.problemData.problem_statement,
       public_ids
@@ -130,7 +147,7 @@ function Page1(props) {
             public_ids: public_ids,
           },
         })
-          .then((result) => {
+          .then((_) => {
             props.setActiveIndex(1);
           })
           .catch((err) => {
@@ -215,13 +232,6 @@ function Page1(props) {
                   placeholder={"in MB"}
                 />
                 <div className="flex justify-center items-center ">
-                  {/* <button
-                    className="btn-purple py-2 text-base space-x-3"
-                    onClick={(e) => handleSubmit(e)}
-                  >
-                    <span>Add Test Case</span>
-                    <ArrowForward className="text-sm" />
-                  </button> */}
                   <Button onClick={(e) => handleSubmit(e)}>Go Next</Button>
                 </div>
               </form>
@@ -243,7 +253,7 @@ function Page1(props) {
   );
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: IRootState) => {
   return {
     problemData: state.addProblemData,
     isAdmin: state.userData.is_admin,

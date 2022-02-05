@@ -1,4 +1,4 @@
-import { signupErrorType } from "../interfaces";
+import { signupErrorI } from "../interfaces";
 import {
   FirstNameError,
   LastNameError,
@@ -13,7 +13,7 @@ type Action = {
   payload: { error: boolean; details: string };
 };
 
-let initial: signupErrorType = {
+let initial: signupErrorI = {
   username: { error: false, details: "" },
   firstname: { error: false, details: "" },
   lastname: { error: false, details: "" },
@@ -23,7 +23,7 @@ let initial: signupErrorType = {
 };
 
 export const SignupErrorReducer = (
-  state: signupErrorType = initial,
+  state: signupErrorI = initial,
   action: Action
 ) => {
   switch (action.type) {

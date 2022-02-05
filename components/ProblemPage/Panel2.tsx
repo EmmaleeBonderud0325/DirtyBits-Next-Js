@@ -1,15 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ReactElement } from "react";
 import SplitPane, { Pane } from "react-split-pane";
 import { useDispatch, connect } from "react-redux";
 import { Loading } from "@nextui-org/react";
 
 import Editor from "./Editor";
-import Tabs from "../Tabs";
+import Tabs from "./Tabs";
 import { unMountEditorPage } from "../../redux/actions/ProblemPage";
+import { IRootState } from "../../redux/reducers";
+import { submissionResultI } from "../../redux/interfaces";
 
-function Panel2(props) {
+interface Props {
+  isRendered: boolean;
+}
+
+function Panel2(props: Props): ReactElement {
   const dispatch = useDispatch();
-  console.log("rendered panel2");
 
   useEffect(() => {
     return () => {
@@ -17,23 +22,23 @@ function Panel2(props) {
     };
   }, []);
 
-  const [tabsValue, setTabsValue] = useState(0);
-  const [resultData, setResultData] = useState({});
-  const [running, setIsRunning] = useState(false);
+  const [tabsValue, setTabsValue] = useState<number>(0);
+  const [resultData, setResultData] = useState<submissionResultI | {}>({});
+  const [running, setIsRunning] = useState<boolean>(false);
 
-  const tabsValueHandler = (value) => {
+  const tabsValueHandler = (value: number): void => {
     setTabsValue(value);
   };
 
-  const submissionDataHandler = (value) => {
+  const submissionDataHandler = (value: submissionResultI | {}): void => {
     setResultData(value);
   };
 
-  const runningHandler = (value) => {
+  const runningHandler = (value: boolean): void => {
     setIsRunning(value);
   };
 
-  const backgroundColor = "#060F1E";
+  const backgroundColor: string = "#060F1E";
 
   return (
     <div>
@@ -83,7 +88,7 @@ function Panel2(props) {
   );
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: IRootState) => {
   return {
     isRendered: state.problemData.title !== "" ? true : false,
   };

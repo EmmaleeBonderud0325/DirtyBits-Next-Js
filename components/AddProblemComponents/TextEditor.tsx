@@ -1,7 +1,14 @@
 import { Editor } from "@tinymce/tinymce-react";
+import { FC, ReactElement } from "react";
 import { useDispatch } from "react-redux";
 
-export const TextEditor = (props) => {
+interface Props {
+  initialValue: string;
+  label: string;
+  dispatch: (newState: string) => any;
+}
+
+export const TextEditor: FC<Props> = (props): ReactElement => {
   const dispatch = useDispatch();
   return (
     <div className="space-y-3">
@@ -12,6 +19,7 @@ export const TextEditor = (props) => {
         apiKey="g9fbihack52f29u89rqqazv3me0jk3xak5aged47rn1d7aaq"
         value={props.initialValue}
         init={{
+          // @ts-ignore
           selector: "textarea#file-picker",
           height: 300,
           plugins: [
@@ -49,11 +57,14 @@ export const TextEditor = (props) => {
             input.setAttribute("type", "file");
             input.setAttribute("accept", "image/*");
             input.onchange = function () {
+              // @ts-ignore
               var file = this.files[0];
               var reader = new FileReader();
               reader.onload = function () {
                 var id = "blobid" + new Date().getTime();
+                // @ts-ignore
                 var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+                // @ts-ignore
                 var base64 = reader.result.split(",")[1];
                 var blobInfo = blobCache.create(id, file, base64);
                 blobCache.add(blobInfo);
