@@ -1,7 +1,7 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import Head from "next/head";
 
-function Leaderboard() {
+function Leaderboard(): ReactElement {
   return (
     <div className="flex lg:w-screen lg:h-screen h-screen w-screen">
       <Head>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { AiOutlineSearch } from "react-icons/ai";
 import { VscSettingsGear } from "react-icons/vsc";
@@ -9,9 +9,36 @@ import Image from "next/image";
 import { XAxis, Tooltip, AreaChart, Area } from "recharts";
 import { getStaticData, getUserProfile } from "../../components/api/apis";
 import Head from "next/head";
+import { IRootState } from "../../redux/reducers";
 
-function Profile() {
-  const userInfo = useSelector((state) => state.userData);
+interface SubmissionsI {
+  date: string;
+  "Questions Solved": number;
+}
+
+interface UserProfileI {
+  id: number;
+  email: string;
+  score: number;
+  rank: number;
+  rating: number;
+  hard_solved: number;
+  medium_solved: number;
+  easy_solved: number;
+  submissions: SubmissionsI[];
+}
+
+interface StaticdataI {
+  id: number;
+  easy: number;
+  medium: number;
+  hard: number;
+  avatar_count: number;
+  users_count: number;
+}
+
+function Profile(): ReactElement {
+  const userInfo = useSelector((state: IRootState) => state.userData);
 
   const [percentage, setPercentage] = useState({
     easy: 0,
@@ -25,11 +52,11 @@ function Profile() {
     const getProfile = async () => {
       const {
         data: { easy_solved, medium_solved, hard_solved, submissions },
-      } = await getUserProfile.get("/");
+      } = await getUserProfile.get<UserProfileI>("/");
 
       const {
         data: { easy, medium, hard },
-      } = await getStaticData.get("/");
+      } = await getStaticData.get<StaticdataI>("/");
 
       const perc = {
         easy: (easy_solved / easy) * 100,

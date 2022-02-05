@@ -1,8 +1,10 @@
-import Image from "next/image";
+import { ReactElement } from "react";
 import { useSelector } from "react-redux";
+import Image from "next/image";
+import { IRootState } from "../redux/reducers";
 
-function Profile() {
-  const userData = useSelector((state) => state.userData);
+function Profile(): ReactElement {
+  const userData = useSelector((state: IRootState) => state.userData);
   return (
     <div>
       <div className="">
@@ -151,7 +153,7 @@ function Profile() {
             <div className="w-full md:w-9/12 mx-2 h-64">
               <div className=" p-3 shadow-sm rounded-sm">
                 <div className="flex items-center space-x-2 font-semibold text-white-900 leading-8">
-                  <span clas="text-green-500">
+                  <span className="text-green-500">
                     <svg
                       className="h-5"
                       xmlns="http://www.w3.org/2000/svg"
@@ -230,7 +232,7 @@ function Profile() {
                 <div className="grid grid-cols-2">
                   <div>
                     <div className="flex items-center space-x-2 font-semibold text-white-900 leading-8 mb-3">
-                      <span clas="text-green-500">
+                      <span className="text-green-500">
                         <svg
                           className="h-5"
                           xmlns="http://www.w3.org/2000/svg"
@@ -285,7 +287,7 @@ function Profile() {
                   </div>
                   <div>
                     <div className="flex items-center space-x-2 font-semibold text-white-900 leading-8 mb-3">
-                      <span clas="text-green-500">
+                      <span className="text-green-500">
                         <svg
                           className="h-5"
                           xmlns="http://www.w3.org/2000/svg"

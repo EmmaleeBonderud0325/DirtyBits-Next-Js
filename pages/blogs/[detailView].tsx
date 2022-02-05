@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import Image from "next/image";
 import bg from "../../public/blog.jpeg";
 import { motion } from "framer-motion";
@@ -8,7 +8,7 @@ const variants = {
   hidden: { opacity: 0 },
 };
 
-function DetailView() {
+function DetailView(): ReactElement {
   return (
     <div className="container mx-auto lg:p-10 p-6 w-full">
       <div className="flex flex-col space-y-9 lg:mx-56">

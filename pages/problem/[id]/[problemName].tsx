@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useEffect } from "react";
+import { ReactElement, useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
 
 import {
@@ -7,14 +7,14 @@ import {
   getProblemPageProblemData,
 } from "../../../redux/actions/ProblemPage";
 import Panel2 from "../../../components/ProblemPage/Panel2";
+import { IRootState } from "../../../redux/reducers";
 
-function ProblemView({ title }) {
+function ProblemView({ title }): ReactElement {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    let path = window.location.href;
-    path = path.split("/");
-    const id = path.at(-2);
+    let path = window.location.href.split("/");
+    const id = Number(path.at(-2));
     dispatch(changeProblemPageProblemId(id));
     dispatch(getProblemPageProblemData(id));
   }, []);
@@ -31,11 +31,11 @@ function ProblemView({ title }) {
   );
 }
 
-ProblemView.getLayout = function PageLayout(page) {
+ProblemView.getLayout = function PageLayout(page: any) {
   return <>{page}</>;
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: IRootState) => {
   return {
     title: state.problemData.title,
   };

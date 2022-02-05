@@ -1,7 +1,7 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import Head from "next/head";
 
-function compete() {
+function compete(): ReactElement {
   return (
     <div className="flex lg:h-screen lg:w-screen h-screen w-screen">
       <Head>

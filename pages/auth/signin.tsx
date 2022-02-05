@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -19,47 +19,75 @@ import Input from "../../components/Input";
 import { signinApi } from "../../components/api/apis";
 import Parsetoken from "../../components/Helper/Parsetoken";
 import { githubLogin, googleLogin } from "../../redux/actions/authenticate";
+import { IRootState } from "../../redux/reducers";
 
-function Signin(props) {
+interface Props {
+  googleSpinner: boolean;
+  githubSpinner: boolean;
+  signInSpinner: boolean;
+}
+
+interface FormDataI {
+  email: string;
+  password: string;
+  remeberMe: boolean;
+}
+
+interface ErrorI {
+  error: boolean;
+  details: string;
+}
+
+interface ErrorsI {
+  email: ErrorI;
+  password: ErrorI;
+}
+
+interface TokensI {
+  access: string;
+  refresh: string;
+}
+
+function Signin(props: Props): ReactElement {
   const dispatch = useDispatch();
   const router = useRouter();
   const antIcon = <Loading type="points-opacity" size="sm" />;
-  let [formData, setFormData] = useState({
+  let [formData, setFormData] = useState<FormDataI>({
     email: "",
     password: "",
     remeberMe: false,
   });
 
-  let [showPassword, setShowPassword] = useState(false);
+  let [showPassword, setShowPassword] = useState<boolean>(false);
 
-  let [isError, setIsError] = useState({
+  let [isError, setIsError] = useState<ErrorsI>({
     email: { error: false, details: "" },
     password: { error: false, details: "" },
   });
 
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
-  const emailInputColor = isError.email.error
+  const emailInputColor: string = isError.email.error
     ? "border-red-500"
     : "border-custom-indigo";
-  const emailInputFocusColor = isError.email.error
+  const emailInputFocusColor: string = isError.email.error
     ? "border-white"
     : "border-custom-indigo";
-  const emailLabelColor = isError.email.error
+  const emailLabelColor: string = isError.email.error
     ? "text-red-500"
     : "text-gray-700";
 
-  const passwordInputColor = isError.password.error
+  const passwordInputColor: string = isError.password.error
     ? "border-red-500"
     : "border-custom-indigo";
-  const passwordInputFocusColor = isError.password.error
+  const passwordInputFocusColor: string = isError.password.error
     ? "border-red-500"
     : "border-custom-indigo";
-  const passwordLabelColor = isError.password.error
+  const passwordLabelColor: string = isError.password.error
     ? "text-red-500"
     : "text-gray-700";
 
-  const validateFormData = () => {
+  const validateFormData = (): boolean => {
     if (validate(formData.email)) {
       if (formData.password.length === 0) {
         setIsError({
@@ -93,7 +121,7 @@ function Signin(props) {
     }
   };
 
-  const postAuthentication = (tokens) => {
+  const postAuthentication = (tokens: TokensI) => {
     const { access, refresh } = tokens;
     const data = Parsetoken(access);
     console.log("data", data);
@@ -110,6 +138,7 @@ function Signin(props) {
         updateUserinfo({
           is_logged_in: true,
           is_admin: data.is_admin,
+          is_verified: data.is_verified,
           email: data.email,
           first_name: data.first_name,
           last_name: data.last_name,
@@ -127,7 +156,7 @@ function Signin(props) {
     }
   };
 
-  const submitLoginForm = async (e) => {
+  const submitLoginForm = async (e: any) => {
     dispatch(updateSignInSpinner(true));
     e.preventDefault();
     setIsDisabled(true);
@@ -139,7 +168,7 @@ function Signin(props) {
     if (isValid) {
       try {
         await signinApi
-          .post("/", formData)
+          .post<TokensI>("/", formData)
           .then((result) => {
             postAuthentication(result.data);
           })
@@ -401,12 +430,11 @@ function Signin(props) {
   );
 }
 
-Signin.getLayout = function PageLayout(page) {
+Signin.getLayout = function PageLayout(page: any) {
   return <>{page}</>;
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: IRootState) => {
   return {
-    userInfo: state.userInfo,
     googleSpinner: state.googleLoginSpinner,
     githubSpinner: state.githubLoginSpinner,
     signInSpinner: state.loginInSpinner,
