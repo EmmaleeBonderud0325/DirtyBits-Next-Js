@@ -66,3 +66,11 @@ export interface editorLanguage {
   value: string;
   ext: string;
 }
+
+export interface submissionsList {
+  language: string;
+  status: string;
+  score: number;
+  total_scrore: number;
+  submission_Date_Time: string;
+}
