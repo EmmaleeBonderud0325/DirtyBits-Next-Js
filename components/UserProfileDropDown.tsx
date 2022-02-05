@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { signoutUser } from "../redux/actions/authenticate";
 import { Fragment } from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
@@ -8,14 +8,23 @@ import { openNotificationWithIcon } from "./OpenNotification";
 import Image from "next/image";
 import { classNames } from "./Helper/Classnames";
 import Link from "next/link";
+import { IRootState } from "../redux/reducers";
 
-function UserProfileDropDown(props) {
+interface Props {
+  profilePic: string;
+  username: string;
+  isAdmin: boolean;
+  showUserName: boolean;
+  redirectOnSignout: boolean;
+}
+
+function UserProfileDropDown(props: Props): ReactElement {
   const dispatch = useDispatch();
 
   const notificationHandler = () => {
     if (!props.isAdmin) {
-      const message = "Not an Admin";
-      const description =
+      let message: string = "Not an Admin";
+      let description: string =
         "You don't have enough privileges, because you are not an admin";
       openNotificationWithIcon(
         "info",
@@ -116,7 +125,7 @@ function UserProfileDropDown(props) {
   );
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: IRootState) => {
   return {
     profilePic: state.userData.profile_pic,
     username: state.userData.username,

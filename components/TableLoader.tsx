@@ -1,7 +1,9 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import ContentLoader from "react-content-loader";
 
-const MyLoader = (props) => (
+interface Props {}
+
+const MyLoader = (props: Props): ReactElement => (
   <ContentLoader
     speed={2}
     width={800}
