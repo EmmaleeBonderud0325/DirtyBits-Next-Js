@@ -33,7 +33,7 @@ import {
 } from "./ProblemPageReducers/TestCaseReducer";
 import { TagsReducer } from "./Tags";
 
-export default combineReducers({
+export const rootReducer = combineReducers({
   userData: userDataReducer,
   addProblemData: AddProblemReducer,
   signupErrors: SignupErrorReducer,
@@ -59,3 +59,5 @@ export default combineReducers({
   loginInSpinner: simpleLoginSpinnerReducer,
   tags: TagsReducer,
 });
+
+export type IRootState = ReturnType<typeof rootReducer>;

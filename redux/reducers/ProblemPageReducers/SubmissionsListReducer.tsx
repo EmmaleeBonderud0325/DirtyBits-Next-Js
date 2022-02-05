@@ -4,12 +4,21 @@ import {
   AppendSubmissionList,
 } from "../../types";
 import cloneDeep from "lodash/cloneDeep";
+import { submissionsList } from "../../interfaces";
 
-const initial = null;
+type Action = {
+  type: string;
+  payload: any;
+};
 
-const getSubmissionsState_initial = true;
+const initial: null | submissionsList[] = null;
 
-export const SubmissionsListReducer = (state = initial, action) => {
+const getSubmissionsState_initial: boolean = true;
+
+export const SubmissionsListReducer = (
+  state: null | submissionsList[] = initial,
+  action: Action
+): null | submissionsList[] => {
   switch (action.type) {
     case UpdateSubmissionsList:
       return action.payload;
@@ -26,9 +35,9 @@ export const SubmissionsListReducer = (state = initial, action) => {
 };
 
 export const GetSubmissionsStateReducer = (
-  state = getSubmissionsState_initial,
-  action
-) => {
+  state: boolean = getSubmissionsState_initial,
+  action: { type: string; payload: boolean }
+): boolean => {
   switch (action.type) {
     case UpdateGetSubmissionsState:
       return action.payload;
