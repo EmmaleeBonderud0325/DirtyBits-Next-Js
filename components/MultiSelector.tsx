@@ -1,17 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FC, ReactElement } from "react";
 import { MultiSelect } from "primereact/multiselect";
 import { Skeleton } from "primereact/skeleton";
 
-export const MultiSelectDemo = () => {
+interface Props {}
+
+export const MultiSelectDemo: FC<Props> = (props): ReactElement => {
   const [lazyItems, setLazyItems] = useState([]);
-  const [lazyLoading, setLazyLoading] = useState(false);
-  const [selectedCities1, setSelectedCities1] = useState(null);
+  const [lazyLoading, setLazyLoading] = useState<boolean>(false);
   const [selectedCities2, setSelectedCities2] = useState(null);
-  const [selectedCountries, setSelectedCountries] = useState(null);
-  const [selectedGroupedCities, setSelectedGroupedCities] = useState(null);
-  const [selectedItems1, setSelectedItems1] = useState(null);
-  const [selectedItems2, setSelectedItems2] = useState(null);
-  const [selectAll, setSelectAll] = useState(false);
 
   const cssValues = {
     padding: ".25rem .5rem",

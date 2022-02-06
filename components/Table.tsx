@@ -5,20 +5,25 @@ import "primereact/resources/themes/mdc-dark-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css"; //icons
 import { Paginator } from "primereact/paginator";
-import { useState } from "react";
+import { ReactElement, useState } from "react";
+import { problemListI } from "../redux/interfaces";
 
-function Table(props) {
-  const [basicFirst, setBasicFirst] = useState(0);
-  const [basicRows, setBasicRows] = useState(10);
-  const onBasicPageChange = (event) => {
+interface Props {
+  dataList: problemListI[];
+}
+
+function Table(props: Props): ReactElement {
+  const [basicFirst, setBasicFirst] = useState<number>(0);
+  const [basicRows, setBasicRows] = useState<number>(10);
+  const onBasicPageChange = (event: any) => {
     setBasicFirst(event.first);
     setBasicRows(event.rows);
     console.log("request for", event.page + 1);
   };
 
-  let problemLevel;
-  let problemColor;
-  let status;
+  let problemLevel: string;
+  let problemColor: string;
+  let status: string;
 
   let problemMarkup = props.dataList.map((problem, idx) => {
     switch (problem.problem_level) {

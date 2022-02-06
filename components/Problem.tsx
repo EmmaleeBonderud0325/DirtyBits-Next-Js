@@ -1,8 +1,8 @@
 import { AiOutlineSearch } from "react-icons/ai";
-import { useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { connect } from "react-redux";
-import Table from "../components/Table";
+import Table from "./Table";
 import plus from "../public/plus.svg";
 import google from "../public/google.svg";
 import amazon from "../public/amazon.svg";
@@ -19,6 +19,8 @@ import "primereact/resources/themes/mdc-dark-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css"; //icons
 import { Paginator } from "primereact/paginator";
+import { IRootState } from "../redux/reducers";
+import { problemListI } from "../redux/interfaces";
 
 const styles = {
   minWidth: "15rem",
@@ -29,21 +31,25 @@ const styles = {
   backgroundColor: "#111827",
 };
 
-function Problem(props) {
-  const values = useSelector((state) => state.tags);
+interface Props {
+  problemList: problemListI[];
+}
 
-  const [value, setValue] = useState("");
+function Problem(props: Props): ReactElement {
+  const values = useSelector((state: IRootState) => state.tags);
 
-  const [difficulty, setDifficulty] = useState("Difficulty");
-  const [status, setStatus] = useState("Status");
-  const [timeoutId, setTimeoutId] = useState();
+  const [value, setValue] = useState<string>("");
+
+  const [difficulty, setDifficulty] = useState<string>("Difficulty");
+  const [status, setStatus] = useState<string>("Status");
+  let [timeoutId, setTimeoutId] = useState();
   const [tags, setTags] = useState([]);
-  const [currentDataList, setCurrentDataList] = useState([]);
+  const [currentDataList, setCurrentDataList] = useState<problemListI[]>([]);
 
   useEffect(() => {
     async function getData() {
       if (tags.length > 0) {
-        const response = await filterProblemData.post("/", {
+        const response = await filterProblemData.post<problemListI[]>("/", {
           keyword: value,
           tags: tags,
           difficulty: [],
@@ -57,13 +63,14 @@ function Problem(props) {
   }, [tags, props.problemList, value]);
 
   console.log("current value", value);
+  let TimeOutId: any;
 
-  const valueHandler = (e) => {
+  const valueHandler = (e: any) => {
     setValue(e.target.value);
     if (timeoutId) {
       clearTimeout(timeoutId);
     }
-    timeoutId = setTimeout(async () => {
+    TimeOutId = setTimeout(async () => {
       const data = {
         keyword: e.target.value,
         tags: tags,
@@ -72,10 +79,10 @@ function Problem(props) {
 
       console.log("send req ", e.target.value);
 
-      const response = await filterProblemData.post("/", data);
+      const response = await filterProblemData.post<problemListI[]>("/", data);
       setCurrentDataList(response.data);
     }, 2000);
-    setTimeoutId(timeoutId);
+    setTimeoutId(TimeOutId);
   };
 
   return (
@@ -98,6 +105,7 @@ function Problem(props) {
       <MultiSelect
         style={styles}
         value={tags}
+        // @ts-ignore
         options={values}
         onChange={(e) => setTags(e.value)}
         optionLabel="label"
