@@ -1,25 +1,30 @@
-import React, { ReactElement, useState } from "react";
-import Link from "next/link";
-import Head from "next/head";
-import { useRouter } from "next/router";
-
-import { Loading } from "@nextui-org/react";
-import GoogleLogin from "react-google-login";
-import GitHubLogin from "react-github-login";
-import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
-import { validate } from "email-validator";
-import Cookies from "js-cookie";
-import { connect, useDispatch } from "react-redux";
-import { FcGoogle } from "react-icons/fc";
-import { AiFillGithub } from "react-icons/ai";
-import SmoothList from "react-smooth-list";
-
-import { updateSignInSpinner, updateUserinfo } from "../../redux/actions";
-import Input from "../../components/Input";
-import { signinApi } from "../../components/api/apis";
-import Parsetoken from "../../components/Helper/Parsetoken";
-import { githubLogin, googleLogin } from "../../redux/actions/authenticate";
+import { ReactElement } from "react";
 import { IRootState } from "../../redux/reducers";
+import {
+  useState,
+  Link,
+  Head,
+  useRouter,
+  Loading,
+  GoogleLogin,
+  GitHubLogin,
+  EyeOffIcon,
+  EyeIcon,
+  validate,
+  Cookies,
+  connect,
+  useDispatch,
+  FcGoogle,
+  AiFillGithub,
+  SmoothList,
+  updateSignInSpinner,
+  updateUserinfo,
+  Input,
+  signinApi,
+  Parsetoken,
+  githubLogin,
+  googleLogin,
+} from "../../imports/Signin";
 
 interface Props {
   googleSpinner: boolean;
