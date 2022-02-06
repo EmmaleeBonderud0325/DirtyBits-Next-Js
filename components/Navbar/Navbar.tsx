@@ -35,9 +35,9 @@ import React, { useRef } from "react";
 import { Menu as PrimeMenu } from "primereact/menu";
 import { Button as Btn } from "primereact/button";
 
-import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
-import "primereact/resources/primereact.min.css"; //core css
-import "primeicons/primeicons.css";
+
+import Notification from './Notification'
+
 
 export default function WithSubnavigation() {
   console.log("navbar rendered");
@@ -184,6 +184,7 @@ export default function WithSubnavigation() {
                   aria-controls="popup_menu"
                   aria-haspopup
                 />
+                <Notification/>
               </>
             ) : (
               <div className="md:flex space-x-4 items-center hidden">

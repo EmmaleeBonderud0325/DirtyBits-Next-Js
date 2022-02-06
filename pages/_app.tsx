@@ -16,6 +16,9 @@ import { ChakraProvider } from '@chakra-ui/react'
 import theme from '../theme/theme'
 import NextNProgress from 'nextjs-progressbar';
 
+import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
+import "primereact/resources/primereact.min.css"; //core css
+import "primeicons/primeicons.css";
 
 type Page<P = {}> = NextPage<P> & {
   getLayout?: (page: ReactNode) => ReactNode;

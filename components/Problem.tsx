@@ -88,12 +88,12 @@ function Problem(props: Props): ReactElement {
   return (
     <WrapperLayout>
       <motion.div animate={{ y: [20, 0, 0] }}>
-        <div className="flex gap-10">
-          <CompanyTags icon={google} title="Top google Questions" />
-          <CompanyTags icon={fb} title="Top facebook Questions" />
-          <CompanyTags icon={amazon} title="Top amazon Questions" />
-          <CompanyTags icon={microsoft} title="Top microsoft Questions" />
-          <CompanyTags icon={apple} title="Top apple Questions" />
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-6 md:gap-10 ">
+          <CompanyTags icon={google} title="Top questions" />
+          <CompanyTags icon={fb} title="Top questions" />
+          <CompanyTags icon={amazon} title="Top questions" />
+          <CompanyTags icon={microsoft} title="Top questions" />
+          <CompanyTags icon={apple} title="Top questions" />
           <CompanyTags icon={plus} title="More" />
         </div>
       </motion.div>
@@ -115,10 +115,10 @@ function Problem(props: Props): ReactElement {
 
       {/* SEARCH BAR */}
 
-      <div className="flex space-x-3 w-3/4">
+      <div className="space-x-3 w-full block">
         <form
           onSubmit={() => {}}
-          className="p-[.2rem] flex border-none rounded-xl focus:outline-none bg-gray-900 items-center w-1/2 border border-rose-600"
+          className="p-[.2rem] flex border-none rounded-xl focus:outline-none bg-gray-900 items-center md:w-1/2 border border-rose-600"
         >
           <AiOutlineSearch className="text-custom-indigo ml-1 text-xl" />
           <input

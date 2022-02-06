@@ -56,7 +56,7 @@ function Table(props: Props): ReactElement {
         <td className="table-data text-white border-b border-slate-800">
           <a
             href={`/problem/${problem.id}/${problem.title}`}
-            className="text-stone-200 hover:text-indigo-400 transition-all duration-200 ease-in text-sm"
+            className="text-stone-200 hover:text-indigo-400 transition-all duration-200 ease-in md:text-sm"
           >
             {idx + 1} . {problem.title}
           </a>
@@ -92,13 +92,16 @@ function Table(props: Props): ReactElement {
         </table>
       </div>
       {props.dataList.length <= 0 && <TableLoader />}
+
+      <div className="flex justify-start">
       <Paginator
         first={basicFirst}
         rows={basicRows}
         totalRecords={120}
         rowsPerPageOptions={[10, 20, 30]}
         onPageChange={onBasicPageChange}
-      ></Paginator>
+        ></Paginator>
+        </div>
     </div>
   );
 }

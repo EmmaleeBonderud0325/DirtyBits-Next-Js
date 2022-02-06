@@ -46,10 +46,10 @@
     @apply bg-custom-indigo py-3 px-3 text-xl text-white rounded-full font-extrabold hover:bg-indigo-800 transition-all ease-out;
   }
   .table-heading {
-    @apply py-4 px-6 font-bold text-base text-[#686868] border-b border-slate-500;
+    @apply py-4 md:px-6 md:font-bold md:text-base text-[#686868] border-b border-slate-500 text-sm px-3;
   }
   .table-data {
-    @apply py-4 px-6 border-b font-medium hover:text-blue-700 transition-all ease-in-out duration-100 cursor-pointer;
+    @apply md:py-4 md:px-6 border-b md:font-medium hover:text-blue-700 transition-all ease-in-out duration-100 cursor-pointer px-2 text-sm;
   }
   .login-btn {
     @apply py-2 px-4 shadow-md no-underline rounded-full bg-custom-indigo text-white font-semibold text-sm border-custom-indigo hover:text-white hover:bg-custom-background focus:outline-none active:shadow-none mr-2 transition-all ease-in-out duration-300;
@@ -282,7 +282,7 @@ html::-webkit-scrollbar-thumb {
 }
 
 .p-menu.p-menu-overlay {
-  background: #2d3748 !important;
+  background: #1e293b !important;
   border: 0 none !important;
   color: white !important;
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14),
@@ -298,4 +298,13 @@ html::-webkit-scrollbar-thumb {
 }
 .p-button.p-button-icon-only {
   width: 4rem !important;
+}
+
+.nextui-c-kMgpew .nextui-avatar-img {
+  background: transparent !important;
+}
+
+.p-multiselect-panel,
+.p-multiselect-header {
+  background: #2d3748 !important;
 }
