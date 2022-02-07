@@ -1,5 +1,5 @@
 import { AiOutlineSearch } from "react-icons/ai";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState, } from "react";
 import { motion } from "framer-motion";
 import { connect } from "react-redux";
 import Table from "./Table";
@@ -11,7 +11,7 @@ import fb from "../public/fb.svg";
 import microsoft from "../public/microsoft.svg";
 import CompanyTags from "./CompanyTags/CompanyTags";
 import { useSelector } from "react-redux";
-import { MultiSelect } from "primereact/multiselect";
+// import { MultiSelect } from "primereact/multiselect";
 import { filterProblemData } from "./api/apis";
 import WrapperLayout from "../Layout/Layout";
 
@@ -21,8 +21,10 @@ import "primeicons/primeicons.css"; //icons
 import { Paginator } from "primereact/paginator";
 import { IRootState } from "../redux/reducers";
 import { problemListI } from "../redux/interfaces";
+import {  } from '@mantine/core';
+import { MultiSelect , Input } from '@mantine/core';
 
-const styles = {
+const styles = {  
   minWidth: "15rem",
   padding: ".25rem .5rem",
   borderRadius: "3px",
@@ -46,6 +48,8 @@ function Problem(props: Props): ReactElement {
   const [tags, setTags] = useState([]);
   const [currentDataList, setCurrentDataList] = useState<problemListI[]>([]);
 
+  console.log('tags', tags)
+  
   useEffect(() => {
     async function getData() {
       if (tags.length > 0) {
@@ -62,7 +66,6 @@ function Problem(props: Props): ReactElement {
     getData();
   }, [tags, props.problemList, value]);
 
-  console.log("current value", value);
   let TimeOutId: any;
 
   const valueHandler = (e: any) => {
@@ -76,8 +79,6 @@ function Problem(props: Props): ReactElement {
         tags: tags,
         difficulty: [],
       };
-
-      console.log("send req ", e.target.value);
 
       const response = await filterProblemData.post<problemListI[]>("/", data);
       setCurrentDataList(response.data);
@@ -101,7 +102,7 @@ function Problem(props: Props): ReactElement {
       <br />
       <hr />
       <br />
-
+{/* 
       <MultiSelect
         style={styles}
         value={tags}
@@ -111,12 +112,24 @@ function Problem(props: Props): ReactElement {
         optionLabel="label"
         placeholder="Select Tags"
         display="chip"
+      /> */}
+      <MultiSelect
+      // @ts-ignore
+      data={values}
+      className="w-1/2"
+        label="Select Tags"
+        placeholder="Pick all that you like"
+        searchable
+        nothingFound="Nothing found"
+        clearable
+        onChange={(e) => setTags(e)}
+        radius="xl"
       />
 
       {/* SEARCH BAR */}
 
       <div className="space-x-3 w-full block">
-        <form
+        {/* <form
           onSubmit={() => {}}
           className="p-[.2rem] flex border-none rounded-xl focus:outline-none bg-gray-900 items-center md:w-1/2 border border-rose-600"
         >
@@ -128,7 +141,16 @@ function Problem(props: Props): ReactElement {
             value={value}
             onChange={valueHandler}
           />
-        </form>
+        </form> */}
+        <Input
+        className="w-1/2"
+  icon={<AiOutlineSearch className="text-custom-indigo"/>}
+  placeholder="Search Questions"
+  styles={{ rightSection: { pointerEvents: 'none' } }}
+  radius="xl"
+  value={value}
+  onChange={valueHandler}
+/>
       </div>
 
       {/* DROPDOWN SECITONS FOR DIFFICULTY , STATUS, TAGS */}
