@@ -29,19 +29,20 @@ import Router from "next/router";
 import NextLink from "next/link";
 import { signoutUser } from "../../redux/actions/authenticate";
 import { useDispatch } from "react-redux";
-import { openNotificationWithIcon } from "../OpenNotification";
 
 import React, { useRef } from "react";
 import { Menu as PrimeMenu } from "primereact/menu";
 import { Button as Btn } from "primereact/button";
-
+import { useNotifications } from "@mantine/notifications";
 
 import Notification from './Notification'
-
+import {FcInfo} from 'react-icons/fc'
+import { Menu, Divider as Div, UnstyledButton } from '@mantine/core';
 
 export default function WithSubnavigation() {
   console.log("navbar rendered");
   const dispatch = useDispatch();
+  const notifications = useNotifications();
   const { isOpen, onToggle } = useDisclosure();
   const isHidden = useBreakpointValue({ base: true, md: false });
   console.log("is hideen", isHidden);
@@ -50,43 +51,28 @@ export default function WithSubnavigation() {
     (state: any) => state.userData
   );
 
-  const menu = useRef(null);
-  const addProblemPageHandler = () => {
+  // const menu = useRef(null);
+  const addProbemRouteHandler = () => {
     if (is_admin) {
       Router.push("/addproblems");
     } else {
-      openNotificationWithIcon(
-        "info",
-        "Not an Admin",
-        "You don't have enough privileges, because you are not an admin"
-      );
+
+      notifications.showNotification({
+        title: 'Not an Admin',
+        message: "You don't have enough privileges, because you are not an admin",
+        icon: <FcInfo className="text-4xl"/>
+      })
     }
   };
-  const items = [
-    {
-      items: [
-        {
-          label: "Your profile",
 
-          command: () => {
-            Router.push(`/profile/${username}`);
-          },
-        },
-        {
-          label: "Add problems",
-          command: () => {
-            addProblemPageHandler();
-          },
-        },
-        {
-          label: "Log Out",
-          command: () => {
-            dispatch(signoutUser(false));
-          },
-        },
-      ],
-    },
-  ];
+  const profileRouteHandler = () => {
+    Router.push(`/profile/${username}`)
+  } 
+
+  const signoutHandler = () => {
+    dispatch(signoutUser(false))
+  }
+
   return (
     <Container maxW={"container.xl"} className="overflow-hidden">
       <Box>
@@ -142,7 +128,7 @@ export default function WithSubnavigation() {
           </Flex>
 
           <Stack
-            className="space-x-4 "
+            className="space-x-4"
             flex={{ base: 1, md: 0 }}
             justify={"flex-end"}
             direction={"row"}
@@ -150,44 +136,59 @@ export default function WithSubnavigation() {
             alignItems={"center"}
           >
             {is_logged_in ? (
-              //    <Menu>
-              //    <MenuButton>
-              //        <Flex direction={'row'} alignItems={'center'}>
-              //               <Avatar size="lg" src={profile_pic} color="secondary" bordered squared/>
-              //               <Text hidden={isHidden} fontWeight={'semibold'} casing='capitalize' marginLeft={'1'}>{username}</Text>
-
-              //        </Flex>
-              //    </MenuButton>
-              //    <MenuList>
-
-              //        <MenuItem onClick={() => Router.push(`/profile/${username}`)}>Your Profile</MenuItem>
-              //        <MenuItem onClick={addProblemPageHandler}>Add Problems{!is_admin &&<AiOutlineInfoCircle className="text-yellow-200 ml-2 text-lg" />}</MenuItem>
-
-              //      <MenuDivider />
-              //        <MenuItem onClick={() => dispatch(signoutUser())}>Log Out</MenuItem>
-              //    </MenuList>
-              //  </Menu>
               <>
-                <PrimeMenu model={items} popup ref={menu} id="popup_menu" />
-                <Btn
-                  label={!isHidden && username}
-                  icon={
-                    <Avatar
+               <Menu 
+               className="group" 
+              
+               control={
+                  <UnstyledButton>  
+                    <Flex className="group-hover:cursor-pointer" alignItems="center">
+                      <Avatar
                       size="lg"
                       src={profile_pic}
                       color="secondary"
                       bordered
                       squared
-                    />
-                  }
-                  onClick={(event) => menu.current.toggle(event)}
-                  aria-controls="popup_menu"
-                  aria-haspopup
-                />
-                <Notification/>
+                      />
+                      <span className="ml-2 text-white font-bold">
+                        {username}
+                      </span>
+                    </Flex>
+                  </UnstyledButton>}>
+                <Menu.Item  
+                  sx={(theme) => ({
+                    '&:hover': {
+                    backgroundColor: theme.colors.gray[8],
+                    },
+                  })}
+                  onClick={profileRouteHandler}>
+                    Your Profile
+                </Menu.Item> 
+                <Menu.Item  
+                  sx={(theme) => ({
+                    '&:hover': {
+                    backgroundColor: theme.colors.gray[8],
+                    },
+                  })}
+                  onClick={addProbemRouteHandler}>
+                    Add problems
+                </Menu.Item> 
+                <Div />           
+                <Menu.Item  
+                  sx={(theme) => ({
+                    '&:hover': {
+                    backgroundColor: theme.colors.gray[8],
+                    },
+                  })}
+                  onClick={signoutHandler}
+                  color="red"
+                  >
+                    Sign Out
+                </Menu.Item> 
+               </Menu>
               </>
             ) : (
-              <div className="md:flex space-x-4 items-center hidden">
+              <>
                 <NextLink href="/auth/signin">
                   <Button
                     fontSize={"sm"}
@@ -218,11 +219,12 @@ export default function WithSubnavigation() {
                     Sign Up
                   </Button>
                 </NextLink>
-              </div>
+              </>
             )}
           </Stack>
+          <Notification/>
         </Flex>
-
+                    
         <Collapse in={isOpen} animateOpacity>
           <MobileNav />
         </Collapse>
