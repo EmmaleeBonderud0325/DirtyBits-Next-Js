@@ -1,62 +1,79 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Image from "next/image";
 import { IRootState } from "../redux/reducers";
 import {RingProgress, Text} from '@mantine/core'
 import { XAxis, Tooltip, AreaChart, Area } from "recharts";
 import { useBreakpointValue } from '@chakra-ui/react'
+import { getStaticData, getUserProfile } from "../components/api/apis";
 
+interface SubmissionsI {
+  date: string;
+  "Questions Solved": number;
+}
+
+
+interface UserProfileI {
+  id: number;
+  email: string;
+  score: number;
+  rank: number;
+  rating: number;
+  hard_solved: number;
+  medium_solved: number;
+  easy_solved: number;
+  submissions: SubmissionsI[];
+}
+
+interface StaticdataI {
+  id: number;
+  easy: number;
+  medium: number;
+  hard: number;
+  avatar_count: number;
+  users_count: number;
+}
 function Profile(): ReactElement {
-  const userData = useSelector((state: IRootState) => state.userData);
+  const userInfo = useSelector((state: IRootState) => state.userData);
+
+  const [percentage, setPercentage] = useState({
+    easy: 0,
+    medium: 0,
+    hard: 0,
+  });
+
+
+
+  const [sub, setSub] = useState([]);
+  useEffect(() => {
+    const getProfile = async () => {
+      const {
+        data: { easy_solved, medium_solved, hard_solved, submissions },
+      } = await getUserProfile.get<UserProfileI>("/");
+
+      const {
+        data: { easy, medium, hard },
+      } = await getStaticData.get<StaticdataI>("/");
+
+      const perc = {
+        easy: (easy_solved / easy) * 100,
+        medium: (medium_solved / medium) * 100,
+        hard: (hard_solved / hard) * 100,
+      };
+
+      setPercentage(perc);
+      setSub(submissions);
+    };
+    getProfile();
+  }, []);
+
   const isMobile = useBreakpointValue({ base: true, md: false })
 
-  console.log('mobile', isMobile)
-  
-  const item = [
-    {
-      name: 'Page A',
-      uv: 4000,
-      pv: 2400,
-      amt: 2400,
-    },
-    {
-      name: 'Page B',
-      uv: 3000,
-      pv: 1398,
-      amt: 2210,
-    },
-    {
-      name: 'Page C',
-      uv: 2000,
-      pv: 9800,
-      amt: 2290,
-    },
-    {
-      name: 'Page D',
-      uv: 2780,
-      pv: 3908,
-      amt: 2000,
-    },
-    {
-      name: 'Page E',
-      uv: 1890,
-      pv: 4800,
-      amt: 2181,
-    },
-    {
-      name: 'Page F',
-      uv: 2390,
-      pv: 3800,
-      amt: 2500,
-    },
-    {
-      name: 'Page G',
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
-    },
-  ];
-  
+  console.log('perc', percentage.easy)
+  console.log('perc', percentage.medium)
+  console.log('perc', percentage.hard)
+  console.log('sub', sub)
+
   
   return (
     <div className="">
@@ -82,10 +99,10 @@ function Profile(): ReactElement {
             <div className="w-full md:w-3/12 md:mx-2">
               <div className=" p-3 border-t-4 border-custom-indigo">
                 <div className="image overflow-hidden">
-                  {userData.profile_pic && (
+                  {userInfo.profile_pic && (
                     <Image
                       className="h-auto w-full mx-auto"
-                      src={userData.profile_pic}
+                      src={userInfo.profile_pic}
                       alt="profile pic"
                       width={500}
                       height={500}
@@ -93,7 +110,7 @@ function Profile(): ReactElement {
                   )}
                 </div>
                 <h1 className="text-white-900 capitalize font-bold text-xl leading-8 my-1">
-                  {userData.username}
+                  {userInfo.username}
                 </h1>
                 <h3 className="text-white-600 font-lg text-semibold leading-6">
                   Owner at Her Company Inc.
@@ -169,10 +186,10 @@ function Profile(): ReactElement {
                     <div>
                       <label>Easy :</label>
                         <RingProgress
-                          sections={[{ value: 40, color: 'green' }]}
+                          sections={[{ value: percentage.easy, color: 'green' }]}
                           label={
                           <Text color="green" weight={700} align="center" size="xl">
-                          40%
+                          {percentage.easy}%
                           </Text>
                          }
                         />
@@ -180,10 +197,10 @@ function Profile(): ReactElement {
                     <div>
                     <label>Medium :</label>
                         <RingProgress
-                          sections={[{ value: 40, color: 'yellow' }]}
+                          sections={[{ value: percentage.medium, color: 'yellow' }]}
                           label={
                           <Text color="yellow" weight={700} align="center" size="xl">
-                          40%
+                          {percentage.medium}%
                           </Text>
                          }
                         />
@@ -191,10 +208,10 @@ function Profile(): ReactElement {
                     <div>
                     <label>Hard :</label>
                         <RingProgress
-                          sections={[{ value: 40, color: 'red' }]}
+                          sections={[{ value: percentage.hard, color: 'red' }]}
                           label={
                           <Text color="red" weight={700} align="center" size="xl">
-                          40%
+                          {percentage.hard}%
                           </Text>
                          }
                         />
@@ -237,7 +254,7 @@ function Profile(): ReactElement {
                     <AreaChart
                         width={isMobile ? 300 : 900}
                         height={250}
-                        data={item}
+                        data={sub}
                         margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
                       >
                         <defs>
@@ -260,7 +277,7 @@ function Profile(): ReactElement {
                             />
                           </linearGradient>
                         </defs>
-                        <XAxis dataKey="name" />
+                        <XAxis dataKey="date" />
 
                         <Tooltip
                           cursor={false}
@@ -272,7 +289,7 @@ function Profile(): ReactElement {
                         />
                         <Area
                           type="monotone"
-                          dataKey="uv"
+                          dataKey="Questions Solved"
                           stroke="#5476DA"
                           fillOpacity={1}
                           strokeWidth={5}
@@ -333,7 +350,7 @@ function Profile(): ReactElement {
           )} */}
             <div className="text-center w-full">
               <p className="text-white p-4 font-bold text-2xl">
-                No Submissions
+                (Feature Coming Soon...)
               </p>
             </div>
         </div>

@@ -70,7 +70,7 @@ export default function WithSubnavigation() {
   } 
 
   const signoutHandler = () => {
-    dispatch(signoutUser(false))
+    dispatch(signoutUser(true))
   }
 
   return (
