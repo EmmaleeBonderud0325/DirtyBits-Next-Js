@@ -15,6 +15,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ChakraProvider } from '@chakra-ui/react'
 import theme from '../theme/theme'
 import NextNProgress from 'nextjs-progressbar';
+import { NotificationsProvider } from '@mantine/notifications';
+import { MantineProvider, Button } from '@mantine/core';
 
 import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css"; //core css
@@ -52,22 +54,18 @@ function MyApp({ Component, pageProps }: Props) {
   }
   return (
     <>
+    <MantineProvider theme={{colorScheme:'dark'}}>
+
   <ChakraProvider theme={theme}>
   <NextNProgress height={2} color="#6366F1"/>
-      <ToastContainer position="top-right"
-autoClose={5000}
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick
-rtl={false}
-pauseOnFocusLoss
-draggable
-theme="dark"
-pauseOnHover/>
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false}  pauseOnFocusLoss draggable theme="dark" pauseOnHover/>
       {/* <Navbar fixedHeader={fixedTop} bg={background} /> */}
-      <Navbar/>
-      <Component {...pageProps} />
+      <NotificationsProvider position="top-right" zIndex={2077} color="red">
+        <Navbar/>
+        <Component {...pageProps} />
+      </NotificationsProvider>
 </ChakraProvider>
+    </MantineProvider>
       {footer}
     </>
   );
