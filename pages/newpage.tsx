@@ -2,11 +2,64 @@ import { ReactElement } from "react";
 import { useSelector } from "react-redux";
 import Image from "next/image";
 import { IRootState } from "../redux/reducers";
+import {RingProgress, Text} from '@mantine/core'
+import { XAxis, Tooltip, AreaChart, Area } from "recharts";
+import { useBreakpointValue } from '@chakra-ui/react'
 
 function Profile(): ReactElement {
   const userData = useSelector((state: IRootState) => state.userData);
+  const isMobile = useBreakpointValue({ base: true, md: false })
+
+  console.log('mobile', isMobile)
+  
+  const item = [
+    {
+      name: 'Page A',
+      uv: 4000,
+      pv: 2400,
+      amt: 2400,
+    },
+    {
+      name: 'Page B',
+      uv: 3000,
+      pv: 1398,
+      amt: 2210,
+    },
+    {
+      name: 'Page C',
+      uv: 2000,
+      pv: 9800,
+      amt: 2290,
+    },
+    {
+      name: 'Page D',
+      uv: 2780,
+      pv: 3908,
+      amt: 2000,
+    },
+    {
+      name: 'Page E',
+      uv: 1890,
+      pv: 4800,
+      amt: 2181,
+    },
+    {
+      name: 'Page F',
+      uv: 2390,
+      pv: 3800,
+      amt: 2500,
+    },
+    {
+      name: 'Page G',
+      uv: 3490,
+      pv: 4300,
+      amt: 2100,
+    },
+  ];
+  
+  
   return (
-    <div>
+    <div className="">
       <div className="">
         <div className="w-full text-white bg-main-color">
           <div
@@ -20,26 +73,6 @@ function Profile(): ReactElement {
               >
                 Your Dashboard
               </a>
-              <button className="md:hidden rounded-lg focus:outline-none focus:shadow-outline">
-                <svg
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  className="w-6 h-6"
-                >
-                  <path
-                    x-show="!open"
-                    fillRule="evenodd"
-                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z"
-                    clipRule="evenodd"
-                  ></path>
-                  <path
-                    x-show="open"
-                    fillRule="evenodd"
-                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-              </button>
             </div>
           </div>
         </div>
@@ -75,7 +108,7 @@ function Profile(): ReactElement {
                     <span>Status</span>
                     <span className="ml-auto">
                       <span className="bg-custom-indigo py-1 px-2 rounded text-white text-sm">
-                        Active
+                        Problem Solver
                       </span>
                     </span>
                   </li>
@@ -107,53 +140,13 @@ function Profile(): ReactElement {
                   <span>Similar Profiles</span>
                 </div>
                 <div className="grid grid-cols-3">
-                  <div className="text-center my-2">
-                    <img
-                      className="h-16 w-16 rounded-full mx-auto"
-                      src="https://cdn.australianageingagenda.com.au/wp-content/uploads/2015/06/28085920/Phil-Beckett-2-e1435107243361.jpg"
-                      alt=""
-                    />
-                    <a href="#" className="text-main-color">
-                      Kojstantin
-                    </a>
-                  </div>
-                  <div className="text-center my-2">
-                    <img
-                      className="h-16 w-16 rounded-full mx-auto"
-                      src="https://widgetwhats.com/app/uploads/2019/11/free-profile-photo-whatsapp-4.png"
-                      alt=""
-                    />
-                    <a href="#" className="text-main-color">
-                      James
-                    </a>
-                  </div>
-                  <div className="text-center my-2">
-                    <img
-                      className="h-16 w-16 rounded-full mx-auto"
-                      src="https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg"
-                      alt=""
-                    />
-                    <a href="#" className="text-main-color">
-                      Natie
-                    </a>
-                  </div>
-                  <div className="text-center my-2">
-                    <img
-                      className="h-16 w-16 rounded-full mx-auto"
-                      src="https://bucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com/public/images/f04b52da-12f2-449f-b90c-5e4d5e2b1469_361x361.png"
-                      alt=""
-                    />
-                    <a href="#" className="text-main-color">
-                      Casey
-                    </a>
-                  </div>
-                </div>
+                 </div>
               </div>
             </div>
             <div className="w-full md:w-9/12 mx-2 h-64">
               <div className=" p-3 shadow-sm rounded-sm">
                 <div className="flex items-center space-x-2 font-semibold text-white-900 leading-8">
-                  <span className="text-green-500">
+                  <span className="text-custom-indigo">
                     <svg
                       className="h-5"
                       xmlns="http://www.w3.org/2000/svg"
@@ -172,67 +165,56 @@ function Profile(): ReactElement {
                   <span className="tracking-wide">About</span>
                 </div>
                 <div className="text-whie-700">
-                  <div className="grid md:grid-cols-2 text-sm">
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">First Name</div>
-                      <div className="px-4 py-2">Jane</div>
+                  <div className="grid md:grid-cols-3 grid-cols-2 text-sm">
+                    <div>
+                      <label>Easy :</label>
+                        <RingProgress
+                          sections={[{ value: 40, color: 'green' }]}
+                          label={
+                          <Text color="green" weight={700} align="center" size="xl">
+                          40%
+                          </Text>
+                         }
+                        />
                     </div>
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">Last Name</div>
-                      <div className="px-4 py-2">Doe</div>
+                    <div>
+                    <label>Medium :</label>
+                        <RingProgress
+                          sections={[{ value: 40, color: 'yellow' }]}
+                          label={
+                          <Text color="yellow" weight={700} align="center" size="xl">
+                          40%
+                          </Text>
+                         }
+                        />
                     </div>
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">Gender</div>
-                      <div className="px-4 py-2">Female</div>
+                    <div>
+                    <label>Hard :</label>
+                        <RingProgress
+                          sections={[{ value: 40, color: 'red' }]}
+                          label={
+                          <Text color="red" weight={700} align="center" size="xl">
+                          40%
+                          </Text>
+                         }
+                        />
                     </div>
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">Contact No.</div>
-                      <div className="px-4 py-2">+11 998001001</div>
-                    </div>
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">
-                        Current Address
-                      </div>
-                      <div className="px-4 py-2">
-                        Beech Creek, PA, Pennsylvania
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">
-                        Permanant Address
-                      </div>
-                      <div className="px-4 py-2">
-                        Arlington Heights, IL, Illinois
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">Email.</div>
-                      <div className="px-4 py-2">
-                        <a
-                          className="text-custom-indigo"
-                          href="mailto:jane@example.com"
-                        >
-                          jane@example.com
-                        </a>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">Birthday</div>
-                      <div className="px-4 py-2">Feb 06, 1998</div>
-                    </div>
+                  
+                                            
+                                     
                   </div>
                 </div>
-                <button className="block w-full text-custom-indigo text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">
+                {/* <button className="block w-full text-custom-indigo text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">
                   Show Full Information
-                </button>
+                </button> */}
               </div>
 
               <div className="my-4"></div>
               <div className=" p-3 shadow-sm rounded-sm">
-                <div className="grid grid-cols-2">
+                <div className="grid grid-cols-1">
                   <div>
                     <div className="flex items-center space-x-2 font-semibold text-white-900 leading-8 mb-3">
-                      <span className="text-green-500">
+                      <span className="text-custom-indigo">
                         <svg
                           className="h-5"
                           xmlns="http://www.w3.org/2000/svg"
@@ -248,46 +230,66 @@ function Profile(): ReactElement {
                           />
                         </svg>
                       </span>
-                      <span className="tracking-wide">Experience</span>
+                      <span className="tracking-wide">Check Your Daily Progress</span>
                     </div>
-                    <ul className="list-inside space-y-2">
-                      <li>
-                        <div className="text-custom-indigo">
-                          Owner at Her Company Inc.
+
+                    <div className="">
+                    <AreaChart
+                        width={isMobile ? 300 : 900}
+                        height={250}
+                        data={item}
+                        margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+                      >
+                        <defs>
+                          <linearGradient
+                            id="colorUv"
+                            x1="0"
+                            y1="0"
+                            x2="0"
+                            y2="1"
+                          >
+                            <stop
+                              offset="5%"
+                              stopColor="#8884d8"
+                              stopOpacity={0.4}
+                            />
+                            <stop
+                              offset="95%"
+                              stopColor="#8884d8"
+                              stopOpacity={0}
+                            />
+                          </linearGradient>
+                        </defs>
+                        <XAxis dataKey="name" />
+
+                        <Tooltip
+                          cursor={false}
+                          contentStyle={{
+                            background: "black",
+                            color: "white",
+                            border: "none",
+                          }}
+                        />
+                        <Area
+                          type="monotone"
+                          dataKey="uv"
+                          stroke="#5476DA"
+                          fillOpacity={1}
+                          strokeWidth={5}
+                          fill="url(#colorUv)"
+                        />
+                      </AreaChart>
                         </div>
-                        <div className="text-white-500 text-xs">
-                          March 2020 - Now
-                        </div>
-                      </li>
-                      <li>
-                        <div className="text-custom-indigos">
-                          Owner at Her Company Inc.
-                        </div>
-                        <div className="text-white-500 text-xs">
-                          March 2020 - Now
-                        </div>
-                      </li>
-                      <li>
-                        <div className="text-custom-indigos">
-                          Owner at Her Company Inc.
-                        </div>
-                        <div className="text-white-500 text-xs">
-                          March 2020 - Now
-                        </div>
-                      </li>
-                      <li>
-                        <div className="text-custom-indigos">
-                          Owner at Her Company Inc.
-                        </div>
-                        <div className="text-white-500 text-xs">
-                          March 2020 - Now
-                        </div>
-                      </li>
-                    </ul>
                   </div>
+                </div>
+              </div>
+
+
+              <div className="p-3 shadow-sm rounded-sm">
+                <div className="grid grid-cols-1">
                   <div>
                     <div className="flex items-center space-x-2 font-semibold text-white-900 leading-8 mb-3">
-                      <span className="text-green-500">
+                      <span className="text-custom-indigo">
                         <svg
                           className="h-5"
                           xmlns="http://www.w3.org/2000/svg"
@@ -295,42 +297,69 @@ function Profile(): ReactElement {
                           viewBox="0 0 24 24"
                           stroke="currentColor"
                         >
-                          <path fill="#fff" d="M12 14l9-5-9-5-9 5 9 5z" />
-                          <path
-                            fill="#fff"
-                            d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"
-                          />
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
                             strokeWidth="2"
-                            d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                           />
                         </svg>
                       </span>
-                      <span className="tracking-wide">Education</span>
+                      <span className="tracking-wide">Your Recent Submissions</span>
                     </div>
-                    <ul className="list-inside space-y-2">
-                      <li>
-                        <div className="text-custom-indigos">
-                          Masters Degree in Oxford
-                        </div>
-                        <div className="text-white-500 text-xs">
-                          March 2020 - Now
-                        </div>
-                      </li>
-                      <li>
-                        <div className="text-custom-indigos">
-                          Bachelors Degreen in LPU
-                        </div>
-                        <div className="text-white-500 text-xs">
-                          March 2020 - Now
-                        </div>
-                      </li>
-                    </ul>
+
+                    <section className="  container font-mono scrollbar-hide">
+      <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg scrollbar-hide">
+        <div className="w-full overflow-x-hidden">
+          <table className="w-full">
+            <thead>
+              <tr className="text-md font-semibold tracking-wide text-left text-gray-500 bg-slate-800 uppercase border-b border-gray-600">
+                <th className="px-4 py-3">Result</th>
+                <th className="px-4 py-3">Score</th>
+                <th className="px-4 py-3">Language</th>
+                <th className="px-4 py-3">Time</th>
+              </tr>
+            </thead>
+            <tbody className="bg-slate-800">
+              {/* {props.submissionList !== null && listRowHandler()} */}
+            </tbody>
+          </table>
+          {/* {props.submissionList === null && (
+            <div className="text-center w-full">
+              <p className="text-white font-bold text-2xl p-4">
+                <Loading type="points-opacity" size="xl" />
+              </p>
+            </div>
+          )} */}
+            <div className="text-center w-full">
+              <p className="text-white p-4 font-bold text-2xl">
+                No Submissions
+              </p>
+            </div>
+        </div>
+      </div>
+    </section>
                   </div>
                 </div>
               </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              
+              
             </div>
           </div>
         </div>
