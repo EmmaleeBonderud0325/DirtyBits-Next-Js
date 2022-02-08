@@ -182,6 +182,7 @@ export default function WithSubnavigation() {
                     Sign Out
                 </Menu.Item> 
                </Menu>
+               <Notification/>
               </>
             ) : (
               <>
@@ -218,7 +219,7 @@ export default function WithSubnavigation() {
               </>
             )}
           </Stack>
-          <Notification/>
+          
         </Flex>
                     
         <Collapse in={isOpen} animateOpacity>

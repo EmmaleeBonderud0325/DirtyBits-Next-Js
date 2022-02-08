@@ -39,7 +39,7 @@ export const DropdownV3: FC<Props> = (props): ReactElement => {
               </div>
             </button>
             <ul
-              className="dropdown-menu min-w-full absolute bg-white text-base z-50 float-left py-2 list-none text-left rounded-lg shadow-lg mt-1 hidden m-0 bg-clip-padding border-none max-h-60 overflow-scroll scrollbar-hide"
+              className="dropdown-menu min-w-full absolute bg-gray-800 text-base z-50 float-left py-2 list-none text-left rounded-lg shadow-lg mt-1 hidden m-0 bg-clip-padding border-none max-h-60 overflow-scroll scrollbar-hide"
               aria-labelledby="dropdownMenuButton2"
             >
               {props.list.map((item: JSX.Element) => {

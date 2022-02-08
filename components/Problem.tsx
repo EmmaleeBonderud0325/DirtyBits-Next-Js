@@ -18,11 +18,10 @@ import WrapperLayout from "../Layout/Layout";
 import "primereact/resources/themes/mdc-dark-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css"; //icons
-import { Paginator } from "primereact/paginator";
 import { IRootState } from "../redux/reducers";
 import { problemListI } from "../redux/interfaces";
-import {  } from '@mantine/core';
 import { MultiSelect , Input } from '@mantine/core';
+import { Checkbox } from '@nextui-org/react';
 
 const styles = {  
   minWidth: "15rem",
@@ -42,21 +41,21 @@ function Problem(props: Props): ReactElement {
 
   const [value, setValue] = useState<string>("");
 
-  const [difficulty, setDifficulty] = useState<string>("Difficulty");
+  const [difficulty, setDifficulty] = useState<string[]>([]);
   const [status, setStatus] = useState<string>("Status");
   let [timeoutId, setTimeoutId] = useState();
   const [tags, setTags] = useState([]);
   const [currentDataList, setCurrentDataList] = useState<problemListI[]>([]);
 
-  console.log('tags', tags)
-  
+  console.log('diff', difficulty)
+
   useEffect(() => {
     async function getData() {
-      if (tags.length > 0) {
+      if (tags.length > 0 || difficulty.length > 0) {
         const response = await filterProblemData.post<problemListI[]>("/", {
           keyword: value,
           tags: tags,
-          difficulty: [],
+          difficulty: difficulty,
         });
         setCurrentDataList(response.data);
       } else {
@@ -64,7 +63,7 @@ function Problem(props: Props): ReactElement {
       }
     }
     getData();
-  }, [tags, props.problemList, value]);
+  }, [tags, props.problemList, value, difficulty]);
 
   let TimeOutId: any;
 
@@ -77,7 +76,7 @@ function Problem(props: Props): ReactElement {
       const data = {
         keyword: e.target.value,
         tags: tags,
-        difficulty: [],
+        difficulty: difficulty,
       };
 
       const response = await filterProblemData.post<problemListI[]>("/", data);
@@ -102,17 +101,7 @@ function Problem(props: Props): ReactElement {
       <br />
       <hr />
       <br />
-{/* 
-      <MultiSelect
-        style={styles}
-        value={tags}
-        // @ts-ignore
-        options={values}
-        onChange={(e) => setTags(e.value)}
-        optionLabel="label"
-        placeholder="Select Tags"
-        display="chip"
-      /> */}
+
       <MultiSelect
       // @ts-ignore
       data={values}
@@ -174,10 +163,26 @@ function Problem(props: Props): ReactElement {
           actionFunction={setStatus}
         />
       </div> */}
+<div className="space-y-2">
+<label className="text-sm">Select Difficulty</label>
+
+<Checkbox.Group onChange={(e) => setDifficulty(e)} size="sm"   color="success" value={[]} row>
+    <Checkbox size="sm" color="success" rounded value="E">
+      <span className="text-slate-500">Easy</span>
+    </Checkbox>
+    <Checkbox size="sm" color="warning" rounded value="M">
+    <span className="text-slate-500">Medium</span>
+    </Checkbox>
+    <Checkbox size="sm" color="error" rounded value="H">
+    <span className="text-slate-500">Hard</span>
+    </Checkbox>
+  </Checkbox.Group>
+
 
       <div className="flex flex-col">
         <Table dataList={currentDataList} />
       </div>
+</div>
     </WrapperLayout>
   );
 }

@@ -1,20 +1,17 @@
 import { ReactElement, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { AiOutlineSearch } from "react-icons/ai";
-import { VscSettingsGear } from "react-icons/vsc";
-import { IoMdNotificationsOutline } from "react-icons/io";
-
 import Image from "next/image";
-
-import { XAxis, Tooltip, AreaChart, Area } from "recharts";
-import { getStaticData, getUserProfile } from "../../components/api/apis";
-import Head from "next/head";
 import { IRootState } from "../../redux/reducers";
+import {RingProgress, Text} from '@mantine/core'
+import { XAxis, Tooltip, AreaChart, Area } from "recharts";
+import { useBreakpointValue } from '@chakra-ui/react'
+import { getStaticData, getUserProfile } from "../../components/api/apis";
 
 interface SubmissionsI {
   date: string;
   "Questions Solved": number;
 }
+
 
 interface UserProfileI {
   id: number;
@@ -36,7 +33,6 @@ interface StaticdataI {
   avatar_count: number;
   users_count: number;
 }
-
 function Profile(): ReactElement {
   const userInfo = useSelector((state: IRootState) => state.userData);
 
@@ -46,8 +42,9 @@ function Profile(): ReactElement {
     hard: 0,
   });
 
-  const [sub, setSub] = useState([]);
 
+
+  const [sub, setSub] = useState([]);
   useEffect(() => {
     const getProfile = async () => {
       const {
@@ -70,137 +67,192 @@ function Profile(): ReactElement {
     getProfile();
   }, []);
 
+  const isMobile = useBreakpointValue({ base: true, md: false })
+
+  console.log('perc', percentage.easy)
+  console.log('perc', percentage.medium)
+  console.log('perc', percentage.hard)
+  console.log('sub', sub)
+
+  
   return (
-    <>
-      <Head>
-        <title>{userInfo.username ? userInfo.username : "Loading..."}</title>
-      </Head>
-      <div className="bg-[#060F1E] min-h-screen">
-        <div className="space-y-8 container p-10 mx-auto max-w-screen-xs lg:max-w-screen-xl ">
-          <div className="lg:p-4">
-            <span className="block lg:hidden">
-              <h1 className="text-white text-center text-[35px] font-medium">
-                Hello, {userInfo.username}!
-              </h1>
-            </span>
-            <header className="flex justify-between items-center">
-              <div className="hidden lg:block">
-                <h1 className="font-semibold lg:text-2xl text-white">
-                  Hello, {userInfo.username} !
-                </h1>
-                <p className="uppercase text-gray-400 text-xs tracking-wider">
-                  Welcome To Your Dashboard
-                </p>
-              </div>
+    <div className="">
+      <div className="">
+        <div className="w-full text-white bg-main-color">
+          <div
+            x-data="{ open: false }"
+            className="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8"
+          >
+            <div className="p-4 flex flex-row items-center justify-between">
+              <a
+                href="#"
+                className="text-lg font-semibold tracking-widest uppercase rounded-lg focus:outline-none focus:shadow-outline"
+              >
+                Your Dashboard
+              </a>
+            </div>
+          </div>
+        </div>
 
-              <div className="center flex items-center p-1 pl-2 rounded-2xl">
-                <AiOutlineSearch className="text-[20px] text-white" />
-                <input
-                  className="ml-1 text-lg placeholder:text-base placeholder:p-1 placeholder:tracking-wide outline-none bg-transparent py-4 caret-custom-indigo text-white"
-                  type="text"
-                  placeholder="Search..."
-                />
-              </div>
-              <div className="right flex gap-4 text-white">
-                <VscSettingsGear className="text-lg" />
-              </div>
-            </header>
-
-            <main>
-              <div className="flex flex-col lg:flex-row mt-10 p-4">
-                <div className="relative block overflow-hidden  lg:hidden h-[300px] w-[250px]">
+        <div className="container mx-auto my-5 p-5">
+          <div className="md:flex no-wrap md:-mx-2 ">
+            <div className="w-full md:w-3/12 md:mx-2">
+              <div className=" p-3 border-t-4 border-custom-indigo">
+                <div className="image overflow-hidden">
                   {userInfo.profile_pic && (
                     <Image
-                      className="absolute object-contain rounded-full"
-                      height={150}
-                      width={150}
+                      className="h-auto w-full mx-auto"
                       src={userInfo.profile_pic}
                       alt="profile pic"
-                      layout="responsive"
+                      width={500}
+                      height={500}
                     />
                   )}
                 </div>
-
-                <div className="relative left h-full lg:w-1/3 md:w-1/2 rounded-2xl">
-                  <div className="flex justify-between items-center h-5/6">
-                    <div className="absolute hidden rounded-full h-36 w-36 lg:flex justify-center items-center">
-                      <div className="relative h-full w-full">
-                        {userInfo.profile_pic && (
-                          <Image
-                            className="absolute object-contain rounded-md overflow-hidden"
-                            height={50}
-                            width={50}
-                            src={userInfo.profile_pic}
-                            alt="profile pic"
-                            layout="responsive"
-                          />
-                        )}
-                      </div>
-                    </div>
-                    <div className="lg:relative text-right w-full flex flex-col lg:items-end justify-center items-center">
-                      <button className="bg-indigo-600 rounded-md px-1 py-1">
-                        <Image
-                          src="https://img.icons8.com/emoji/48/000000/pencil-emoji.png"
-                          alt="edit button image"
-                          width={20}
-                          height={5}
+                <h1 className="text-white-900 capitalize font-bold text-xl leading-8 my-1">
+                  {userInfo.username}
+                </h1>
+                <h3 className="text-white-600 font-lg text-semibold leading-6">
+                  Owner at Her Company Inc.
+                </h3>
+                <p className="text-sm text-white-500 hover:text-white-600 leading-6">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Reprehenderit, eligendi dolorum sequi illum qui unde
+                  aspernatur non deserunt
+                </p>
+                <ul className=" text-white-600 hover:text-white-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
+                  <li className="flex items-center py-3">
+                    <span>Status</span>
+                    <span className="ml-auto">
+                      <span className="bg-custom-indigo py-1 px-2 rounded text-white text-sm">
+                        Problem Solver
+                      </span>
+                    </span>
+                  </li>
+                  <li className="flex items-center py-3">
+                    <span>Member since</span>
+                    <span className="ml-auto">Nov 07, 2016</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="my-4"></div>
+              <div className=" p-3 hover:shadow">
+                <div className="flex items-center space-x-3 font-semibold text-white-900 text-xl leading-8">
+                  <span className="text-custom-indigo">
+                    <svg
+                      className="h-5 fill-current"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                      />
+                    </svg>
+                  </span>
+                  <span>Similar Profiles</span>
+                </div>
+                <div className="grid grid-cols-3">
+                 </div>
+              </div>
+            </div>
+            <div className="w-full md:w-9/12 mx-2 h-64">
+              <div className=" p-3 shadow-sm rounded-sm">
+                <div className="flex items-center space-x-2 font-semibold text-white-900 leading-8">
+                  <span className="text-custom-indigo">
+                    <svg
+                      className="h-5"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                      />
+                    </svg>
+                  </span>
+                  <span className="tracking-wide">About</span>
+                </div>
+                <div className="text-whie-700">
+                  <div className="grid md:grid-cols-3 grid-cols-2 text-sm">
+                    <div>
+                      <label>Easy :</label>
+                        <RingProgress
+                          sections={[{ value: percentage.easy, color: 'green' }]}
+                          label={
+                          <Text color="green" weight={700} align="center" size="xl">
+                          {percentage.easy}%
+                          </Text>
+                         }
                         />
-                      </button>
-                      <p className="font-semibold tracking-wider text-lg text-white">
-                        {userInfo.first_name} {userInfo.last_name}
-                      </p>
-                      <p className="text-gray-500 text-sm">{userInfo.email}</p>
-                      <p className="text-white">28, F</p>
-                      <div className="lg:my-6 my-3 flex lg:flex-col lg:items-end items-center space-x-2">
-                        <label className="text-gray-500 text-sm">Role</label>
-                      </div>
                     </div>
+                    <div>
+                    <label>Medium :</label>
+                        <RingProgress
+                          sections={[{ value: percentage.medium, color: 'yellow' }]}
+                          label={
+                          <Text color="yellow" weight={700} align="center" size="xl">
+                          {percentage.medium}%
+                          </Text>
+                         }
+                        />
+                    </div>
+                    <div>
+                    <label>Hard :</label>
+                        <RingProgress
+                          sections={[{ value: percentage.hard, color: 'red' }]}
+                          label={
+                          <Text color="red" weight={700} align="center" size="xl">
+                          {percentage.hard}%
+                          </Text>
+                         }
+                        />
+                    </div>
+                  
+                                            
+                                     
                   </div>
                 </div>
+                {/* <button className="block w-full text-custom-indigo text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">
+                  Show Full Information
+                </button> */}
+              </div>
 
-                <div className="mt-24 lg:mt-0 flex-1 p-2 flex flex-col items-center justify-center lg:pl-36 lg:space-y-10  rounded-2xl">
-                  {/* <div className="w-full grid grid-cols-2 place-items-center lg:grid-cols-4 gap-4 lg:p-0">
-                    <div className="space-x-5">
-                      <label className="text-gray-400">Easy:</label>
-                      <Progress
-                        strokeColor={"lime"}
-                        type="circle"
-                        percent={percentage.easy}
-                        width={100}
-                        showInfo={true}
-                        trailColor={"black"}
-                      />
+              <div className="my-4"></div>
+              <div className=" p-3 shadow-sm rounded-sm">
+                <div className="grid grid-cols-1">
+                  <div>
+                    <div className="flex items-center space-x-2 font-semibold text-white-900 leading-8 mb-3">
+                      <span className="text-custom-indigo">
+                        <svg
+                          className="h-5"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
+                        </svg>
+                      </span>
+                      <span className="tracking-wide">Check Your Daily Progress</span>
                     </div>
 
-                    <div className="space-x-5">
-                      <label className="text-gray-400">Medium:</label>
-                      <Progress
-                        strokeColor={"orange"}
-                        type="circle"
-                        percent={percentage.medium}
-                        width={100}
-                        trailColor={"black"}
-                      />
-                    </div>
-                    <div className="space-x-5">
-                      <label className="text-gray-400">Hard:</label>
-                      <Progress
-                        strokeColor={"red"}
-                        type="circle"
-                        percent={percentage.hard}
-                        width={100}
-                        trailColor={"black"}
-                      />
-                    </div>
-                  </div> */}
-                  <div className="bottombar h-full w-full hidden lg:block">
-                    <div className="space-y-6">
-                      <label className="text-white font-bold text-2xl">
-                        Questions Solved
-                      </label>
-
-                      <AreaChart
-                        width={600}
+                    <div className="">
+                    <AreaChart
+                        width={isMobile ? 300 : 900}
                         height={250}
                         data={sub}
                         margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
@@ -244,15 +296,74 @@ function Profile(): ReactElement {
                           fill="url(#colorUv)"
                         />
                       </AreaChart>
-                    </div>
+                        </div>
                   </div>
                 </div>
               </div>
-            </main>
+
+
+              <div className="p-3 shadow-sm rounded-sm">
+                <div className="grid grid-cols-1">
+                  <div>
+                    <div className="flex items-center space-x-2 font-semibold text-white-900 leading-8 mb-3">
+                      <span className="text-custom-indigo">
+                        <svg
+                          className="h-5"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
+                        </svg>
+                      </span>
+                      <span className="tracking-wide">Your Recent Submissions</span>
+                    </div>
+
+                    <section className="  container font-mono scrollbar-hide">
+      <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg scrollbar-hide">
+        <div className="w-full overflow-x-hidden">
+          <table className="w-full">
+            <thead>
+              <tr className="text-md font-semibold tracking-wide text-left text-gray-500 bg-slate-800 uppercase border-b border-gray-600">
+                <th className="px-4 py-3">Result</th>
+                <th className="px-4 py-3">Score</th>
+                <th className="px-4 py-3">Language</th>
+                <th className="px-4 py-3">Time</th>
+              </tr>
+            </thead>
+            <tbody className="bg-slate-800">
+              {/* {props.submissionList !== null && listRowHandler()} */}
+            </tbody>
+          </table>
+          {/* {props.submissionList === null && (
+            <div className="text-center w-full">
+              <p className="text-white font-bold text-2xl p-4">
+                <Loading type="points-opacity" size="xl" />
+              </p>
+            </div>
+          )} */}
+            <div className="text-center w-full">
+              <p className="text-white p-4 font-bold text-2xl">
+                (Feature Coming Soon...)
+              </p>
+            </div>
+        </div>
+      </div>
+    </section>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

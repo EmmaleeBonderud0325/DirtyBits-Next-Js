@@ -60,7 +60,7 @@ export function PasswordStrength({value, setValue, formData, cb, timeoutId, setT
     <Popover
       opened={popoverOpened}
       position="bottom"
-      placement="center"
+      placement="end"
       withArrow
       styles={{ popover: { width: '100%' } }}
       noFocusTrap

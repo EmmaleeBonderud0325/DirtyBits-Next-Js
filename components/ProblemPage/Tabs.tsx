@@ -10,6 +10,7 @@ import {
   AiFillDislike,
 } from "react-icons/ai";
 import { IoPlayBackOutline } from "react-icons/io5";
+import { BsFillBookmarkFill, BsBookmark } from "react-icons/bs";
 import { TabView, TabPanel as Panel } from "primereact/tabview";
 
 import Submissions from "./submission";
@@ -26,6 +27,7 @@ import remove from "../../public/remove.svg";
 import bar from "../../public/bar.svg";
 import Image from "next/image";
 import global from "../../public/global.svg";
+
 
 import "primereact/resources/themes/mdc-dark-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
@@ -107,14 +109,9 @@ function BasicTabs(props: Props): ReactElement {
                     } `}
                   >
                     {props.isBookmarkSet ? (
-                      <Image
-                        src={remove}
-                        width={30}
-                        height={30}
-                        alt="bookmark"
-                      />
+                      <BsFillBookmarkFill/>
                     ) : (
-                      <Image src={add} width={30} height={30} alt="bookmark" />
+                      <BsBookmark/>
                     )}
                   </div>
                 </div>
