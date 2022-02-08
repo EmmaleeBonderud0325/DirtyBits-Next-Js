@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 import { IRootState } from "../../redux/reducers";
+import { TextInput, PasswordInput } from '@mantine/core';
 import {
   useState,
   Link,
@@ -19,7 +20,7 @@ import {
   SmoothList,
   updateSignInSpinner,
   updateUserinfo,
-  Input,
+  // Input,
   signinApi,
   Parsetoken,
   githubLogin,
@@ -180,7 +181,7 @@ function Signin(props: Props): ReactElement {
           .catch(() => {
             setIsError({
               ...isError,
-              email: { error: true, details: "" },
+              email: { error: true, details: "Invalid Credentials !" },
               password: { error: true, details: "Invalid Credentials !" },
             });
             console.error("Invalid Credentials !");
@@ -238,9 +239,9 @@ function Signin(props: Props): ReactElement {
               </SmoothList>
             </div>
           </div>
-          <div className="flex lg:justify-center md:justify-start lg:self-center z-10">
+          <div className="flex lg:justify-center md:justify-start lg:self-center z-10 md:w-[400px]">
             <div className="p-10 lg:p-16 bg-white mx-auto rounded-2xl w-full lg:w-100 ">
-              <div className="mb-4">
+              <div className="mb-4 bg-green">
                 <h3 className="font-semibold text-2xl text-gray-800">
                   Sign In{" "}
                 </h3>
@@ -250,12 +251,12 @@ function Signin(props: Props): ReactElement {
               <div className="space-y-5">
                 <div className="space-y-1">
                   {/* Change text-red-700 to text-gray-700 if there's no error */}
-                  <label
+                  {/* <label
                     className={`text-sm font-medium ${emailLabelColor} tracking-wide`}
                   >
                     Email
-                  </label>
-                  <Input
+                  </label> */}
+                  {/* <Input
                     type="email"
                     placeholder={"@gmail.com"}
                     value={formData.email}
@@ -265,7 +266,9 @@ function Signin(props: Props): ReactElement {
                     onchangeFunction={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
-                  />
+                  /> */}
+                <TextInput error={isError.email.details} value={formData.email} radius="md" onChange={(event) => setFormData({...formData, email: event.currentTarget.value})} label="Email"  placeholder="your email address" invalid={isError.email.error} required size="sm"/>
+{/* 
                   <div style={{ height: "1rem" }}>
                     {isError.email.error ? (
                       <span className="text-xs text-red-500 ml-2 mb:2">
@@ -274,16 +277,27 @@ function Signin(props: Props): ReactElement {
                     ) : (
                       <span></span>
                     )}
-                  </div>
+                  </div> */}
                 </div>
                 <div className="space-y-1">
-                  <label
+                  {/* <label
                     className={`mb-5 text-sm font-medium ${passwordLabelColor} tracking-wide`}
                   >
                     Password
-                  </label>
+                  </label> */}
+                    <PasswordInput
+                        error={isError.password.details}
+                        radius="md"
+                        placeholder="Your password here"
+                        value={formData.password}
+                        onChange={(event) => setFormData({...formData, password: event.currentTarget.value})}
+                        label="Password"
+                        size="sm"
+                        required
+                        invalid={isError.password.error}
+                    />
                   <div className={`w-full rounded-lg flex`}>
-                    <input
+                    {/* <input
                       className={`w-full px-4 py-2 border-2 text-black ${passwordInputColor} focus:${passwordInputFocusColor} focus:outline-none rounded-lg`}
                       type={showPassword ? "text" : "password"}
                       value={formData.password}
@@ -291,8 +305,9 @@ function Signin(props: Props): ReactElement {
                       onChange={(e) =>
                         setFormData({ ...formData, password: e.target.value })
                       }
-                    />
-                    {showPassword ? (
+                    /> */}
+         
+                    {/* {showPassword ? (
                       <EyeIcon
                         onClick={() => setShowPassword(false)}
                         className="cursor-pointer h-5 w-5 -ml-10 mt-2 text-black"
@@ -302,10 +317,10 @@ function Signin(props: Props): ReactElement {
                         onClick={() => setShowPassword(true)}
                         className="cursor-pointer h-5 w-5 -ml-10 mt-2 text-black"
                       />
-                    )}
+                    )} */}
                   </div>
 
-                  <div style={{ height: "1rem" }}>
+                  {/* <div style={{ height: "1rem" }}>
                     {isError.password.error ? (
                       <span className="text-xs text-red-500 ml-2">
                         {isError.password.details}
@@ -313,7 +328,7 @@ function Signin(props: Props): ReactElement {
                     ) : (
                       <span></span>
                     )}
-                  </div>
+                  </div> */}
                 </div>
                 <div className="flex items-center justify-between my-2">
                   <div className="flex items-center accent-custom-indigo">
