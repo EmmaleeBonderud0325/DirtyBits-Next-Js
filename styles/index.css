@@ -95,8 +95,9 @@ body {
   height: 100vh;
   /* ff 3.6+ */
   /* ff 3.6+ */
-  background: linear-gradient(135deg, #ce9ffc, #7367f0);
-  background-repeat: no-repeat;
+  /* background: linear-gradient(135deg, #ce9ffc, #7367f0); */
+  /* background-repeat: no-repeat; */
+  background-color: black;
 }
 
 .cartoon {

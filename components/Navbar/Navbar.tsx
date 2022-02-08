@@ -40,18 +40,14 @@ import {FcInfo} from 'react-icons/fc'
 import { Menu, Divider as Div, UnstyledButton } from '@mantine/core';
 
 export default function WithSubnavigation() {
-  console.log("navbar rendered");
   const dispatch = useDispatch();
   const notifications = useNotifications();
   const { isOpen, onToggle } = useDisclosure();
   const isHidden = useBreakpointValue({ base: true, md: false });
-  console.log("is hideen", isHidden);
   // @ts-ignore
   const { is_logged_in, profile_pic, username, is_admin } = useSelector(
     (state: any) => state.userData
   );
-
-  // const menu = useRef(null);
   const addProbemRouteHandler = () => {
     if (is_admin) {
       Router.push("/addproblems");

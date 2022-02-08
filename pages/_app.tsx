@@ -55,16 +55,15 @@ function MyApp({ Component, pageProps }: Props) {
   return (
     <>
     <MantineProvider theme={{colorScheme:'dark'}}>
-
-  <ChakraProvider theme={theme}>
-  <NextNProgress height={2} color="#6366F1"/>
-      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false}  pauseOnFocusLoss draggable theme="dark" pauseOnHover/>
-      {/* <Navbar fixedHeader={fixedTop} bg={background} /> */}
       <NotificationsProvider position="top-right" zIndex={2077} color="red">
-        <Navbar/>
-        <Component {...pageProps} />
+        <ChakraProvider theme={theme}>
+          <NextNProgress height={2} color="#6366F1"/>
+          <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false}  pauseOnFocusLoss draggable theme="dark" pauseOnHover/>
+      {/* <Navbar fixedHeader={fixedTop} bg={background} /> */}
+          <Navbar/>
+          <Component {...pageProps} />
+        </ChakraProvider>
       </NotificationsProvider>
-</ChakraProvider>
     </MantineProvider>
       {footer}
     </>
