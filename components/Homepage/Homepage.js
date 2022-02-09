@@ -19,7 +19,7 @@ import Link from "next/link";
 export default function Homepage() {
   return (
     <>
-      <div className="relative space-y-8 container p-10 mx-auto max-w-screen-xl flex-col justify-center items-center">
+      <div className="relative p-10 md:p-3 space-y-8 container mx-auto max-w-screen-xl flex-col justify-center items-center">
         <Zoom>
           <div className="absolute hidden md:block opacity-70 top-[10rem] right-[30rem]">
             <Image
@@ -42,7 +42,7 @@ export default function Homepage() {
             />
           </div>
         </Zoom>
-        <div className="container md:px-4 sm:px-8 xl:px-20 mx-auto md:h-[1100px] h-[650px]">
+        <div className="container md:px-4 sm:px-8  mx-auto md:h-[1100px] h-[650px] ">
           <div className="hero-wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 items-start  md:items-center lg:mt-[8rem] sm:mt[5rem]">
             <div className="hero-text col-span-6 ">
               <SmoothList>
@@ -98,8 +98,8 @@ export default function Homepage() {
                     className="cartoon"
                     src={hero}
                     alt="hero section image"
-                    width={600}
-                    height={700}
+                    width={550}
+                    height={650}
                     priority
                     placeholder="blur"
                   />
@@ -108,7 +108,7 @@ export default function Homepage() {
             </div>
           </div>
         </div>
-        <div className="w-full  h-full  sm:px-8 xl:px-20 mx-auto md:h-[1100px] p-4 px-4 ">
+        <div className="w-full  h-full  sm:px-8  mx-auto md:h-[1100px] ">
           <div className="space-y-16">
             <div className="text-center sm:space-y-10 lg:space-y-16">
               <div className="flex space-x-2 justify-center items-center font-bold text-3xl md:text-4xl lg:text-5xl font-heading text-white capitalize">
@@ -175,9 +175,9 @@ export default function Homepage() {
           </div>
         </div>
 
-        <div className="py-12 xs:h-[1500px] md:h-[900px]">
+        <div className="py-12 xs:h-[1500px] md:h-[900px] ">
           <div className="">
-            <section className=" mx-auto px-4 sm:px-6 lg:px-4 py-12 space-y-20">
+            <section className=" mx-auto sm:px-6 space-y-20">
               <div className="text-center pb-12">
                 <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl font-heading text-white capitalize">
                   Check our Awesome{" "}
@@ -255,7 +255,7 @@ export default function Homepage() {
           </div>
         </div>
 
-        <div className=" items-center">
+        <div className="">
           <div className="">
             <div className="text-center font-semibold">
               <h1 className="text-5xl">
@@ -270,7 +270,7 @@ export default function Homepage() {
               </p>
             </div>
 
-            <div className="my-16 sm:flex flex-wrap justify-center items-center gap-8">
+            <div className="my-16 sm:flex flex-wrap justify-around items-center gap-8">
               <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/4 px-4 py-4 bg-slate-400 mt-6 shadow-lg rounded-lg">
                 <div className="px-6 py-8 sm:p-10 sm:pb-6">
                   <div className="flex justify-center">
