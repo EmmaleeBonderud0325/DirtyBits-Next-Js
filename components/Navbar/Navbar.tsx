@@ -24,7 +24,7 @@ import {
   ChevronRightIcon,
 } from "@chakra-ui/icons";
 import { useSelector } from "react-redux";
-import { Avatar } from "@nextui-org/react";
+import { Avatar } from "@chakra-ui/react";
 import Router from "next/router";
 import NextLink from "next/link";
 import { signoutUser } from "../../redux/actions/authenticate";
@@ -113,7 +113,7 @@ export default function WithSubnavigation() {
               onClick={() => Router.push("/")}
               fontSize={"2xl"}
               fontWeight="semibold"
-              color={useColorModeValue("gray.800", "purple.400")}
+              color={useColorModeValue("gray.800", "brand.100")}
             >
               DirtyBits
             </Text>
@@ -137,15 +137,9 @@ export default function WithSubnavigation() {
                className="group" 
               
                control={
-                  <UnstyledButton>  
+                  <UnstyledButton className="hidden md:block">  
                     <Flex className="group-hover:cursor-pointer" alignItems="center">
-                      <Avatar
-                      size="lg"
-                      src={profile_pic}
-                      color="secondary"
-                      bordered
-                      squared
-                      />
+                      <Avatar className="mt-2" name={username} src={profile_pic} />
                       <span className="ml-2 text-white font-bold">
                         {username}
                       </span>

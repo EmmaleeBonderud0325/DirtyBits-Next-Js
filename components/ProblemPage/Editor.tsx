@@ -131,7 +131,7 @@ interface Props {
 
 const Editor: FC<Props> = (props): ReactElement => {
   const dispatch = useDispatch();
-  console.log("editor rendered");
+  
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(false);

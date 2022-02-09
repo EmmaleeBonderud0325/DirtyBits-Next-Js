@@ -23,14 +23,7 @@ import { problemListI } from "../redux/interfaces";
 import { MultiSelect , Input } from '@mantine/core';
 import { Checkbox } from '@nextui-org/react';
 
-const styles = {  
-  minWidth: "15rem",
-  padding: ".25rem .5rem",
-  borderRadius: "3px",
-  display: "inline-flex",
-  marginRight: ".5rem",
-  backgroundColor: "#111827",
-};
+
 
 interface Props {
   problemList: problemListI[];
@@ -47,7 +40,6 @@ function Problem(props: Props): ReactElement {
   const [tags, setTags] = useState([]);
   const [currentDataList, setCurrentDataList] = useState<problemListI[]>([]);
 
-  console.log('diff', difficulty)
 
   useEffect(() => {
     async function getData() {
@@ -97,7 +89,6 @@ function Problem(props: Props): ReactElement {
           <CompanyTags icon={plus} title="More" />
         </div>
       </motion.div>
-      <br />
       <br />
       <hr />
       <br />
@@ -164,9 +155,9 @@ function Problem(props: Props): ReactElement {
         />
       </div> */}
 <div className="space-y-2">
-<label className="text-sm">Select Difficulty</label>
+<label className="text-[13px] text-[#C1C2C5] font-semibold tracking-wider">Select Difficulty</label>
 
-<Checkbox.Group onChange={(e) => setDifficulty(e)} size="sm"   color="success" value={[]} row>
+<Checkbox.Group aria-label="Select difficulty" onChange={(e) => setDifficulty(e)} size="sm"   color="success" value={[]} row>
     <Checkbox size="sm" color="success" rounded value="E">
       <span className="text-slate-500">Easy</span>
     </Checkbox>

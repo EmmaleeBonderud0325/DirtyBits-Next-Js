@@ -9,8 +9,6 @@ import {
   Loading,
   GoogleLogin,
   GitHubLogin,
-  EyeOffIcon,
-  EyeIcon,
   validate,
   Cookies,
   connect,
@@ -20,7 +18,6 @@ import {
   SmoothList,
   updateSignInSpinner,
   updateUserinfo,
-  // Input,
   signinApi,
   Parsetoken,
   githubLogin,
@@ -64,7 +61,6 @@ function Signin(props: Props): ReactElement {
     remeberMe: false,
   });
 
-  let [showPassword, setShowPassword] = useState<boolean>(false);
 
   let [isError, setIsError] = useState<ErrorsI>({
     email: { error: false, details: "" },
@@ -73,25 +69,6 @@ function Signin(props: Props): ReactElement {
 
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
-  const emailInputColor: string = isError.email.error
-    ? "border-red-500"
-    : "border-custom-indigo";
-  const emailInputFocusColor: string = isError.email.error
-    ? "border-white"
-    : "border-custom-indigo";
-  const emailLabelColor: string = isError.email.error
-    ? "text-red-500"
-    : "text-gray-700";
-
-  const passwordInputColor: string = isError.password.error
-    ? "border-red-500"
-    : "border-custom-indigo";
-  const passwordInputFocusColor: string = isError.password.error
-    ? "border-red-500"
-    : "border-custom-indigo";
-  const passwordLabelColor: string = isError.password.error
-    ? "text-red-500"
-    : "text-gray-700";
 
   const validateFormData = (): boolean => {
     if (validate(formData.email)) {
@@ -250,41 +227,11 @@ function Signin(props: Props): ReactElement {
 
               <div className="space-y-5">
                 <div className="space-y-1">
-                  {/* Change text-red-700 to text-gray-700 if there's no error */}
-                  {/* <label
-                    className={`text-sm font-medium ${emailLabelColor} tracking-wide`}
-                  >
-                    Email
-                  </label> */}
-                  {/* <Input
-                    type="email"
-                    placeholder={"@gmail.com"}
-                    value={formData.email}
-                    color={emailInputColor}
-                    focusColor={emailInputFocusColor}
-                    id={"none"}
-                    onchangeFunction={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
-                    }
-                  /> */}
                 <TextInput error={isError.email.details} value={formData.email} radius="md" onChange={(event) => setFormData({...formData, email: event.currentTarget.value})} label="Email"  placeholder="your email address" invalid={isError.email.error} required size="sm"/>
-{/* 
-                  <div style={{ height: "1rem" }}>
-                    {isError.email.error ? (
-                      <span className="text-xs text-red-500 ml-2 mb:2">
-                        {isError.email.details}
-                      </span>
-                    ) : (
-                      <span></span>
-                    )}
-                  </div> */}
+
                 </div>
                 <div className="space-y-1">
-                  {/* <label
-                    className={`mb-5 text-sm font-medium ${passwordLabelColor} tracking-wide`}
-                  >
-                    Password
-                  </label> */}
+                 
                     <PasswordInput
                         error={isError.password.details}
                         radius="md"
@@ -296,39 +243,7 @@ function Signin(props: Props): ReactElement {
                         required
                         invalid={isError.password.error}
                     />
-                  <div className={`w-full rounded-lg flex`}>
-                    {/* <input
-                      className={`w-full px-4 py-2 border-2 text-black ${passwordInputColor} focus:${passwordInputFocusColor} focus:outline-none rounded-lg`}
-                      type={showPassword ? "text" : "password"}
-                      value={formData.password}
-                      placeholder="Password"
-                      onChange={(e) =>
-                        setFormData({ ...formData, password: e.target.value })
-                      }
-                    /> */}
-         
-                    {/* {showPassword ? (
-                      <EyeIcon
-                        onClick={() => setShowPassword(false)}
-                        className="cursor-pointer h-5 w-5 -ml-10 mt-2 text-black"
-                      />
-                    ) : (
-                      <EyeOffIcon
-                        onClick={() => setShowPassword(true)}
-                        className="cursor-pointer h-5 w-5 -ml-10 mt-2 text-black"
-                      />
-                    )} */}
-                  </div>
-
-                  {/* <div style={{ height: "1rem" }}>
-                    {isError.password.error ? (
-                      <span className="text-xs text-red-500 ml-2">
-                        {isError.password.details}
-                      </span>
-                    ) : (
-                      <span></span>
-                    )}
-                  </div> */}
+                 
                 </div>
                 <div className="flex items-center justify-between my-2">
                   <div className="flex items-center accent-custom-indigo">
