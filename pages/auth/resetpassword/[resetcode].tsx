@@ -1,29 +1,37 @@
-import { useState } from "react";
+import { FC, ReactElement, useState } from "react";
 import Form from "../../../components/Form";
 import { resetPassword } from "../../../components/api/apis";
 import { openNotificationWithIcon } from "../../../components/OpenNotification";
 import Head from "next/head";
 
-const ConfirmPassword = ({ resetcode }) => {
-  const [newPass, setNewPass] = useState("");
-  const [confirmPass, setConfirmPass] = useState("");
-  const [error, setError] = useState("");
+interface Props {
+  resetcode: string;
+}
 
-  const getNewPassValue = (value) => {
+interface ResetPassI {
+  message: string;
+}
+
+const ConfirmPassword: FC<Props> = ({ resetcode }): ReactElement => {
+  const [newPass, setNewPass] = useState<string>("");
+  const [confirmPass, setConfirmPass] = useState<string>("");
+  const [error, setError] = useState<string>("");
+
+  const getNewPassValue = (value: string) => {
     setError("");
     setNewPass(value);
   };
 
-  const getConfirmPassValue = (value) => {
+  const getConfirmPassValue = (value: string) => {
     setError("");
     setConfirmPass(value);
   };
 
-  const sendData = async (e) => {
+  const sendData = async (e: any) => {
     e.preventDefault();
     try {
       if (newPass === confirmPass) {
-        const result = await resetPassword.post("/", {
+        const result = await resetPassword.post<ResetPassI>("/", {
           verification_code: resetcode,
           new_password: newPass,
         });
@@ -67,7 +75,7 @@ const ConfirmPassword = ({ resetcode }) => {
 
 export default ConfirmPassword;
 
-export async function getServerSideProps(ctx) {
+export async function getServerSideProps(ctx: any) {
   const {
     query: { resetcode },
   } = ctx;

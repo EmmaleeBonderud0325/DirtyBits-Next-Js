@@ -1,19 +1,18 @@
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { changePass } from "../../../components/api/apis";
 import Form from "../../../components/Form";
 import { openNotificationWithIcon } from "../../../components/OpenNotification";
 import Head from "next/head";
 
-function ChangePassword() {
-  let [mail, setMail] = useState("");
-  const [error, setError] = useState("");
+function ChangePassword(): ReactElement {
+  let [mail, setMail] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
-  const sendData = async (e) => {
+  const sendData = async (e: any) => {
     e.preventDefault();
-    console.log(mail);
     try {
       await changePass
-        .post("/", { email: mail })
+        .post<string>("/", { email: mail })
         .then((result) => {
           openNotificationWithIcon(
             "success",
@@ -39,7 +38,7 @@ function ChangePassword() {
     }
   };
 
-  function getEmailFieldValue(value) {
+  function getEmailFieldValue(value: string) {
     setMail(value);
   }
 

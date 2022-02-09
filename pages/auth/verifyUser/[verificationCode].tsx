@@ -1,13 +1,20 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import Modal from "../../../components/Modal";
 import { verifyVerificationCode } from "../../../components/api/apis";
 import Head from "next/head";
 import success from "../../../public/success.png";
 import close from "../../../public/close.png";
 
-function CodeVerify(props) {
-  console.log(props.message);
-  let isVerified;
+interface Props {
+  message: any;
+}
+
+interface VerifyRequestI {
+  message: string;
+}
+
+function CodeVerify(props: Props): ReactElement {
+  let isVerified: any;
   if (props.message.includes("Wrong")) {
     isVerified = close;
   } else {
@@ -30,13 +37,11 @@ function CodeVerify(props) {
   );
 }
 
-export const getServerSideProps = async (context) => {
+export const getServerSideProps = async (context: any) => {
   const code = context.params;
-  const response = await verifyVerificationCode.post("/", {
+  const response = await verifyVerificationCode.post<VerifyRequestI>("/", {
     verification_code: code.verificationCode,
   });
-
-  console.log(response);
 
   return {
     props: {
@@ -47,6 +52,6 @@ export const getServerSideProps = async (context) => {
 
 export default CodeVerify;
 
-CodeVerify.getLayout = function PageLayout(page) {
+CodeVerify.getLayout = function PageLayout(page: any) {
   return <>{page}</>;
 };

@@ -1,9 +1,11 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import Modal from "../../components/Modal";
 import Head from "next/head";
 import sucess from "../../public/success.png";
 
-function registered() {
+interface Props {}
+
+function registered(props: Props): ReactElement {
   return (
     <>
       <body className="bg-[#080015]">
@@ -13,6 +15,7 @@ function registered() {
           </Head>
           <Modal
             source={sucess}
+            // @ts-ignore
             verify={true}
             title={"Registered Succesfully"}
             content={
@@ -27,6 +30,6 @@ function registered() {
 
 export default registered;
 
-registered.getLayout = function PageLayout(page) {
+registered.getLayout = function PageLayout(page: any) {
   return <>{page}</>;
 };
