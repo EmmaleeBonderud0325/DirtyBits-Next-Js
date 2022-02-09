@@ -290,6 +290,8 @@ const Editor: FC<Props> = (props): ReactElement => {
       "CodeMirror-foldgutter",
       "CodeMirror-lint-markers",
     ],
+    tabSize: 2,
+    indentWithTabs: true,
     autoCloseTags: true,
     keyMap: "sublime",
     matchBrackets: true,

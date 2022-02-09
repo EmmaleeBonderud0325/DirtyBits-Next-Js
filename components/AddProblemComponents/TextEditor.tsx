@@ -1,6 +1,7 @@
-import { Editor } from "@tinymce/tinymce-react";
+// import { Editor } from "@tinymce/tinymce-react";
 import { FC, ReactElement } from "react";
 import { useDispatch } from "react-redux";
+import MantineEditor from "./MantineEditor";
 
 interface Props {
   initialValue: string;
@@ -15,7 +16,7 @@ export const TextEditor: FC<Props> = (props): ReactElement => {
       <label className="text-lg text-white lg:text-2xl ml-1">
         {props.label}
       </label>
-      <Editor
+      {/* <Editor
         apiKey="g9fbihack52f29u89rqqazv3me0jk3xak5aged47rn1d7aaq"
         value={props.initialValue}
         init={{
@@ -77,6 +78,12 @@ export const TextEditor: FC<Props> = (props): ReactElement => {
         }}
         onEditorChange={(content, _) => {
           dispatch(props.dispatch(content));
+        }}
+      /> */}
+      <MantineEditor
+        value={props.initialValue}
+        onChange={(value) => {
+          dispatch(props.dispatch(value));
         }}
       />
     </div>

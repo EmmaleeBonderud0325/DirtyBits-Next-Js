@@ -18,6 +18,7 @@
     "@mantine/core": "^3.6.6",
     "@mantine/hooks": "^3.6.6",
     "@mantine/notifications": "^3.6.6",
+    "@mantine/rte": "^3.6.6",
     "@nextui-org/react": "^1.0.2-beta.3",
     "@tinymce/tinymce-react": "^3.13.0",
     "@types/codemirror": "^5.60.5",
