@@ -22,7 +22,7 @@ import {
 import MultiSelect from "./MultiSelect";
 import { AddProblem, UpdateProblem } from "../api/apis";
 import { TextAreaComponent } from "./TextAreaComponent";
-import { InputComponent } from "./InputComponent";
+import  InputComponent from "./InputComponent";
 import { uploadImage } from "../api/apis";
 import { IRootState } from "../../redux/reducers";
 import { addProblemI, tagsI } from "../../redux/interfaces";
@@ -158,7 +158,7 @@ function Page1(props: Props) {
       console.error("Token Error");
     }
   };
-
+  console.log('page 1 re')
   return (
     <>
       {props.isAdmin ? (

@@ -1,4 +1,4 @@
-import { FC, ReactElement } from "react";
+import { FC, ReactElement, memo } from "react";
 import { useDispatch } from "react-redux";
 
 interface Props {
@@ -9,8 +9,9 @@ interface Props {
   placeholder: string;
 }
 
-export const InputComponent: FC<Props> = (props): ReactElement => {
+const InputComponent: FC<Props> = (props): ReactElement => {
   const dispatch = useDispatch();
+  console.log('input component re')
   return (
     <div className="space-y-3">
       <label className="text-lg text-white lg:text-2xl ml-1">
@@ -26,3 +27,5 @@ export const InputComponent: FC<Props> = (props): ReactElement => {
     </div>
   );
 };
+
+export default memo(InputComponent)
