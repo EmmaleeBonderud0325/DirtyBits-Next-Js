@@ -137,12 +137,10 @@ export default function WithSubnavigation() {
                className="group" 
               
                control={
-                  <UnstyledButton className="hidden md:block">  
+                  <UnstyledButton className="hidden md:block min-w-max">  
                     <Flex className="group-hover:cursor-pointer" alignItems="center">
                       <Avatar className="mt-2" name={username} src={profile_pic} />
-                      <span className="ml-2 text-white font-bold">
-                        {username}
-                      </span>
+                      <span className="text-white ml-2 font-medium">Mohit Singh Bisht</span>
                     </Flex>
                   </UnstyledButton>}>
                 <Menu.Item  
