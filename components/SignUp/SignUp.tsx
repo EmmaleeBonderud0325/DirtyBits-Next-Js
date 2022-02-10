@@ -21,6 +21,7 @@ import {
   updatePasswordError,
   updateConfirmPasswordError,
 } from "../../redux/actions";
+import Background from '../Background'
 
 function Signup(props) {
   const dispatch = useDispatch();
@@ -271,33 +272,29 @@ function Signup(props) {
       </Head>
       <ToastContainer theme="dark" />
       <div className="loginSignUp">
-        <div className="absolute w-60 h-60 rounded-xl bg-custom-indigo -top-5 -left-16 z-0 transform rotate-45 hidden md:hidden lg:block"></div>
-        <div className="absolute w-48 h-48 rounded-xl bg-custom-indigo -bottom-10 transform rotate-12 hidden md:hidden lg:block"></div>
-        <div className="w-40 h-40 absolute bg-custom-indigo rounded-full top-0 right-12 hidden md:hidden lg:block"></div>
-        <div className="w-20 h-40 absolute bg-custom-indigo rounded-full bottom-20 right-10 transform rotate-45 hidden md:hidden lg:block"></div>
-
-        <div className="absolute md:bg-gradient-to-b from-black to-black opacity-75 lg:inset-0 z-0"></div>
-
-        <div className="lg:min-h-screen lg:flex lg:justify-center lg:space-x-48 p-8 space-y-5 lg:z-10">
+        
+        <Background/>
+        <div className="lg:h-screen xl:h-screen lg:flex-row xl:flex-row md:flex md:flex-col md:h-screen md:justify-center md:items-center lg:justify-center lg:space-x-0 xl:space-x-38 p-8 space-y-5 lg:z-10 ">
           {/* HEADING FOR SMALL SIZE SCREENS */}
-          <div className="text-white text-xl text-center lg:hidden">
-            Welcome to{" "}
+          <div className="text-white text-center lg:hidden">
+            <h1 className="text-xl md:text-4xl xs:text-xl sm:text-xl">Welcome to{" "}
             <span className="text-custom-indigo text-2xl font-semibold">
               <Link href="/">
-                <a>DirtyBits</a>
+                <a className="md:text-4xl">DirtyBits</a>
               </Link>
             </span>
+            </h1>
           </div>
           {/* HEADING FOR LARGER SIZE SCREENS */}
-          <div className="flex-col lg:flex hidden  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
+          <div className=" lg:flex hidden  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
             <div className="self-start hidden lg:flex flex-col  text-white">
               <SmoothList>
-                <h1 className="loginSignUpHeading text-transparent bg-clip-text bg-gradient-to-r from-[#AE67FA] to-[#F49867]">
+                <h1 className="loginSignUpHeading lg:text-7xl xl:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-[#AE67FA] to-[#F49867]">
                   Hola,
                 </h1>
                 <br />
-                <div className=" flex space-x-6">
-                  <h2 className="text-white text-6xl">
+                <div className=" flex space-x-6 ">
+                  <h2 className="text-white text-6xl lg:text-5xl xl:text-6xl">
                     Welcome to{" "}
                     <span className="text-custom-indigo font-extrabold">
                       <Link href="/">
@@ -310,8 +307,8 @@ function Signup(props) {
             </div>
           </div>
 
-          <div className="flexContainer self-center  z-10">
-            <div className="p-5 md:p-9 bg-white mx-auto rounded-2xl w-100 -mt-14 mb-4 lg:m-0 md:m-0">
+          <div className="flexContainer self-center  z-10 ">
+            <div className="p-5 md:p-9 lg:py-3 lg:w-96 xl:w-[500px] bg-white mx-auto rounded-2xl w-100 -mt-14 mb-4 lg:m-0 md:m-0">
               <div className="mb-4">
                 <h3 className="font-semibold text-2xl text-gray-800">
                   Sign Up{" "}

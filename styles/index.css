@@ -75,6 +75,10 @@
   .flexContainer {
     @apply flex justify-center items-center;
   }
+
+  .signinwrapper {
+    @apply lg:min-h-screen lg:flex-row lg:justify-center md:h-screen md:flex md:flex-col md:justify-center md:items-center lg:space-x-0  p-8 space-y-5 lg:z-10;
+  }
 }
 
 * {

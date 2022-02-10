@@ -22,8 +22,8 @@ function CodeVerify(props: Props): ReactElement {
   }
 
   return (
-    <body className="bg-[#080015]">
-      <div>
+    <body>
+      <>
         <Head>
           <title>Verification Status</title>
         </Head>
@@ -32,7 +32,7 @@ function CodeVerify(props: Props): ReactElement {
           title={"Verification Status"}
           content={props.message}
         />
-      </div>
+      </>
     </body>
   );
 }
@@ -52,6 +52,6 @@ export const getServerSideProps = async (context: any) => {
 
 export default CodeVerify;
 
-CodeVerify.getLayout = function PageLayout(page: any) {
-  return <>{page}</>;
-};
+// CodeVerify.getLayout = function PageLayout(page: any) {
+//   return <>{page}</>;
+// };

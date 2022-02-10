@@ -19,6 +19,7 @@ function ChangePassword(): ReactElement {
             "Password Reset Link",
             "Password reset link is sent to the provided email address"
           );
+          setMail('')
         })
         .catch(() => {
           // openNotificationWithIcon(
@@ -53,7 +54,7 @@ function ChangePassword(): ReactElement {
         buttonText="Send"
         getValue={getEmailFieldValue}
         title="Forgot Password ?"
-        description="Change your password a confirmation mail will be send to your registerd email"
+        description="Change your password a confirmation mail will be send to the provided email address"
         extraField={false}
         type="email"
         placeholder="Enter your email"
