@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, memo } from "react";
 import Image from "next/image";
 
 import _ from "lodash";
@@ -36,7 +36,7 @@ function Header(props: Props): ReactElement {
   const is_logged_in = useSelector(
     (state: IRootState) => state.userData.is_logged_in
   );
-
+    console.log('header render')
   const uploadCloud = async () => {
     const key = "updatable";
     // @ts-ignore
@@ -169,7 +169,7 @@ function Header(props: Props): ReactElement {
                 type="file"
                 accept=".cpp, .c, .py, .java"
                 id="file-input"
-                onChange={(e) => uploadedfile(e)}
+                onChange={uploadedfile}
                 className="hidden "
               />
             </Tooltip>
@@ -192,7 +192,7 @@ function Header(props: Props): ReactElement {
           <div>
             <Tooltip content="Reset Code" color="secondary">
               <Image
-                onClick={() => resetCode()}
+                onClick={resetCode}
                 className="cursor-pointer"
                 src={refresh}
                 width={20}
@@ -227,4 +227,4 @@ const mapStateToProps = (state: IRootState) => {
   };
 };
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps)(memo(Header));
