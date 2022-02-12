@@ -1,4 +1,7 @@
-import { getProblemsList } from "../../components/api/apis";
+import {
+  getNotificationsStartup,
+  getProblemsList,
+} from "../../components/api/apis";
 import {
   updateConstraints,
   updateNote,
@@ -22,12 +25,14 @@ import {
   GoogleLoginSpinner,
   SimpleLoginSpinner,
   UpdateTags,
+  UpdateNotifications,
 } from "../types";
 import { Updateproblemsstatus } from "../../components/Helper/Updateproblemsstatus";
 import { getTagsApi } from "../../components/api/apis";
 import {
   DispatchI,
   GetStateI,
+  NotificationsI,
   problemListI,
   SUErrorI,
   tagsI,
@@ -369,4 +374,56 @@ export const resetProblemPageData =
     dispatch(updateProblemTimeLimit(null));
     dispatch(updateProblemLevel("Difficulty"));
     dispatch(updateProblemTags([]));
+  };
+
+interface notifyFirstLoadI {
+  type: string;
+  payload: NotificationsI;
+}
+
+export const UpdateNotifyFirstLoad = (
+  newState: NotificationsI
+): notifyFirstLoadI => {
+  return {
+    type: UpdateNotifications,
+    payload: newState,
+  };
+};
+
+export const notifyFirstLoad =
+  () => async (dispatch: DispatchI, getState: GetStateI) => {
+    if (getState().userData.is_logged_in) {
+      try {
+        await getNotificationsStartup
+          .post<NotificationsI[]>("/", { read: false })
+          .then((result) => {
+            if (result.data.length > 0) {
+              dispatch(
+                UpdateNotifyFirstLoad({
+                  last_requested: result.data[0].last_requested,
+                  notifications: result.data[0].notifications,
+                })
+              );
+            } else {
+              console.error("User not found in Notification Backend");
+              dispatch(
+                UpdateNotifyFirstLoad({
+                  last_requested: null,
+                  notifications: [],
+                })
+              );
+            }
+          });
+      } catch (err: any) {
+        console.error("Server Error In Notification Backend");
+        console.error(err);
+      }
+    } else {
+      dispatch(
+        UpdateNotifyFirstLoad({
+          last_requested: null,
+          notifications: [],
+        })
+      );
+    }
   };

@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { IRootState } from "../../redux/reducers";
-import { TextInput, PasswordInput } from '@mantine/core';
+import { TextInput, PasswordInput } from "@mantine/core";
 import {
   useState,
   Link,
@@ -24,6 +24,7 @@ import {
   googleLogin,
 } from "../../imports/Signin";
 import Background from "../../components/Background";
+import { notifyFirstLoad } from "../../redux/actions";
 
 interface Props {
   googleSpinner: boolean;
@@ -62,14 +63,12 @@ function Signin(props: Props): ReactElement {
     remeberMe: false,
   });
 
-
   let [isError, setIsError] = useState<ErrorsI>({
     email: { error: false, details: "" },
     password: { error: false, details: "" },
   });
 
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
-
 
   const validateFormData = (): boolean => {
     if (validate(formData.email)) {
@@ -130,6 +129,7 @@ function Signin(props: Props): ReactElement {
           profile_pic: data.profile_pic,
         })
       );
+      dispatch(notifyFirstLoad());
       router.push("/");
     } else {
       setIsError({
@@ -179,17 +179,17 @@ function Signin(props: Props): ReactElement {
         <title>Sign In to DirtyBits</title>
       </Head>
       <div className="loginSignUp">
-
-        <Background/>
+        <Background />
         <div className="signinwrapper xl:space-x-38 xl:flex-row">
           {/* HEADING FOR SMALLER AND MEDIUM SIZE SCREENS */}
           <div className="text-white text-center lg:hidden">
-            <h1 className="text-xl md:text-4xl xs:text-xl sm:text-xl">Welcome to{" "}
-            <span className="text-custom-indigo text-2xl font-semibold">
-              <Link href="/">
-                <a className="md:text-4xl">DirtyBits</a>
-              </Link>
-            </span>
+            <h1 className="text-xl md:text-4xl xs:text-xl sm:text-xl">
+              Welcome to{" "}
+              <span className="text-custom-indigo text-2xl font-semibold">
+                <Link href="/">
+                  <a className="md:text-4xl">DirtyBits</a>
+                </Link>
+              </span>
             </h1>
           </div>
           {/* HEADING FOR LARGER SIZE SCREENS */}
@@ -224,23 +224,40 @@ function Signin(props: Props): ReactElement {
 
               <div className="space-y-5">
                 <div className="space-y-1">
-                <TextInput error={isError.email.details} value={formData.email} radius="md" onChange={(event) => setFormData({...formData, email: event.currentTarget.value})} label="Email"  placeholder="your email address" invalid={isError.email.error} required size="sm"/>
-
+                  <TextInput
+                    error={isError.email.details}
+                    value={formData.email}
+                    radius="md"
+                    onChange={(event) =>
+                      setFormData({
+                        ...formData,
+                        email: event.currentTarget.value,
+                      })
+                    }
+                    label="Email"
+                    placeholder="your email address"
+                    invalid={isError.email.error}
+                    required
+                    size="sm"
+                  />
                 </div>
                 <div className="space-y-1">
-                 
-                    <PasswordInput
-                        error={isError.password.details}
-                        radius="md"
-                        placeholder="Your password here"
-                        value={formData.password}
-                        onChange={(event) => setFormData({...formData, password: event.currentTarget.value})}
-                        label="Password"
-                        size="sm"
-                        required
-                        invalid={isError.password.error}
-                    />
-                 
+                  <PasswordInput
+                    error={isError.password.details}
+                    radius="md"
+                    placeholder="Your password here"
+                    value={formData.password}
+                    onChange={(event) =>
+                      setFormData({
+                        ...formData,
+                        password: event.currentTarget.value,
+                      })
+                    }
+                    label="Password"
+                    size="sm"
+                    required
+                    invalid={isError.password.error}
+                  />
                 </div>
                 <div className="flex items-center justify-between my-2">
                   <div className="flex items-center accent-custom-indigo">

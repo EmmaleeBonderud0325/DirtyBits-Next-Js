@@ -5,6 +5,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 // const PROBLEM_URL = "http://localhost:8000/";
 const PROBLEM_URL = process.env.NEXT_PUBLIC_PROBLEM_URL;
+const NOTIFICATION_URL = process.env.NEXT_PUBLIC_NOTIFICATION_URL;
 
 const localhost = "http://localhost:8000/";
 
@@ -124,4 +125,8 @@ export const getStaticData = CreateAxiosRequest(
 
 export const getAllSubmissions = CreateAxiosRequest(
   PROBLEM_URL + "problems/getUserSubmissions"
+);
+
+export const getNotificationsStartup = CreateAxiosRequest(
+  NOTIFICATION_URL + "get"
 );
