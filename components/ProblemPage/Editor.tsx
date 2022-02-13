@@ -6,12 +6,14 @@ import Cookies from "js-cookie";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { Modal, Text, Row } from "@nextui-org/react";
 import { Loading } from "@nextui-org/react";
-import { AiFillGithub } from "react-icons/ai";
+import { AiFillGithub, AiOutlineSend } from "react-icons/ai";
 import { MdCreate } from "react-icons/md";
 import { VscRunAll } from "react-icons/vsc";
 import { FcGoogle } from "react-icons/fc";
 import GoogleLogin from "react-google-login";
-import { AiOutlineSend } from "react-icons/ai";
+import { BsCheck2Circle } from "react-icons/bs";
+import { ImCross } from "react-icons/im";
+import { Alert } from '@mantine/core';
 
 import terminal from "../../public/terminal.svg";
 import { base64_encode } from "./Helper2";
@@ -146,8 +148,10 @@ const Editor: FC<Props> = (props): ReactElement => {
   const [value, setValue] = useState<number>(0);
 
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [testCaseResult, setTestCaseResult] = useState()
 
   const { is_logged_in } = useSelector((state: IRootState) => state.userData);
+  const totalSampleTestCases  = useSelector((state: IRootState) => state.problemData.sample_Tc);
 
   useEffect(() => {
     return () => {
@@ -209,6 +213,7 @@ const Editor: FC<Props> = (props): ReactElement => {
       })
       .then((result) => {
         console.log("result", result.data);
+        setTestCaseResult(result.data)
         setIsDisabled(false);
         setShowLoader(false);
         if (result.data["status"] !== "Accepted") {
@@ -378,6 +383,50 @@ const Editor: FC<Props> = (props): ReactElement => {
     setShowConsole(!showConsole);
   };
 
+  console.log('test cases result', testCaseResult)
+
+  const successArray = Array.apply(null, Array(totalSampleTestCases)).map(function (x, i) { return i; })
+  
+  const handleOutput = () => {
+    if(showLoader){
+      return <span className="loader"></span>
+    }else {
+      if(testCaseResult.status === 'Accepted') {
+          return (
+            <div className="pl-4">
+              <pre className="text-left mb-4 text-4xl font-bold text-green-500">
+                <span className="inline-flex items-center gap-4">
+                <BsCheck2Circle/>
+                {outputValue}
+                </span>
+              </pre>
+              <h1 className="text-left text-slate-400 tracking-wider text-2xl font-bold">{totalSampleTestCases}/{totalSampleTestCases} Test Cases Passed</h1>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+                {successArray.map(index => <Alert key={index} style={{ marginTop: 20, maxWidth:'13rem', maxHeight:'5rem' }} icon={<BsCheck2Circle size={16} />} variant="filled" title={`Test Case ${index + 1}`} color="green" radius="lg"/>)}
+              </div>
+            </div>
+          )
+      }else if(testCaseResult.status === 'error'){
+        return (
+          <div className="pl-4">
+              <pre className="text-left mb-4 text-4xl font-bold text-red-500">
+                <span className="inline-flex items-center gap-4">
+                <ImCross/>
+                {testCaseResult.error}
+                </span>
+              </pre>
+              <h1 className="text-left text-slate-400 tracking-wider text-2xl font-bold">{testCaseResult['testCase No'] - 1}/{totalSampleTestCases} Test Cases Passed</h1>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+                {successArray.map(index => <Alert key={index} style={{ marginTop: 20, maxWidth:'13rem', maxHeight:'5rem' }} icon={<ImCross size={16} />} variant="filled" title={`Test Case ${index + 1}`} color={`${index + 1 < testCaseResult.error ? 'green' : 'red'}`} radius="lg"/>)}
+              </div>
+          </div>
+        )
+      }else {
+        return <pre className="text-left font-bold">{outputValue}</pre>
+      }
+    }
+  }
+
   return (
     <div
       style={{ height: "100vh" }}
@@ -522,94 +571,7 @@ const Editor: FC<Props> = (props): ReactElement => {
           </Row>
         </div>
       </Modal>
-      {/* <Modal
-        title="Login or SignUp to continue..."
-        centered
-        visible={isModalVisible}
-        bodyStyle={{ background: "#1b1138" }}
-        onOk={() => setIsModalVisible(false)}
-        onCancel={() => setIsModalVisible(false)}
-        keyboard
-        cancelButtonProps={{ style: { display: "none" } }}
-        okButtonProps={{ style: { display: "none" } }}
-      >
-        <div className="flex justify-center flex-col items-center">
-          <GoogleLogin
-            clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
-            render={(renderProps) => (
-              <button
-                onClick={renderProps.onClick}
-                disabled={renderProps.disabled}
-                className="social-login-btn w-1/2 border border-white"
-              >
-                <FcGoogle />
-                <span>Login with Google</span>
-              </button>
-            )}
-            onSuccess={responseGoogleSuccess}
-            onFailure={responseGoogleFailure}
-            cookiePolicy={"single_host_origin"}
-          />
-          <button className="social-login-btn cursor-not-allowed w-1/2 border border-white">
-            <AiFillGithub />
-            <span>Login with GitHub </span>
-          </button>
-          <button className="social-login-btn bg-custom-yellow2 w-1/2 border border-white">
-            <MdCreate />
-            <span>
-              <a className="text-white hover:text-white" href="/auth/signup">
-                Sign Up
-              </a>
-            </span>
-          </button>
-        </div>
-      </Modal> */}
 
-      {/* {showConsole && (
-        <div className="relative bottom-0 w-full transition-all ease-in-out duration-75 p-2">
-          <Box sx={{ width: "100%" }}>
-            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-              <Tabs
-                value={value}
-                textColor="inherit"
-                indicatorColor="secondary"
-                onChange={handleChange}
-                aria-label="basic tabs example"
-              >
-                <Tab
-                  onClick={(e) => handleShowMode(e)}
-                  label="Output"
-                  {...a11yProps(0)}
-                />
-                <Tab
-                  onClick={(e) => handleShowMode(e)}
-                  label="Input"
-                  {...a11yProps(1)}
-                />
-              </Tabs>
-            </Box>
-            <TabPanel value={value} index={0}>
-              {showLoader ? (
-                <span className="loader"></span>
-              ) : (
-                <pre className="text-left font-bold">{outputValue}</pre>
-              )}
-            </TabPanel>
-
-            <TabPanel value={value} index={1}>
-              <textarea
-                className="w-full placeholder:text-base placeholder:p-2 bg-gray-800 outline-none rounded-lg p-1 text-lg"
-                rows="6"
-                id="input-btn"
-                placeholder="Custom Input here"
-                value={inputValue}
-                onChange={(e) => changeInputValue(e.target.value)}
-                spellCheck="false"
-              ></textarea>
-            </TabPanel>
-          </Box>
-        </div>
-      )} */}
       {showConsole && (
         <TabView
           activeIndex={activeIndex}
@@ -622,11 +584,7 @@ const Editor: FC<Props> = (props): ReactElement => {
             header="Output"
             leftIcon={!is_logged_in && "pi pi-lock"}
           >
-            {showLoader ? (
-              <span className="loader"></span>
-            ) : (
-              <pre className="text-left font-bold">{outputValue}</pre>
-            )}
+            {handleOutput()}
           </Panel>
           <Panel
             disabled={!is_logged_in}
