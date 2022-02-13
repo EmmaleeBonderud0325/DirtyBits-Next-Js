@@ -402,7 +402,7 @@ const Editor: FC<Props> = (props): ReactElement => {
               </pre>
               <h1 className="text-left text-slate-400 tracking-wider text-2xl font-bold">{totalSampleTestCases}/{totalSampleTestCases} Test Cases Passed</h1>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-                {successArray.map(index => <Alert key={index} style={{ marginTop: 20, maxWidth:'13rem', maxHeight:'5rem' }} icon={<BsCheck2Circle size={16} />} variant="filled" title={`Test Case ${index + 1}`} color="green" radius="lg"/>)}
+                {successArray.map(index => <Alert children="" key={index} style={{ marginTop: 20, maxWidth:'13rem', maxHeight:'5rem' }} icon={<BsCheck2Circle size={16} />} variant="filled" title={`Test Case ${index + 1}`} color="green" radius="lg"/>)}
               </div>
             </div>
           )
@@ -417,7 +417,7 @@ const Editor: FC<Props> = (props): ReactElement => {
               </pre>
               <h1 className="text-left text-slate-400 tracking-wider text-2xl font-bold">{testCaseResult['testCase No'] - 1}/{totalSampleTestCases} Test Cases Passed</h1>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-                {successArray.map(index => <Alert key={index} style={{ marginTop: 20, maxWidth:'13rem', maxHeight:'5rem' }} icon={<ImCross size={16} />} variant="filled" title={`Test Case ${index + 1}`} color={`${index + 1 < testCaseResult.error ? 'green' : 'red'}`} radius="lg"/>)}
+                {successArray.map(index => <Alert children="" key={index} style={{ marginTop: 20, maxWidth:'13rem', maxHeight:'5rem' }} icon={<ImCross size={16} />} variant="filled" title={`Test Case ${index + 1}`} color={`${index + 1 < testCaseResult.error ? 'green' : 'red'}`} radius="lg"/>)}
               </div>
           </div>
         )
