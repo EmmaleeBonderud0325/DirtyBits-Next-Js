@@ -148,7 +148,7 @@ const Editor: FC<Props> = (props): ReactElement => {
   const [value, setValue] = useState<number>(0);
 
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const [testCaseResult, setTestCaseResult] = useState()
+  const [testCaseResult, setTestCaseResult] = useState<any>()
 
   const { is_logged_in } = useSelector((state: IRootState) => state.userData);
   const totalSampleTestCases  = useSelector((state: IRootState) => state.problemData.sample_Tc);
@@ -547,9 +547,12 @@ const Editor: FC<Props> = (props): ReactElement => {
               onFailure={(response) => {
                 console.error(response);
               }}
-              children={
-                <>
-                  {props.githubSpinner ? (
+              redirectUri=""
+              scope="read:user,user:email"
+              buttonText=""
+              className="social-login-btn w-1/2 border border-white"
+            >
+              {props.githubSpinner ? (
                     <>
                       <span>{antIcon}</span>
                     </>
@@ -561,13 +564,7 @@ const Editor: FC<Props> = (props): ReactElement => {
                       </span>
                     </>
                   )}
-                </>
-              }
-              redirectUri=""
-              scope="read:user,user:email"
-              buttonText=""
-              className="social-login-btn w-1/2 border border-white"
-            />
+              </GitHubLogin>
           </Row>
         </div>
       </Modal>
