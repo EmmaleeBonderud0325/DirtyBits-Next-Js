@@ -93,7 +93,7 @@ function Table(props: Props): ReactElement {
       </div>
       {props.dataList.length <= 0 && <TableLoader />}
 
-      <div className="flex justify-start">
+      <div className="hidden md:flex">
       <Paginator
         first={basicFirst}
         rows={basicRows}

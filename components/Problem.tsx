@@ -96,7 +96,7 @@ function Problem(props: Props): ReactElement {
       <MultiSelect
       // @ts-ignore
       data={values}
-      className="w-1/2"
+      className="w-full md:w-1/2"
         label="Select Tags"
         placeholder="Pick all that you like"
         searchable
@@ -109,28 +109,15 @@ function Problem(props: Props): ReactElement {
       {/* SEARCH BAR */}
 
       <div className="space-x-3 w-full block">
-        {/* <form
-          onSubmit={() => {}}
-          className="p-[.2rem] flex border-none rounded-xl focus:outline-none bg-gray-900 items-center md:w-1/2 border border-rose-600"
-        >
-          <AiOutlineSearch className="text-custom-indigo ml-1 text-xl" />
-          <input
-            type="text"
-            className="bg-gray-900 placeholder:text-lg text-lg outline-none text-white p-2 rounded-lg w-full caret-custom-indigo"
-            placeholder="Search questions"
-            value={value}
-            onChange={valueHandler}
-          />
-        </form> */}
         <Input
-        className="w-1/2"
-  icon={<AiOutlineSearch className="text-custom-indigo"/>}
-  placeholder="Search Questions"
-  styles={{ rightSection: { pointerEvents: 'none' } }}
-  radius="xl"
-  value={value}
-  onChange={valueHandler}
-/>
+          className="w-full md:w-1/2"
+          icon={<AiOutlineSearch className="text-custom-indigo"/>}
+          placeholder="Search Questions"
+          styles={{ rightSection: { pointerEvents: 'none' } }}
+          radius="xl"
+          value={value}
+          onChange={valueHandler}
+        />
       </div>
 
       {/* DROPDOWN SECITONS FOR DIFFICULTY , STATUS, TAGS */}
@@ -154,26 +141,26 @@ function Problem(props: Props): ReactElement {
           actionFunction={setStatus}
         />
       </div> */}
-<div className="space-y-2">
-<label className="text-[13px] text-[#C1C2C5] font-semibold tracking-wider">Select Difficulty</label>
+      <div className="space-y-2">
+        <label className="text-[13px] text-[#C1C2C5] font-semibold tracking-wider">Select Difficulty</label>
 
-<Checkbox.Group aria-label="Select difficulty" onChange={(e) => setDifficulty(e)} size="sm"   color="success" value={[]} row>
-    <Checkbox size="sm" color="success" rounded value="E">
-      <span className="text-slate-500">Easy</span>
-    </Checkbox>
-    <Checkbox size="sm" color="warning" rounded value="M">
-    <span className="text-slate-500">Medium</span>
-    </Checkbox>
-    <Checkbox size="sm" color="error" rounded value="H">
-    <span className="text-slate-500">Hard</span>
-    </Checkbox>
-  </Checkbox.Group>
+        <Checkbox.Group aria-label="Select difficulty" onChange={(e) => setDifficulty(e)} size="sm"   color="success" value={[]} row>
+          <Checkbox size="sm" color="success" rounded value="E">
+            <span className="text-slate-500">Easy</span>
+            </Checkbox>
+            <Checkbox size="sm" color="warning" rounded value="M">
+            <span className="text-slate-500">Medium</span>
+            </Checkbox>
+            <Checkbox size="sm" color="error" rounded value="H">
+            <span className="text-slate-500">Hard</span>
+            </Checkbox>
+        </Checkbox.Group>
 
 
-      <div className="flex flex-col">
+        <div className="flex flex-col">
         <Table dataList={currentDataList} />
+        </div>
       </div>
-</div>
     </WrapperLayout>
   );
 }
