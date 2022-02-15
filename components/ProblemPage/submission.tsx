@@ -8,6 +8,7 @@ import { Loading } from "@nextui-org/react";
 import { getSubmissionsListAction } from "../../redux/actions/ProblemPage";
 import { submissionsListI } from "../../redux/interfaces";
 import { IRootState } from "../../redux/reducers";
+import RecentSubmission from '../Submission'
 
 interface Props {
   submissionList: submissionsListI[];
@@ -24,43 +25,44 @@ const Submission = (props: Props): ReactElement => {
 
   const listRowHandler = () => {
     let rowMarkup = props.submissionList.map((submission) => {
-      let color: string;
-      let status: ReactElement;
-      switch (submission.status) {
-        case "Accepted":
-          status = <IoMdCheckmarkCircleOutline />;
-          color = "text-green-500";
-          break;
-        case "Wrong Answer":
-          status = <AiOutlineCloseCircle />;
-          color = "text-red-500";
-          break;
-        default:
-          status = <AiOutlineInfoCircle />;
-          color = "text-yellow-500";
-      }
+      // let color: string;
+      // let status: ReactElement;
+      // switch (submission.status) {
+      //   case "Accepted":
+      //     status = <IoMdCheckmarkCircleOutline />;
+      //     color = "text-green-500";
+      //     break;
+      //   case "Wrong Answer":
+      //     status = <AiOutlineCloseCircle />;
+      //     color = "text-red-500";
+      //     break;
+      //   default:
+      //     status = <AiOutlineInfoCircle />;
+      //     color = "text-yellow-500";
+      // }
       if (submission.status === "Running") {
         return <></>;
       }
 
       return (
-        <tr className="text-white" key={submission.submission_Date_Time}>
-          <td
-            className={`px-4 py-3 font-semibold ${color} text-sm flex items-center gap-2`}
-          >
-            {status}
-            {submission.status}
-          </td>
-          <td className="px-4 py-3 text-ms font-semibold ">
-            {submission.score}
-          </td>
-          <td className="px-4 py-3 text-xs ">{submission.language}</td>
-          <td className="px-4 py-3 text-sm ">
-            {moment(submission.submission_Date_Time).format(
-              "MMMM Do YYYY, h:mm:ss a"
-            )}
-          </td>
-        </tr>
+        // <tr className="text-white" key={submission.submission_Date_Time}>
+        //   <td
+        //     className={`px-4 py-3 font-semibold ${color} text-sm flex items-center gap-2`}
+        //   >
+        //     {status}
+        //     {submission.status}
+        //   </td>
+        //   <td className="px-4 py-3 text-ms font-semibold ">
+        //     {submission.score}
+        //   </td>
+        //   <td className="px-4 py-3 text-xs ">{submission.language}</td>
+        //   <td className="px-4 py-3 text-sm ">
+        //     {moment(submission.submission_Date_Time).format(
+        //       "MMMM Do YYYY, h:mm:ss a"
+        //     )}
+        //   </td>
+        // </tr>
+        <RecentSubmission key={submission.submission_Date_Time} submission={submission}/>
       );
     });
 
