@@ -3,9 +3,14 @@ import { useSelector } from "react-redux";
 import Image from "next/image";
 import { IRootState } from "../../redux/reducers";
 import {RingProgress, Text} from '@mantine/core'
-import { XAxis, Tooltip, AreaChart, Area } from "recharts";
+
 import { useBreakpointValue } from '@chakra-ui/react'
-import { getStaticData, getUserProfile } from "../../components/api/apis";
+import { getStaticData, getUserProfile, recentSubmissions } from "../../components/api/apis";
+
+import Submission from '../../components/Submission'
+import AreaGraph from '../../components/Graphs/AreaGraph'
+import { Loading } from "@nextui-org/react";
+
 
 interface SubmissionsI {
   date: string;
@@ -41,6 +46,7 @@ function Profile(): ReactElement {
     medium: 0,
     hard: 0,
   });
+  const [recentSubList, setRecentSubList] = useState<any>(['Empty']);
 
 
 
@@ -67,13 +73,17 @@ function Profile(): ReactElement {
     getProfile();
   }, []);
 
+  useEffect(() => {
+    async function getRecenSubmissions() {
+      const result = await recentSubmissions.get("/");
+      console.log("recent submisions", result.data);
+      setRecentSubList(result.data);
+    }
+
+    getRecenSubmissions();
+  }, []);
+
   const isMobile = useBreakpointValue({ base: true, md: false })
-
-  console.log('perc', percentage.easy)
-  console.log('perc', percentage.medium)
-  console.log('perc', percentage.hard)
-  console.log('sub', sub)
-
   
   return (
     <div className="">
@@ -189,7 +199,7 @@ function Profile(): ReactElement {
                           sections={[{ value: percentage.easy, color: 'green' }]}
                           label={
                           <Text color="green" weight={700} align="center" size="xl">
-                          {percentage.easy}%
+                          {`${percentage.easy.toFixed(0)}%`}
                           </Text>
                          }
                         />
@@ -200,7 +210,7 @@ function Profile(): ReactElement {
                           sections={[{ value: percentage.medium, color: 'yellow' }]}
                           label={
                           <Text color="yellow" weight={700} align="center" size="xl">
-                          {percentage.medium}%
+                          {`${percentage.medium.toFixed(0)}%`}
                           </Text>
                          }
                         />
@@ -211,7 +221,7 @@ function Profile(): ReactElement {
                           sections={[{ value: percentage.hard, color: 'red' }]}
                           label={
                           <Text color="red" weight={700} align="center" size="xl">
-                          {percentage.hard}%
+                          {`${percentage.hard.toFixed(0)}%`}
                           </Text>
                          }
                         />
@@ -250,53 +260,7 @@ function Profile(): ReactElement {
                       <span className="tracking-wide">Check Your Daily Progress</span>
                     </div>
 
-                    <div className="">
-                    <AreaChart
-                        width={isMobile ? 300 : 900}
-                        height={250}
-                        data={sub}
-                        margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-                      >
-                        <defs>
-                          <linearGradient
-                            id="colorUv"
-                            x1="0"
-                            y1="0"
-                            x2="0"
-                            y2="1"
-                          >
-                            <stop
-                              offset="5%"
-                              stopColor="#8884d8"
-                              stopOpacity={0.4}
-                            />
-                            <stop
-                              offset="95%"
-                              stopColor="#8884d8"
-                              stopOpacity={0}
-                            />
-                          </linearGradient>
-                        </defs>
-                        <XAxis dataKey="date" />
-
-                        <Tooltip
-                          cursor={false}
-                          contentStyle={{
-                            background: "black",
-                            color: "white",
-                            border: "none",
-                          }}
-                        />
-                        <Area
-                          type="monotone"
-                          dataKey="Questions Solved"
-                          stroke="#5476DA"
-                          fillOpacity={1}
-                          strokeWidth={5}
-                          fill="url(#colorUv)"
-                        />
-                      </AreaChart>
-                        </div>
+                    <AreaGraph sub={sub} isMobile={isMobile}/>
                   </div>
                 </div>
               </div>
@@ -326,36 +290,40 @@ function Profile(): ReactElement {
                     </div>
 
                     <section className="  container font-mono scrollbar-hide">
-      <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg scrollbar-hide">
-        <div className="w-full overflow-x-hidden">
-          <table className="w-full">
-            <thead>
-              <tr className="text-md font-semibold tracking-wide text-left text-gray-500 bg-slate-800 uppercase border-b border-gray-600">
-                <th className="px-4 py-3">Result</th>
-                <th className="px-4 py-3">Score</th>
-                <th className="px-4 py-3">Language</th>
-                <th className="px-4 py-3">Time</th>
-              </tr>
-            </thead>
-            <tbody className="bg-slate-800">
-              {/* {props.submissionList !== null && listRowHandler()} */}
-            </tbody>
-          </table>
-          {/* {props.submissionList === null && (
-            <div className="text-center w-full">
-              <p className="text-white font-bold text-2xl p-4">
-                <Loading type="points-opacity" size="xl" />
-              </p>
-            </div>
-          )} */}
-            <div className="text-center w-full">
-              <p className="text-white p-4 font-bold text-2xl">
-                (Feature Coming Soon...)
-              </p>
-            </div>
-        </div>
-      </div>
-    </section>
+                      <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg scrollbar-hide">
+                        <div className="w-full overflow-x-hidden">
+                          <table className="w-full">
+                            <thead>
+                              <tr className="text-md font-semibold tracking-wide text-left text-gray-500 bg-slate-800 uppercase border-b border-gray-600">
+                                <th className="px-4 py-3">Result</th>
+                                <th className="px-4 py-3">Score</th>
+                                <th className="px-4 py-3">Language</th>
+                                <th className="px-4 py-3">Time</th>
+                              </tr>
+                            </thead>
+                            <tbody className="bg-slate-800">
+                                {!recentSubList.includes('Empty') && recentSubList.map((submission) => (
+                                  <Submission key={submission.submission_Date_Time} submission={submission}/>
+                                ))}
+                            </tbody>
+                            </table>            
+                            {recentSubList.includes('Empty') && (
+                            <div className="text-center w-full">
+                              <p className="text-white font-bold text-2xl p-4">
+                                <Loading type="points-opacity" size="xl" />
+                              </p>
+                            </div>
+                          )}
+                            {recentSubList !== null && recentSubList.length <= 0 && (
+                              <div className="text-center w-full">
+                                <p className="text-white p-4 font-bold text-2xl">
+                                  No Submissions
+                                </p>
+                              </div>
+                            )}
+                        </div>
+                      </div>
+                    </section>
                   </div>
                 </div>
               </div>
