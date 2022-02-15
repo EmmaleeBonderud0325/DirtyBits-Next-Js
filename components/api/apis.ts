@@ -125,3 +125,6 @@ export const getStaticData = CreateAxiosRequest(
 export const getAllSubmissions = CreateAxiosRequest(
   PROBLEM_URL + "problems/getUserSubmissions"
 );
+export const recentSubmissions = CreateAxiosRequest(
+  PROBLEM_URL + "problems/getUserSubmissions"
+);
