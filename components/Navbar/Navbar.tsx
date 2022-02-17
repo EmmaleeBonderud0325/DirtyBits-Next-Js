@@ -30,9 +30,7 @@ import NextLink from "next/link";
 import { signoutUser } from "../../redux/actions/authenticate";
 import { useDispatch } from "react-redux";
 
-import React, { useRef } from "react";
-import { Menu as PrimeMenu } from "primereact/menu";
-import { Button as Btn } from "primereact/button";
+import React from "react";
 import { useNotifications } from "@mantine/notifications";
 
 import Notification from './Notification'

@@ -7,7 +7,7 @@ function CompanyTags({title, icon}) {
     <div className="bg-slate-500 py-3 opacity-70 flex flex-col items-center rounded-md justify-center">
       {/* <div className="flex justify-center items-center h-full w-full rounded-md  bg-white"> */}
       <div>
-        <Image src={icon} height={40} width={40} />
+        <Image src={icon} height={40} width={40} alt="company logo"/>
       </div>
       <a
         href="#"

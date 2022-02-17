@@ -15,9 +15,7 @@ import { useSelector } from "react-redux";
 import { filterProblemData } from "./api/apis";
 import WrapperLayout from "../Layout/Layout";
 
-import "primereact/resources/themes/mdc-dark-indigo/theme.css"; //theme
-import "primereact/resources/primereact.min.css"; //core css
-import "primeicons/primeicons.css"; //icons
+
 import { IRootState } from "../redux/reducers";
 import { problemListI } from "../redux/interfaces";
 import { MultiSelect , Input } from '@mantine/core';
@@ -35,11 +33,9 @@ function Problem(props: Props): ReactElement {
   const [value, setValue] = useState<string>("");
 
   const [difficulty, setDifficulty] = useState<string[]>([]);
-  const [status, setStatus] = useState<string>("Status");
   let [timeoutId, setTimeoutId] = useState();
   const [tags, setTags] = useState([]);
   const [currentDataList, setCurrentDataList] = useState<problemListI[]>([]);
-
 
   useEffect(() => {
     async function getData() {
@@ -120,27 +116,6 @@ function Problem(props: Props): ReactElement {
         />
       </div>
 
-      {/* DROPDOWN SECITONS FOR DIFFICULTY , STATUS, TAGS */}
-      {/* <div className="flex space-x-2">
-        <Dropdown
-          textColor={"text-white"}
-          fieldName={"Difficulty"}
-          fieldValues={["Easy", "Medium", "Hard"]}
-          bg={"bg-gray-900"}
-          hasAction={false}
-          currentValue={difficulty}
-          actionFunction={setDifficulty}
-        />
-        <Dropdown
-          textColor={"text-white"}
-          fieldName={"Status"}
-          fieldValues={["ToDo", "Solved", "Attempted"]}
-          bg={"bg-gray-900"}
-          hasAction={false}
-          currentValue={status}
-          actionFunction={setStatus}
-        />
-      </div> */}
       <div className="space-y-2">
         <label className="text-[13px] text-[#C1C2C5] font-semibold tracking-wider">Select Difficulty</label>
 
