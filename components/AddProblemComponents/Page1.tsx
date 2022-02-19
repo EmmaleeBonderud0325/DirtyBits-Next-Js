@@ -65,7 +65,6 @@ interface Props {
   setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
   problemData: addProblemI;
   isAdmin: boolean;
-  tags: tagsI[];
 }
 
 function Page1(props: Props) {
