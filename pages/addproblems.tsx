@@ -5,12 +5,6 @@ import { getTags } from "../redux/actions/index";
 import New from "../components/AddProblemComponents/New";
 
 function Addproblems(): ReactElement {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getTags());
-  }, []);
-
   return (
     <div>
       <New />

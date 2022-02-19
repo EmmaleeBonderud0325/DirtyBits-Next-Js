@@ -1,5 +1,5 @@
 import { AiOutlineSearch } from "react-icons/ai";
-import { ReactElement, useEffect, useState, } from "react";
+import { ReactElement, useContext, useEffect, useState, } from "react";
 import { motion } from "framer-motion";
 import { connect } from "react-redux";
 import Table from "./Table";
@@ -10,16 +10,14 @@ import apple from "../public/apple.svg";
 import fb from "../public/fb.svg";
 import microsoft from "../public/microsoft.svg";
 import CompanyTags from "./CompanyTags/CompanyTags";
-import { useSelector } from "react-redux";
-// import { MultiSelect } from "primereact/multiselect";
 import { filterProblemData } from "./api/apis";
 import WrapperLayout from "../Layout/Layout";
 
 
-import { IRootState } from "../redux/reducers";
 import { problemListI } from "../redux/interfaces";
 import { MultiSelect , Input } from '@mantine/core';
 import { Checkbox } from '@nextui-org/react';
+import { Context } from "../Context";
 
 
 
@@ -28,15 +26,17 @@ interface Props {
 }
 
 function Problem(props: Props): ReactElement {
-  const values = useSelector((state: IRootState) => state.tags);
 
   const [value, setValue] = useState<string>("");
-
   const [difficulty, setDifficulty] = useState<string[]>([]);
   let [timeoutId, setTimeoutId] = useState();
   const [tags, setTags] = useState([]);
   const [currentDataList, setCurrentDataList] = useState<problemListI[]>([]);
+  
+  const {tags :tagsList} = useContext(Context)
 
+  console.log('taglist', tagsList)
+  
   useEffect(() => {
     async function getData() {
       if (tags.length > 0 || difficulty.length > 0) {
@@ -91,7 +91,7 @@ function Problem(props: Props): ReactElement {
 
       <MultiSelect
       // @ts-ignore
-      data={values}
+      data={tagsList}
       className="w-full md:w-1/2"
         label="Select Tags"
         placeholder="Pick all that you like"

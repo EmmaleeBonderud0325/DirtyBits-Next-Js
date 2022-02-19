@@ -10,8 +10,10 @@ import {
 } from "../../components/api/apis";
 import Parsetoken from "../../components/Helper/Parsetoken";
 import {
+  notifyFirstLoad,
   updateGithubSpinner,
   updateGoogleSpinner,
+  UpdateNotifyFirstLoad,
   updateUserinfo,
 } from "./index";
 import { DispatchI, GetStateI, userDataI } from "../interfaces";
@@ -21,7 +23,7 @@ interface ResultI {
   refresh: string;
 }
 
-export const updatedata = (result: ResultI, dispatch: Dispatch): void => {
+export const updatedata = (result: ResultI, dispatch: DispatchI): void => {
   const { access, refresh } = result;
   const data: userDataI = Parsetoken(access);
   if (data.is_verified) {
@@ -40,6 +42,7 @@ export const updatedata = (result: ResultI, dispatch: Dispatch): void => {
         profile_pic: data.profile_pic,
       })
     );
+    dispatch<any>(notifyFirstLoad());
     Router.push("/");
   }
 };
@@ -109,6 +112,9 @@ export const signoutUser =
     );
     Cookies.remove("access");
     Cookies.remove("refresh");
+    dispatch(
+      UpdateNotifyFirstLoad({ last_requested: null, notifications: [] })
+    );
     if (redirectOnSignout) {
       Router.push("/");
     }

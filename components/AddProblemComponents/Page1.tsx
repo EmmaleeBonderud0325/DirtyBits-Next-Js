@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Head from "next/head";
 
 import { connect } from "react-redux";
@@ -26,6 +26,7 @@ import  InputComponent from "./InputComponent";
 import { uploadImage } from "../api/apis";
 import { IRootState } from "../../redux/reducers";
 import { addProblemI, tagsI } from "../../redux/interfaces";
+import { Context } from "../../Context";
 
 const mapping = {
   Difficulty: "Difficulty",
@@ -68,6 +69,7 @@ interface Props {
 }
 
 function Page1(props: Props) {
+  const {tags: tagsList} = useContext(Context);
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (props.problemData.title === "") {
@@ -216,7 +218,7 @@ function Page1(props: Props) {
                     actionFunction={updateProblemLevel}
                   />
                 </div>
-                <MultiSelect label="Tags" value={props.tags} />
+                <MultiSelect label="Tags" value={tagsList} />
                 <InputComponent
                   label={"Time Limit"}
                   value={props.problemData.time_Limit}
@@ -257,7 +259,6 @@ const mapStateToProps = (state: IRootState) => {
   return {
     problemData: state.addProblemData,
     isAdmin: state.userData.is_admin,
-    tags: state.tags,
   };
 };
 

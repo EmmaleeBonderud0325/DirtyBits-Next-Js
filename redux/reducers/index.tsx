@@ -32,6 +32,7 @@ import {
   OutputTestCasesReducer,
 } from "./ProblemPageReducers/TestCaseReducer";
 import { TagsReducer } from "./Tags";
+import { NotificationReducer } from "./NotificationsReducer";
 
 export const rootReducer = combineReducers({
   userData: userDataReducer,
@@ -58,6 +59,7 @@ export const rootReducer = combineReducers({
   googleLoginSpinner: googleLoginSpinnerReducer,
   loginInSpinner: simpleLoginSpinnerReducer,
   tags: TagsReducer,
+  notifications: NotificationReducer,
 });
 
 export type IRootState = ReturnType<typeof rootReducer>;

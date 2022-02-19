@@ -54,14 +54,14 @@ export const Page2: FC<Props> = (props): ReactElement => {
     changeTestCases(temp);
   };
 
-  const addNewFileInputTC = (e) => {
+  const addNewFileInputTC = (e: any) => {
     e.preventDefault();
     const inputID = uuid();
     const newInputs = testCases.concat({ id: inputID });
     changeTestCases(newInputs);
   };
 
-  let renderListSC = customTestCases.map((n, idx) => {
+  let renderListSC = customTestCases.map((n: any, idx: any) => {
     const sci = "sc-" + n.id + "-i";
     const sco = "sc-" + n.id + "-o";
     return (
@@ -105,7 +105,7 @@ export const Page2: FC<Props> = (props): ReactElement => {
     );
   });
 
-  let renderListTC = testCases.map((n, idx) => {
+  let renderListTC = testCases.map((n: any, idx: any) => {
     const tci = "tc-" + n.id + "-i";
     const tco = "tc-" + n.id + "-o";
     return (
@@ -149,7 +149,7 @@ export const Page2: FC<Props> = (props): ReactElement => {
     );
   });
 
-  const postData = async (data) => {
+  const postData = async (data: any) => {
     try {
       toast
         .promise(uploadTestCases.post("/", data), {

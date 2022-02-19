@@ -139,5 +139,16 @@ export interface SavedCodeI {
   submission_Date_Time: string;
 }
 
+export interface NotificationI {
+  message: string;
+  message_type: string;
+  created_at: string;
+}
+
+export interface NotificationsI {
+  last_requested: string | null;
+  notifications: NotificationI[];
+}
+
 export type GetStateI = () => IRootState;
 export type DispatchI = Dispatch;
