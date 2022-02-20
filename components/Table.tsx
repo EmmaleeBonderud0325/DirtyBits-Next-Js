@@ -1,9 +1,4 @@
 import TableLoader from "./TableLoader";
-import { connect } from "react-redux";
-import Link from "next/link";
-import "primereact/resources/themes/mdc-dark-indigo/theme.css"; //theme
-import "primereact/resources/primereact.min.css"; //core css
-import "primeicons/primeicons.css"; //icons
 import { Paginator } from "primereact/paginator";
 import { ReactElement, useState } from "react";
 import { problemListI } from "../redux/interfaces";
