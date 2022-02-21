@@ -189,7 +189,7 @@ html::-webkit-scrollbar-thumb {
 
 /* OUTPUT LOADER */
 
-.loader {
+/* .loader {
   width: 4.8px;
   height: 4.8px;
   display: block;
@@ -227,7 +227,7 @@ html::-webkit-scrollbar-thumb {
   100% {
     width: 48px;
   }
-}
+} */
 
 .bg-main-color {
   background-color: var(--main-color);
