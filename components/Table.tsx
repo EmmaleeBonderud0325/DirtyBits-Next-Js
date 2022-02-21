@@ -1,6 +1,8 @@
+import { ReactElement, useState } from "react";
+import Link from "next/link";
+
 import TableLoader from "./TableLoader";
 import { Paginator } from "primereact/paginator";
-import { ReactElement, useState } from "react";
 import { problemListI } from "../redux/interfaces";
 
 interface Props {
@@ -49,12 +51,14 @@ function Table(props: Props): ReactElement {
     return (
       <tr key={problem.id}>
         <td className="table-data text-white border-b border-slate-800">
+          <Link href={`/problem/${problem.id}/${problem.title}`}>
           <a
-            href={`/problem/${problem.id}/${problem.title}`}
+            
             className="text-stone-200 hover:text-indigo-400 transition-all duration-200 ease-in md:text-sm"
-          >
+            >
             {idx + 1} . {problem.title}
           </a>
+            </Link>
         </td>
         <td className="py-4 px-6 border-b border-slate-800">
           <p
@@ -100,12 +104,4 @@ function Table(props: Props): ReactElement {
     </div>
   );
 }
-
-// const mapStateToProps = (state) => {
-//   return {
-//     dataList: state.problemList,
-//   };
-// };
-
-// export default connect(mapStateToProps)(Table);
 export default Table;
