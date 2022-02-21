@@ -22,8 +22,6 @@ import {
 } from "../../redux/actions/ProblemPage";
 import { IRootState } from "../../redux/reducers";
 import { problemDataI, submissionResultI } from "../../redux/interfaces";
-import add from "../../public/add.svg";
-import remove from "../../public/remove.svg";
 import bar from "../../public/bar.svg";
 import Image from "next/image";
 import global from "../../public/global.svg";
