@@ -1,14 +1,14 @@
 import { ReactElement, useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
 import moment from "moment";
-import { IoMdCheckmarkCircleOutline } from "react-icons/io";
-import { AiOutlineCloseCircle, AiOutlineInfoCircle } from "react-icons/ai";
+
 import { Loading } from "@nextui-org/react";
 
 import { getSubmissionsListAction } from "../../redux/actions/ProblemPage";
 import { submissionsListI } from "../../redux/interfaces";
 import { IRootState } from "../../redux/reducers";
 import RecentSubmission from '../Submission'
+import { Loader } from "@mantine/core";
 
 interface Props {
   submissionList: submissionsListI[];
@@ -84,7 +84,7 @@ const Submission = (props: Props): ReactElement => {
     <section className="container mx-auto p-6 font-mono scrollbar-hide">
       {props.isRunning && (
         <div className="pl-5 h-36">
-          <span className="loader"></span>
+          <Loader className="w-full md:h-6 lg:h-10 xl:h-16 mt-10 flex justify-center items-center" color="violet" variant="bars" />
         </div>
       )}
       {Object.keys(props.result).length > 0 && (
