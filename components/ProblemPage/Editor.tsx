@@ -13,7 +13,7 @@ import { FcGoogle } from "react-icons/fc";
 import GoogleLogin from "react-google-login";
 import { BsCheck2Circle } from "react-icons/bs";
 import { ImCross } from "react-icons/im";
-import { Alert } from '@mantine/core';
+import { Alert, Loader } from '@mantine/core';
 
 import terminal from "../../public/terminal.svg";
 import { base64_encode } from "./Helper2";
@@ -126,7 +126,7 @@ interface Props {
   submissionCount: number;
   email: string;
   codeRunner: (value: boolean) => void;
-  result: (value: submissionResultI) => void;
+  result: (value: submissionResultI | {}) => void;
   currentTabFunction: (value: number) => void;
   githubSpinner?: any;
 }
@@ -244,7 +244,7 @@ const Editor: FC<Props> = (props): ReactElement => {
     socket.onopen = async function (e) {
       props.currentTabFunction(1);
       props.codeRunner(true);
-      // props.result({});
+      props.result({});
       console.log("opened");
       await submitCode.post("/", {
         problem_Id: problemPageProblemId,
@@ -389,7 +389,7 @@ const Editor: FC<Props> = (props): ReactElement => {
   
   const handleOutput = () => {
     if(showLoader){
-      return <span className="loader"></span>
+      return <Loader className="w-full md:h-10 lg:h-20 xl:h-24 mt-10 flex justify-center items-center" color="violet" variant="bars" />
     }else {
       if(testCaseResult.status === 'Accepted') {
           return (
