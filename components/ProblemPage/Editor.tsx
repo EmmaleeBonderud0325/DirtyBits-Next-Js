@@ -325,19 +325,6 @@ const Editor: FC<Props> = (props): ReactElement => {
     },
   };
 
-  // const handeCustomInput = (e) => {
-  //   setCustomInput(!customInput);
-  // };
-
-  // const handleShowMode = (e) => {
-  //   const ele_id = e.target.id;
-  //   if (ele_id === "simple-tab-0") {
-  //     changeShowMode(true);
-  //   } else {
-  //     changeShowMode(false);
-  //   }
-  // };
-
   const responseGoogleSuccess = async (data) => {
     try {
       await googleLoginApi
@@ -443,10 +430,6 @@ const Editor: FC<Props> = (props): ReactElement => {
             onBeforeChange={(_: any, __: any, value: string) => {
               dispatch(changeEditorValue(value));
             }}
-            //   onChange={(editor, data, value) => changeCode(value)}
-            // onKeyUp={(editor, event) => {
-            //   handleKeyUp(editor, event);
-            // }}
           />
         )}
       </div>

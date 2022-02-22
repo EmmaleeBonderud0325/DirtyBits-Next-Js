@@ -21,7 +21,6 @@ export default function Features() {
             SOME FEATURES
           </p>
         </div>
-        {/* <div className="flex lg:flex-row lg:justify-center lg:items-center lg:space-x-20"> */}
         <div className="grid lg:grid-cols-3 lg:gap-32 grid-rows-3">
           <Zoom>
             <div>
