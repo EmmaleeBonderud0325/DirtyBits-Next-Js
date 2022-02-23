@@ -9,7 +9,6 @@ import "react-toastify/dist/ReactToastify.min.css";
 import { connect, useDispatch } from "react-redux";
 import SmoothList from "react-smooth-list";
 import { TextInput, PasswordInput } from "@mantine/core";
-import { FcCheckmark } from "react-icons/fc";
 
 import { PasswordStrength } from "../PasswordMeter";
 import { validateUserName, validateEmail, createUser } from "../api/apis";
