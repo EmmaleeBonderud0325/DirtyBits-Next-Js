@@ -377,6 +377,12 @@ const Editor: FC<Props> = (props): ReactElement => {
   const handleOutput = () => {
     if(showLoader){
       return <Loader className="w-full md:h-10 lg:h-20 xl:h-24 mt-10 flex justify-center items-center" color="violet" variant="bars" />
+    }else if(!testCaseResult && showConsole){
+      return (
+        <div className="w-full md:h-10 lg:h-20 xl:h-24 mt-10 flex justify-center items-center">
+          <pre className="text-2xl font-bold">{outputValue}</pre>
+          </div>
+      )
     }else {
       if(testCaseResult.status === 'Accepted') {
           return (
