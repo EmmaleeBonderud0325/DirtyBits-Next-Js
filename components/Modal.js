@@ -1,5 +1,4 @@
 import React from "react";
-import success from "../public/success.png";
 import Image from "next/image";
 import Link from "next/link";
 
