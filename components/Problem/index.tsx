@@ -2,22 +2,19 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { ReactElement, useContext, useEffect, useState, } from "react";
 import { motion } from "framer-motion";
 import { connect } from "react-redux";
-import Table from "./Table";
-import plus from "../public/plus.svg";
-import google from "../public/google.svg";
-import amazon from "../public/amazon.svg";
-import apple from "../public/apple.svg";
-import fb from "../public/fb.svg";
-import microsoft from "../public/microsoft.svg";
-import CompanyTags from "./CompanyTags/CompanyTags";
-import { filterProblemData } from "./api/apis";
-import WrapperLayout from "../Layout/Layout";
+import Table from "../Table";
+
+import {GoogleIcon, FacebookIcon, AmazonIcon, MicrosoftIcon, PlusIcon, AppleIcon} from '../../SVG'
+
+import CompanyTags from "../CompanyTags/CompanyTags";
+import { filterProblemData } from "../api/apis";
+import WrapperLayout from "../../Layout/Layout";
 
 
-import { problemListI } from "../redux/interfaces";
+import { problemListI } from "../../redux/interfaces";
 import { MultiSelect , Input } from '@mantine/core';
 import { Checkbox } from '@nextui-org/react';
-import { Context } from "../Context";
+import { Context } from "../../Context";
 
 
 
@@ -77,12 +74,12 @@ function Problem(props: Props): ReactElement {
     <WrapperLayout>
       <motion.div animate={{ y: [20, 0, 0] }}>
         <div className="grid grid-cols-2 gap-4 md:grid-cols-6 md:gap-10 ">
-          <CompanyTags icon={google} title="Top questions" />
-          <CompanyTags icon={fb} title="Top questions" />
-          <CompanyTags icon={amazon} title="Top questions" />
-          <CompanyTags icon={microsoft} title="Top questions" />
-          <CompanyTags icon={apple} title="Top questions" />
-          <CompanyTags icon={plus} title="More" />
+          <CompanyTags Icon={<GoogleIcon/>} title="Top questions" />
+          <CompanyTags Icon={<FacebookIcon/>} title="Top questions" />
+          <CompanyTags Icon={<AmazonIcon/>} title="Top questions" />
+          <CompanyTags Icon={<MicrosoftIcon/>} title="Top questions" />
+          <CompanyTags Icon={<AppleIcon/>} title="Top questions" />
+          <CompanyTags Icon={<PlusIcon/>} title="More" />
         </div>
       </motion.div>
       <br />
