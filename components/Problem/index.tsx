@@ -1,85 +1,96 @@
+import { ReactElement, useCallback, useContext, useEffect, useState, } from "react";
+
 import { AiOutlineSearch } from "react-icons/ai";
-import { ReactElement, useContext, useEffect, useState, } from "react";
 import { motion } from "framer-motion";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
+import { MultiSelect , Input } from '@mantine/core';
+import { Checkbox } from '@nextui-org/react';
+
 import Table from "../Table";
-
 import {GoogleIcon, FacebookIcon, AmazonIcon, MicrosoftIcon, PlusIcon, AppleIcon} from '../../SVG'
-
 import CompanyTags from "../CompanyTags/CompanyTags";
 import { filterProblemData } from "../api/apis";
 import WrapperLayout from "../../Layout/Layout";
-
-
 import { problemListI } from "../../redux/interfaces";
-import { MultiSelect , Input } from '@mantine/core';
-import { Checkbox } from '@nextui-org/react';
 import { Context } from "../../Context";
+import {debounce} from '../../utils'
 
 
+function Problem(props): ReactElement {
+  const companyData = [
+    {
+      id: 1,
+    Icon: <GoogleIcon/>,
+    name: "Google Questions",
+  }, 
+  {
+    id: 2,
+    Icon: <FacebookIcon/>,
+    name: "Facebook Questions",
+  },
+  {
+    id: 3,
+    Icon: <AmazonIcon/>,
+    name: "Amazon Questions",
+  },
+  {
+    id: 4,
+    Icon: <MicrosoftIcon/>,
+    name: "Microsoft Questions",
+  },
+  {
+    id: 5,
+    Icon: <PlusIcon/>,
+    name: "Plus",
+  }
+]
 
-interface Props {
-  problemList: problemListI[];
-}
-
-function Problem(props: Props): ReactElement {
-
-  const [value, setValue] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [difficulty, setDifficulty] = useState<string[]>([]);
-  let [timeoutId, setTimeoutId] = useState();
   const [tags, setTags] = useState([]);
   const [currentDataList, setCurrentDataList] = useState<problemListI[]>([]);
   
   const {tags :tagsList} = useContext(Context)
-
-  console.log('taglist', tagsList)
+  const problemList = useSelector((state: any) => state.problemList);
   
   useEffect(() => {
-    async function getData() {
-      if (tags.length > 0 || difficulty.length > 0) {
-        const response = await filterProblemData.post<problemListI[]>("/", {
-          keyword: value,
-          tags: tags,
-          difficulty: difficulty,
-        });
-        setCurrentDataList(response.data);
-      } else {
-        setCurrentDataList(props.problemList);
+    function getData() {
+      if(tags.length === 0 && difficulty.length === 0 && searchQuery.length === 0){
+        setCurrentDataList(problemList);
       }
     }
     getData();
-  }, [tags, props.problemList, value, difficulty]);
+  }, [problemList, tags, searchQuery, difficulty]);
 
-  let TimeOutId: any;
-
-  const valueHandler = (e: any) => {
-    setValue(e.target.value);
-    if (timeoutId) {
-      clearTimeout(timeoutId);
+  const fetchFilteredData = async (searchQuery = '') => {
+    const {data} = await filterProblemData.post<problemListI[]>("/", {
+      keyword: searchQuery,
+      tags: tags,
+      difficulty: difficulty,
+    });
+    setCurrentDataList(data)
+  }
+  
+  useEffect(() => {
+    if(tags.length > 0 || difficulty.length > 0 || searchQuery.length > 0){
+      fetchFilteredData()
     }
-    TimeOutId = setTimeout(async () => {
-      const data = {
-        keyword: e.target.value,
-        tags: tags,
-        difficulty: difficulty,
-      };
+  }, [tags, difficulty, searchQuery])
+  
+  const _debounceSearchField = useCallback(debounce(fetchFilteredData, 500), [])
 
-      const response = await filterProblemData.post<problemListI[]>("/", data);
-      setCurrentDataList(response.data);
-    }, 2000);
-    setTimeoutId(TimeOutId);
+  const onSearchQueryChange = e => {
+    setSearchQuery(e.target.value);
+    _debounceSearchField(e.target.value);
   };
 
   return (
     <WrapperLayout>
       <motion.div animate={{ y: [20, 0, 0] }}>
         <div className="grid grid-cols-2 gap-4 md:grid-cols-6 md:gap-10 ">
-          <CompanyTags Icon={<GoogleIcon/>} title="Top questions" />
-          <CompanyTags Icon={<FacebookIcon/>} title="Top questions" />
-          <CompanyTags Icon={<AmazonIcon/>} title="Top questions" />
-          <CompanyTags Icon={<MicrosoftIcon/>} title="Top questions" />
-          <CompanyTags Icon={<AppleIcon/>} title="Top questions" />
-          <CompanyTags Icon={<PlusIcon/>} title="More" />
+          {companyData.map(company => (
+            <CompanyTags key={company.id} Icon={company.Icon} title={company.name} />
+          ))}
         </div>
       </motion.div>
       <br />
@@ -108,8 +119,8 @@ function Problem(props: Props): ReactElement {
           placeholder="Search Questions"
           styles={{ rightSection: { pointerEvents: 'none' } }}
           radius="xl"
-          value={value}
-          onChange={valueHandler}
+          value={searchQuery}
+          onChange={onSearchQueryChange}
         />
       </div>
 
@@ -137,10 +148,4 @@ function Problem(props: Props): ReactElement {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    problemList: state.problemList,
-  };
-};
-
-export default connect(mapStateToProps)(Problem);
+export default Problem;
