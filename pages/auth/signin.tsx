@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { IRootState } from "../../redux/reducers";
+import { IRootState } from "redux/reducers";
 import { TextInput, PasswordInput } from "@mantine/core";
 import {
   useState,
@@ -22,9 +22,9 @@ import {
   Parsetoken,
   githubLogin,
   googleLogin,
-} from "../../imports/Signin";
-import Background from "../../components/Background";
-import { notifyFirstLoad } from "../../redux/actions";
+} from "imports/Signin";
+import Background from "components/Background";
+import { notifyFirstLoad } from "redux/actions";
 
 interface Props {
   googleSpinner: boolean;

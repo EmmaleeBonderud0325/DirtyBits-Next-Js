@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import Head from "next/head";
-import Homepage from "../components/Homepage/Homepage";
+import Homepage from "components/Homepage/Homepage";
 
 function Index(): ReactElement {
   return (

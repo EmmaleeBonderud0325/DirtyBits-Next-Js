@@ -1,9 +1,9 @@
 import React, { ReactElement } from "react";
-import Modal from "../../../components/Modal";
-import { verifyVerificationCode } from "../../../components/api/apis";
+import Modal from "components/Modal";
+import { verifyVerificationCode } from "components/api/apis";
 import Head from "next/head";
-import success from "../../../public/success.png";
-import close from "../../../public/close.png";
+import success from "public/success.png";
+import close from "public/close.png";
 
 interface Props {
   message: any;

@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import Image from "next/image";
-import bg from "../../public/blog.jpeg";
+import bg from "public/blog.jpeg";
 import { motion } from "framer-motion";
 
 const variants = {
@@ -18,6 +18,7 @@ function DetailView(): ReactElement {
           height={300}
           width={600}
           layout="responsive"
+          alt="blog"
         />
         <motion.div animate={{ y: [20, 0, 0] }}>
           <header className="font-extrabold lg:text-5xl text-4xl w-full ">
@@ -35,6 +36,7 @@ function DetailView(): ReactElement {
               }
               width={40}
               height={40}
+              alt="avatar"
             />
           </div>
           <div className="flex items-center space-x-2">

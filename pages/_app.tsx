@@ -2,9 +2,9 @@ import { createWrapper } from "next-redux-wrapper";
 import type { AppProps } from "next/app";
 import { ToastContainer } from "react-toastify";
 // import Navbar from "../components/Navbar";
-import Navbar from "../components/Navbar/Navbar";
-import Footer from "../components/Footer";
-import { store } from "../redux/store";
+import Navbar from "components/Navbar/Navbar";
+import Footer from "components/Footer";
+import { store } from "redux/store";
 import "../styles/index.css";
 import { useRouter } from "next/router";
 import "../styles/Editor.css";
@@ -13,16 +13,16 @@ import { NextPage } from "next";
 import { ReactNode, useEffect } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { ChakraProvider } from "@chakra-ui/react";
-import theme from "../theme/theme";
+import theme from "theme/theme";
 import NextNProgress from "nextjs-progressbar";
 import { NotificationsProvider } from "@mantine/notifications";
-import { MantineProvider, Button } from "@mantine/core";
+import { MantineProvider } from "@mantine/core";
 
 import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css";
 import { useDispatch } from "react-redux";
-import { notifyFirstLoad } from "../redux/actions";
+import { notifyFirstLoad } from "redux/actions";
 
 import Context from '../Context'
 

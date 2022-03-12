@@ -3,7 +3,8 @@ import Link from "next/link";
 
 import TableLoader from "./TableLoader";
 import { Paginator } from "primereact/paginator";
-import { problemListI } from "../redux/interfaces";
+import { problemListI } from "redux/interfaces";
+import {DashIcon, QuestionIcon, CheckIcon} from 'SVG'
 
 interface Props {
   dataList: problemListI[];
@@ -20,7 +21,7 @@ function Table(props: Props): ReactElement {
 
   let problemLevel: string;
   let problemColor: string;
-  let status: string;
+  let status: JSX.Element;
 
   let problemMarkup = props.dataList.map((problem, idx) => {
     switch (problem.problem_level) {
@@ -39,13 +40,13 @@ function Table(props: Props): ReactElement {
     }
     switch (problem.solved) {
       case "Unsolved":
-        status = "➖";
+        status = <DashIcon/>;
         break;
       case "Solved":
-        status = "✅";
+        status = <CheckIcon/>;
         break;
       case "Attempted":
-        status = "❓";
+        status = <QuestionIcon/>;
         break;
     }
     return (

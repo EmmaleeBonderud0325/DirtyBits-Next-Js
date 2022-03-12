@@ -1,7 +1,7 @@
 import { FC, ReactElement, useState } from "react";
-import Form from "../../../components/Form";
-import { resetPassword } from "../../../components/api/apis";
-import { openNotificationWithIcon } from "../../../components/OpenNotification";
+import Form from "components/Form";
+import { resetPassword } from "components/api/apis";
+import { openNotificationWithIcon } from "components/OpenNotification";
 import Head from "next/head";
 
 interface Props {

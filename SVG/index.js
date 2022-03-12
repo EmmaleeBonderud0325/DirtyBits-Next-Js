@@ -260,3 +260,78 @@ export const PlusIcon = () => {
     </svg>
   );
 };
+
+export const CheckIcon = () => {
+  return (
+    <svg
+      width="24px"
+      height="24px"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g>
+        <path fill="none" d="M0 0h24v24H0z" />
+        <path
+          fill="#7EECB4"
+          d="M11.602 13.76l1.412 1.412 8.466-8.466 1.414 1.414-9.88 9.88-6.364-6.364 1.414-1.414 2.125 2.125 1.413 1.412zm.002-2.828l4.952-4.953 1.41 1.41-4.952 4.953-1.41-1.41zm-2.827 5.655L7.364 18 1 11.636l1.414-1.414 1.413 1.413-.001.001 4.951 4.951z"
+        />
+      </g>
+    </svg>
+  );
+};
+
+export const DashIcon = () => {
+  return (
+    <svg
+      width="24px"
+      height="24px"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-labelledby="checkboxIntermediateIconTitle"
+      stroke="#fff"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill="none"
+      color="#000"
+    >
+      {" "}
+      <title id="checkboxIntermediateIconTitle">
+        Checkbox in intermediate state
+      </title>{" "}
+      <rect
+        x="21"
+        y="3"
+        width="18"
+        height="18"
+        rx="1"
+        transform="rotate(90 21 3)"
+      />{" "}
+      <path d="M16 12H8" />{" "}
+    </svg>
+  );
+};
+
+export const QuestionIcon = () => {
+  return (
+    <svg
+      width="24px"
+      height="24px"
+      viewBox="0 0 24 24"
+      id="magicoon-Regular"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs></defs>
+      <title>question-circle</title>
+      <g id="question-circle-Regular">
+        <path
+          id="question-circle-Regular-2"
+          data-name="question-circle-Regular"
+          class="cls-1"
+          d="M12,2.25A9.75,9.75,0,1,0,21.75,12,9.761,9.761,0,0,0,12,2.25Zm0,18A8.25,8.25,0,1,1,20.25,12,8.259,8.259,0,0,1,12,20.25ZM15.691,9.326A3.647,3.647,0,0,1,13.9,13.107c-.941.625-1.146,1-1.191,1.133a.751.751,0,0,1-.711.51.766.766,0,0,1-.239-.039.751.751,0,0,1-.471-.951,4.094,4.094,0,0,1,1.782-1.9,2.153,2.153,0,0,0,1.142-2.273A2.251,2.251,0,0,0,9.75,10a.75.75,0,0,1-1.5,0,3.751,3.751,0,0,1,7.441-.674ZM13,17a1,1,0,1,1-1-1A1,1,0,0,1,13,17Z"
+          fill="#880808"
+        />
+      </g>
+    </svg>
+  );
+};

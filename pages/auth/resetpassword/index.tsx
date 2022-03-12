@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from "react";
-import { changePass } from "../../../components/api/apis";
-import Form from "../../../components/Form";
-import { openNotificationWithIcon } from "../../../components/OpenNotification";
+import { changePass } from "components/api/apis";
+import Form from "components/Form";
+import { openNotificationWithIcon } from "components/OpenNotification";
 import Head from "next/head";
 
 function ChangePassword(): ReactElement {

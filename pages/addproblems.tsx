@@ -1,8 +1,6 @@
-import { ReactElement, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { ReactElement } from "react";
 
-import { getTags } from "../redux/actions/index";
-import New from "../components/AddProblemComponents/New";
+import New from "components/AddProblemComponents/New";
 
 function Addproblems(): ReactElement {
   return (

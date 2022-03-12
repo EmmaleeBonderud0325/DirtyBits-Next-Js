@@ -5,9 +5,9 @@ import { connect, useDispatch } from "react-redux";
 import {
   changeProblemPageProblemId,
   getProblemPageProblemData,
-} from "../../../redux/actions/ProblemPage";
-import Panel2 from "../../../components/ProblemPage/Panel2";
-import { IRootState } from "../../../redux/reducers";
+} from "redux/actions/ProblemPage";
+import Panel2 from "components/ProblemPage/Panel2";
+import { IRootState } from "redux/reducers";
 
 function ProblemView({ title }): ReactElement {
   const dispatch = useDispatch();

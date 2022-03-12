@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import Head from "next/head";
-import Card from "../../components/Blog/Card";
-import Topics from "../../components/Blog/Topics";
+import Card from "components/Blog/Card";
+import Topics from "components/Blog/Topics";
 import { motion } from "framer-motion";
 
 const variants = {

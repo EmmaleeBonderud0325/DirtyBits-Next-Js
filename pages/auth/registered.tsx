@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
-import Modal from "../../components/Modal";
+import Modal from "components/Modal";
 import Head from "next/head";
-import sucess from "../../public/success.png";
+import sucess from "public/success.png";
 
 interface Props {}
 
