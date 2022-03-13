@@ -101,8 +101,7 @@ function Problem(props): ReactElement {
       // @ts-ignore
       data={tagsList}
       className="w-full md:w-1/2"
-        label="Select Tags"
-        placeholder="Pick all that you like"
+        placeholder="Select Tags"
         searchable
         nothingFound="Nothing found"
         clearable
