@@ -1,4 +1,5 @@
 import { extendTheme } from "@chakra-ui/react";
+import { colors } from "constants/colors";
 
 // 2. Add your color mode config
 const config = {
@@ -11,7 +12,7 @@ const theme = extendTheme({
   config,
   colors: {
     brand: {
-      100: "#6366F1",
+      100: colors.primary,
     },
   },
 });
