@@ -12,6 +12,7 @@ import { FiLayers } from "react-icons/fi";
 import himanshu from "../../public/himanshu.jpeg";
 import mohit from "../../public/mohit.jpg";
 import akshat from "../../public/akshat.jpeg";
+import Navbar from "../Navbar/Navbar";
 
 import Feature from "../Feature";
 import Link from "next/link";
@@ -19,6 +20,7 @@ import Link from "next/link";
 export default function Homepage() {
   return (
     <>
+      <Navbar />
       <div className="relative p-10 md:p-3 space-y-8 container mx-auto max-w-screen-xl flex-col justify-center items-center">
         <Zoom>
           <div className="absolute hidden md:block opacity-70 top-[10rem] right-[30rem]">

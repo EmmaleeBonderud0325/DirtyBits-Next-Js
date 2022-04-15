@@ -18,6 +18,7 @@ import NextNProgress from "nextjs-progressbar";
 import { NotificationsProvider } from "@mantine/notifications";
 import { MantineProvider, Button } from "@mantine/core";
 
+import "react-quill/dist/quill.snow.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css";
@@ -77,7 +78,7 @@ function MyApp({ Component, pageProps }: Props) {
               pauseOnHover
             />
             {/* <Navbar fixedHeader={fixedTop} bg={background} /> */}
-            <Navbar />
+            {/* <Navbar /> */}
             <Component {...pageProps} />
           </ChakraProvider>
         </NotificationsProvider>

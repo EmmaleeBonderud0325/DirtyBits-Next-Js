@@ -2,6 +2,7 @@ import { ReactElement, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Head from "next/head";
 
+import Navbar from "../components/Navbar/Navbar";
 import Problem from "../components/Problem";
 import { getProblems, getTags } from "../redux/actions";
 
@@ -16,6 +17,7 @@ function Practice(): ReactElement {
       <Head>
         <title>Practice</title>
       </Head>
+      <Navbar />
       <Problem />
     </>
   );
