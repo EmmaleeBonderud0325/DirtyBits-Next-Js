@@ -73,9 +73,9 @@ export const changeLanguage = (newState: editorLanguageI): changeLanguageI => {
 
 interface changeFontI {
   type: string;
-  payload: string;
+  payload: number;
 }
-export const changeFont = (newState: string): changeFontI => {
+export const changeFont = (newState: number): changeFontI => {
   return {
     type: UpdateEditorFontSize,
     payload: newState,

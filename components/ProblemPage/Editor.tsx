@@ -25,6 +25,7 @@ import {
   changeSubmissionCount,
   changeGetSubmissionsListAppendData,
   changeLanguage,
+  changeFont,
 } from "../../redux/actions/ProblemPage";
 import Encodemail from "../Helper/Encodemail";
 import Parsetoken from "../Helper/Parsetoken";
@@ -43,6 +44,7 @@ import {
 import { IRootState } from "../../redux/reducers";
 
 let CodeMirror = null;
+const FONT_SIZE = 51;
 if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
   CodeMirror = require("react-codemirror2").Controlled;
   require("codemirror/mode/yaml/yaml");
@@ -430,7 +432,7 @@ const Editor: FC<Props> = (props): ReactElement => {
       <div>
         {CodeMirror && (
           <CodeMirror
-            className={`my-code-editor scrollbar-hide text-[${fontSize}]`}
+            className={`my-code-editor scrollbar-hide text-[${FONT_SIZE}px]`}
             value={editorValue}
             options={options}
             onBeforeChange={(_: any, __: any, value: string) => {
