@@ -131,7 +131,7 @@ interface Props {
 
 const Editor: FC<Props> = (props): ReactElement => {
   const dispatch = useDispatch();
-  
+
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(false);
@@ -231,7 +231,7 @@ const Editor: FC<Props> = (props): ReactElement => {
     }
     const encoded_mail = Encodemail(email);
     var socket = new WebSocket(
-      `wss://db-code.herokuapp.com/ws/runcode/${encoded_mail}/`
+      `ws://34.131.70.37:8001/ws/runcode/${encoded_mail}/`
     );
     // var socket = new WebSocket(
     //   `ws://localhost:8000/ws/runcode/${encoded_mail}/`
