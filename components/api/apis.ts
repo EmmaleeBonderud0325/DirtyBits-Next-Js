@@ -89,11 +89,13 @@ export const filterProblemData = axios.create({
   baseURL: PROBLEM_URL + "problems/getFilteredProblemsList",
 });
 
-export const runCode = CreateAxiosRequest(PROBLEM_URL + "core/compilecode");
+export const runCode = CreateAxiosRequest(PROBLEM_URL + "runcode/compilecode");
 
-export const submitCode = CreateAxiosRequest(PROBLEM_URL + "core/runcode");
+export const submitCode = CreateAxiosRequest(PROBLEM_URL + "runcode/runcode");
 
-export const runTestCases = CreateAxiosRequest(PROBLEM_URL + "core/runtests");
+export const runTestCases = CreateAxiosRequest(
+  PROBLEM_URL + "runcode/runtests"
+);
 
 export const getProblemPageDataApi = CreateAxiosRequest(
   PROBLEM_URL + "problems/getProblemPageData"
