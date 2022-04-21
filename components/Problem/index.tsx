@@ -4,7 +4,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import { MultiSelect , Input } from '@mantine/core';
-import { Checkbox } from '@nextui-org/react';
+import { CheckboxGroup, Checkbox } from '@mantine/core';
 
 import Table from "../Table";
 import {GoogleIcon, FacebookIcon, AmazonIcon, MicrosoftIcon, PlusIcon, AppleIcon} from '../../SVG'
@@ -125,19 +125,11 @@ function Problem(props): ReactElement {
 
       <div className="space-y-2">
         <label className="text-[13px] text-[#C1C2C5] font-semibold tracking-wider">Select Difficulty</label>
-
-        <Checkbox.Group aria-label="Select difficulty" onChange={(e) => setDifficulty(e)} size="sm"   color="success" value={[]} row>
-          <Checkbox size="sm" color="success" rounded value="E">
-            <span className="text-slate-500">Easy</span>
-            </Checkbox>
-            <Checkbox size="sm" color="warning" rounded value="M">
-            <span className="text-slate-500">Medium</span>
-            </Checkbox>
-            <Checkbox size="sm" color="error" rounded value="H">
-            <span className="text-slate-500">Hard</span>
-            </Checkbox>
-        </Checkbox.Group>
-
+    <CheckboxGroup description="You can select multiple" defaultValue={[]} onChange={(e) => setDifficulty(e)}>
+      <Checkbox value="E" label="Easy" />
+      <Checkbox value="M" label="Medium" />
+      <Checkbox value="H" label="Hard" />
+    </CheckboxGroup>
 
         <div className="flex flex-col">
         <Table dataList={currentDataList} />

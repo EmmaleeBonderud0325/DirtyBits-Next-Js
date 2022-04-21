@@ -6,7 +6,6 @@ import {
   Link,
   Head,
   useRouter,
-  Loading,
   GoogleLogin,
   GitHubLogin,
   validate,
@@ -56,7 +55,7 @@ interface TokensI {
 function Signin(props: Props): ReactElement {
   const dispatch = useDispatch();
   const router = useRouter();
-  const antIcon = <Loading type="points-opacity" size="sm" />;
+  const antIcon = "Loading"
   let [formData, setFormData] = useState<FormDataI>({
     email: "",
     password: "",

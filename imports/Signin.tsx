@@ -3,7 +3,6 @@ export { default as Link } from "next/link";
 export { default as Head } from "next/head";
 export { useRouter } from "next/router";
 
-export { Loading } from "@nextui-org/react";
 export { default as GoogleLogin } from "react-google-login";
 export { default as GitHubLogin } from "react-github-login";
 export { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";

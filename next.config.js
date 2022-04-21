@@ -20,6 +20,7 @@ module.exports = withBundleAnalyzer({
       "localhost",
       "img.icons8.com",
       "helostatus.com",
+      "storage.googleapis.com",
     ],
   },
 });

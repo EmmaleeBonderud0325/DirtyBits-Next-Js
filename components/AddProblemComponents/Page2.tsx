@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 import { TiPlus } from "react-icons/ti";
 import { useDispatch } from "react-redux";
 import { resetProblemPageData } from "../../redux/actions";
-import { Button } from "@nextui-org/react";
+import { Button } from '@mantine/core';
 
 interface Props {
   problemId: number;
@@ -65,7 +65,7 @@ export const Page2: FC<Props> = (props): ReactElement => {
     const sci = "sc-" + n.id + "-i";
     const sco = "sc-" + n.id + "-o";
     return (
-      <div className="overflow-hidden bg-slate-800 p-4 space-y-3 rounded-2xl shadow-2xl">
+      <div key={idx} className="overflow-hidden bg-slate-800 p-4 space-y-3 rounded-2xl shadow-2xl">
         <h1 className="text-xl lg:text-[1.5rem] text-white font-light">
           Test Case - {idx + 1}
         </h1>
@@ -109,7 +109,7 @@ export const Page2: FC<Props> = (props): ReactElement => {
     const tci = "tc-" + n.id + "-i";
     const tco = "tc-" + n.id + "-o";
     return (
-      <div className="overflow-hidden bg-slate-800 p-4 space-y-3 rounded-2xl shadow-2xl">
+      <div key={idx} className="overflow-hidden bg-slate-800 p-4 space-y-3 rounded-2xl shadow-2xl">
         <h1 className="text-xl lg:text-[1.5rem] font-light text-white">
           Test Case - {idx + 1}
         </h1>
@@ -222,9 +222,7 @@ export const Page2: FC<Props> = (props): ReactElement => {
             <TiPlus />{" "}
           </button>
           <div>
-            <Button onClick={submitted} auto color="gradient" rounded bordered>
-              Upload
-            </Button>
+            <Button variant="outline" color="violet" radius="md" size="md" onClick={submitted}>Upload </Button>
           </div>
         </div>
       </div>

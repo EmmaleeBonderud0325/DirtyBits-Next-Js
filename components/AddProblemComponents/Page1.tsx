@@ -4,7 +4,7 @@ import Head from "next/head";
 import { connect } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
-import { Button } from "@nextui-org/react";
+import { Button } from '@mantine/core';
 
 import { TextEditor } from "./TextEditor";
 import Dropdown from "../Dropdown";
@@ -22,11 +22,12 @@ import {
 import MultiSelect from "./MultiSelect";
 import { AddProblem, UpdateProblem } from "../api/apis";
 import { TextAreaComponent } from "./TextAreaComponent";
-import  InputComponent from "./InputComponent";
+import InputComponent from "./InputComponent";
 import { uploadImage } from "../api/apis";
 import { IRootState } from "../../redux/reducers";
 import { addProblemI, tagsI } from "../../redux/interfaces";
 import { Context } from "../../Context";
+import QuillEditor from "./QuillEditor";
 
 const mapping = {
   Difficulty: "Difficulty",
@@ -159,7 +160,7 @@ function Page1(props: Props) {
       console.error("Token Error");
     }
   };
-  console.log('page 1 re')
+  console.log("page 1 re");
   return (
     <>
       {props.isAdmin ? (
@@ -183,6 +184,7 @@ function Page1(props: Props) {
                   label="Problem Statement"
                   dispatch={updateProblemStatement}
                 />
+                {/* <QuillEditor /> */}
                 <TextAreaComponent
                   label="Note"
                   value={props.problemData.note}
@@ -233,7 +235,7 @@ function Page1(props: Props) {
                   placeholder={"in MB"}
                 />
                 <div className="flex justify-center items-center ">
-                  <Button onClick={(e) => handleSubmit(e)}>Go Next</Button>
+                  <Button variant="outline" color="violet" radius="md" size="md" onClick={(e) => handleSubmit(e)}>Go Next</Button>
                 </div>
               </form>
             </div>

@@ -9,7 +9,6 @@ import { getStaticData, getUserProfile, recentSubmissions } from "components/api
 
 import Submission from 'components/Submission'
 import AreaGraph from 'components/Graphs/AreaGraph'
-import { Loading } from "@nextui-org/react";
 
 
 interface SubmissionsI {
@@ -62,9 +61,9 @@ function Profile(): ReactElement {
       } = await getStaticData.get<StaticdataI>("/");
 
       const perc = {
-        easy: (easy_solved / easy) * 100,
-        medium: (medium_solved / medium) * 100,
-        hard: (hard_solved / hard) * 100,
+        easy: (easy_solved / easy) * 100 || 0,
+        medium: (medium_solved / medium) * 100 || 0,
+        hard: (hard_solved / hard) * 100 || 0,
       };
 
       setPercentage(perc);
@@ -303,7 +302,7 @@ function Profile(): ReactElement {
                             {recentSubList.includes('Empty') && (
                             <div className="text-center w-full">
                               <p className="text-white font-bold text-2xl p-4">
-                                <Loading type="points-opacity" size="xl" />
+                                Loading...
                               </p>
                             </div>
                           )}

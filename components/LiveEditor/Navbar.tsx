@@ -30,31 +30,44 @@ import NextLink from "next/link";
 import { signoutUser } from "../../redux/actions/authenticate";
 import { useDispatch } from "react-redux";
 
-import React from "react";
-// import { useNotifications } from "@mantine/notifications";
-import { showNotification } from '@mantine/notifications';
+import React, { useRef } from "react";
+import { Menu as PrimeMenu } from "primereact/menu";
+import { Button as Btn } from "primereact/button";
+import { useNotifications } from "@mantine/notifications";
 
-import Notification from './Notification'
-import {FcInfo} from 'react-icons/fc'
-import { Menu, Divider as Div, UnstyledButton } from '@mantine/core';
+import Notification from "../Navbar/Notification";
+import { FcInfo } from "react-icons/fc";
+import { Menu, Divider as Div, UnstyledButton } from "@mantine/core";
 
 export default function WithSubnavigation() {
   const dispatch = useDispatch();
-  // const notifications = useNotifications();
+  const notifications = useNotifications();
   const { isOpen, onToggle } = useDisclosure();
   const isHidden = useBreakpointValue({ base: true, md: false });
   // @ts-ignore
   const { is_logged_in, profile_pic, username, is_admin } = useSelector(
     (state: any) => state.userData
   );
+  const addProbemRouteHandler = () => {
+    if (is_admin) {
+      Router.push("/addproblems");
+    } else {
+      notifications.showNotification({
+        title: "Not an Admin",
+        message:
+          "You don't have enough privileges, because you are not an admin",
+        icon: <FcInfo className="text-4xl" />,
+      });
+    }
+  };
 
   const profileRouteHandler = () => {
-    Router.push(`/profile/${username}`)
-  } 
+    Router.push(`/profile/${username}`);
+  };
 
   const signoutHandler = () => {
-    dispatch(signoutUser(true))
-  }
+    dispatch(signoutUser(true));
+  };
 
   return (
     <Container maxW={"container.xl"} className="overflow-hidden">
@@ -120,49 +133,60 @@ export default function WithSubnavigation() {
           >
             {is_logged_in ? (
               <>
-               <Menu 
-               className="group" 
-              
-               control={
-                  <UnstyledButton className="hidden md:block min-w-max">  
-                    <Flex className="group-hover:cursor-pointer" alignItems="center">
-                      <Avatar className="mt-2" name={username} src={profile_pic} />
-                      <span className="text-white ml-2 font-medium">{username}</span>
-                    </Flex>
-                  </UnstyledButton>}>
-                <Menu.Item  
-                  sx={(theme) => ({
-                    '&:hover': {
-                    backgroundColor: theme.colors.gray[8],
-                    },
-                  })}
-                  onClick={profileRouteHandler}>
+                <Menu
+                  className="group"
+                  control={
+                    <UnstyledButton className="hidden md:block min-w-max">
+                      <Flex
+                        className="group-hover:cursor-pointer"
+                        alignItems="center"
+                      >
+                        <Avatar
+                          className="mt-2"
+                          name={username}
+                          src={profile_pic}
+                        />
+                        <span className="text-white ml-2 font-medium">
+                          {username}
+                        </span>
+                      </Flex>
+                    </UnstyledButton>
+                  }
+                >
+                  <Menu.Item
+                    sx={(theme) => ({
+                      "&:hover": {
+                        backgroundColor: theme.colors.gray[8],
+                      },
+                    })}
+                    onClick={profileRouteHandler}
+                  >
                     Your Profile
-                </Menu.Item> 
-                <Menu.Item  
-                  sx={(theme) => ({
-                    '&:hover': {
-                    backgroundColor: theme.colors.gray[8],
-                    },
-                  })}
-                  disabled={!is_admin}
-                  onClick={() => Router.push("/addproblems")}>
+                  </Menu.Item>
+                  <Menu.Item
+                    sx={(theme) => ({
+                      "&:hover": {
+                        backgroundColor: theme.colors.gray[8],
+                      },
+                    })}
+                    onClick={addProbemRouteHandler}
+                  >
                     Add problems
-                </Menu.Item> 
-                <Div />           
-                <Menu.Item  
-                  sx={(theme) => ({
-                    '&:hover': {
-                    backgroundColor: theme.colors.gray[8],
-                    },
-                  })}
-                  onClick={signoutHandler}
-                  color="red"
+                  </Menu.Item>
+                  <Div />
+                  <Menu.Item
+                    sx={(theme) => ({
+                      "&:hover": {
+                        backgroundColor: theme.colors.gray[8],
+                      },
+                    })}
+                    onClick={signoutHandler}
+                    color="red"
                   >
                     Sign Out
-                </Menu.Item> 
-               </Menu>
-               <Notification/>
+                  </Menu.Item>
+                </Menu>
+                <Notification />
               </>
             ) : (
               <>
@@ -187,7 +211,7 @@ export default function WithSubnavigation() {
                     fontSize={"sm"}
                     fontWeight={400}
                     color={"white"}
-                    bg={"brand.100"}
+                    bg={"purple.600"}
                     href={"/auth/signup"}
                     _hover={{
                       bg: "purple.400",
@@ -199,9 +223,8 @@ export default function WithSubnavigation() {
               </>
             )}
           </Stack>
-          
         </Flex>
-                    
+
         <Collapse in={isOpen} animateOpacity>
           <MobileNav />
         </Collapse>
@@ -268,13 +291,13 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
       display={"block"}
       p={2}
       rounded={"md"}
-      _hover={{ bg: useColorModeValue("brand.100", "gray.900") }}
+      _hover={{ bg: useColorModeValue("purple.600", "gray.900") }}
     >
       <Stack direction={"row"} align={"center"}>
         <Box>
           <Text
             transition={"all .3s ease"}
-            _groupHover={{ color: "brand.100" }}
+            _groupHover={{ color: "purple.400" }}
             fontWeight={500}
           >
             {label}
@@ -290,7 +313,7 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
           align={"center"}
           flex={1}
         >
-          <Icon color={"brand.100"} w={5} h={5} as={ChevronRightIcon} />
+          <Icon color={"purple.400"} w={5} h={5} as={ChevronRightIcon} />
         </Flex>
       </Stack>
     </Link>

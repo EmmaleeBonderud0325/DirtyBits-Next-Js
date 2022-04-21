@@ -4,8 +4,6 @@ import Link from "next/link";
 
 import Cookies from "js-cookie";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { Modal, Text, Row } from "@nextui-org/react";
-import { Loading } from "@nextui-org/react";
 import { AiFillGithub, AiOutlineSend } from "react-icons/ai";
 import { MdCreate } from "react-icons/md";
 import { VscRunAll } from "react-icons/vsc";
@@ -365,7 +363,7 @@ const Editor: FC<Props> = (props): ReactElement => {
     console.error("Google Authentication failed !");
   };
 
-  const antIcon = <Loading type="points-opacity" size="sm" />;
+  const antIcon = "Loading..."
 
   const handleConsole = () => {
     setActiveIndex(1);
@@ -460,7 +458,7 @@ const Editor: FC<Props> = (props): ReactElement => {
             >
               {isDisabled ? (
                 <span className="w-[51px] flex justify-center items-center h-5">
-                  {<Loading type="spinner" size="sm" />}
+                  Loading...
                 </span>
               ) : (
                 <>
@@ -483,7 +481,7 @@ const Editor: FC<Props> = (props): ReactElement => {
         </div>
       </div>
 
-      <Modal
+      {/* <Modal
         closeButton
         blur
         aria-labelledby="modal-title"
@@ -558,7 +556,7 @@ const Editor: FC<Props> = (props): ReactElement => {
               </GitHubLogin>
           </Row>
         </div>
-      </Modal>
+      </Modal> */}
 
       {showConsole && (
         <TabView

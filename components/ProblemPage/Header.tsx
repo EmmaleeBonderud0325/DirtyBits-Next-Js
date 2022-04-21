@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import _ from "lodash";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { Tooltip } from "@nextui-org/react";
+import { Tooltip } from '@mantine/core';
 
 import UserProfileDropDown from "../UserProfileDropDown";
 import { uploadCode } from "../api/apis";
@@ -143,7 +143,7 @@ function Header(props: Props): ReactElement {
       {/* TOP RIGHT ICONS */}
       {is_logged_in && (
         <div className="space-x-4 flex items-center transition-all ease-in-out">
-          <Tooltip content="Upload Code to cloud" color="secondary">
+          <Tooltip label="Upload Code to cloud" color="blue" withArrow>
             <Image
               onClick={uploadCloud}
               className="cursor-pointer"
@@ -155,7 +155,7 @@ function Header(props: Props): ReactElement {
           </Tooltip>
 
           <div>
-            <Tooltip content="Import File" color="secondary">
+          <Tooltip label="Import File" color="blue" withArrow>
               <label htmlFor="file-input">
                 <Image
                   className="cursor-pointer"
@@ -176,7 +176,7 @@ function Header(props: Props): ReactElement {
           </div>
 
           <div>
-            <Tooltip content="Download Code" color="secondary">
+          <Tooltip label="Download Code" color="blue" withArrow>
               <Image
                 onClick={() =>
                   download("code" + props.currLang.ext, props.editorValue)
@@ -190,7 +190,7 @@ function Header(props: Props): ReactElement {
             </Tooltip>
           </div>
           <div>
-            <Tooltip content="Reset Code" color="secondary">
+          <Tooltip label="Reset Code" color="blue" withArrow>
               <Image
                 onClick={resetCode}
                 className="cursor-pointer"

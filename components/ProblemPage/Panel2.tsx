@@ -1,7 +1,6 @@
 import { useState, useEffect, ReactElement } from "react";
 import SplitPane, { Pane } from "react-split-pane";
 import { useDispatch, connect } from "react-redux";
-import { Loading } from "@nextui-org/react";
 
 import Editor from "./Editor";
 import Tabs from "./Tabs";
@@ -64,7 +63,7 @@ function Panel2(props: Props): ReactElement {
           ) : (
             <div className="h-[100vh] flex justify-center items-center w-full">
               <p className="text-white font-bold text-2xl p-4">
-                <Loading type="points-opacity" size="xl" />
+                Loading...
               </p>
             </div>
           )}

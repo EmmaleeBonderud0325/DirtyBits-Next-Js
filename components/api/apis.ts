@@ -62,7 +62,7 @@ export const AddProblem = CreateAxiosRequest(
 );
 
 export const uploadImage = axios.create({
-  baseURL: BASE_URL + "auth/uploadCloudinary",
+  baseURL: BASE_URL + "problems/uploadProblemImage",
 });
 
 export const UpdateProblem = CreateAxiosRequest(

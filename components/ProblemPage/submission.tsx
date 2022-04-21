@@ -2,8 +2,6 @@ import { ReactElement, useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
 import moment from "moment";
 
-import { Loading } from "@nextui-org/react";
-
 import { getSubmissionsListAction } from "../../redux/actions/ProblemPage";
 import { submissionsListI } from "../../redux/interfaces";
 import { IRootState } from "../../redux/reducers";
@@ -103,7 +101,7 @@ const Submission = (props: Props): ReactElement => {
           {props.submissionList === null && (
             <div className="text-center w-full">
               <p className="text-white font-bold text-2xl p-4">
-                <Loading type="points-opacity" size="xl" />
+                Loading...
               </p>
             </div>
           )}
