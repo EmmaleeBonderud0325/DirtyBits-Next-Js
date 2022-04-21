@@ -313,3 +313,12 @@ html::-webkit-scrollbar-thumb {
 .p-multiselect-header {
   background: #2d3748 !important;
 }
+
+.mantine-kekquh {
+  background: #25262B !important;
+  border: 1px solid #25262B !important;
+}
+
+.mantine-kekquh .mantine-Divider-horizontal {
+  border-top-color: #000 !important;
+}

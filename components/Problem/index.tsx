@@ -14,6 +14,7 @@ import WrapperLayout from "../../Layout/Layout";
 import { problemListI } from "../../redux/interfaces";
 import { Context } from "../../Context";
 import {debounce} from '../../utils'
+import Fade from 'react-reveal/Fade';
 
 
 function Problem(props): ReactElement {
@@ -86,21 +87,19 @@ function Problem(props): ReactElement {
 
   return (
     <WrapperLayout>
-      <motion.div animate={{ y: [20, 0, 0] }}>
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-6 md:gap-10 ">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-6 md:gap-10 mb-10">
           {companyData.map(company => (
-            <CompanyTags key={company.id} Icon={company.Icon} title={company.name} />
+            <Fade bottom key={company.id}>
+              <CompanyTags Icon={company.Icon} title={company.name} />
+            </Fade>
           ))}
         </div>
-      </motion.div>
-      <br />
-      <hr />
-      <br />
+      <hr className="!mb-10 bg-custom-indigo"/>
 
       <MultiSelect
       // @ts-ignore
-      data={tagsList}
-      className="w-full md:w-1/2"
+        data={tagsList}
+        className="w-full md:w-1/2"
         placeholder="Select Tags"
         searchable
         nothingFound="Nothing found"
@@ -124,13 +123,11 @@ function Problem(props): ReactElement {
       </div>
 
       <div className="space-y-2">
-        <label className="text-[13px] text-[#C1C2C5] font-semibold tracking-wider">Select Difficulty</label>
-    <CheckboxGroup description="You can select multiple" defaultValue={[]} onChange={(e) => setDifficulty(e)}>
-      <Checkbox value="E" label="Easy" />
-      <Checkbox value="M" label="Medium" />
-      <Checkbox value="H" label="Hard" />
-    </CheckboxGroup>
-
+        <CheckboxGroup label="Select Difficulty" defaultValue={[]} onChange={(e) => setDifficulty(e)}>
+          <Checkbox value="E" label="Easy" />
+          <Checkbox value="M" label="Medium" />
+          <Checkbox value="H" label="Hard" />
+        </CheckboxGroup>
         <div className="flex flex-col">
         <Table dataList={currentDataList} />
         </div>
