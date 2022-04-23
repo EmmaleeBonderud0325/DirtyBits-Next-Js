@@ -103,7 +103,7 @@ function Signup(props) {
 
   const handleEmailChange = async (email) => {
     if (email.length > 0 && !validate(email)) {
-      dispatch(updateEmailError({ error: true, details: "Invalid Email !" }));
+      dispatch(updateEmailError({ error: true, details: "onInvalid Email !" }));
     } else {
       try {
         const res = await validateEmail.post("/", { email: email });
@@ -146,8 +146,8 @@ function Signup(props) {
     setTimeoutId(emailTimeOutId);
   };
 
-  const handlePasswordChange = (password) => {
-    console.log("called");
+  const handlePasswordChange = (password = '') => {
+    console.log("called", password);
     if (password.length > 0 && password.length < 8) {
       dispatch(
         updatePasswordError({
@@ -264,6 +264,8 @@ function Signup(props) {
     }
   };
 
+  console.log('PASSWORD', formData.password)
+
   return (
     <div>
       <Head>
@@ -323,7 +325,7 @@ function Signup(props) {
                     radius="md"
                     onChange={usernameHandler}
                     error={props.isErrors.username.details}
-                    invalid={props.isErrors.username.error}
+                    onInvalid={props.isErrors.username.error}
                     required
                     size="sm"
                   />
@@ -341,7 +343,7 @@ function Signup(props) {
                       })
                     }
                     error={props.isErrors.firstname.details}
-                    invalid={props.isErrors.firstname.error}
+                    onInvalid={props.isErrors.firstname.error}
                     required
                     size="sm"
                   />
@@ -359,7 +361,7 @@ function Signup(props) {
                       })
                     }
                     error={props.isErrors.lastname.details}
-                    invalid={props.isErrors.lastname.error}
+                    onInvalid={props.isErrors.lastname.error}
                     required
                     size="sm"
                   />
@@ -373,19 +375,17 @@ function Signup(props) {
                     radius="md"
                     onChange={handleEmail}
                     error={props.isErrors.email.details}
-                    invalid={props.isErrors.email.error}
+                    onInvalid={props.isErrors.email.error}
                     required
                     size="sm"
                   />
                 </div>
                 <div className="space-y-2">
                   <PasswordStrength
-                    formData={formData}
-                    value={formData.password}
-                    setValue={setFormData}
+                    // @ts-ignore
+                    restFormData={formData}
+                    setFormValue={setFormData}
                     cb={handlePasswordChange}
-                    timeoutId={timeoutId}
-                    setTimeoutId={setTimeoutId}
                     error={props.isErrors.password.details}
                     invalid={props.isErrors.password.error}
                   />
@@ -398,7 +398,7 @@ function Signup(props) {
                     radius="md"
                     onChange={handleConfirmPassword}
                     error={props.isErrors.confirmPassword.details}
-                    invalid={props.isErrors.confirmPassword.error}
+                    onInvalid={props.isErrors.confirmPassword.error}
                     required
                     size="sm"
                   />

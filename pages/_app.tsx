@@ -1,7 +1,7 @@
 import { createWrapper } from "next-redux-wrapper";
 import type { AppProps } from "next/app";
 // import Navbar from "../components/Navbar";
-import Navbar from "components/Navbar/Navbar";
+// import Navbar from "components/Navbar/Navbar";
 import Footer from "components/Footer";
 import { store } from "redux/store";
 import "../styles/index.css";
@@ -17,6 +17,7 @@ import NextNProgress from "nextjs-progressbar";
 import { NotificationsProvider } from "@mantine/notifications";
 import { MantineProvider } from "@mantine/core";
 import {colors} from 'constants/colors';
+import Navbar from 'components/Navbar2.0';
 
 import "react-quill/dist/quill.snow.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
@@ -24,6 +25,7 @@ import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css";
 import { useDispatch } from "react-redux";
 import { notifyFirstLoad } from "redux/actions";
+
 
 import Context from '../Context'
 
@@ -65,8 +67,7 @@ function MyApp({ Component, pageProps }: Props) {
   return (
     <>
     <Context>
-          <ChakraProvider theme={theme}>
-      <MantineProvider theme={{ colorScheme: "dark" }}>
+      <MantineProvider theme={theme}>
         <NotificationsProvider position="top-right" zIndex={2077} color="red">
             <NextNProgress height={2} color={colors.primary} />
             {/* <Navbar fixedHeader={fixedTop} bg={background} /> */}
@@ -74,7 +75,6 @@ function MyApp({ Component, pageProps }: Props) {
             <Component {...pageProps} />
         </NotificationsProvider>
       </MantineProvider>
-          </ChakraProvider>
       {footer}
     </Context>
     </>

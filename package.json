@@ -77,6 +77,7 @@
     "redux": "^4.1.1",
     "redux-thunk": "^2.3.0",
     "sass": "^1.43.4",
+    "tabler-icons-react": "^1.45.0",
     "tailwind-scrollbar-hide": "^1.0.4",
     "tw-elements": "^1.0.0-alpha8",
     "typewriter-effect": "^2.18.2"

@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import Link from "next/link";
-import { Button } from "@nextui-org/react";
+import { Button } from '@mantine/core';
 
 interface Props {
   url: string;
@@ -13,13 +13,6 @@ function LoginButton({ url, text, color, textColor }: Props): ReactElement {
   return (
     <Link href={url}>
       <Button
-        css={{
-          background: color,
-          color: textColor,
-        }}
-        auto
-        color="primary"
-        rounded
       >
         {text}
       </Button>
