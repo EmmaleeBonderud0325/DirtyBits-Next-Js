@@ -3,10 +3,10 @@ import { ReactElement, useCallback, useContext, useEffect, useState, } from "rea
 import { AiOutlineSearch } from "react-icons/ai";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
-import { MultiSelect , Input } from '@mantine/core';
+import { MultiSelect , Input, Text } from '@mantine/core';
 import { CheckboxGroup, Checkbox } from '@mantine/core';
 
-import Table from "../Table";
+import Table from "../ProblemsTable/Table";
 import {GoogleIcon, FacebookIcon, AmazonIcon, MicrosoftIcon, PlusIcon, AppleIcon} from '../../SVG'
 import CompanyTags from "../CompanyTags/CompanyTags";
 import { filterProblemData } from "../api/apis";
@@ -15,9 +15,26 @@ import { problemListI } from "../../redux/interfaces";
 import { Context } from "../../Context";
 import {debounce} from '../../utils'
 import Fade from 'react-reveal/Fade';
+import { useModals } from "@mantine/modals";
 
 
 function Problem(props): ReactElement {
+  const modals = useModals();
+
+  const openConfirmModal = () => modals.openConfirmModal({
+    title: 'Please confirm your action',
+    children: (
+      <Text size="sm">
+        This action is so important that you are required to confirm it with a modal. Please click
+        one of these buttons to proceed.
+      </Text>
+    ),
+    labels: { confirm: 'Confirm', cancel: 'Cancel' },
+    confirmProps: { color: 'red' },
+    onCancel: () => console.log('Cancel'),
+    onConfirm: () => console.log('Confirmed'),
+  });
+
   const companyData = [
     {
       id: 1,
@@ -90,7 +107,7 @@ function Problem(props): ReactElement {
         <div className="grid grid-cols-2 gap-4 md:grid-cols-6 md:gap-10 mb-10">
           {companyData.map(company => (
             <Fade bottom key={company.id}>
-              <CompanyTags Icon={company.Icon} title={company.name} />
+              <CompanyTags onClick={openConfirmModal} Icon={company.Icon} title={company.name} />
             </Fade>
           ))}
         </div>

@@ -7,7 +7,7 @@ import {RingProgress, Text} from '@mantine/core'
 import { useBreakpointValue } from '@chakra-ui/react'
 import { getStaticData, getUserProfile, recentSubmissions } from "components/api/apis";
 
-import Submission from 'components/Submission'
+import Submission from 'components/Submissions/Submission'
 import AreaGraph from 'components/Graphs/AreaGraph'
 
 

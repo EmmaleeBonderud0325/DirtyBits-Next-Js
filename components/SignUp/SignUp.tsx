@@ -10,7 +10,7 @@ import { connect, useDispatch } from "react-redux";
 import SmoothList from "react-smooth-list";
 import { TextInput, PasswordInput } from "@mantine/core";
 
-import { PasswordStrength } from "../PasswordMeter";
+import { PasswordStrength } from "../PasswordStrength/PasswordMeter";
 import { validateUserName, validateEmail, createUser } from "../api/apis";
 import {
   updateFirstNameError,

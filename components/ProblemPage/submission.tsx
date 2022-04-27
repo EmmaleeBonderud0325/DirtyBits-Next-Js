@@ -5,7 +5,7 @@ import moment from "moment";
 import { getSubmissionsListAction } from "../../redux/actions/ProblemPage";
 import { submissionsListI } from "../../redux/interfaces";
 import { IRootState } from "../../redux/reducers";
-import RecentSubmission from '../Submission'
+import RecentSubmission from '../Submissions/Submission'
 import { Loader } from "@mantine/core";
 
 interface Props {

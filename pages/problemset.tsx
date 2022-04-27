@@ -2,7 +2,7 @@ import { ReactElement, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Head from "next/head";
 
-import Problem from "components/Problem";
+import ProblemSet from "components/Problem";
 import { getProblems } from "redux/actions";
 
 function Practice(): ReactElement {
@@ -16,7 +16,7 @@ function Practice(): ReactElement {
       <Head>
         <title>Practice</title>
       </Head>
-      <Problem />
+      <ProblemSet />
     </>
   );
 }

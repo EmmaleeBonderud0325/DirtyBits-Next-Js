@@ -13,7 +13,7 @@ import himanshu from "../../public/himanshu.jpeg";
 import mohit from "../../public/mohit.jpg";
 import akshat from "../../public/akshat.jpeg";
 
-import Feature from "../Feature";
+import Feature from "../Features/Feature";
 import Link from "next/link";
 
 export default function Homepage() {

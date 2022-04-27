@@ -22,6 +22,6 @@
     "**/*.tsx",
     "redux/store.tsx",
     "components/ProblemPage/Helper2.js"
-, "pages/auth/registered.tsx", "components/Tag.js", "components/Table.tsx", "components/Pricing.js", "next.config.js", "components/PasswordMeter.js", "components/Input.js"  ],
+, "pages/auth/registered.tsx", "components/Tag.js", "components/ProblemsTable/Table.tsx", "components/Pricing.js", "next.config.js", "components/PasswordMeter.js", "components/Input.js"  ],
   "exclude": ["node_modules"]
 }
