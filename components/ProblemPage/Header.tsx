@@ -22,6 +22,7 @@ import insert from "../../public/insert.svg";
 import { IRootState } from "../../redux/reducers";
 import { editorLanguageI, themeI, userDataI } from "../../redux/interfaces";
 import UserDropdown from "components/UserDropdown";
+import LanguageDropdown from 'components/Dropdown/index'
 
 interface Props {
   editorValue: string;
@@ -141,6 +142,7 @@ function Header(props: Props): ReactElement {
         setCurrLang={changeLanguage}
         changeEditorValue={changeEditorValue}
       />
+      <LanguageDropdown title="Language"/>
       {/* TOP RIGHT ICONS */}
       {is_logged_in && (
         <div className="space-x-4 flex items-center transition-all ease-in-out">

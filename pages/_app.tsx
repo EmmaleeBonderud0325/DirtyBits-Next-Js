@@ -11,7 +11,6 @@ import "../styles/tinymce.css";
 import { NextPage } from "next";
 import { ReactNode, useEffect } from "react";
 import "react-toastify/dist/ReactToastify.css";
-import { ChakraProvider } from "@chakra-ui/react";
 import theme from "theme/theme";
 import NextNProgress from "nextjs-progressbar";
 import { NotificationsProvider } from "@mantine/notifications";
@@ -52,16 +51,11 @@ function MyApp({ Component, pageProps }: Props) {
     return Component.getLayout(<Component {...pageProps} />);
   }
 
-  let background: string;
-  let fixedTop = "";
   let footer: JSX.Element;
 
   if (router.pathname === "/") {
-    background = "bg-transparent-800 w-screen absolute z-50";
     footer = <Footer />;
   } else {
-    background = "bg-black border-b-1 border-gray-500 w-screen z-50";
-    fixedTop = "sticky top-0 z-50";
     footer = null;
   }
   return (
@@ -70,7 +64,6 @@ function MyApp({ Component, pageProps }: Props) {
       <MantineProvider theme={theme}>
         <NotificationsProvider position="top-right" zIndex={2077} color="red">
             <NextNProgress height={2} color={colors.primary} />
-            {/* <Navbar fixedHeader={fixedTop} bg={background} /> */}
             <Navbar />
             <Component {...pageProps} />
         </NotificationsProvider>

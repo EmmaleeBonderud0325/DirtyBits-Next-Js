@@ -9,6 +9,8 @@ import {
   AiFillLike,
   AiFillDislike,
 } from "react-icons/ai";
+import {VscCollapseAll} from 'react-icons/vsc'
+import {BiTrendingUp} from 'react-icons/bi'
 import { IoPlayBackOutline } from "react-icons/io5";
 import { BsFillBookmarkFill, BsBookmark } from "react-icons/bs";
 import { TabView, TabPanel as Panel } from "primereact/tabview";
@@ -147,12 +149,7 @@ function BasicTabs(props: Props): ReactElement {
 
               <div className="flex items-center space-x-1">
                 <p>
-                  <Image
-                    src={bar}
-                    width={30}
-                    height={30}
-                    alt="accuracy graph image"
-                  />
+                  <BiTrendingUp/>
                 </p>
                 <p className="text-xs">
                   Accuracy. {props.questionData.accuracy}%
@@ -161,12 +158,7 @@ function BasicTabs(props: Props): ReactElement {
 
               <div className="flex items-center space-x-1">
                 <p>
-                  <Image
-                    src={global}
-                    width={30}
-                    height={30}
-                    alt="total submission image"
-                  />
+                <VscCollapseAll/>
                 </p>
                 <p className="text-xs">
                   Total Submissions. {props.questionData.totalSubmissions}

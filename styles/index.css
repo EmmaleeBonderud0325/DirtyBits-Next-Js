@@ -7,36 +7,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap");
 
 @import "tailwindcss/base";
-/* Write your own custom base styles here */
-
-/* Start purging... */
 @import "tailwindcss/components";
-/* Stop purging. */
-
-/* Write you own custom component styles here */
-
-/* Start purging... */
 @import "tailwindcss/utilities";
-/* Stop purging. */
 
-/* Your own custom utilities */
-
-/* @layer base {
-  body {
-    @apply bg-[#060F1E] text-gray-300 !important;
-  }
-} */
-/* @layer base {
-  body {
-    @apply bg-[#060F1E] text-gray-300 !important;
-  }
-} */
-
-/* @layer base {
-  body {
-    @apply bg-[#6653FF] text-gray-300;
-  }
-} */
 
 @layer components {
   .circular-btn {
@@ -93,16 +66,12 @@
 html {
   overflow-x: hidden;
 }
-
 body {
   font-family: "Lato", "Montserrat", sans-serif !important;
   height: 100vh;
-  /* ff 3.6+ */
-  /* ff 3.6+ */
-  /* background: linear-gradient(135deg, #ce9ffc, #7367f0); */
-  /* background-repeat: no-repeat; */
   background-color: black;
 }
+
 
 .cartoon {
   animation: updown 5s ease infinite;
@@ -187,48 +156,6 @@ html::-webkit-scrollbar-thumb {
   border-color: transparent;
 }
 
-/* OUTPUT LOADER */
-
-/* .loader {
-  width: 4.8px;
-  height: 4.8px;
-  display: block;
-  margin: 50px auto;
-  position: relative;
-  border-radius: 4px;
-  color: #fff;
-  background: currentColor;
-  box-sizing: border-box;
-  animation: animloader 0.3s 0.3s linear infinite alternate;
-}
-.loader::after,
-.loader::before {
-  content: "";
-  box-sizing: border-box;
-  width: 4.8px;
-  height: 4.8px;
-  border-radius: 4px;
-  background: currentColor;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 15px;
-  animation: animloader 0.3s 0.45s linear infinite alternate;
-}
-.loader::after {
-  top: -15px;
-  animation-delay: 0s;
-}
-
-@keyframes animloader {
-  0% {
-    width: 4.8px;
-  }
-  100% {
-    width: 48px;
-  }
-} */
-
 .bg-main-color {
   background-color: var(--main-color);
 }
@@ -262,9 +189,6 @@ html::-webkit-scrollbar-thumb {
   border-bottom: none !important;
   border-style: none !important;
   border-color: none !important;
-}
-.chakra-stack .css-379x9j {
-  visibility: hidden;
 }
 .css-73pxpg,
 .css-pwz031,

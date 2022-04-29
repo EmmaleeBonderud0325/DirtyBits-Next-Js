@@ -4,7 +4,6 @@ import Image from "next/image";
 import { IRootState } from "redux/reducers";
 import {RingProgress, Text} from '@mantine/core'
 
-import { useBreakpointValue } from '@chakra-ui/react'
 import { getStaticData, getUserProfile, recentSubmissions } from "components/api/apis";
 
 import Submission from 'components/Submission'
@@ -81,7 +80,7 @@ function Profile(): ReactElement {
     getRecenSubmissions();
   }, []);
 
-  const isMobile = useBreakpointValue({ base: true, md: false })
+  const isMobile = false
   
   return (
     <div className="">
