@@ -6,17 +6,13 @@ module.exports = {
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./styles/**/*.css",
     "./components/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/tw-elements/dist/js/**/*.js",
   ],
   future: {
     removeDeprecatedGapUtilities: true,
     purgeLayersByDefault: true,
   },
   darkMode: "class",
-  plugins: [
-    require("tailwind-scrollbar-hide"),
-    require("tw-elements/dist/plugin"),
-  ],
+  plugins: [require("tailwind-scrollbar-hide")],
   theme: {
     fontFamily: {
       dance: ['"Dancing Script"'],
@@ -36,4 +32,7 @@ module.exports = {
       },
     },
   },
+  // corePlugins: {
+  //   preflight: false,
+  // },
 };
