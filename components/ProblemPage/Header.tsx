@@ -126,7 +126,7 @@ function Header(props: Props): ReactElement {
   return (
     <div className="flex justify-around p-10">
       {/* <FontDropdown fontSize={props.fontSize} setFontSize={changeFont} /> */}
-      <Dropdown2
+      {/* <Dropdown2
         dropdownType={"theme"}
         currTheme={props.currTheme}
         currLang={props.currLang}
@@ -141,7 +141,7 @@ function Header(props: Props): ReactElement {
         setCurrTheme={changeTheme}
         setCurrLang={changeLanguage}
         changeEditorValue={changeEditorValue}
-      />
+      /> */}
       <LanguageDropdown title="Language"/>
       {/* TOP RIGHT ICONS */}
       {is_logged_in && (
