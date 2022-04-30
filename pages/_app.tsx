@@ -44,9 +44,6 @@ function MyApp({ Component, pageProps }: Props) {
   }, []);
   const router = useRouter();
 
-  if (typeof window !== "undefined") {
-    import("tw-elements/dist/js/index.min.js");
-  }
   if (Component.getLayout) {
     return Component.getLayout(<Component {...pageProps} />);
   }
