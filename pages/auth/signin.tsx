@@ -6,24 +6,24 @@ import {
   Link,
   Head,
   useRouter,
-  GoogleLogin,
-  GitHubLogin,
-  validate,
   Cookies,
   connect,
   useDispatch,
-  FcGoogle,
-  AiFillGithub,
+
   SmoothList,
   updateSignInSpinner,
   updateUserinfo,
   signinApi,
   Parsetoken,
-  githubLogin,
-  googleLogin,
 } from "imports/Signin";
 import Background from "components/Background";
 import { notifyFirstLoad } from "redux/actions";
+import { useForm, Controller  } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+import { Loader } from '@mantine/core';
+import GoogleButton from 'components/authProviders/Google'
+import GitHubButton from 'components/authProviders/Github'
 
 interface Props {
   googleSpinner: boolean;
@@ -55,60 +55,31 @@ interface TokensI {
 function Signin(props: Props): ReactElement {
   const dispatch = useDispatch();
   const router = useRouter();
-  const antIcon = "Loading"
-  let [formData, setFormData] = useState<FormDataI>({
-    email: "",
-    password: "",
-    remeberMe: false,
-  });
+  const antIcon = <Loader color="indigo" size="sm" />;
 
+  const schema = yup.object({
+    email: yup.string().required('Email is required').email('Email is not valid'),
+    password: yup.string().required('Password is required'),
+    remember_me: yup.boolean(),
+  }).required();
+  
   let [isError, setIsError] = useState<ErrorsI>({
     email: { error: false, details: "" },
     password: { error: false, details: "" },
   });
 
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
+  const { control,register, handleSubmit, formState:{ errors } } = useForm({
+    resolver: yupResolver(schema)
+  });
 
-  const validateFormData = (): boolean => {
-    if (validate(formData.email)) {
-      if (formData.password.length === 0) {
-        setIsError({
-          ...isError,
-          email: { error: false, details: "" },
-          password: { error: true, details: "Password can't be empty !" },
-        });
-        return false;
-      } else {
-        setIsError({
-          email: { error: false, details: "" },
-          password: { error: false, details: "" },
-        });
-        return true;
-      }
-    } else {
-      if (formData.password.length === 0) {
-        setIsError({
-          ...isError,
-          email: { error: true, details: "Invalid Email !" },
-          password: { error: true, details: "Password can't be empty !" },
-        });
-        return false;
-      } else {
-        setIsError({
-          ...isError,
-          email: { error: true, details: "Invalid Email !" },
-        });
-        return false;
-      }
-    }
-  };
-
-  const postAuthentication = (tokens: TokensI) => {
+  const postAuthentication = (tokens: TokensI, remember_me: Boolean) => {
     const { access, refresh } = tokens;
+    console.log('remember', remember_me)
     const data = Parsetoken(access);
     console.log("data", data);
     if (data.is_verified) {
-      if (formData.remeberMe) {
+      if (remember_me) {
         var inTwentyMinutes = new Date(new Date().getTime() + 20 * 60 * 1000);
         Cookies.set("access", access, { expires: inTwentyMinutes });
         Cookies.set("refresh", refresh, { expires: 14 });
@@ -139,21 +110,14 @@ function Signin(props: Props): ReactElement {
     }
   };
 
-  const submitLoginForm = async (e: any) => {
-    dispatch(updateSignInSpinner(true));
-    e.preventDefault();
+  const submitLoginForm = async (data: any) => {
+    console.log('data', data)
     setIsDisabled(true);
-    setIsError({
-      email: { error: false, details: "" },
-      password: { error: false, details: "" },
-    });
-    const isValid = validateFormData();
-    if (isValid) {
       try {
         await signinApi
-          .post<TokensI>("/", formData)
+          .post<TokensI>("/", data)
           .then((result) => {
-            postAuthentication(result.data);
+            postAuthentication(result.data, data.remember_me);
           })
           .catch(() => {
             setIsError({
@@ -166,12 +130,12 @@ function Signin(props: Props): ReactElement {
       } catch (e) {
         console.error("Server Error !");
       }
-    }
     setIsDisabled(false);
     dispatch(updateSignInSpinner(false));
     return;
   };
-
+ 
+  
   return (
     <>
       <Head>
@@ -220,145 +184,123 @@ function Signin(props: Props): ReactElement {
                 </h3>
                 <p className="text-gray-500">Please sign in to your account.</p>
               </div>
-
               <div className="space-y-5">
-                <div className="space-y-1">
-                  <TextInput
-                    error={isError.email.details}
-                    value={formData.email}
-                    radius="md"
-                    onChange={(event) =>
-                      setFormData({
-                        ...formData,
-                        email: event.currentTarget.value,
-                      })
-                    }
-                    label="Email"
-                    placeholder="your email address"
-                    invalid={isError.email.error}
-                    required
-                    size="sm"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <PasswordInput
-                    error={isError.password.details}
-                    radius="md"
-                    placeholder="Your password here"
-                    value={formData.password}
-                    onChange={(event) =>
-                      setFormData({
-                        ...formData,
-                        password: event.currentTarget.value,
-                      })
-                    }
-                    label="Password"
-                    size="sm"
-                    required
-                    invalid={isError.password.error}
-                  />
-                </div>
-                <div className="flex items-center justify-between my-2">
-                  <div className="flex items-center accent-custom-indigo">
-                    <input
-                      id="remember_me"
-                      name="remember_me"
-                      type="checkbox"
-                      checked={formData.remeberMe}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          remeberMe: !formData.remeberMe,
-                        })
-                      }
-                      className="h-4 w-4 bg-blue-500 focus:ring-blue-400 border-gray-300 rounded"
+                <form noValidate autoComplete="off" onSubmit={handleSubmit(submitLoginForm)}>
+                    <div className="space-y-1">
+                    <Controller
+                      name="email"
+                      control={control}
+                      render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                        key="email"
+                        error={errors.email?.message || isError.email?.details}
+                        value={value}
+                        radius="md"
+                        onChange={onChange}
+                        onBlur={() => {
+                          setIsError({
+                            ...isError,
+                            email: { error: false, details: "" },
+                          });
+                          onBlur();
+                        }}
+                        label="Email"
+                        placeholder="your email address"
+                        // onInvalid={isError.email.error || errors.email?.message}
+                        required
+                        size="sm"
+                        />
+                      )}
                     />
-                    <label
-                      htmlFor="remember_me"
-                      className="ml-2 block text-sm text-gray-800"
-                    >
-                      Remember me
-                    </label>
-                  </div>
-                  <div className="text-sm">
-                    <Link href="/auth/resetpassword">
-                      <a className="text-indigo-400 text-xs hover:text-black">
-                        Forgot your password?
-                      </a>
-                    </Link>
-                  </div>
-                </div>
-                <div>
-                  <button
-                    disabled={isDisabled ? true : false}
-                    type="submit"
-                    onClick={(e) => submitLoginForm(e)}
-                    className={`social-login-btn  bg-custom-indigo hover:bg-indigo-900 hover:outline-black
-                      transition ease-in duration-500
-                      ${isDisabled && "opacity-50 cursor-not-allowed"}
-                    `}
-                    autoFocus
-                  >
-                    {props.signInSpinner ? (
-                      <>
-                        <span>{antIcon}</span>
-                      </>
-                    ) : (
-                      <span className="text-sm font-light">Sign In</span>
-                    )}{" "}
-                  </button>
-
-                  <GoogleLogin
-                    clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
-                    render={(renderProps) => (
+                    </div>
+                    <div className="space-y-1">
+                      <Controller
+                      name="password"
+                      control={control}
+                      render={({ field: { onChange, onBlur, value } }) => (
+                        <PasswordInput
+                        key="password"
+                        error={errors.password?.message || isError.password.details}
+                        radius="md"
+                        placeholder="Your password here"
+                        value={value}
+                        onBlur={() => {
+                          setIsError({
+                            ...isError,
+                            password: { error: false, details: "" },
+                          });
+                          onBlur();
+                        }}
+                        onChange={onChange}
+                        label="Password"
+                        size="sm"
+                        required
+                        // onInvalid={isError.password.error || errors.password?.message}
+                        />
+                      )}
+                    />
+                    </div>
+                    <div className="flex items-center justify-between my-2">
+                      <div className="flex items-center accent-custom-indigo">
+                        
+                      <Controller
+                        name="remember_me"
+                        control={control}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                          <input
+                          id="remember_me"
+                          name="remember_me"
+                          type="checkbox"
+                          checked={value}
+                          // onChange={(e) =>
+                          //   setFormData({
+                          //     ...formData,
+                          //     remeberMe: !formData.remeberMe,
+                          //   })
+                          // }
+                          onBlur={onBlur}
+                          onChange={onChange}
+                          className="h-4 w-4 bg-blue-500 focus:ring-blue-400 border-gray-300 rounded"
+                        />
+                      )}
+                    />
+                        <label
+                          htmlFor="remember_me"
+                          className="ml-2 block text-sm text-gray-800"
+                        >
+                          Remember me
+                        </label>
+                      </div>
+                      <div className="text-sm">
+                        <Link href="/auth/resetpassword">
+                          <a className="text-indigo-400 text-xs hover:text-black">
+                            Forgot your password?
+                          </a>
+                        </Link>
+                      </div>
+                    </div>
                       <button
-                        onClick={renderProps.onClick}
-                        disabled={renderProps.disabled}
-                        className="social-login-btn"
+                        disabled={isDisabled ? true : false}
+                        type="submit"
+                        className={`social-login-btn  bg-custom-indigo hover:bg-indigo-900 hover:outline-black
+                          transition ease-in duration-500
+                          ${isDisabled && "opacity-50 cursor-not-allowed"}
+                        `}
+                        autoFocus
                       >
-                        {props.googleSpinner ? (
+                        {isDisabled ? (
                           <>
                             <span>{antIcon}</span>
                           </>
                         ) : (
-                          <>
-                            <FcGoogle />
-                            <span className="text-sm font-light">Sign In</span>
-                          </>
-                        )}
+                          <span className="text-sm font-light">Sign In</span>
+                        )}{" "}
                       </button>
-                    )}
-                    onSuccess={(data) => {
-                      dispatch(googleLogin(data["tokenId"]));
-                    }}
-                    onFailure={() => {
-                      console.error("Google Authentication failed !");
-                    }}
-                    cookiePolicy={"single_host_origin"}
-                  />
-                  <GitHubLogin
-                    clientId={process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}
-                    onSuccess={(response) => {
-                      dispatch(githubLogin(response.code));
-                    }}
-                    onFailure={(response) => {
-                      console.error(response);
-                    }}
-                    redirectUri=""
-                    scope="read:user,user:email"
-                    buttonText=""
-                    className="social-login-btn"
-                  >
-                    {props.githubSpinner ? (
-                      <span>{antIcon}</span>
-                    ) : (
-                      <>
-                        <AiFillGithub />
-                        <span className="text-sm font-light">Sign In</span>
-                      </>
-                    )}
-                  </GitHubLogin>
-                </div>
+                </form>
+              <div>
+                <GoogleButton dispatch={dispatch} loader={antIcon}/>
+                <GitHubButton dispatch={dispatch} loader={antIcon}/>
+              </div>
               </div>
               <div className="pt-5 text-center text-gray-400 text-xs">
                 <span>
@@ -381,12 +323,6 @@ function Signin(props: Props): ReactElement {
 Signin.getLayout = function PageLayout(page: any) {
   return <>{page}</>;
 };
-const mapStateToProps = (state: IRootState) => {
-  return {
-    googleSpinner: state.googleLoginSpinner,
-    githubSpinner: state.githubLoginSpinner,
-    signInSpinner: state.loginInSpinner,
-  };
-};
 
-export default connect(mapStateToProps, { updateUserinfo })(Signin);
+
+export default Signin;
