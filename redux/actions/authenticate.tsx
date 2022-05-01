@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 import Router from "next/router";
 import { Dispatch } from "redux";
 
-import { openNotificationWithIcon } from "../../components/OpenNotification";
+import { openNotificationWithIcon } from "components/OpenNotification";
 import {
   githubLoginApi,
   googleLoginApi,
