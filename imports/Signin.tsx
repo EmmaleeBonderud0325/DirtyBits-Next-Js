@@ -10,7 +10,6 @@ export { validate } from "email-validator";
 export { default as Cookies } from "js-cookie";
 export { connect, useDispatch } from "react-redux";
 export { FcGoogle } from "react-icons/fc";
-export { AiFillGithub } from "react-icons/ai";
 export { default as SmoothList } from "react-smooth-list";
 export { updateSignInSpinner, updateUserinfo } from "../redux/actions";
 export { default as Input } from "../components/Input";
