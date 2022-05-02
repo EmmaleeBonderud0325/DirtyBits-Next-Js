@@ -135,7 +135,7 @@ export default function HeaderResponsive() {
     <Header height={HEADER_HEIGHT} mb={120} className={classes.root}>
       <Container size="xl" className={classes.header}>
         {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-        <a href='/' className="text-custom-indigo text-2xl font-semibold tracking-wider">DirtyBits</a>
+        <a href='/' className="text-custom-indigo text-2xl font-semibold tracking-wider no-underline">DirtyBits</a>
         <Group spacing={5} className={classes.links}>
           {items}
           <UserDropdown showUserName size={40}/>
