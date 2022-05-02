@@ -8,10 +8,13 @@ import {
   Text,
   List,
   ThemeIcon,
+  MediaQuery,
+  Image,
 } from '@mantine/core';
 import { Check } from 'tabler-icons-react';
 import hero from "public/hero.svg"
-import Image from 'next/image';
+// import Image from 'next/image';
+import { colors } from 'constants/colors';
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -24,7 +27,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   content: {
-    maxWidth: 480,
+    maxWidth: 500,
     marginRight: theme.spacing.xl * 3,
 
     [theme.fn.smallerThan('md')]: {
@@ -53,7 +56,7 @@ const useStyles = createStyles((theme) => ({
 
   image: {
     // flex: 1,
-
+    display: 'none',
     [theme.fn.smallerThan('md')]: {
       display: 'none',
     },
@@ -63,7 +66,7 @@ const useStyles = createStyles((theme) => ({
     position: 'relative',
     backgroundColor:
       theme.colorScheme === 'dark'
-        ? theme.fn.rgba(theme.colors[theme.primaryColor][6], 0.55)
+        ? theme.fn.rgba(colors.primary, 0.55)
         : theme.colors[theme.primaryColor][0],
     borderRadius: theme.radius.sm,
     padding: '4px 12px',
@@ -78,47 +81,24 @@ export default function HeroBullets() {
         <div className={classes.inner}>
           <div className={classes.content}>
             <Title className={classes.title}>
-              A <span className={classes.highlight}>modern</span> React <br /> components library
+              Welcome to <span className={classes.highlight}>DirtyBits</span>
             </Title>
-            <Text color="dimmed" mt="md">
-              Build fully functional accessible web applications faster than ever – Mantine includes
-              more than 120 customizable components and hooks to cover you in any situation
+            <Text color="#fff" size="xl" mt="md">
+            Be a Coder with us.
             </Text>
-
-            <List
-              mt={30}
-              spacing="sm"
-              size="sm"
-              icon={
-                <ThemeIcon size={20} radius="xl">
-                  <Check size={12} />
-                </ThemeIcon>
-              }
-            >
-              <List.Item>
-                <b>TypeScript based</b> – build type safe applications, all components and hooks
-                export types
-              </List.Item>
-              <List.Item>
-                <b>Free and open source</b> – all packages have MIT license, you can use Mantine in
-                any project
-              </List.Item>
-              <List.Item>
-                <b>No annoying focus ring</b> – focus ring will appear only when user navigates with
-                keyboard
-              </List.Item>
-            </List>
+            <Text color="dimmed" mt="md">First, solve the problem. Then, write the code.</Text>
 
             <Group mt={30}>
-              <Button variant='outline' radius="xl" size="md" className={classes.control}>
-                Get started
-              </Button>
-              <Button variant="default" radius="xl" size="md" className={classes.control}>
-                Source code
+              <Button variant='gradient' gradient={{ from: colors.primary, to: '#835FE6', deg: 35 }} radius="xl" size="lg" className={classes.control}>
+                Explore
               </Button>
             </Group>
           </div>
-          <Image src={hero.src} width={500} height={500} className={classes.image} />
+          <Image src={hero.src} width={500} height={500} sx={{
+        '@media (max-width: 1200px)': {
+          display: 'none',
+        },
+      }} />
         </div>
       </Container>
     </div>

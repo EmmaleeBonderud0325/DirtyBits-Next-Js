@@ -9,39 +9,50 @@ import {
   createStyles,
 } from '@mantine/core';
 import { colors } from 'constants/colors';
+import { GiLightningShield } from "react-icons/gi";
+import { FaBlog } from 'react-icons/fa';
+import { MdLeaderboard } from 'react-icons/md';
+import { FiLayers } from 'react-icons/fi';
 
 
 const MOCKDATA = [
   {
-  "icon": "adjustent",
-  "title": "Integrate effortlessly with any technology stack",
+  "icon": <GiLightningShield style={{width: 30, height: 30}}/>,
+  "gradientFrom": "#D84CB5",
+  "gradientTo": "#6C64F2",
+  "title": "Fast Judge Server",
   "description": "Every once in a while, you’ll see a Golbat that’s missing some fangs. This happens when hunger drives it to try biting a Steel-type Pokémon."
   },
   {
-  "icon": "adjustent",
-  "title": "Integrate effortlessly with any technology stack",
+  "icon": <FaBlog style={{width: 30, height: 30}}/>,
+  "gradientFrom": "#D24B0C",
+  "gradientTo": "#F16B8D",
+  "title": "Create your Blog",
   "description": "Every once in a while, you’ll see a Golbat that’s missing some fangs. This happens when hunger drives it to try biting a Steel-type Pokémon."
   },
   {
-  "icon": "adjustent",
-  "title": "Integrate effortlessly with any technology stack",
+  "icon": <MdLeaderboard style={{width: 30, height: 30}}/>,
+  "gradientFrom": "#38D371",
+  "gradientTo": "#9FE963",
+  "title": "Leaderboard",
   "description": "Every once in a while, you’ll see a Golbat that’s missing some fangs. This happens when hunger drives it to try biting a Steel-type Pokémon."
   },
   {
-  "icon": "adjustent",
-  "title": "Integrate effortlessly with any technology stack",
+  "icon": <FiLayers style={{width: 30, height: 30}}/>,
+  "title": "Add Problems",
   "description": "Every once in a while, you’ll see a Golbat that’s missing some fangs. This happens when hunger drives it to try biting a Steel-type Pokémon."
   },
 ]
 
-function Feature({ icon: Icon, title, description }) {
+function Feature({ icon: Icon, title, description, gradientFrom, gradientTo }) {
   const theme = useMantineTheme();
   return (
     <div>
-      <ThemeIcon variant="filled" size={40} radius={40}>
-        <Icon style={{ width: 20, height: 20 }} />
+      <ThemeIcon variant="gradient" gradient={{ from: gradientFrom, to: gradientTo, deg: 40 }} size={80} radius={40}>
+        {/* <Icon style={{ width: 20, height: 20 }} /> */}
+        {Icon}
       </ThemeIcon>
-      <Text variant='text' color={'cyan'} style={{ marginTop: theme.spacing.sm, marginBottom: 7 }}>{title}</Text>
+      <Text variant='text' color="#fff" style={{ marginTop: theme.spacing.sm, marginBottom: 7 }}>{title}</Text>
       <Text size="sm" color="dimmed" style={{ lineHeight: 1.6 }}>
         {description}
       </Text>
@@ -53,6 +64,11 @@ const useStyles = createStyles((theme) => ({
   wrapper: {
     paddingTop: theme.spacing.xl * 4,
     paddingBottom: theme.spacing.xl * 4,
+    marginTop: theme.spacing.xl * 16,
+    '@media (max-width: 480px)': {
+      textAlign: 'center',
+      marginTop: theme.spacing.xl * 8,
+    },
   },
 
   title: {
@@ -66,6 +82,9 @@ const useStyles = createStyles((theme) => ({
       textAlign: 'left',
     },
     color: colors.primary,
+    '@media (max-width: 480px)': {
+      textAlign: 'center',
+    },
   },
 
   description: {
@@ -73,6 +92,9 @@ const useStyles = createStyles((theme) => ({
 
     [theme.fn.smallerThan('sm')]: {
       textAlign: 'left',
+    },
+    '@media (max-width: 480px)': {
+      textAlign: 'center',
     },
   },
 }));
@@ -85,10 +107,12 @@ export function FeatureList({ title, description, data = MOCKDATA }) {
 
   return (
     <Container size="xl" className={classes.wrapper}>
-      <Title className={classes.title}>{title}</Title>
+      <Title className={classes.title}>
+        <span className='text-white'>Some</span> {title}
+      </Title>
 
-      <Container size={560} p={0}>
-        <Text size="sm" className={classes.description}>
+      <Container className='my-10' size={560} p={0}>
+        <Text color="dimmed" size="md" className={classes.description}>
           {description}
         </Text>
       </Container>
