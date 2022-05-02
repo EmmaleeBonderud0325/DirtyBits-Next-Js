@@ -32,7 +32,7 @@ module.exports = {
       },
     },
   },
-  // corePlugins: {
-  //   preflight: false,
-  // },
+  corePlugins: {
+    preflight: false,
+  },
 };
