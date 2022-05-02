@@ -1,21 +1,14 @@
-import React, { ReactElement } from "react";
-import Head from "next/head";
-import Homepage from "components/Homepage/Homepage";
+import React from 'react'
+import Hero from 'components/Hero'
+import Feature from 'components/Feature/index'
 
-function Index(): ReactElement {
+function Navbar() {
   return (
     <>
-      <Head>
-        <title>DirtyBits</title>
-        <meta
-          name="description"
-          content="DirtyBits is the platform to help you enhance your skills, expand your knowledge and prepare for technical interviews."
-        ></meta>
-      </Head>
-
-      <Homepage />
+    <Hero />
+    <Feature title="Features" description="Some of our basics features"/>
     </>
-  );
+  )
 }
 
-export default Index;
+export default Navbar
