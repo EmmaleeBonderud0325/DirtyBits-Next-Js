@@ -1,36 +1,11 @@
 import React, { useState } from 'react';
-import { createStyles, Header, Container, Group, Burger, Paper, Transition } from '@mantine/core';
-import { useBooleanToggle } from '@mantine/hooks';
+import { createStyles, Header, Container, Group, Button } from '@mantine/core';
 import UserDropdown from 'components/UserDropdown';
-// import { MantineLogo } from '../../shared/MantineLogo';
 import {colors} from 'constants/colors';
 import Link from 'next/link';
-
-import {
-
-  Avatar,
-  UnstyledButton,
-  Text,
-  Menu,
-  Divider,
-  Tabs,
-} from '@mantine/core';
-import {
-  Logout,
-  Heart,
-  Star,
-  Message,
-  Settings,
-  PlayerPause,
-  Trash,
-  SwitchHorizontal,
-  ChevronDown,
-} from 'tabler-icons-react';
-import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 
 const HEADER_HEIGHT = 60;
-
-
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -87,11 +62,11 @@ const useStyles = createStyles((theme) => ({
       color: colors.primary,
     },
   },
-}));
 
-interface HeaderResponsiveProps {
-  links: { link: string; label: string }[];
-}
+  linksWrapper: {
+    marginRight: theme.spacing.md,
+  }
+}));
 
 const links =  [
   {
@@ -115,15 +90,15 @@ const links =  [
 export default function HeaderResponsive() {
   const [active, setActive] = useState('');
   const { classes, cx } = useStyles();
-
+  
+  const isAuth = useSelector((state: any) => state.userData.is_logged_in);
+  
   const items = links.map((link) => (
     <Link key={link.label} href={link.link}>
       <a
         className={cx(classes.link, { [classes.linkActive]: active === link.link })}
-        onClick={(event) => {
-          // event.preventDefault();
+        onClick={() => {
           setActive(link.link);
-          // toggleOpened(true);
         }}
       >
         {link.label}
@@ -136,27 +111,24 @@ export default function HeaderResponsive() {
       <Container size="xl" className={classes.header}>
         {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
         <a href='/' className="text-custom-indigo text-2xl font-semibold tracking-wider no-underline">DirtyBits</a>
-        <Group spacing={5} className={classes.links}>
-          {items}
-          <UserDropdown showUserName size={40}/>
-        </Group>
-
-        {/* <Burger
-          opened={opened}
-          onClick={() => toggleOpened()}
-          className={classes.burger}
-          size="sm"
-        /> */}
-{/* 
-        <Transition transition="pop-top-right" duration={200} mounted={opened}>
-          {(styles) => (
+        <Group spacing={10} className={classes.links}>
+          <Group spacing={10} className={classes.linksWrapper}>
+            {items}
+          </Group>
+          {isAuth ? (
+            <UserDropdown showUserName size={40}/>
+          ) : (
             <>
-            <Paper className={classes.dropdown} withBorder style={styles}>
-              {items}
-            </Paper>
+              <Link href="/auth/signin" passHref>
+                <Button className='bg-custom-indigo' variant='filled' radius="xl">Sign In</Button>
+              </Link>
+              <Link href="/auth/signup" passHref>
+                <Button color="dark" variant='white' radius="xl">Sign Up</Button>
+              </Link>
             </>
-          )}
-        </Transition> */}
+          )
+          }
+        </Group>
       </Container>
     </Header>
   );
