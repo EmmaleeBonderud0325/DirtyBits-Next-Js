@@ -4,8 +4,6 @@ import Image from "next/image";
 import _ from "lodash";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { Tooltip } from '@mantine/core';
-
-import UserProfileDropDown from "../UserProfileDropDown";
 import { uploadCode } from "../api/apis";
 import {
   changeEditorValue,

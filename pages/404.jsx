@@ -52,7 +52,7 @@ const NotFoundImage  = () => {
             <title>404 - Page Not Found</title>
         </Head>
       <SimpleGrid spacing={80} cols={2} breakpoints={[{ maxWidth: 'sm', cols: 1, spacing: 40 }]}>
-        <Image src={image} className={classes.mobileImage} />
+        <Image src={image} className={classes.mobileImage} alt="404 image"/>
         <div>
           <Title className={classes.title}>Something is not right...</Title>
           <Text color="dimmed" size="lg">
@@ -63,7 +63,7 @@ const NotFoundImage  = () => {
             Get back to home page
           </Button>
         </div>
-        <Image src={image.src} className={classes.desktopImage} />
+        <Image src={image.src} className={classes.desktopImage} alt="404 image"/>
       </SimpleGrid>
     </Container>
   );

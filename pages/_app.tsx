@@ -1,7 +1,5 @@
 import { createWrapper } from "next-redux-wrapper";
 import type { AppProps } from "next/app";
-// import Navbar from "../components/Navbar";
-// import Navbar from "components/Navbar/Navbar";
 import Footer from "components/Footer";
 import { store } from "redux/store";
 import "../styles/index.css";
@@ -38,10 +36,10 @@ type Props = AppProps & {
 };
 
 function MyApp({ Component, pageProps }: Props) {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(notifyFirstLoad());
-  }, []);
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(notifyFirstLoad());
+  // }, []);
   const router = useRouter();
 
   if (Component.getLayout) {
