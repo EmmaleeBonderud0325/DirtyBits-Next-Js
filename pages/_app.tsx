@@ -58,9 +58,9 @@ function MyApp({ Component, pageProps }: Props) {
     <Context>
       <MantineProvider theme={theme}>
         <NotificationsProvider position="top-right" zIndex={2077} color="red">
-            <NextNProgress height={2} color={colors.primary} />
-            <Navbar />
-            <Component {...pageProps} />
+          <NextNProgress height={2} color={colors.primary} />
+          <Navbar />
+          <Component {...pageProps} />
         </NotificationsProvider>
       </MantineProvider>
       {footer}
