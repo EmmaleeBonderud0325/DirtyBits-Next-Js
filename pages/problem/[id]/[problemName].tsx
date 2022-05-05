@@ -20,7 +20,7 @@ function ProblemView({ title }): ReactElement {
   }, []);
 
   return (
-    <div className="text-white">
+    <div>
       <Head>
         <title>{title ? title : "Loading..."}</title>
       </Head>

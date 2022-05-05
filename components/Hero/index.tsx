@@ -6,15 +6,11 @@ import {
   Button,
   Group,
   Text,
-  List,
-  ThemeIcon,
-  MediaQuery,
   Image,
 } from '@mantine/core';
-import { Check } from 'tabler-icons-react';
 import hero from "public/hero.svg"
-// import Image from 'next/image';
 import { colors } from 'constants/colors';
+import Link from 'next/link';
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -23,7 +19,6 @@ const useStyles = createStyles((theme) => ({
     paddingTop: theme.spacing.xl * 4,
     paddingBottom: theme.spacing.xl * 4,
     alignItems: 'center',
-    // backgroundColor: 'red',s
   },
 
   content: {
@@ -55,7 +50,6 @@ const useStyles = createStyles((theme) => ({
   },
 
   image: {
-    // flex: 1,
     display: 'none',
     [theme.fn.smallerThan('md')]: {
       display: 'none',
@@ -89,16 +83,19 @@ export default function HeroBullets() {
             <Text color="dimmed" mt="md">First, solve the problem. Then, write the code.</Text>
 
             <Group mt={30}>
-              <Button variant='gradient' gradient={{ from: colors.primary, to: '#835FE6', deg: 35 }} radius="xl" size="lg" className={classes.control}>
-                Explore
-              </Button>
+              <Link href="/problemset" passHref>
+                <Button variant='gradient' gradient={{ from: colors.primary, to: '#835FE6', deg: 35 }} radius="xl" size="lg" className={classes.control}>
+                  Explore
+                </Button>
+              </Link>
             </Group>
           </div>
-          <Image src={hero.src} width={500} height={500} sx={{
-        '@media (max-width: 1200px)': {
-          display: 'none',
-        },
-      }} />
+          <Image src={hero.src} width={500} height={500} alt="hero right image" sx={{
+            '@media (max-width: 1200px)': {
+              display: 'none',
+            },
+            }} 
+          />
         </div>
       </Container>
     </div>

@@ -43,7 +43,7 @@ function Panel2(props: Props): ReactElement {
     <div>
       <SplitPane
         split="vertical"
-        minSize={300}
+        minSize={400}
         maxSize={1200}
         defaultSize={900}
         style={{ height: "100vh" }}
@@ -51,7 +51,7 @@ function Panel2(props: Props): ReactElement {
       >
         <Pane
           className="scrollbar-hide"
-          style={{ overflowY: "scroll", background: backgroundColor }}
+          style={{ overflowY: "scroll" }}
         >
           {props.isRendered ? (
             <Tabs
@@ -72,8 +72,7 @@ function Panel2(props: Props): ReactElement {
           className="scrollbar-hide"
           style={{
             overflowY: "scroll",
-            background: backgroundColor,
-            position: "relative",
+            // position: "relative",
           }}
         >
           <Editor
