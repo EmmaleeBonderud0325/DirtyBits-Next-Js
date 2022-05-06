@@ -11,7 +11,7 @@ import { FcGoogle } from "react-icons/fc";
 import GoogleLogin from "react-google-login";
 import { BsCheck2Circle } from "react-icons/bs";
 import { ImCross } from "react-icons/im";
-import { Alert, Loader } from '@mantine/core';
+import { Alert, Button, Group, Loader, Text, Textarea, UnstyledButton } from '@mantine/core';
 
 import terminal from "../../public/terminal.svg";
 import { base64_encode } from "./Helper2";
@@ -40,6 +40,7 @@ import {
   userDataI,
 } from "../../redux/interfaces";
 import { IRootState } from "../../redux/reducers";
+import {BsTerminal} from "react-icons/bs";
 
 let CodeMirror = null;
 const FONT_SIZE = 51;
@@ -426,7 +427,6 @@ const Editor: FC<Props> = (props): ReactElement => {
       className="problem-page-right-container p-2"
     >
       <Header />
-
       <div>
         {CodeMirror && (
           <CodeMirror
@@ -439,125 +439,45 @@ const Editor: FC<Props> = (props): ReactElement => {
           />
         )}
       </div>
-
       <div className="editor-options-container mt-10 flex space-x-5 justify-between items-center p-2">
-        <button
-          onClick={handleConsole}
-          type="button"
-          className="flex items-center space-x-2"
-        >
-          <Image src={terminal} width={20} height={20} alt="terminal image" />
-          <span className="font-semibold text-base">Console</span>
-        </button>
+        <UnstyledButton className="text-white text-base font-semibold" onClick={handleConsole} leftIcon={<BsTerminal/>}>
+          <Group>
+            <BsTerminal/>
+          <div>
+            <Text>Console</Text>
+          </div>
+        </Group>
+
+        </UnstyledButton>
         <div className="flex space-x-3">
           <SmoothList>
-            <button
-              className="group flex items-center space-x-2 login-btn bg-white text-black font-semibold"
+            <Button
+              className="text-black"
+              leftIcon={<VscRunAll className="text-lg group-hover:animate-bounce" />}
               onClick={handleRunCode}
               disabled={isDisabled}
-            >
-              {isDisabled ? (
-                <span className="w-[51px] flex justify-center items-center h-5">
-                  Loading...
-                </span>
-              ) : (
-                <>
-                  <VscRunAll className="text-lg group-hover:animate-bounce" />
-                  <span>Run</span>
-                </>
-              )}
-            </button>
+              loading={isDisabled}
+              variant="white"
+              radius="xl"
+            >     
+              Run
+            </Button>
           </SmoothList>
           <SmoothList>
-            <button
-              className="group flex items-center space-x-2 login-btn bg-white text-black font-semibold"
+            <Button
+              className="text-black"
+              leftIcon={<AiOutlineSend className="text-lg group-hover:rotate-45 transition-all ease-in-out" />}
               onClick={handleSubmitCode}
               disabled={isSubmitDisabled}
-            >
-              <AiOutlineSend className="text-lg group-hover:rotate-45 transition-all ease-in-out" />
-              <span>Submit</span>
-            </button>
+              loading={isSubmitDisabled}
+              variant="white"
+              radius="xl"
+            >     
+              Submit
+            </Button>
           </SmoothList>
         </div>
       </div>
-
-      {/* <Modal
-        closeButton
-        blur
-        aria-labelledby="modal-title"
-        open={isModalVisible}
-        onClose={closeHandler}
-        style={{ background: "black", color: "white" }}
-      >
-        <Modal.Header>
-          <Text color="#fff" id="modal-title" size={18}>
-            Welcome to{" "}
-            <Text color="primary" b size={18}>
-              DirtyBits
-            </Text>
-          </Text>
-        </Modal.Header>
-        <Row justify="center" className="mb-4">
-          <button className="social-login-btn bg-custom-yellow2 w-1/2 border border-white">
-            <MdCreate />
-            <span>
-              <Link href="/auth/signup">
-                <a className="text-white hover:text-white">Sign Up</a>
-              </Link>
-            </span>
-          </button>
-        </Row>
-        <Text color="#fff">OR</Text>
-        <div className="pb-3">
-          <Row justify="center">
-            <GoogleLogin
-              clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
-              render={(renderProps) => (
-                <button
-                  onClick={renderProps.onClick}
-                  disabled={renderProps.disabled}
-                  className="social-login-btn w-1/2 border border-white"
-                >
-                  <FcGoogle />
-                  <span className="text-sm font-light">Login with Google</span>
-                </button>
-              )}
-              onSuccess={responseGoogleSuccess}
-              onFailure={responseGoogleFailure}
-              cookiePolicy={"single_host_origin"}
-            />
-          </Row>
-          <Row justify="center">
-            <GitHubLogin
-              clientId={process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}
-              onSuccess={(response) => {
-                dispatch(githubLogin(response.code));
-              }}
-              onFailure={(response) => {
-                console.error(response);
-              }}
-              redirectUri=""
-              scope="read:user,user:email"
-              buttonText=""
-              className="social-login-btn w-1/2 border border-white"
-            >
-              {props.githubSpinner ? (
-                    <>
-                      <span>{antIcon}</span>
-                    </>
-                  ) : (
-                    <>
-                      <AiFillGithub />
-                      <span className="text-sm font-light">
-                        Login with GitHub
-                      </span>
-                    </>
-                  )}
-              </GitHubLogin>
-          </Row>
-        </div>
-      </Modal> */}
-
       {showConsole && (
         <TabView
           activeIndex={activeIndex}
@@ -578,7 +498,7 @@ const Editor: FC<Props> = (props): ReactElement => {
             leftIcon={!is_logged_in && "pi pi-lock"}
           >
             <textarea
-              className="w-full placeholder:text-base placeholder:p-2 bg-gray-800 outline-none rounded-lg p-1 text-lg"
+              className="w-full placeholder:text-base placeholder:p-1 bg-gray-800 border-none text-white outline-none rounded-lg p-1 text-lg"
               rows={6}
               id="input-btn"
               placeholder="Custom Input here"
