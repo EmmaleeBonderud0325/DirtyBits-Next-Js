@@ -1,24 +1,16 @@
-import { ReactElement, useState } from "react";
+import { ReactElement } from "react";
 import Link from "next/link";
 
 import TableLoader from "./TableLoader";
-import { Paginator } from "primereact/paginator";
 import { problemListI } from "redux/interfaces";
 import {DashIcon, QuestionIcon, CheckIcon} from 'SVG'
+import { Pagination } from "@mantine/core";
 
 interface Props {
   dataList: problemListI[];
 }
 
 function Table(props: Props): ReactElement {
-  const [basicFirst, setBasicFirst] = useState<number>(0);
-  const [basicRows, setBasicRows] = useState<number>(10);
-  const onBasicPageChange = (event: any) => {
-    setBasicFirst(event.first);
-    setBasicRows(event.rows);
-    console.log("request for", event.page + 1);
-  };
-
   let problemLevel: string;
   let problemColor: string;
   let status: JSX.Element;
@@ -55,7 +47,7 @@ function Table(props: Props): ReactElement {
           <Link href={`/problem/${problem.id}/${problem.title}`}>
           <a
             
-            className="text-stone-200 hover:text-indigo-400 transition-all duration-200 ease-in md:text-sm"
+            className="text-stone-200 no-underline hover:text-indigo-400 transition-all duration-200 ease-in md:text-sm"
             >
             {idx + 1} . {problem.title}
           </a>
@@ -93,14 +85,8 @@ function Table(props: Props): ReactElement {
       </div>
       {props.dataList.length <= 0 && <TableLoader />}
 
-      <div className="hidden md:flex">
-      <Paginator
-        first={basicFirst}
-        rows={basicRows}
-        totalRecords={120}
-        rowsPerPageOptions={[10, 20, 30]}
-        onPageChange={onBasicPageChange}
-        ></Paginator>
+      <div className="hidden md:flex justify-center">
+        <Pagination total={2} radius="md" color="violet"/>
         </div>
     </div>
   );
