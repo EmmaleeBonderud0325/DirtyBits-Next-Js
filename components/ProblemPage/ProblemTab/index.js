@@ -6,6 +6,7 @@ import {
   AiOutlineLike,
   AiFillLike,
   AiFillDislike,
+  AiOutlineBars,
 } from "react-icons/ai";
 import { IoPlayBackOutline } from "react-icons/io5";
 import { BsFillBookmarkFill, BsBookmark } from "react-icons/bs";
@@ -14,6 +15,7 @@ import { BiTrendingUp } from "react-icons/bi";
 import { VscCollapseAll } from "react-icons/vsc";
 import { useDispatch, useSelector } from "react-redux";
 import useHtmlParser from "hooks/htmlParser";
+import { Button } from "@mantine/core";
 
 function ProblemTab(props) {
   const dispatch = useDispatch();
@@ -39,11 +41,19 @@ function ProblemTab(props) {
     <div className="space-y-5 transition-all ease-in-out">
       <SmoothList>
         <div className="inline-flex  items-center gap-2 group">
-          <Link href="/problemset">
-            <a className="login-btn text-black group-hover:text-white bg-white flex items-center gap-2">
+          <Link href="/problemset" passHref>
+            <Button
+              className="text-black"
+              variant="white"
+              radius="xl"
+              leftIcon={<AiOutlineBars />}
+            >
+              Problem Set
+            </Button>
+            {/* <a className="login-btn text-black group-hover:text-white bg-white flex items-center gap-2">
               <IoPlayBackOutline className="text-base" />
               <span>Problem Set</span>
-            </a>
+            </a> */}
           </Link>
         </div>
       </SmoothList>
