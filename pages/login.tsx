@@ -13,29 +13,13 @@ import {
   Divider,
   Group,
   ButtonProps,
+  Loader,
 } from '@mantine/core';
 import { useForm, useToggle, upperFirst } from '@mantine/hooks'
 import {GoogleIcon, FacebookIcon} from 'SVG'
-
-export function GoogleButton(props: ButtonProps<'button'>) {
-    return <Button leftIcon={<GoogleIcon/>} variant="default" color="gray" {...props} />;
-  }
-  
-  export function FacebookButton(props: ButtonProps<'button'>) {
-    return (
-      <Button
-        leftIcon={<FacebookIcon />}
-        sx={(theme) => ({
-          backgroundColor: '#4267B2',
-          color: '#fff',
-          '&:hover': {
-            backgroundColor: theme.fn.darken('#4267B2', 0.1),
-          },
-        })}
-        {...props}
-      />
-    );
-  }
+import GoogleButton from 'components/authProviders/Google'
+import GitHubButton from 'components/authProviders/Github'
+import { useDispatch } from 'react-redux';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -73,9 +57,11 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export default function AuthenticationImage() {
+export default function Authentication() {
   const { classes } = useStyles();
+  const dispatch = useDispatch()
   const [type, toggle] = useToggle('login', ['login', 'register']);
+  const loader = <Loader color="indigo" size="sm" />;
   const form = useForm({
     initialValues: {
       email: '',
@@ -92,35 +78,16 @@ export default function AuthenticationImage() {
   
   return (
     <div className={classes.wrapper}>
-      {/* <Paper className={classes.form} radius={0} p={30}>
-        <Title order={2} className={classes.title} align="center" mt="md" mb={50}>
-          Welcome back to DirtyBits!
-        </Title>
-
-        <TextInput label="Email address" placeholder="hello@gmail.com" size="md" />
-        <PasswordInput label="Password" placeholder="Your password" mt="md" size="md" />
-        <Checkbox label="Keep me logged in" mt="xl" size="md" />
-        <Button fullWidth mt="xl" size="md">
-          Login
-        </Button>
-
-        <Text align="center" mt="md">
-          Don&apos;t have an account?{' '}
-          <Anchor<'a'> href="#" weight={700} onClick={(event) => event.preventDefault()}>
-            Register
-          </Anchor>
-        </Text>
-      </Paper> */}
       <Paper className={classes.form} radius={0} p={30}>
       <Text size="lg" weight={500}>
         Welcome to DirtyBits, {type} with
       </Text>
 
       <Group grow mb="md" mt="md">
-        <GoogleButton radius="lg">Google</GoogleButton>
-        <FacebookButton radius="lg">Twitter</FacebookButton>
+        <GoogleButton loader={loader} dispatch={dispatch}/>
+        <GitHubButton loader={loader} dispatch={dispatch}/>
       </Group>
-
+    
       <Divider label="Or continue with email" labelPosition="center" my="lg" />
 
       <form onSubmit={form.onSubmit(() => {})}>
@@ -174,3 +141,7 @@ export default function AuthenticationImage() {
     </div>
   );
 }
+
+Authentication.getLayout = function PageLayout(page: any) {
+  return <>{page}</>;
+};
