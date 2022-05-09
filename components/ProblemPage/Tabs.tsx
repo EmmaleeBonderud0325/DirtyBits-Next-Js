@@ -1,8 +1,8 @@
 import { ReactElement } from "react";
 import { connect, useSelector } from "react-redux";
 import { TabView, TabPanel as Panel } from "primereact/tabview";
+import dynamic from "next/dynamic";
 
-import Submissions from "./submission";
 import { IRootState } from "../../redux/reducers";
 import { problemDataI, submissionResultI } from "../../redux/interfaces";
 import ProblemTab from './ProblemTab'
@@ -11,6 +11,8 @@ import ProblemTab from './ProblemTab'
 import "primereact/resources/themes/mdc-dark-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
+
+const Submissions = dynamic(() => import("./submission"))
 
 interface Props {
   userSubmissions: number;
