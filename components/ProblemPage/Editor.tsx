@@ -1,19 +1,15 @@
 import React, { useState, useEffect, FC, ReactElement } from "react";
-import Image from "next/image";
-import Link from "next/link";
-
 import Cookies from "js-cookie";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { AiFillGithub, AiOutlineSend } from "react-icons/ai";
-import { MdCreate } from "react-icons/md";
+import { AiOutlineSend } from "react-icons/ai";
+
 import { VscRunAll } from "react-icons/vsc";
-import { FcGoogle } from "react-icons/fc";
-import GoogleLogin from "react-google-login";
+
 import { BsCheck2Circle } from "react-icons/bs";
 import { ImCross } from "react-icons/im";
-import { Alert, Button, Group, Loader, Text, Textarea, UnstyledButton } from '@mantine/core';
+import { Alert, Button, Group, Loader, Text, UnstyledButton } from '@mantine/core';
 
-import terminal from "../../public/terminal.svg";
+
 import { base64_encode } from "./Helper2";
 require("codemirror/lib/codemirror.css");
 import { googleLoginApi, runTestCases, submitCode } from "../api/apis";
@@ -29,9 +25,7 @@ import Encodemail from "../Helper/Encodemail";
 import Parsetoken from "../Helper/Parsetoken";
 import Header from "./Header";
 import SmoothList from "react-smooth-list";
-import GitHubLogin from "react-github-login";
-import { githubLogin, googleLogin } from "../../redux/actions/authenticate";
-import { TabView, TabPanel as Panel } from "primereact/tabview";
+import { TabPanel as Panel } from "primereact/tabview";
 import {
   editorLanguageI,
   submissionResultI,
@@ -41,6 +35,11 @@ import {
 } from "../../redux/interfaces";
 import { IRootState } from "../../redux/reducers";
 import {BsTerminal} from "react-icons/bs";
+import dynamic from "next/dynamic";
+
+const TabView = dynamic(() =>
+  import('primereact/tabview').then((mod) => mod.TabView)
+)
 
 let CodeMirror = null;
 const FONT_SIZE = 51;
