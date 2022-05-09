@@ -43,7 +43,13 @@ function MyApp({ Component, pageProps }: Props) {
   const router = useRouter();
 
   if (Component.getLayout) {
-    return Component.getLayout(<Component {...pageProps} />);
+    return Component.getLayout((
+      <MantineProvider theme={theme}>
+        <NotificationsProvider position="top-right" zIndex={2077}>
+        <Component {...pageProps} />
+        </NotificationsProvider>
+        </MantineProvider>
+    ));
   }
 
   let footer: JSX.Element;
