@@ -20,7 +20,6 @@ import insert from "../../public/insert.svg";
 import { IRootState } from "../../redux/reducers";
 import { editorLanguageI, themeI, userDataI } from "../../redux/interfaces";
 import UserDropdown from "components/UserDropdown";
-import LanguageDropdown from 'components/Dropdown/index'
 
 interface Props {
   editorValue: string;
@@ -124,7 +123,7 @@ function Header(props: Props): ReactElement {
   return (
     <div className="flex justify-around p-10">
       {/* <FontDropdown fontSize={props.fontSize} setFontSize={changeFont} /> */}
-      {/* <Dropdown2
+      <Dropdown2
         dropdownType={"theme"}
         currTheme={props.currTheme}
         currLang={props.currLang}
@@ -139,8 +138,7 @@ function Header(props: Props): ReactElement {
         setCurrTheme={changeTheme}
         setCurrLang={changeLanguage}
         changeEditorValue={changeEditorValue}
-      /> */}
-      <LanguageDropdown title="Language"/>
+      />
       {/* TOP RIGHT ICONS */}
       {is_logged_in && (
         <div className="space-x-4 flex items-center transition-all ease-in-out">
@@ -205,10 +203,6 @@ function Header(props: Props): ReactElement {
 
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 z-50">
             {props.userInfo.is_logged_in && (
-              // <UserProfileDropDown
-              //   showUserName={false}
-              //   redirectOnSignout={false}
-              // />
               <UserDropdown size={40} showUserName={false}/>
             )}
           </div>
