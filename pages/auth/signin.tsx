@@ -1,5 +1,4 @@
 import { ReactElement } from "react";
-import { IRootState } from "redux/reducers";
 import { TextInput, PasswordInput } from "@mantine/core";
 import {
   useState,
@@ -7,9 +6,7 @@ import {
   Head,
   useRouter,
   Cookies,
-  connect,
   useDispatch,
-
   SmoothList,
   updateSignInSpinner,
   updateUserinfo,
@@ -69,13 +66,12 @@ function Signin(props: Props): ReactElement {
   });
 
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
-  const { control,register, handleSubmit, formState:{ errors } } = useForm({
+  const { control, handleSubmit, formState:{ errors } } = useForm({
     resolver: yupResolver(schema)
   });
 
   const postAuthentication = (tokens: TokensI, remember_me: Boolean) => {
     const { access, refresh } = tokens;
-    console.log('remember', remember_me)
     const data = Parsetoken(access);
     console.log("data", data);
     if (data.is_verified) {
@@ -111,7 +107,6 @@ function Signin(props: Props): ReactElement {
   };
 
   const submitLoginForm = async (data: any) => {
-    console.log('data', data)
     setIsDisabled(true);
       try {
         await signinApi
@@ -252,12 +247,6 @@ function Signin(props: Props): ReactElement {
                           name="remember_me"
                           type="checkbox"
                           checked={value}
-                          // onChange={(e) =>
-                          //   setFormData({
-                          //     ...formData,
-                          //     remeberMe: !formData.remeberMe,
-                          //   })
-                          // }
                           onBlur={onBlur}
                           onChange={onChange}
                           className="h-4 w-4 bg-blue-500 focus:ring-blue-400 border-gray-300 rounded"
