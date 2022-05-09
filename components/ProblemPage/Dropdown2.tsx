@@ -5,7 +5,7 @@ import { SiPython, SiCplusplus, SiJava } from "react-icons/si";
 import { IoMoonOutline } from "react-icons/io5";
 import { MdOutlineWbSunny } from "react-icons/md";
 
-import { DropdownV3 } from "./DropdownV3";
+import Dropdown from "components/Dropdown/index";
 import jsonData from "./data.json";
 import { editorLanguageI, themeI } from "../../redux/interfaces";
 
@@ -119,7 +119,7 @@ export const Dropdown2: FC<Props> = (props): ReactElement => {
 
   return (
     <div>
-      <DropdownV3
+      <Dropdown
         label={
           props.dropdownType === "theme"
             ? props.currTheme.label
