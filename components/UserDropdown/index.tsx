@@ -1,7 +1,6 @@
 import { Avatar, createStyles, Divider, Group, Menu, UnstyledButton, Text } from '@mantine/core'
 import React, { useState } from 'react'
 import { ChevronDown, Heart, PlayerPause, Trash } from 'tabler-icons-react'
-import {colors} from 'constants/colors';
 import { FcInfo } from 'react-icons/fc';
 import  Router  from 'next/router';
 import { showNotification } from '@mantine/notifications';
@@ -61,7 +60,7 @@ function UserDropdown({showUserName = false, size = 30}) {
 
     const dispatch = useDispatch();
 
-    const { is_logged_in, profile_pic, username, is_admin } = useSelector(
+    const {profile_pic, username, is_admin } = useSelector(
       (state: any) => state.userData
     );
     const addProbemRouteHandler = () => {
