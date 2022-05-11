@@ -11,7 +11,7 @@ interface Props {
 
 function LoginButton({ url, text, color, textColor }: Props): ReactElement {
   return (
-    <Link href={url}>
+    <Link href={url} passHref>
       <Button
       >
         {text}

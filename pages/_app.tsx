@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import "../styles/Editor.css";
 import "../styles/tinymce.css";
 import { NextPage } from "next";
-import { ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import theme from "theme/theme";
 import NextNProgress from "nextjs-progressbar";
@@ -20,8 +20,6 @@ import "react-quill/dist/quill.snow.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css";
-import { useDispatch } from "react-redux";
-import { notifyFirstLoad } from "redux/actions";
 
 
 import Context from '../Context'

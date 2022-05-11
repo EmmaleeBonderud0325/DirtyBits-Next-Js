@@ -6,17 +6,13 @@ import {
   PasswordInput,
   Checkbox,
   Button,
-  Title,
   Text,
   Anchor,
-  Container,
   Divider,
   Group,
-  ButtonProps,
   Loader,
 } from '@mantine/core';
 import { useForm, useToggle, upperFirst } from '@mantine/hooks'
-import {GoogleIcon, FacebookIcon} from 'SVG'
 import GoogleButton from 'components/authProviders/Google'
 import GitHubButton from 'components/authProviders/Github'
 import { useDispatch } from 'react-redux';
