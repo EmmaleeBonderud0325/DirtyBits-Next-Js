@@ -78,6 +78,7 @@
     "sass": "^1.43.4",
     "tabler-icons-react": "^1.45.0",
     "tailwind-scrollbar-hide": "^1.0.4",
+    "terminal-in-react": "^4.3.1",
     "yup": "^0.32.11"
   },
   "devDependencies": {
