@@ -249,3 +249,18 @@ html::-webkit-scrollbar-thumb {
 .mantine-1c3hs74 {
   margin-bottom: 0 !important;
 }
+.backgroundGrdient {
+  background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgb(37,34,53) 0%, rgb(65,58,112) 90% );
+} 
+.glassNavbar {
+  padding: 1rem 1.5rem;
+  position: sticky;
+  top: 0;
+  background-clip: border-box;
+  z-index: 100;
+}
+
+.scrolling-active {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(50px);
+}
