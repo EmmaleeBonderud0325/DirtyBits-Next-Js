@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import "../styles/Editor.css";
 import "../styles/tinymce.css";
 import { NextPage } from "next";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import theme from "theme/theme";
 import NextNProgress from "nextjs-progressbar";
@@ -27,6 +27,7 @@ import Context from '../Context'
 
 type Page<P = {}> = NextPage<P> & {
   getLayout?: (page: ReactNode) => ReactNode;
+  getNavbarTLayout?: (page: ReactNode) => ReactNode;
 };
 
 type Props = AppProps & {
@@ -40,16 +41,12 @@ function MyApp({ Component, pageProps }: Props) {
   // }, []);
   const router = useRouter();
 
-  if (Component.getLayout) {
-    return Component.getLayout((
-      <MantineProvider theme={theme}>
-        <NotificationsProvider position="top-right" zIndex={2077}>
-        <Component {...pageProps} />
-        </NotificationsProvider>
-        </MantineProvider>
-    ));
-  }
-
+  useEffect(() => {
+    window.addEventListener('scroll', () => {
+      let nav = document.getElementById('glassNavbar')
+      nav.classList.toggle('scrolling-active', window.scrollY > 0)
+    })
+  }, [])
   let footer: JSX.Element;
 
   if (router.pathname === "/") {
@@ -57,6 +54,29 @@ function MyApp({ Component, pageProps }: Props) {
   } else {
     footer = null;
   }
+  
+  
+  if (Component.getLayout) {
+    return Component.getLayout((
+      <MantineProvider theme={theme}>
+        <NotificationsProvider position="top-right" zIndex={2077}>
+        <Component {...pageProps} />
+        </NotificationsProvider>
+      </MantineProvider>
+    ));
+  }
+
+  if(Component.getNavbarTLayout){
+    return Component.getNavbarTLayout((
+      <MantineProvider theme={theme}>
+        <NotificationsProvider position="top-right" zIndex={2077}>
+        <Component {...pageProps} />
+        {footer}
+        </NotificationsProvider>
+      </MantineProvider>
+    ));
+  }
+
   return (
     <>
     <Context>
@@ -65,9 +85,9 @@ function MyApp({ Component, pageProps }: Props) {
           <NextNProgress height={2} color={colors.primary} />
           <Navbar />
           <Component {...pageProps} />
+          {footer}
         </NotificationsProvider>
       </MantineProvider>
-      {footer}
     </Context>
     </>
   );
