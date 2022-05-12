@@ -64,7 +64,7 @@ const useStyles = createStyles((theme) => ({
   wrapper: {
     paddingTop: theme.spacing.xl * 4,
     paddingBottom: theme.spacing.xl * 4,
-    marginTop: theme.spacing.xl * 16,
+    // marginTop: theme.spacing.xl * 16,
     '@media (max-width: 480px)': {
       textAlign: 'center',
       marginTop: theme.spacing.xl * 8,
@@ -106,29 +106,31 @@ export function FeatureList({ title, description, data = MOCKDATA }) {
   const features = data.map((feature, index) => <Feature {...feature} key={index} />);
 
   return (
-    <Container size="xl" className={classes.wrapper}>
-      <Title className={classes.title}>
-        <span className='text-white'>Some</span> {title}
-      </Title>
+    <div className=''>
+      <Container size="xl" className={classes.wrapper}>
+        <Title className={classes.title}>
+          <span className='text-white'>Some</span> {title}
+        </Title>
 
-      <Container className='my-10' size={560} p={0}>
-        <Text color="dimmed" size="md" className={classes.description}>
-          {description}
-        </Text>
+        <Container className='my-10' size={560} p={0}>
+          <Text color="dimmed" size="md" className={classes.description}>
+            {description}
+          </Text>
+        </Container>
+
+        <SimpleGrid
+          mt={60}
+          cols={3}
+          spacing={theme.spacing.xl * 2}
+          breakpoints={[
+            { maxWidth: 980, cols: 2, spacing: 'xl' },
+            { maxWidth: 755, cols: 1, spacing: 'xl' },
+          ]}
+        >
+          {features}
+        </SimpleGrid>
       </Container>
-
-      <SimpleGrid
-        mt={60}
-        cols={3}
-        spacing={theme.spacing.xl * 2}
-        breakpoints={[
-          { maxWidth: 980, cols: 2, spacing: 'xl' },
-          { maxWidth: 755, cols: 1, spacing: 'xl' },
-        ]}
-      >
-        {features}
-      </SimpleGrid>
-    </Container>
+    </div>
   );
 }
 
