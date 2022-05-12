@@ -1,7 +1,7 @@
 module.exports = {
   colorScheme: "dark",
   colors: {
-    customColor: [
+    primary: [
       "#EFEBFA",
       "#D3C6F0",
       "#B7A2E7",
@@ -14,5 +14,5 @@ module.exports = {
       "#140A29",
     ],
   },
-  primaryColor: "customColor",
+  primaryColor: "primary",
 };
