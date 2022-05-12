@@ -11,6 +11,7 @@ import {
 import hero from "public/hero.svg";
 import { colors } from "constants/colors";
 import Link from "next/link";
+import SmoothList from "react-smooth-list";
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -33,11 +34,10 @@ const useStyles = createStyles((theme) => ({
 
   title: {
     color: theme.colorScheme === "dark" ? theme.white : theme.black,
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontFamily: 'Lato',
     fontSize: 44,
     lineHeight: 1.2,
     fontWeight: 900,
-
     [theme.fn.smallerThan("xs")]: {
       fontSize: 28,
     },
@@ -47,6 +47,7 @@ const useStyles = createStyles((theme) => ({
     [theme.fn.smallerThan("xs")]: {
       flex: 1,
     },
+    color: 'black'
   },
 
   image: {
@@ -70,35 +71,40 @@ const useStyles = createStyles((theme) => ({
 export default function HeroBullets() {
   const { classes } = useStyles();
   return (
-    <div>
+    <div className="">
       <Container size="xl">
         <div className={classes.inner}>
           <div className={classes.content}>
-            <Title className={classes.title}>
-              Welcome to <span className={classes.highlight}>DirtyBits</span>
-            </Title>
-            {/* <Text color="#fff" size="xl" mt="md">
-             */}
-            <Text color="customColor" size="xl" mt="md">
-              Be a Coder with us.
-            </Text>
-            <Text color="dimmed" mt="md">
-              First, solve the problem. Then, write the code.
-            </Text>
+            <SmoothList>
+              <Title className={classes.title}>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#AE67FA] to-[#F49867]">
+                  Welcome to DirtyBits
+                </span>
+              </Title>
+              <Text color="#fff" mt="md">
+                <span className="block text-center md:text-left text-white font-light xl:block mt-5 text-xl md:text-4xl tracking-wider font-lato">
+                  Be a Coder with us.
+                </span>
+              </Text>
+              <Text color="dimmed" mt="md">
+                <p className="mt-3 text-base text-center md:text-left text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                  First, solve the problem. Then, write the code.
+                </p>
+              </Text>
 
-            <Group mt={30}>
-              <Link href="/problemset" passHref>
-                <Button
-                  variant="gradient"
-                  gradient={{ from: colors.primary, to: "#835FE6", deg: 35 }}
-                  radius="xl"
-                  size="lg"
-                  className={classes.control}
-                >
-                  Explore
-                </Button>
-              </Link>
-            </Group>
+              <Group mt={30}>
+                <Link href="/problemset" passHref>
+                  <Button
+                    variant="white"
+                    radius="xl"
+                    size="lg"
+                    className="bg-[#643ADA] text-white"
+                  >
+                    Explore
+                  </Button>
+                </Link>
+              </Group>
+            </SmoothList> 
           </div>
           <Image
             src={hero.src}
@@ -110,7 +116,7 @@ export default function HeroBullets() {
                 display: "none",
               },
             }}
-          />
+            />
         </div>
       </Container>
     </div>
