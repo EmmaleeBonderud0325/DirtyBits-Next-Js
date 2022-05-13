@@ -49,11 +49,11 @@ function MyApp({ Component, pageProps }: Props) {
   }, [])
   let footer: JSX.Element;
 
-  if (router.pathname === "/") {
-    footer = <Footer />;
-  } else {
-    footer = null;
-  }
+  // if (router.pathname === "/") {
+  //   footer = <Footer />;
+  // } else {
+  //   footer = null;
+  // }
   
   
   if (Component.getLayout) {
@@ -71,7 +71,7 @@ function MyApp({ Component, pageProps }: Props) {
       <MantineProvider theme={theme}>
         <NotificationsProvider position="top-right" zIndex={2077}>
         <Component {...pageProps} />
-        {footer}
+        {/* {footer} */}
         </NotificationsProvider>
       </MantineProvider>
     ));
@@ -85,7 +85,7 @@ function MyApp({ Component, pageProps }: Props) {
           <NextNProgress height={2} color={colors.primary} />
           <Navbar />
           <Component {...pageProps} />
-          {footer}
+          {/* {footer} */}
         </NotificationsProvider>
       </MantineProvider>
     </Context>
