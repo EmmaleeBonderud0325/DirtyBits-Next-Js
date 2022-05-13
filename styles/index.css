@@ -1,5 +1,6 @@
 .root {
   --main-color: #4a76a8;
+  --primary-color: #643ADA;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap");
@@ -250,7 +251,8 @@ html::-webkit-scrollbar-thumb {
   margin-bottom: 0 !important;
 }
 .backgroundGrdient {
-  background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgb(37,34,53) 0%, rgb(65,58,112) 90% );
+  /* background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgb(37,34,53) 20% , rgb(37,34,53) 5%, rgb(39,38,61) 12%, rgb(65,58,112) 90% ); */
+  background-image: linear-gradient(to right, #252235, #2F2B4A, #413A71);
 } 
 .glassNavbar {
   padding: 1rem 1.5rem;
@@ -258,9 +260,18 @@ html::-webkit-scrollbar-thumb {
   top: 0;
   background-clip: border-box;
   z-index: 100;
+  -webkit-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
 }
 
 .scrolling-active {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(50px);
+}
+
+.brand {
+  display: inline-flex;
+  background-color: var(--primary-color);
+  height: 1.2rem;
+  width: .5rem;
 }
