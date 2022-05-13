@@ -3,7 +3,7 @@ import Hero from 'components/Hero'
 import Feature from 'components/Feature/index'
 import Head from 'next/head'
 import Navbar from 'components/NavbarT'
-import Terminal from 'components/Terminal'
+// import Terminal from 'components/Terminal'
 
 function Homepage() {
   return (
@@ -11,7 +11,7 @@ function Homepage() {
       <Navbar/>
       <Head><title>DirtyBits</title></Head>
       <Hero />
-      <Terminal/>
+      {/* <Terminal/> */}
       <Feature title="Features" description="Some of our basics features"/>
     </div>
   )
