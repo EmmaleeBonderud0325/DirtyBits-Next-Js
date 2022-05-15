@@ -38,7 +38,7 @@ function ProblemTab(props) {
       break;
   }
   return (
-    <div className="space-y-5 transition-all ease-in-out">
+    <div className="space-y-5 transition-all ease-in-out tracking-wider">
       <SmoothList>
         <div className="inline-flex  items-center gap-2 group">
           <Link href="/problemset" passHref>
@@ -50,10 +50,6 @@ function ProblemTab(props) {
             >
               Problem Set
             </Button>
-            {/* <a className="login-btn text-black group-hover:text-white bg-white flex items-center gap-2">
-              <IoPlayBackOutline className="text-base" />
-              <span>Problem Set</span>
-            </a> */}
           </Link>
         </div>
       </SmoothList>

@@ -41,13 +41,17 @@ function MyApp({ Component, pageProps }: Props) {
   // }, []);
   const router = useRouter();
 
-  useEffect(() => {
+  if(typeof window !== "undefined" && router.pathname === '/'){
     window.addEventListener('scroll', () => {
       let nav = document.getElementById('glassNavbar')
-      nav.classList.toggle('scrolling-active', window.scrollY > 0)
+      if(nav){
+        nav.classList.toggle('scrolling-active', window.scrollY > 0)
+      }else {
+        return
+      }
     })
-  }, [])
-  let footer: JSX.Element;
+  }
+  // let footer: JSX.Element;
 
   // if (router.pathname === "/") {
   //   footer = <Footer />;
@@ -66,6 +70,7 @@ function MyApp({ Component, pageProps }: Props) {
     ));
   }
 
+  // FOR HOME SCREEN
   if(Component.getNavbarTLayout){
     return Component.getNavbarTLayout((
       <MantineProvider theme={theme}>
@@ -83,7 +88,7 @@ function MyApp({ Component, pageProps }: Props) {
       <MantineProvider theme={theme}>
         <NotificationsProvider position="top-right" zIndex={2077} color="red">
           <NextNProgress height={2} color={colors.primary} />
-          <Navbar />
+          {/* <Navbar /> */}
           <Component {...pageProps} />
           {/* {footer} */}
         </NotificationsProvider>

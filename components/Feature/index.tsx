@@ -53,7 +53,7 @@ function Feature({ icon: Icon, title, description, gradientFrom, gradientTo }) {
         {Icon}
       </ThemeIcon>
       <Text variant='text' color="#fff" style={{ marginTop: theme.spacing.sm, marginBottom: 7 }}>{title}</Text>
-      <Text size="sm" color="dimmed" style={{ lineHeight: 1.6 }}>
+      <Text className='tracking-wider' size="sm" color="dimmed" style={{ lineHeight: 1.6 }}>
         {description}
       </Text>
     </div>
@@ -76,15 +76,14 @@ const useStyles = createStyles((theme) => ({
     fontWeight: 900,
     marginBottom: theme.spacing.md,
     textAlign: 'center',
-    fontSize: 50,
     [theme.fn.smallerThan('sm')]: {
-      fontSize: 28,
       textAlign: 'left',
     },
     color: colors.primary,
     '@media (max-width: 480px)': {
       textAlign: 'center',
     },
+    textAlignLast: 'center',
   },
 
   description: {
@@ -96,6 +95,7 @@ const useStyles = createStyles((theme) => ({
     '@media (max-width: 480px)': {
       textAlign: 'center',
     },
+    textAlignLast: 'center',
   },
 }));
 
@@ -106,10 +106,12 @@ export function FeatureList({ title, description, data = MOCKDATA }) {
   const features = data.map((feature, index) => <Feature {...feature} key={index} />);
 
   return (
-    <div className=''>
+    <div className='md:p-5'>
       <Container size="xl" className={classes.wrapper}>
         <Title className={classes.title}>
-          <span className='text-white'>Some</span> {title}
+          <div className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl'>
+            <span className='text-white text-center'>Some</span> {title}
+          </div>
         </Title>
 
         <Container className='my-10' size={560} p={0}>
@@ -126,6 +128,7 @@ export function FeatureList({ title, description, data = MOCKDATA }) {
             { maxWidth: 980, cols: 2, spacing: 'xl' },
             { maxWidth: 755, cols: 1, spacing: 'xl' },
           ]}
+          className='text-center'
         >
           {features}
         </SimpleGrid>

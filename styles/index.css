@@ -275,3 +275,43 @@ html::-webkit-scrollbar-thumb {
   height: 1.2rem;
   width: .5rem;
 }
+
+.glassBackground {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(50px);
+  background-clip: border-box;
+}
+
+/* .hexagon {
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+} */
+/* .profilePageBackground{
+  background-image: linear-gradient(
+    115deg,
+    hsl(260deg 97% 15%) 0%,
+    hsl(265deg 97% 15%) 44%,
+    hsl(269deg 97% 16%) 60%,
+    hsl(274deg 96% 17%) 69%,
+    hsl(279deg 96% 17%) 74%,
+    hsl(284deg 96% 18%) 79%,
+    hsl(289deg 95% 19%) 84%,
+    hsl(293deg 95% 19%) 89%,
+    hsl(298deg 95% 20%) 94%,
+    hsl(303deg 94% 21%) 100%
+  );
+} */
+
+.profilePagePatter1{
+  background: rgb(25,5,73);
+background: linear-gradient(87deg, rgba(25,5,73,1) 22%, rgba(95,39,159,1) 100%);
+  height: 500px;
+  width: 500px;
+  border-radius: 71% 29% 67% 33% / 29% 30% 70% 71% ;
+}
+.profilePagePatter2{
+  background: rgb(63,94,251);
+  background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(65,4,17,1) 15%);
+  height: 400px;
+  width: 400px;
+  border-radius: 71% 29% 67% 33% / 29% 30% 70% 71% ;
+}

@@ -15,7 +15,7 @@ function Navbar() {
             <div className="brand mr-2"></div>
             DirtyBits
           </a>
-          <ul className="flex gap-16 items-center text-white list-none">
+          <ul className="gap-16 items-center text-white list-none hidden md:flex">
             <li className="group font-medium hover:cursor-pointer tracking-wide space-y-1">
               <Link href="/compete">
                 <a className="mb-5 no-underline text-white">Compete</a>
