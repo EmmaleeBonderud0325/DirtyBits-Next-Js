@@ -80,7 +80,7 @@ export default function SideNavbar() {
   ));
 
   return (
-    <Navbar className='md: h-[100%] lg:h-[100%]' width={{ base: 80 }} p="md">
+    <Navbar className='min-h-full' width={{ base: 80 }} p="md">
         <Center>
             DirtyBits
         </Center>
