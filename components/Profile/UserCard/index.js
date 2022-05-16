@@ -1,14 +1,20 @@
-import { Avatar, Button, Image, Progress, Text } from "@mantine/core";
+import { Button, Image, Progress, Text } from "@mantine/core";
 // import Image from "next/image";
 import React from "react";
 import { BsArrowRightShort } from "react-icons/bs";
 import Card from "components/Profile/Card";
 import { Divider } from "@mantine/core";
-import { VerificationIcon, GearIcon } from "SVG";
+import {
+  VerificationIcon,
+  GearIcon,
+  AchievementIcon,
+  AchievementIcon2,
+  AchievementIcon3,
+} from "SVG";
 
 function UserCard() {
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 font-secondary">
       <div className="text-white md:flex md:items-start space-x-10">
         <div className="flex flex-col items-center space-y-10">
           <Image
@@ -17,7 +23,7 @@ function UserCard() {
             height={200}
             alt="profile pic"
           />
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 cursor-pointer">
             <GearIcon />
             <Text color="dimmed" className="font-semibold">
               Edit Profile
@@ -29,23 +35,28 @@ function UserCard() {
             Newbie
           </Text>
           <div className="flex items-center space-x-5">
-            <h1 className="text-xl tracking-widest">Animal Planet_11</h1>
+            <h1 className="text-xl tracking-widest font-secondary">
+              Animal Planet_11
+            </h1>
             <VerificationIcon />
           </div>
           <Button
             rightIcon={<BsArrowRightShort className="text-2xl" />}
             variant="filled"
             size="sm"
+            className="font-secondary tracking-wide"
           >
             GO PREMIUM
           </Button>
-          <p>You need 300xp to Rookie</p>
+          <p className="tracking-wider font-secondary">
+            You need 300xp to Rookie
+          </p>
           <Progress color="cyan" size="sm" value={50} />
           <div className="flex gap-5">
-            <Card color="#C6F48A" />
-            <Card color="#13F1FF" />
-            <Card color="#FC78EF" />
-            <Card child="+32" color="#E2E4F1" />
+            <Card child={<AchievementIcon3 />} color="C6F48A" />
+            <Card child={<AchievementIcon2 />} color="13F1FF" />
+            <Card child={<AchievementIcon />} color="FC78EF" />
+            <Card child="+32" color="E2E4F1" />
           </div>
         </div>
       </div>

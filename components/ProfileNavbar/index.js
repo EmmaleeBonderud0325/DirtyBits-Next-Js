@@ -14,7 +14,7 @@ function ProfileNavbar({ setModalState }) {
   };
 
   return (
-    <nav className="flex mx-auto flex-1 justify-between items-center">
+    <nav className="flex mx-auto flex-1 justify-between items-center font-secondary">
       <a
         href="#"
         className="text-white pb-1 tracking-wider no-underline text-2xl font-bold sm:flex sm:items-center"
