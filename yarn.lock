@@ -208,6 +208,11 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@fontsource/space-grotesk@^4.5.8":
+  version "4.5.8"
+  resolved "https://registry.yarnpkg.com/@fontsource/space-grotesk/-/space-grotesk-4.5.8.tgz#4f3c6a80bbd556e73338eadf2f19f214657580b5"
+  integrity sha512-2+eifFW1dlCGo/zq4xNFNEMrQEfX6rdC39S5t+jSrpRhBnocgr1m8QNBnaM6gok9c+78bUurJ3BjDgC/+WpIAQ==
+
 "@headlessui/react@^1.4.1":
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/@headlessui/react/-/react-1.5.0.tgz#483b44ba2c8b8d4391e1d2c863898d7dd0cc0296"
