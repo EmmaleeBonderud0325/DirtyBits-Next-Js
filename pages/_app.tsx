@@ -1,3 +1,4 @@
+import "@fontsource/space-grotesk"
 import { createWrapper } from "next-redux-wrapper";
 import type { AppProps } from "next/app";
 import Footer from "components/Footer";
@@ -14,12 +15,12 @@ import NextNProgress from "nextjs-progressbar";
 import { NotificationsProvider } from "@mantine/notifications";
 import { MantineProvider } from "@mantine/core";
 import {colors} from 'constants/colors';
-import Navbar from 'components/Navbar2.0';
 
 import "react-quill/dist/quill.snow.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css";
+import 'styles/Profile/profile.css'
 
 
 import Context from '../Context'
