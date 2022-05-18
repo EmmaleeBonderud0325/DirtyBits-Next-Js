@@ -1,8 +1,8 @@
-import React from "react";
-import Hero from "components/Hero";
-import Feature from "components/Feature/index";
-import Head from "next/head";
-import Navbar from "components/NavbarT";
+import React from 'react'
+import Hero from 'components/Hero'
+import Feature from 'components/Feature/index'
+import Head from 'next/head'
+import Navbar from 'components/NavbarT'
 // import Terminal from 'components/Terminal'
 
 function Homepage() {
@@ -14,7 +14,7 @@ function Homepage() {
       </Head>
       <Hero />
       {/* <Terminal/> */}
-      <Feature title="Features" description="Some of our basics features" />
+      <Feature title="Features" description="Some of our basics features"/>
     </div>
   );
 }

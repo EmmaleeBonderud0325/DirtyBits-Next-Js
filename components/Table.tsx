@@ -47,7 +47,7 @@ function Table(props: Props): ReactElement {
           <Link href={`/problem/${problem.id}/${problem.title}`}>
           <a
             
-            className="text-stone-200 no-underline hover:text-indigo-400 transition-all duration-200 ease-in md:text-sm"
+            className="text-stone-200 tracking-wide no-underline hover:text-indigo-400 transition-all duration-200 ease-in md:text-sm"
             >
             {idx + 1} . {problem.title}
           </a>

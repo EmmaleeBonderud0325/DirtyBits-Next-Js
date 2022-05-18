@@ -1,5 +1,6 @@
 .root {
   --main-color: #4a76a8;
+  --primary-color: #643ADA;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap");
@@ -67,7 +68,7 @@ html {
   overflow-x: hidden;
 }
 body {
-  font-family: "Lato", "Montserrat", sans-serif !important;
+  font-family:"Lato", "Montserrat", sans-serif !important;
   height: 100vh;
   background-color: black;
 }
@@ -250,7 +251,8 @@ html::-webkit-scrollbar-thumb {
   margin-bottom: 0 !important;
 }
 .backgroundGrdient {
-  background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgb(37,34,53) 0%, rgb(65,58,112) 90% );
+  /* background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgb(37,34,53) 20% , rgb(37,34,53) 5%, rgb(39,38,61) 12%, rgb(65,58,112) 90% ); */
+  background-image: linear-gradient(to right, #252235, #2F2B4A, #413A71);
 } 
 .glassNavbar {
   padding: 1rem 1.5rem;
@@ -258,9 +260,55 @@ html::-webkit-scrollbar-thumb {
   top: 0;
   background-clip: border-box;
   z-index: 100;
+  -webkit-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
 }
 
 .scrolling-active {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(50px);
 }
+
+.brand {
+  display: inline-flex;
+  background-color: var(--primary-color);
+  height: 1.2rem;
+  width: .5rem;
+}
+
+/* .glassBackground {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(50px);
+  background-clip: border-box;
+} */
+/* @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+  .glassBackground {
+    background-color: rgba(255, 255, 255, .1);
+    -webkit-backdrop-filter: blur(50px);
+    backdrop-filter: blur(50px);
+  }
+}
+@supports (-moz-appearance:none) {
+  .profilePagePatter1, .profilePagePatter2{
+    background: none;
+    height: none;
+    width: none;
+    border-radius: none;
+  }
+} */
+
+
+/* .profilePagePatter1{
+  background: rgb(25,5,73);
+  background: linear-gradient(87deg, rgba(25,5,73,1) 22%, rgba(95,39,159,1) 100%);
+  height: 500px;
+  width: 500px;
+  border-radius: 71% 29% 67% 33% / 29% 30% 70% 71% ;
+}
+.profilePagePatter2{
+  background: rgb(63,94,251);
+  background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(65,4,17,1) 15%);
+  height: 400px;
+  width: 400px;
+  border-radius: 71% 29% 67% 33% / 29% 30% 70% 71% ;
+} */

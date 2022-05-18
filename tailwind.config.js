@@ -16,6 +16,7 @@ module.exports = {
   theme: {
     fontFamily: {
       dance: ['"Dancing Script"'],
+      secondary: ['"Space Grotesk"'],
     },
     screens: {
       xs: "630px",
