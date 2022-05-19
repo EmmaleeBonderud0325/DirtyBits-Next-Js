@@ -5,12 +5,15 @@ import { Container, Grid, Group, Skeleton } from '@mantine/core';
 
 import LeftSection from 'components/Profile/LeftSection'
 import RightSection from 'components/Profile/RightSection'
+import Head from 'next/head';
+
 
 function Profile() {
     const [isOpen, setIsOpen] = React.useState(false);
     // const child = <Skeleton height={140} radius="md" animate={true} />;
   return (
       <div className='relative flex profilePageBackground'>
+          <Head><title>Dashboard</title></Head>
           <div className='absolute top-52 left-36 profilePagePatter1'></div>
           <div className='absolute top-72 right-[25%] profilePagePatter2'></div>
           {isOpen && <SideNavbar />}
