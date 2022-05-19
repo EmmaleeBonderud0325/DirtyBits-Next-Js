@@ -16,6 +16,11 @@ import { VscCollapseAll } from "react-icons/vsc";
 import { useDispatch, useSelector } from "react-redux";
 import useHtmlParser from "hooks/htmlParser";
 import { Button } from "@mantine/core";
+import {
+  bookmarkStatusHandler,
+  downvoteHandler,
+  upvoteHandler,
+} from "redux/actions/ProblemPage";
 
 function ProblemTab(props) {
   const dispatch = useDispatch();
@@ -65,7 +70,7 @@ function ProblemTab(props) {
                 dispatch(bookmarkStatusHandler());
               }}
               className={`${
-                is_logged_in ? "inline-block cursor-pointer" : "hidden"
+                is_logged_in ? "block cursor-pointer mt-1" : "hidden"
               } `}
             >
               {props.isBookmarkSet ? <BsFillBookmarkFill /> : <BsBookmark />}
