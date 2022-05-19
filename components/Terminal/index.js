@@ -1,33 +1,32 @@
 import React from "react";
-import Terminal from "terminal-in-react";
+import Terminal from "@joeashworth/react-animated-term";
+import "@joeashworth/react-animated-term/dist/react-animated-term.css";
 
-function TerminalSimulator() {
-  return (
-    <div className="flex justify-center items-center">
-      <Terminal
-        color="white"
-        backgroundColor="black"
-        barColor="black"
-        style={{
-          fontWeight: "bold",
-          fontSize: "1.3em",
-          overflow: "hidden",
-          borderRadius: "15px",
-        }}
-        commands={{
-          explore: () =>
-            "Explore the DirtyBits problem set by clicking the links above",
-        }}
-        descriptions={{
-          "open-google": "opens google.com",
-          showmsg: "shows a message",
-          alert: "alert",
-          popup: "alert",
-        }}
-        msg="Welcome To DirtyBits, type 'explore' to begin"
-      />
-    </div>
-  );
-}
+const spinner = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
+const termLines = [
+  {
+    text: "node dirtybits.js",
+    cmd: true,
+    delay: 80,
+  },
+  {
+    text: "✔ Loaded Explore Now",
+    cmd: false,
+    repeat: true,
+    repeatCount: 5,
+    frames: spinner.map(function (spinner) {
+      return {
+        text: spinner + " Loading app",
+        delay: 40,
+      };
+    }),
+  },
+];
 
-export default TerminalSimulator;
+const AnimatedTerminal = () => (
+  <div className="mx-auto p-9 lg:w-1/2 xl:w-1/2">
+    <Terminal lines={termLines} interval={80} height={440} />
+  </div>
+);
+
+export default AnimatedTerminal;
