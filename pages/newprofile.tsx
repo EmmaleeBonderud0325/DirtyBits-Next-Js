@@ -36,3 +36,7 @@ function Profile() {
 }
 
 export default Profile
+
+Profile.getLayout = function PageLayout(page: any) {
+  return <>{page}</>;
+}
