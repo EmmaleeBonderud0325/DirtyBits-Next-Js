@@ -51,7 +51,7 @@ function Panel2(props: Props): ReactElement {
       >
         <Pane
           className="scrollbar-hide"
-          style={{ overflowY: "scroll" }}
+          style={{ overflowY: "scroll", backgroundColor: '#111827' }}
         >
           {props.isRendered ? (
             <Tabs
@@ -73,6 +73,7 @@ function Panel2(props: Props): ReactElement {
           style={{
             overflowY: "scroll",
             // position: "relative",
+            backgroundColor: '#050C1B'
           }}
         >
           <Editor

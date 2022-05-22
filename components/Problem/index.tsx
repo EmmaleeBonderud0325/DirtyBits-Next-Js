@@ -16,6 +16,7 @@ import { Context } from "../../Context";
 import {debounce} from '../../utils'
 import Fade from 'react-reveal/Fade';
 import { getProblems, updateProblemList } from "redux/actions";
+import { useDebouncedValue } from "@mantine/hooks";
 
 const companyData = [
   {
@@ -54,6 +55,8 @@ function Problem(props): ReactElement {
   // const [currentDataList, setCurrentDataList] = useState<problemListI[]>([]);
   const {tags :tagsList} = useContext(Context)
   const problemList = useSelector((state: any) => state.problemList);
+
+  const [debounced] = useDebouncedValue(searchQuery, 500);
   
   useEffect(() => {
     function getData() {
@@ -64,26 +67,27 @@ function Problem(props): ReactElement {
     getData();
   }, [tags, searchQuery, difficulty, dispatch]);
 
-  const fetchFilteredData = async (searchQuery = '') => {
-    const {data} = await filterProblemData.post<problemListI[]>("/", {
-      keyword: searchQuery,
-      tags: tags,
-      difficulty: difficulty,
-    });
-    dispatch(updateProblemList(data))
-  }
+  const filteredData = useCallback( async (debounced) => {
+      const {data} = await filterProblemData.post<problemListI[]>("/", {
+        keyword: debounced,
+        tags: tags,
+        difficulty: difficulty,
+      });
+      dispatch(updateProblemList(data))
+  }, [tags, difficulty, dispatch])
+
   
   useEffect(() => {
     if(tags.length > 0 || difficulty.length > 0 || searchQuery.length > 0){
-      fetchFilteredData()
+      filteredData(debounced)
     }
-  }, [tags, difficulty, searchQuery])
+  }, [tags, difficulty, debounced, filteredData])
   
-  const _debounceSearchField = useCallback(debounce(fetchFilteredData, 500), [])
+  // const _debounceSearchField = useCallback(debounce(fetchFilteredData, 500), [searchQuery, tags, difficulty])
 
   const onSearchQueryChange = e => {
     setSearchQuery(e.target.value);
-    _debounceSearchField(e.target.value);
+    // _debounceSearchField(e.target.value);
   };
 
   return (
