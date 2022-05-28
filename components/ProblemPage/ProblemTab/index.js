@@ -25,6 +25,7 @@ import {
 function ProblemTab(props) {
   const dispatch = useDispatch();
   const { is_logged_in } = useSelector((state) => state.userData);
+  const parseHtml = useHtmlParser();
 
   let level;
   let color;
@@ -122,19 +123,19 @@ function ProblemTab(props) {
       <SmoothList>
         <div>
           {props.questionData.problem_statement &&
-            useHtmlParser(props.questionData.problem_statement)}
+            parseHtml(props.questionData.problem_statement)}
         </div>
       </SmoothList>
       {props.questionData.note && <p>Note: {props.questionData.note}</p>}
       <h2 className="text-white">Input Format</h2>
       <pre>
         {props.questionData.input_format &&
-          useHtmlParser(props.questionData.input_format)}
+          parseHtml(props.questionData.input_format)}
       </pre>
       <h2 className="text-white">Output Format</h2>
       <pre>
         {props.questionData.output_format &&
-          useHtmlParser(props.questionData.output_format)}
+          parseHtml(props.questionData.output_format)}
       </pre>
       <SmoothList>
         <h2 className="text-white">Sample Test Cases</h2>
