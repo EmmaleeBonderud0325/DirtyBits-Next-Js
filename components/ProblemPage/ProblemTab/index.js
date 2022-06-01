@@ -150,14 +150,9 @@ function ProblemTab(props) {
       </SmoothList>
       <SmoothList>
         <h2 className="text-white">Constraints:</h2>
-        <pre>
-          {props.questionData.constraints && (
-            <div
-              dangerouslySetInnerHTML={{
-                __html: props.questionData.constraints,
-              }}
-            ></div>
-          )}
+        <pre className="pl-5">
+          {props.questionData.constraints &&
+            parseHtml(props.questionData.constraints)}
         </pre>
         <pre>Memory Limit: {props.questionData.memory_Limit} KB</pre>
         <pre>Time Limit: {props.questionData.time_Limit}s</pre>
