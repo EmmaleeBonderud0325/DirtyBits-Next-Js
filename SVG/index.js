@@ -859,3 +859,47 @@ export const ChartIcon = () => (
     />
   </svg>
 );
+
+export const DirtyBitsLogo = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    xmlnsXlink="http://www.w3.org/1999/xlink"
+    width="120"
+    height="10"
+    viewBox="0 0 1021 300"
+  >
+    <defs>
+      <clipPath id="clip-DirtyBits-logo">
+        <rect width="1021" height="312" />
+      </clipPath>
+    </defs>
+    <g id="DirtyBits-logo" clipPath="url(#clip-DirtyBits-logo)">
+      <rect width="1021" height="312" fill="rgba(0,0,0,0)" />
+      <g id="Group_1" data-name="Group 1" transform="translate(-5)">
+        <text
+          id="DirtyBits"
+          transform="translate(135 237)"
+          fill="#fffdfd"
+          fontSize="200"
+          fontFamily="ComicSansMS-Bold, Comic Sans MS"
+          fontWeight="700"
+        >
+          <tspan x="0" y="0">
+            DirtyBits
+          </tspan>
+        </text>
+        <g
+          id="Rectangle_1"
+          data-name="Rectangle 1"
+          transform="translate(22 88)"
+          fill={colors.primary}
+          stroke="#707070"
+          strokeWidth="1"
+        >
+          <rect width="70" height="167" rx="32" stroke="none" />
+          <rect x="0.5" y="0.5" width="69" height="166" rx="31.5" fill="none" />
+        </g>
+      </g>
+    </g>
+  </svg>
+);
