@@ -87,7 +87,7 @@ const links =  [
   }
 ]
 
-export default function HeaderResponsive() {
+ function HeaderResponsive() {
   const [active, setActive] = useState('');
   const { classes, cx } = useStyles();
   
@@ -133,3 +133,5 @@ export default function HeaderResponsive() {
     </Header>
   );
 }
+
+export default React.memo(HeaderResponsive);

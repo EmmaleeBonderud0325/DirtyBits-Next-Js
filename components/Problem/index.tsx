@@ -1,22 +1,23 @@
 import { ReactElement, useCallback, useContext, useEffect, useState, } from "react";
 
 import { AiOutlineSearch } from "react-icons/ai";
-import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
-import { MultiSelect , Input, Divider } from '@mantine/core';
-import { CheckboxGroup, Checkbox } from '@mantine/core';
+import { Input} from '@mantine/core';
+import Checkbox from '../Checkbox'
 
 import Table from "../Table";
-import {GoogleIcon, FacebookIcon, AmazonIcon, MicrosoftIcon, PlusIcon, AppleIcon} from '../../SVG'
+import {GoogleIcon, FacebookIcon, AmazonIcon, MicrosoftIcon, PlusIcon} from '../../SVG'
 import CompanyTags from "../CompanyTags/CompanyTags";
 import { filterProblemData } from "../api/apis";
 import WrapperLayout from "../../Layout/Layout";
 import { problemListI } from "../../redux/interfaces";
 import { Context } from "../../Context";
-import {debounce} from '../../utils'
 import Fade from 'react-reveal/Fade';
 import { getProblems, updateProblemList } from "redux/actions";
 import { useDebouncedValue } from "@mantine/hooks";
+import MultiSelect from '../MultiSelect'
+import Divider from '../Divider'
+
 
 const companyData = [
   {
@@ -101,15 +102,8 @@ function Problem(props): ReactElement {
         </div>
       <Divider/>     
       <MultiSelect
-      // @ts-ignore
-        data={tagsList}
-        className="w-full md:w-1/2"
-        placeholder="Select Tags"
-        searchable
-        nothingFound="Nothing found"
-        clearable
-        onChange={(e) => setTags(e)}
-        radius="xl"
+        tagsList={tagsList}
+        setTags={setTags}
       />
 
       {/* SEARCH BAR */}
@@ -125,17 +119,10 @@ function Problem(props): ReactElement {
           onChange={onSearchQueryChange}
         />
       </div>
-
-      <div className="space-y-2">
-        <CheckboxGroup label="Select Difficulty" defaultValue={[]} onChange={(e) => setDifficulty(e)}>
-          <Checkbox value="E" label="Easy" />
-          <Checkbox value="M" label="Medium" />
-          <Checkbox value="H" label="Hard" />
-        </CheckboxGroup>
-        <div className="flex flex-col">
-        <Table dataList={problemList} />
-        </div>
-      </div>
+          <Checkbox setDifficulty={setDifficulty}/>
+      <div className="flex flex-col">
+    <Table dataList={problemList} />
+    </div>
     </WrapperLayout>
   );
 }
