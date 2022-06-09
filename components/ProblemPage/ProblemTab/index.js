@@ -16,10 +16,16 @@ import { VscCollapseAll } from "react-icons/vsc";
 import { useDispatch, useSelector } from "react-redux";
 import useHtmlParser from "hooks/htmlParser";
 import { Button } from "@mantine/core";
+import {
+  bookmarkStatusHandler,
+  downvoteHandler,
+  upvoteHandler,
+} from "redux/actions/ProblemPage";
 
 function ProblemTab(props) {
   const dispatch = useDispatch();
   const { is_logged_in } = useSelector((state) => state.userData);
+  const parseHtml = useHtmlParser();
 
   let level;
   let color;
@@ -65,7 +71,7 @@ function ProblemTab(props) {
                 dispatch(bookmarkStatusHandler());
               }}
               className={`${
-                is_logged_in ? "inline-block cursor-pointer" : "hidden"
+                is_logged_in ? "block cursor-pointer mt-1" : "hidden"
               } `}
             >
               {props.isBookmarkSet ? <BsFillBookmarkFill /> : <BsBookmark />}
@@ -117,19 +123,19 @@ function ProblemTab(props) {
       <SmoothList>
         <div>
           {props.questionData.problem_statement &&
-            useHtmlParser(props.questionData.problem_statement)}
+            parseHtml(props.questionData.problem_statement)}
         </div>
       </SmoothList>
       {props.questionData.note && <p>Note: {props.questionData.note}</p>}
       <h2 className="text-white">Input Format</h2>
       <pre>
         {props.questionData.input_format &&
-          useHtmlParser(props.questionData.input_format)}
+          parseHtml(props.questionData.input_format)}
       </pre>
       <h2 className="text-white">Output Format</h2>
       <pre>
         {props.questionData.output_format &&
-          useHtmlParser(props.questionData.output_format)}
+          parseHtml(props.questionData.output_format)}
       </pre>
       <SmoothList>
         <h2 className="text-white">Sample Test Cases</h2>
@@ -144,14 +150,9 @@ function ProblemTab(props) {
       </SmoothList>
       <SmoothList>
         <h2 className="text-white">Constraints:</h2>
-        <pre>
-          {props.questionData.constraints && (
-            <div
-              dangerouslySetInnerHTML={{
-                __html: props.questionData.constraints,
-              }}
-            ></div>
-          )}
+        <pre className="pl-5">
+          {props.questionData.constraints &&
+            parseHtml(props.questionData.constraints)}
         </pre>
         <pre>Memory Limit: {props.questionData.memory_Limit} KB</pre>
         <pre>Time Limit: {props.questionData.time_Limit}s</pre>

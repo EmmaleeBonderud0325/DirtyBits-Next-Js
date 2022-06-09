@@ -2,18 +2,18 @@ import { Container } from "@mantine/core";
 import Link from "next/link";
 import React from "react";
 import { FaRegUser } from "react-icons/fa";
+import logo from "public/logo.png";
+import Image from "next/image";
 
 function Navbar() {
   return (
     <div id="glassNavbar" className="glassNavbar">
       <Container size="xl">
         <nav className="flex mx-auto flex-1 justify-between items-center">
-          <a
-            href="#"
-            className="text-white pb-1 tracking-wider no-underline text-2xl font-bold"
-          >
-            <div className="brand mr-2"></div>
-            DirtyBits
+          {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+          <a href="/">
+            {/* <div className="brand mr-2"></div> */}
+            <Image height={40} width={120} src={logo} alt="Logo" />
           </a>
           <ul className="gap-16 items-center text-white list-none hidden md:flex">
             <li className="group font-medium hover:cursor-pointer tracking-wide space-y-1">

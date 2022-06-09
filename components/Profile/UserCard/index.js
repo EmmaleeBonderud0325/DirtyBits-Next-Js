@@ -10,7 +10,11 @@ import {
   AchievementIcon,
   AchievementIcon2,
   AchievementIcon3,
+  PieIcon,
+  CreditCardIcon,
+  ChartIcon,
 } from "SVG";
+import StyledCard from "components/Profile/StyledCard";
 
 function UserCard() {
   return (
@@ -22,6 +26,7 @@ function UserCard() {
             width={200}
             height={200}
             alt="profile pic"
+            className="rounded-md"
           />
           <div className="flex items-center space-x-4 cursor-pointer">
             <GearIcon />
@@ -61,7 +66,15 @@ function UserCard() {
         </div>
       </div>
       <Divider my="sm" />
-      <div></div>
+      <div className="flex items-center gap-8">
+        <StyledCard icon={<PieIcon />} label="Total Matches" value="360" />
+        <StyledCard
+          icon={<CreditCardIcon />}
+          label="Total Events"
+          value="120"
+        />
+        <StyledCard icon={<ChartIcon />} label="Total Followers" value="2500" />
+      </div>
     </div>
   );
 }

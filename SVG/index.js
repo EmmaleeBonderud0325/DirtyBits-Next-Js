@@ -598,3 +598,308 @@ export const AchievementIcon3 = (props) => (
     />
   </svg>
 );
+
+export const PieIcon = (props) => (
+  <svg
+    enableBackground="new 0 0 512 512"
+    height="90px"
+    id="Pie_x5F_Chart"
+    version="1.1"
+    viewBox="0 0 512 512"
+    width="90px"
+    xmlSpace="preserve"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlnsXlink="http://www.w3.org/1999/xlink"
+  >
+    <path
+      d="M229.161,33.631l26.809,205.227L358.506,59.059c-30.227-17.276-65.227-27.154-102.536-27.154  C246.884,31.904,237.937,32.495,229.161,33.631z"
+      fill="#3F5EAB"
+    />
+    <linearGradient
+      gradientUnits="userSpaceOnUse"
+      id="SVGID_1_"
+      x1="263.2813"
+      x2="470.2324"
+      y1="195.5752"
+      y2="195.5752"
+    >
+      <stop offset="0" stopColor="#FFFFFF" />
+      <stop offset="0.3279" stopColor="#FCFCFC" />
+      <stop offset="0.5302" stopColor="#F4F4F4" />
+      <stop offset="0.6984" stopColor="#E5E5E5" />
+      <stop offset="0.848" stopColor="#D1D1D1" />
+      <stop offset="0.9839" stopColor="#B7B7B7" />
+      <stop offset="1" stopColor="#B3B3B3" />
+    </linearGradient>
+    <path
+      d="M470.232,267.365c0-80.169-45.588-149.687-112.252-184.056l-94.699,166.056l202.982,58.476  C468.859,294.75,470.232,281.219,470.232,267.365z"
+      fill="url(#SVGID_1_)"
+    />
+    <linearGradient
+      gradientUnits="userSpaceOnUse"
+      id="SVGID_2_"
+      x1="41.7676"
+      x2="451.4668"
+      y1="273.8672"
+      y2="273.8672"
+    >
+      <stop offset="0" stopColor="#00FFFF" />
+      <stop offset="1" stopColor="#FF7BAC" />
+    </linearGradient>
+    <path
+      d="M248.72,255.143L224.226,67.64C121.476,79.758,41.768,167.135,41.768,273.143  c0,114.297,92.655,206.953,206.952,206.953c100.009,0,183.45-70.94,202.747-165.245L248.72,255.143z"
+      fill="url(#SVGID_2_)"
+    />
+  </svg>
+);
+
+export const CreditCardIcon = ({ height = 90, width = 90 }) => (
+  <svg
+    enableBackground="new 0 0 512 512"
+    height={`${height}px`}
+    id="Credit_x5F_Cards"
+    version="1.1"
+    viewBox="0 0 512 512"
+    width={`${width}px`}
+    xmlSpace="preserve"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlnsXlink="http://www.w3.org/1999/xlink"
+  >
+    <path
+      d="M449.972,402.198L49.137,352.01c-11.646-1.458-19.904-12.081-18.446-23.728L59.021,102.01  c1.458-11.646,12.081-19.905,23.728-18.447l400.835,50.188c11.646,1.458,19.904,12.082,18.446,23.728l-28.331,226.272  C472.241,395.397,461.618,403.656,449.972,402.198z"
+      fill="#3F5EAB"
+    />
+    <linearGradient
+      gradientUnits="userSpaceOnUse"
+      id="SVGID_1_"
+      x1="60.1494"
+      x2="406.2057"
+      y1="466.3604"
+      y2="120.3041"
+    >
+      <stop offset="0" stopColor="#00FFFF" />
+      <stop offset="1" stopColor="#FF7BAC" />
+    </linearGradient>
+    <path
+      d="M435.159,428.604H31.195c-11.737,0-21.252-9.516-21.252-21.252v-228.04  c0-11.737,9.515-21.251,21.252-21.251h403.964c11.737,0,21.252,9.515,21.252,21.251v228.04  C456.411,419.088,446.896,428.604,435.159,428.604z"
+      fill="url(#SVGID_1_)"
+    />
+    <path
+      d="M172.403,360.501c12.869,0,12.891-20,0-20c-34.903,0-114.793,0-119.834,0c-12.869,0-12.89,20,0,20  C52.569,360.501,167.362,360.501,172.403,360.501z"
+      fill="#FFFFFF"
+    />
+    <path
+      d="M207.07,360.501c8.197,0,16.395,0,24.592,0c12.869,0,12.891-20,0-20c-8.197,0-16.395,0-24.592,0  C194.201,340.501,194.18,360.501,207.07,360.501L207.07,360.501z"
+      fill="#FFFFFF"
+    />
+    <linearGradient
+      gradientUnits="userSpaceOnUse"
+      id="SVGID_2_"
+      x1="287.9316"
+      x2="362.6396"
+      y1="354.0557"
+      y2="354.0557"
+    >
+      <stop offset="0" stopColor="#B3B3B3" />
+      <stop offset="0.0161" stopColor="#B7B7B7" />
+      <stop offset="0.152" stopColor="#D1D1D1" />
+      <stop offset="0.3016" stopColor="#E5E5E5" />
+      <stop offset="0.4698" stopColor="#F4F4F4" />
+      <stop offset="0.6721" stopColor="#FCFCFC" />
+      <stop offset="1" stopColor="#FFFFFF" />
+    </linearGradient>
+    <circle cx="325.286" cy="354.056" fill="url(#SVGID_2_)" r="37.354" />
+    <circle cx="385.619" cy="354.056" fill="#3F5EAB" r="37.354" />
+    <path
+      d="M9.943,249.209c14.844,0,444.285,0.621,445.717,0c0.177-0.077,0.546,0,0.751,0c0.184,0,0.19-25,0-25  c-14.843,0-444.284-0.621-445.716,0c-0.178,0.077-0.547,0-0.752,0C9.76,224.209,9.753,249.209,9.943,249.209L9.943,249.209z"
+      fill="#FFFFFF"
+    />
+  </svg>
+);
+
+export const ChartIcon = () => (
+  <svg
+    enableBackground="new 0 0 512 512"
+    height="90px"
+    id="Statistic"
+    version="1.1"
+    viewBox="0 0 512 512"
+    width="90px"
+    xmlSpace="preserve"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlnsXlink="http://www.w3.org/1999/xlink"
+  >
+    <path
+      d="M453.543,371.646H58.457V141.9c0-5.431,4.402-9.833,9.833-9.833h375.419c5.432,0,9.834,4.403,9.834,9.833  V371.646z"
+      fill="#3F5EAB"
+    />
+    <linearGradient
+      gradientUnits="userSpaceOnUse"
+      id="SVGID_1_"
+      x1="252.6167"
+      x2="252.6167"
+      y1="467.0703"
+      y2="419.0195"
+    >
+      <stop offset="0" stopColor="#FFFFFF" />
+      <stop offset="1" stopColor="#B3B3B3" />
+    </linearGradient>
+    <rect
+      fill="url(#SVGID_1_)"
+      height="48.051"
+      width="73.242"
+      x="215.995"
+      y="419.02"
+    />
+    <rect
+      fill="#CCCCCC"
+      height="10.002"
+      width="211.604"
+      x="146.813"
+      y="467.07"
+    />
+    <linearGradient
+      gradientUnits="userSpaceOnUse"
+      id="SVGID_2_"
+      x1="114.8154"
+      x2="397.1858"
+      y1="393.042"
+      y2="110.6716"
+    >
+      <stop offset="0" stopColor="#B3B3B3" />
+      <stop offset="0.0161" stopColor="#B7B7B7" />
+      <stop offset="0.152" stopColor="#D1D1D1" />
+      <stop offset="0.3016" stopColor="#E5E5E5" />
+      <stop offset="0.4698" stopColor="#F4F4F4" />
+      <stop offset="0.6721" stopColor="#FCFCFC" />
+      <stop offset="1" stopColor="#FFFFFF" />
+    </linearGradient>
+    <rect
+      fill="url(#SVGID_2_)"
+      height="207.093"
+      width="357.648"
+      x="77.176"
+      y="148.31"
+    />
+    <path
+      d="M428.709,419.02H83.29c-13.715,0-24.833-11.118-24.833-24.833v-22.541h395.086v22.541  C453.543,407.901,442.425,419.02,428.709,419.02z"
+      fill="#E6E6E6"
+    />
+    <linearGradient
+      gradientUnits="userSpaceOnUse"
+      id="SVGID_3_"
+      x1="118.3091"
+      x2="165.1439"
+      y1="339.9482"
+      y2="293.1135"
+    >
+      <stop offset="0" stopColor="#FF7BAC" />
+      <stop offset="1" stopColor="#00FFFF" />
+    </linearGradient>
+    <rect
+      fill="url(#SVGID_3_)"
+      height="53.929"
+      width="39.741"
+      x="121.855"
+      y="289.566"
+    />
+    <linearGradient
+      gradientUnits="userSpaceOnUse"
+      id="SVGID_4_"
+      x1="172.8882"
+      x2="261.4865"
+      y1="319.0664"
+      y2="230.4681"
+    >
+      <stop offset="0" stopColor="#FF7BAC" />
+      <stop offset="1" stopColor="#00FFFF" />
+    </linearGradient>
+    <rect
+      fill="url(#SVGID_4_)"
+      height="137.456"
+      width="39.741"
+      x="197.316"
+      y="206.039"
+    />
+    <linearGradient
+      gradientUnits="userSpaceOnUse"
+      id="SVGID_5_"
+      x1="231.522"
+      x2="353.7751"
+      y1="302.2393"
+      y2="179.9861"
+    >
+      <stop offset="0" stopColor="#FF7BAC" />
+      <stop offset="1" stopColor="#00FFFF" />
+    </linearGradient>
+    <rect
+      fill="url(#SVGID_5_)"
+      height="204.765"
+      width="39.741"
+      x="272.777"
+      y="138.73"
+    />
+    <linearGradient
+      gradientUnits="userSpaceOnUse"
+      id="SVGID_6_"
+      x1="282.3809"
+      x2="456.5356"
+      y1="276.2891"
+      y2="102.1343"
+    >
+      <stop offset="0" stopColor="#FF7BAC" />
+      <stop offset="1" stopColor="#00FFFF" />
+    </linearGradient>
+    <rect
+      fill="url(#SVGID_6_)"
+      height="308.567"
+      width="39.742"
+      x="349.586"
+      y="34.928"
+    />
+  </svg>
+);
+
+export const DirtyBitsLogo = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    xmlnsXlink="http://www.w3.org/1999/xlink"
+    width="120"
+    height="10"
+    viewBox="0 0 1021 300"
+  >
+    <defs>
+      <clipPath id="clip-DirtyBits-logo">
+        <rect width="1021" height="312" />
+      </clipPath>
+    </defs>
+    <g id="DirtyBits-logo" clipPath="url(#clip-DirtyBits-logo)">
+      <rect width="1021" height="312" fill="rgba(0,0,0,0)" />
+      <g id="Group_1" data-name="Group 1" transform="translate(-5)">
+        <text
+          id="DirtyBits"
+          transform="translate(135 237)"
+          fill="#fffdfd"
+          fontSize="200"
+          fontFamily="ComicSansMS-Bold, Comic Sans MS"
+          fontWeight="700"
+        >
+          <tspan x="0" y="0">
+            DirtyBits
+          </tspan>
+        </text>
+        <g
+          id="Rectangle_1"
+          data-name="Rectangle 1"
+          transform="translate(22 88)"
+          fill={colors.primary}
+          stroke="#707070"
+          strokeWidth="1"
+        >
+          <rect width="70" height="167" rx="32" stroke="none" />
+          <rect x="0.5" y="0.5" width="69" height="166" rx="31.5" fill="none" />
+        </g>
+      </g>
+    </g>
+  </svg>
+);

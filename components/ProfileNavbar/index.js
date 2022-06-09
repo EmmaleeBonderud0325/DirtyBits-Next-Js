@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import UserDropdown from "components/UserDropdown";
 import Notification from "components/Navbar/Notification";
-import { CashIcon } from "SVG";
+import { CreditCardIcon } from "SVG";
 import { Burger } from "@mantine/core";
 
 function ProfileNavbar({ setModalState }) {
@@ -30,7 +30,7 @@ function ProfileNavbar({ setModalState }) {
           <li className="hidden lg:block">Home</li>
           <li className="hidden lg:block">Home</li>
           <li className="font-semibold flex items-center space-x-2">
-            <CashIcon />
+            <CreditCardIcon height="30" width="30" />
             <span className="text-custom-indigo ">200 PBC</span>
           </li>
         </ul>

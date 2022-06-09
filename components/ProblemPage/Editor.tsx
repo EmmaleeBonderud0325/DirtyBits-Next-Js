@@ -1,3 +1,4 @@
+/* eslint-disable react/no-children-prop */
 import React, { useState, useEffect, FC, ReactElement } from "react";
 import Cookies from "js-cookie";
 import { connect, useDispatch, useSelector } from "react-redux";
@@ -36,13 +37,16 @@ import {
 import { IRootState } from "../../redux/reducers";
 import {BsTerminal} from "react-icons/bs";
 import dynamic from "next/dynamic";
+import { CaretDown } from 'tabler-icons-react';
 
 const TabView = dynamic(() =>
   import('primereact/tabview').then((mod) => mod.TabView)
 )
 
+import { Tabs } from '@mantine/core';
+
 let CodeMirror = null;
-const FONT_SIZE = 51;
+const FONT_SIZE = 20;
 if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
   CodeMirror = require("react-codemirror2").Controlled;
   require("codemirror/mode/yaml/yaml");
@@ -137,6 +141,9 @@ const Editor: FC<Props> = (props): ReactElement => {
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(false);
+
+  const [currentEditorValue, setCurrentEditorValue] = useState<string>(props.editorValue);
+  
   let [customInput, setCustomInput] = useState<boolean>(false);
   let [inputValue, changeInputValue] = useState<string>("");
   let [outputValue, changeOutputValue] = useState<string>(
@@ -169,7 +176,7 @@ const Editor: FC<Props> = (props): ReactElement => {
         })
       );
     };
-  }, []);
+  }, [dispatch]);
 
   const closeHandler = (): void => {
     setIsModalVisible(false);
@@ -395,14 +402,14 @@ const Editor: FC<Props> = (props): ReactElement => {
               </pre>
               <h1 className="text-left text-slate-400 tracking-wider text-2xl font-bold">{totalSampleTestCases}/{totalSampleTestCases} Test Cases Passed</h1>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-                {successArray.map(index => <Alert children="" key={index} style={{ marginTop: 20, maxWidth:'13rem', maxHeight:'5rem' }} icon={<BsCheck2Circle size={16} />} variant="filled" title={`Test Case ${index + 1}`} color="green" radius="lg"/>)}
+                {successArray.map(index => <Alert children={null} key={index} style={{ marginTop: 20, maxWidth:'13rem', maxHeight:'5rem' }} icon={<BsCheck2Circle size={16} />} variant="filled" title={`Test Case ${index + 1}`} color="green" radius="lg"/>)}
               </div>
             </div>
           )
       }else if(testCaseResult.status === 'error'){
         return (
-          <div className="pl-4">
-              <pre className="text-left mb-4 text-4xl font-bold text-red-500">
+          <div className="pl-4 pt-4">
+              <pre className="text-left mb-4 text-3xl font-bold text-red-500">
                 <span className="inline-flex items-center gap-4">
                 <ImCross/>
                 {testCaseResult.error}
@@ -410,7 +417,7 @@ const Editor: FC<Props> = (props): ReactElement => {
               </pre>
               <h1 className="text-left text-slate-400 tracking-wider text-2xl font-bold">{testCaseResult['testCase No'] - 1}/{totalSampleTestCases} Test Cases Passed</h1>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-                {successArray.map(index => <Alert children="" key={index} style={{ marginTop: 20, maxWidth:'13rem', maxHeight:'5rem' }} icon={<ImCross size={16} />} variant="filled" title={`Test Case ${index + 1}`} color={`${index + 1 < testCaseResult.error ? 'green' : 'red'}`} radius="lg"/>)}
+                {successArray.map(index => <Alert children={null} key={index} style={{ marginTop: 20, maxWidth:'13rem', maxHeight:'5rem' }} icon={<ImCross size={16} />} variant="filled" title={`Test Case ${index + 1}`} color={`${index + 1 < testCaseResult.error ? 'green' : 'red'}`} radius="lg"/>)}
               </div>
           </div>
         )
@@ -430,72 +437,93 @@ const Editor: FC<Props> = (props): ReactElement => {
         {CodeMirror && (
           <CodeMirror
             className={`my-code-editor scrollbar-hide text-[${FONT_SIZE}px]`}
-            value={editorValue}
+            value={currentEditorValue}
             options={options}
             onBeforeChange={(_: any, __: any, value: string) => {
-              dispatch(changeEditorValue(value));
+              // dispatch(changeEditorValue(value));
+              setCurrentEditorValue(value)
             }}
+            
           />
         )}
       </div>
-      <div className="editor-options-container mt-10 flex space-x-5 justify-between items-center p-2">
-        <UnstyledButton className="text-white text-base font-semibold" onClick={handleConsole} leftIcon={<BsTerminal/>}>
-          <Group>
-            <BsTerminal/>
-          <div>
-            <Text>Console</Text>
+      <div className="absolute px-5 py-1 left-0 bottom-0 right-0">
+        <div className="flex justify-between">
+          <UnstyledButton className="flex items-center text-white text-base font-semibold" onClick={handleConsole}>
+              <div>
+                <Text>Console</Text>
+              </div>
+              <CaretDown
+                size={14}
+                strokeWidth={2}
+                color={'#fff'}
+                className="ml-2 mt-1"
+              />
+          </UnstyledButton>
+          <div className="flex space-x-3">
+            <SmoothList>
+              <Button
+                className="text-black"
+                leftIcon={<VscRunAll className="text-lg group-hover:animate-bounce" />}
+                onClick={handleRunCode}
+                disabled={isDisabled}
+                loading={isDisabled}
+                variant="white"
+                radius="xl"
+              >     
+                Run
+              </Button>
+            </SmoothList>
+            <SmoothList>
+              <Button
+                className="text-black"
+                leftIcon={<AiOutlineSend className="text-lg group-hover:rotate-45 transition-all ease-in-out" />}
+                onClick={handleSubmitCode}
+                disabled={isSubmitDisabled}
+                loading={isSubmitDisabled}
+                variant="white"
+                radius="xl"
+              >     
+                Submit
+              </Button>
+            </SmoothList>
           </div>
-        </Group>
-
-        </UnstyledButton>
-        <div className="flex space-x-3">
-          <SmoothList>
-            <Button
-              className="text-black"
-              leftIcon={<VscRunAll className="text-lg group-hover:animate-bounce" />}
-              onClick={handleRunCode}
-              disabled={isDisabled}
-              loading={isDisabled}
-              variant="white"
-              radius="xl"
-            >     
-              Run
-            </Button>
-          </SmoothList>
-          <SmoothList>
-            <Button
-              className="text-black"
-              leftIcon={<AiOutlineSend className="text-lg group-hover:rotate-45 transition-all ease-in-out" />}
-              onClick={handleSubmitCode}
-              disabled={isSubmitDisabled}
-              loading={isSubmitDisabled}
-              variant="white"
-              radius="xl"
-            >     
-              Submit
-            </Button>
-          </SmoothList>
         </div>
       </div>
+      
       {showConsole && (
-        <TabView
-          activeIndex={activeIndex}
-          onTabChange={(e) => setActiveIndex(e.index)}
-          className="tabview-custom"
-        >
-          {" "}
-          <Panel
-            disabled={!is_logged_in}
-            header="Output"
-            leftIcon={!is_logged_in && "pi pi-lock"}
-          >
-            {handleOutput()}
-          </Panel>
-          <Panel
-            disabled={!is_logged_in}
-            header="Input"
-            leftIcon={!is_logged_in && "pi pi-lock"}
-          >
+        // <TabView
+        //   activeIndex={activeIndex}
+        //   onTabChange={(e) => setActiveIndex(e.index)}
+        //   className="tabview-custom"
+        // >
+        //   {" "}
+        //   <Panel
+        //     disabled={!is_logged_in}
+        //     header="Output"
+        //     leftIcon={!is_logged_in && "pi pi-lock"}
+        //   >
+        //     {handleOutput()}
+        //   </Panel>
+        //   <Panel
+        //     disabled={!is_logged_in}
+        //     header="Input"
+        //     leftIcon={!is_logged_in && "pi pi-lock"}
+        //   >
+        //     <textarea
+        //       className="w-full placeholder:text-base placeholder:p-1 bg-gray-800 border-none text-white outline-none rounded-lg p-1 text-lg"
+        //       rows={6}
+        //       id="input-btn"
+        //       placeholder="Custom Input here"
+        //       value={inputValue}
+        //       onChange={(e) => changeInputValue(e.target.value)}
+        //       spellCheck="false"
+        //     ></textarea>
+        //   </Panel>
+        // </TabView>
+        <Tabs variant="pills" className="text-white p-5">
+          <Tabs.Tab label="Input">{handleOutput()}</Tabs.Tab>
+          <Tabs.Tab label="Output">
             <textarea
               className="w-full placeholder:text-base placeholder:p-1 bg-gray-800 border-none text-white outline-none rounded-lg p-1 text-lg"
               rows={6}
@@ -504,9 +532,9 @@ const Editor: FC<Props> = (props): ReactElement => {
               value={inputValue}
               onChange={(e) => changeInputValue(e.target.value)}
               spellCheck="false"
-            ></textarea>
-          </Panel>
-        </TabView>
+            />
+          </Tabs.Tab>
+        </Tabs>
       )}
     </div>
   );

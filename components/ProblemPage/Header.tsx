@@ -121,7 +121,7 @@ function Header(props: Props): ReactElement {
   };
 
   return (
-    <div className="flex justify-around p-10">
+    <div className="flex justify-around items-center p-10">
       {/* <FontDropdown fontSize={props.fontSize} setFontSize={changeFont} /> */}
       <Dropdown2
         dropdownType={"theme"}
@@ -153,7 +153,7 @@ function Header(props: Props): ReactElement {
             />
           </Tooltip>
 
-          <div>
+          <>
           <Tooltip label="Import File" color="blue" withArrow>
               <label htmlFor="file-input">
                 <Image
@@ -172,9 +172,9 @@ function Header(props: Props): ReactElement {
                 className="hidden "
               />
             </Tooltip>
-          </div>
+          </>
 
-          <div>
+          <>
           <Tooltip label="Download Code" color="blue" withArrow>
               <Image
                 onClick={() =>
@@ -187,8 +187,8 @@ function Header(props: Props): ReactElement {
                 alt="download code"
               />
             </Tooltip>
-          </div>
-          <div>
+          </>
+          <>
           <Tooltip label="Reset Code" color="blue" withArrow>
               <Image
                 onClick={resetCode}
@@ -199,7 +199,7 @@ function Header(props: Props): ReactElement {
                 alt="reset code"
               />
             </Tooltip>
-          </div>
+          </>
 
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 z-50">
             {props.userInfo.is_logged_in && (

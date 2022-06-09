@@ -26,11 +26,12 @@ export default function ButtonMenu({ label, list, handleClick}) {
         {list.map((item: JSX.Element) => {
           if (item.key !== null) {
             return (
-                  <Menu.Item
-                    onClick={() => handleClick(item)}
-                  >
-                    {item.props.children}
-                  </Menu.Item>
+              <Menu.Item
+              key={item.key}
+                onClick={() => handleClick(item)}
+              >
+                {item.props.children}
+              </Menu.Item>
             );
           }
         })}
