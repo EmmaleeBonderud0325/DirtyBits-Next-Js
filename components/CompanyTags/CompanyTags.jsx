@@ -1,7 +1,4 @@
-import Image from 'next/image'
-
-
-
+import React from 'react'
 function CompanyTags({title, Icon}) {
   return (
     <div className="bg-slate-500 py-3 opacity-70 flex flex-col items-center rounded-md justify-center">
@@ -18,4 +15,4 @@ function CompanyTags({title, Icon}) {
   )
 }
 
-export default CompanyTags;
+export default React.memo(CompanyTags);
