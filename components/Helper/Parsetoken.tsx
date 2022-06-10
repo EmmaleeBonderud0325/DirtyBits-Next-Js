@@ -1,8 +1,8 @@
 import jwt_decode from "jwt-decode";
-import { userDataI } from "../../redux/interfaces";
+import { userState } from "features/UserData";
 
 const Parsetoken = (token: string) => {
-  let parsedData: userDataI = jwt_decode(token);
+  let parsedData: userState = jwt_decode(token);
   return parsedData;
 };
 
