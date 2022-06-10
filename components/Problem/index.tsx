@@ -1,23 +1,20 @@
 import { ReactElement, useCallback, useContext, useEffect, useState, } from "react";
-
-import { AiOutlineSearch } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { Input} from '@mantine/core';
-import Checkbox from '../Checkbox'
-
-import Table from "../Table";
-import {GoogleIcon, FacebookIcon, AmazonIcon, MicrosoftIcon, PlusIcon} from '../../SVG'
-import CompanyTags from "../CompanyTags/CompanyTags";
-import { filterProblemData } from "../api/apis";
-import WrapperLayout from "../../Layout/Layout";
-import { problemListI } from "../../redux/interfaces";
-import { Context } from "../../Context";
+import { Container } from '@mantine/core';
 import Fade from 'react-reveal/Fade';
-import { getProblems, updateProblemList } from "redux/actions";
 import { useDebouncedValue } from "@mantine/hooks";
-import MultiSelect from '../MultiSelect'
-import Divider from '../Divider'
 
+import {GoogleIcon, FacebookIcon, AmazonIcon, MicrosoftIcon, PlusIcon} from 'SVG'
+import { getProblems, updateProblemList } from "redux/actions";
+import { problemListI } from "redux/interfaces";
+import CompanyTags from "components/CompanyTags/CompanyTags";
+import Table from "components/Table";
+import { filterProblemData } from "components/api/apis";
+import Checkbox from 'components/Checkbox'
+import MultiSelect from "components/MultiSelect"
+import Divider from "components/Divider"
+import { Context } from "Context";
+import SearchInput from 'components/InputField'
 
 const companyData = [
   {
@@ -49,13 +46,12 @@ const companyData = [
 
 function Problem(props): ReactElement {
   const dispatch = useDispatch()
+  const {tags :tagsList} = useContext(Context)
+  const problemList = useSelector((state: any) => state.problemList);
   
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [difficulty, setDifficulty] = useState<string[]>([]);
   const [tags, setTags] = useState([]);
-  // const [currentDataList, setCurrentDataList] = useState<problemListI[]>([]);
-  const {tags :tagsList} = useContext(Context)
-  const problemList = useSelector((state: any) => state.problemList);
 
   const [debounced] = useDebouncedValue(searchQuery, 500);
   
@@ -68,7 +64,7 @@ function Problem(props): ReactElement {
     getData();
   }, [tags, searchQuery, difficulty, dispatch]);
 
-  const filteredData = useCallback( async (debounced) => {
+  const filteredData = useCallback( async (debounced: string) => {
       const {data} = await filterProblemData.post<problemListI[]>("/", {
         keyword: debounced,
         tags: tags,
@@ -84,46 +80,34 @@ function Problem(props): ReactElement {
     }
   }, [tags, difficulty, debounced, filteredData])
   
-  // const _debounceSearchField = useCallback(debounce(fetchFilteredData, 500), [searchQuery, tags, difficulty])
 
-  const onSearchQueryChange = e => {
-    setSearchQuery(e.target.value);
-    // _debounceSearchField(e.target.value);
-  };
+  // const onSearchQueryChange = e => {
+  //   setSearchQuery(e.target.value);
+  // };
 
   return (
-    <WrapperLayout>
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-6 md:gap-10 mb-10">
-          {companyData.map(company => (
-            <Fade bottom key={company.id}>
-              <CompanyTags Icon={company.Icon} title={company.name} />
-            </Fade>
-          ))}
-        </div>
+    <Container size="xl" className="space-y-10 mt-10">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-6 md:gap-10 mb-10">
+        {companyData.map(company => (
+          <Fade bottom key={company.id}>
+            <CompanyTags Icon={company.Icon} title={company.name} />
+          </Fade>
+        ))}
+      </div>
       <Divider/>     
       <MultiSelect
         tagsList={tagsList}
         setTags={setTags}
       />
-
       {/* SEARCH BAR */}
-
       <div className="space-x-3 w-full block">
-        <Input
-          className="w-full md:w-1/2"
-          icon={<AiOutlineSearch className="text-custom-indigo"/>}
-          placeholder="Search Questions"
-          styles={{ rightSection: { pointerEvents: 'none' } }}
-          radius="xl"
-          value={searchQuery}
-          onChange={onSearchQueryChange}
-        />
+        <SearchInput searchQuery={searchQuery} onSearchQueryChange={setSearchQuery}/>
       </div>
-          <Checkbox setDifficulty={setDifficulty}/>
+      <Checkbox setDifficulty={setDifficulty}/>
       <div className="flex flex-col">
-    <Table dataList={problemList} />
-    </div>
-    </WrapperLayout>
+        <Table dataList={problemList} />
+      </div>
+    </Container>
   );
 }
 
