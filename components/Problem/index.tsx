@@ -1,9 +1,8 @@
 import { ReactElement, useCallback, useContext, useEffect, useState, } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Container } from '@mantine/core';
-import Fade from 'react-reveal/Fade';
 import { useDebouncedValue } from "@mantine/hooks";
 
+import StyledContainer from 'Layout/Layout'
 import {GoogleIcon, FacebookIcon, AmazonIcon, MicrosoftIcon, PlusIcon} from 'SVG'
 import { getProblems, updateProblemList } from "redux/actions";
 import { problemListI } from "redux/interfaces";
@@ -15,6 +14,7 @@ import MultiSelect from "components/MultiSelect"
 import Divider from "components/Divider"
 import { Context } from "Context";
 import SearchInput from 'components/InputField'
+
 
 const companyData = [
   {
@@ -86,12 +86,10 @@ function Problem(props): ReactElement {
   // };
 
   return (
-    <Container size="xl" className="space-y-10 mt-10">
+    <StyledContainer className="space-y-10 mt-10">
       <div className="grid grid-cols-2 gap-4 md:grid-cols-6 md:gap-10 mb-10">
         {companyData.map(company => (
-          <Fade bottom key={company.id}>
-            <CompanyTags Icon={company.Icon} title={company.name} />
-          </Fade>
+            <CompanyTags key={company.id} Icon={company.Icon} title={company.name} />
         ))}
       </div>
       <Divider/>     
@@ -107,7 +105,7 @@ function Problem(props): ReactElement {
       <div className="flex flex-col">
         <Table dataList={problemList} />
       </div>
-    </Container>
+    </StyledContainer>
   );
 }
 
