@@ -293,6 +293,7 @@ const Editor: FC<Props> = (props): ReactElement => {
   let options = {
     mode: editorLanguage.value,
     theme: themeValue.value,
+    
     lineWrapping: true,
     smartIndent: true,
     foldGutter: true,
@@ -331,46 +332,6 @@ const Editor: FC<Props> = (props): ReactElement => {
       // Tab: "autocomplete",
     },
   };
-
-  const responseGoogleSuccess = async (data) => {
-    try {
-      await googleLoginApi
-        .post("/", { auth_token: data["tokenId"] })
-        .then((result: any) => {
-          let access: string = result.data.access;
-          let refresh: string = result.data.refresh;
-          const data: userDataI = Parsetoken(access);
-          if (data.is_verified) {
-            setIsModalVisible(false);
-            Cookies.set("access", access);
-            Cookies.set("refresh", refresh, { expires: 14 });
-            dispatch(
-              updateUserinfo({
-                is_logged_in: true,
-                is_verified: data.is_verified,
-                is_admin: data.is_admin,
-                email: data.email,
-                first_name: data.first_name,
-                last_name: data.last_name,
-                username: data.username,
-                profile_pic: data.profile_pic,
-              })
-            );
-          }
-        })
-        .catch(() => {
-          console.error("Bad Request !");
-        });
-    } catch (e) {
-      console.log("Server Error !");
-    }
-  };
-
-  const responseGoogleFailure = () => {
-    console.error("Google Authentication failed !");
-  };
-
-  const antIcon = "Loading..."
 
   const handleConsole = () => {
     setActiveIndex(1);
@@ -429,8 +390,7 @@ const Editor: FC<Props> = (props): ReactElement => {
 
   return (
     <div
-      style={{ height: "100vh" }}
-      className="problem-page-right-container p-2"
+      className="h-[100vh] problem-page-right-container p-2"
     >
       <Header />
       <div>
@@ -492,49 +452,22 @@ const Editor: FC<Props> = (props): ReactElement => {
       </div>
       
       {showConsole && (
-        // <TabView
-        //   activeIndex={activeIndex}
-        //   onTabChange={(e) => setActiveIndex(e.index)}
-        //   className="tabview-custom"
-        // >
-        //   {" "}
-        //   <Panel
-        //     disabled={!is_logged_in}
-        //     header="Output"
-        //     leftIcon={!is_logged_in && "pi pi-lock"}
-        //   >
-        //     {handleOutput()}
-        //   </Panel>
-        //   <Panel
-        //     disabled={!is_logged_in}
-        //     header="Input"
-        //     leftIcon={!is_logged_in && "pi pi-lock"}
-        //   >
-        //     <textarea
-        //       className="w-full placeholder:text-base placeholder:p-1 bg-gray-800 border-none text-white outline-none rounded-lg p-1 text-lg"
-        //       rows={6}
-        //       id="input-btn"
-        //       placeholder="Custom Input here"
-        //       value={inputValue}
-        //       onChange={(e) => changeInputValue(e.target.value)}
-        //       spellCheck="false"
-        //     ></textarea>
-        //   </Panel>
-        // </TabView>
-        <Tabs variant="pills" className="text-white p-5">
-          <Tabs.Tab label="Input">{handleOutput()}</Tabs.Tab>
-          <Tabs.Tab label="Output">
-            <textarea
-              className="w-full placeholder:text-base placeholder:p-1 bg-gray-800 border-none text-white outline-none rounded-lg p-1 text-lg"
-              rows={6}
-              id="input-btn"
-              placeholder="Custom Input here"
-              value={inputValue}
-              onChange={(e) => changeInputValue(e.target.value)}
-              spellCheck="false"
-            />
-          </Tabs.Tab>
-        </Tabs>
+        <div className="h-auto scrollbar-hide overflow-scroll">
+          <Tabs variant="pills" className="text-white p-5">
+            <Tabs.Tab label="Input">{handleOutput()}</Tabs.Tab>
+            <Tabs.Tab label="Output">
+              <textarea
+                className="w-full placeholder:text-base placeholder:p-1 bg-gray-800 border-none text-white outline-none rounded-lg p-1 text-lg"
+                rows={6}
+                id="input-btn"
+                placeholder="Custom Input here"
+                value={inputValue}
+                onChange={(e) => changeInputValue(e.target.value)}
+                spellCheck="false"
+              />
+            </Tabs.Tab>
+          </Tabs>
+        </div>
       )}
     </div>
   );

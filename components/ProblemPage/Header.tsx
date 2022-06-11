@@ -121,7 +121,7 @@ function Header(props: Props): ReactElement {
   };
 
   return (
-    <div className="flex justify-around items-center p-10">
+    <div className="flex justify-around items-center p-2">
       {/* <FontDropdown fontSize={props.fontSize} setFontSize={changeFont} /> */}
       <Dropdown2
         dropdownType={"theme"}
