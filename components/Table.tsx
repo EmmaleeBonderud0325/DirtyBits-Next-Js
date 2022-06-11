@@ -4,7 +4,7 @@ import Link from "next/link";
 import TableLoader from "./TableLoader";
 import { problemListI } from "redux/interfaces";
 import {DashIcon, QuestionIcon, CheckIcon} from 'SVG'
-import { Pagination } from "@mantine/core";
+import Pagination from "components/Pagination";
 
 interface Props {
   dataList: problemListI[];
@@ -84,10 +84,9 @@ function Table(props: Props): ReactElement {
         </table>
       </div>
       {props.dataList.length <= 0 && <TableLoader />}
-
       <div className="hidden md:flex justify-center">
-        <Pagination total={2} radius="md" color="violet"/>
-        </div>
+        <Pagination />
+      </div>
     </div>
   );
 }
