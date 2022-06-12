@@ -61,7 +61,7 @@ function UserDropdown({showUserName = false, size = 30}) {
     const dispatch = useDispatch();
 
     const {profile_pic, username, is_admin } = useSelector(
-      (state: any) => state.userData
+      (state: any) => state.userData.data
     );
     const addProbemRouteHandler = () => {
       if (is_admin) {

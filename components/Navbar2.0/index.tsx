@@ -91,7 +91,9 @@ const links =  [
   const [active, setActive] = useState('');
   const { classes, cx } = useStyles();
   
-  const isAuth = useSelector((state: any) => state.userData.is_logged_in);
+  const isAuth = useSelector((state: any) => state.userData.data.is_logged_in);
+
+  console.log('is auth', isAuth)
   
   const items = links.map((link) => (
     <Link key={link.label} href={link.link}>

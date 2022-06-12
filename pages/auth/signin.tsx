@@ -24,6 +24,7 @@ import GitHubButton from "components/authProviders/Github";
 import { useAppDispatch } from "app/hooks";
 import { setSigninError, setUserData } from "features/UserData";
 import {useSelector} from 'react-redux'
+import Router from 'next/router'
 
 // interface Props {
 //   googleSpinner: boolean;
@@ -93,6 +94,7 @@ function Signin(): ReactElement {
           refresh: response.data.refresh,
           remember_me: data.remember_me,
         }))
+        Router.push('/')
       }catch (e) {
         dispatch(setSigninError({ errorString: "Invalid Credentials !" }));
       }
@@ -244,11 +246,10 @@ function Signin(): ReactElement {
                   <button
                     disabled={isDisabled ? true : false}
                     type="submit"
-                    className={`social-login-btn  bg-custom-indigo hover:bg-indigo-900 hover:outline-black
-                          transition ease-in duration-500
-                          ${isDisabled && "opacity-50 cursor-not-allowed"}
-                        `}
-                    autoFocus
+                    className={`social-login-btn  bg-custom-indigo hover:bg-indigo-900 
+                      transition ease-in duration-500
+                      ${isDisabled && "opacity-50 cursor-not-allowed"}
+                    `}
                   >
                     {isDisabled ? (
                       <>
