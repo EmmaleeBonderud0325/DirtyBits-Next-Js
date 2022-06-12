@@ -15,7 +15,6 @@ function Homepage() {
   useEffect(() => {
     const refresh: string = Cookies.get("refresh");
     if (typeof refresh != "undefined") {
-      console.log("called");
       dispatch(getUserData({ refresh }));
     }
   });

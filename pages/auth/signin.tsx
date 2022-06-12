@@ -15,12 +15,14 @@ import {
 } from "imports/Signin";
 import Background from "components/Background";
 import { notifyFirstLoad } from "redux/actions";
-import { useForm, Controller  } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Loader } from '@mantine/core';
-import GoogleButton from 'components/authProviders/Google'
-import GitHubButton from 'components/authProviders/Github'
+import { Loader } from "@mantine/core";
+import GoogleButton from "components/authProviders/Google";
+import GitHubButton from "components/authProviders/Github";
+import { useAppDispatch } from "app/hooks";
+import { setSigninError, setUserData } from "features/UserData";
 
 interface Props {
   googleSpinner: boolean;
@@ -50,87 +52,104 @@ interface TokensI {
 }
 
 function Signin(props: Props): ReactElement {
-  const dispatch = useDispatch();
-  const router = useRouter();
+  const dispatch = useAppDispatch();
+  // const router = useRouter();
   const antIcon = <Loader color="indigo" size="sm" />;
 
-  const schema = yup.object({
-    email: yup.string().required('Email is required').email('Email is not valid'),
-    password: yup.string().required('Password is required'),
-    remember_me: yup.boolean(),
-  }).required();
-  
+  const schema = yup
+    .object({
+      email: yup
+        .string()
+        .required("Email is required")
+        .email("Email is not valid"),
+      password: yup.string().required("Password is required"),
+      remember_me: yup.boolean(),
+    })
+    .required();
+
   let [isError, setIsError] = useState<ErrorsI>({
     email: { error: false, details: "" },
     password: { error: false, details: "" },
   });
 
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
-  const { control, handleSubmit, formState:{ errors } } = useForm({
-    resolver: yupResolver(schema)
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
   });
 
-  const postAuthentication = (tokens: TokensI, remember_me: Boolean) => {
-    const { access, refresh } = tokens;
-    const data = Parsetoken(access);
-    console.log("data", data);
-    if (data.is_verified) {
-      if (remember_me) {
-        var inTwentyMinutes = new Date(new Date().getTime() + 20 * 60 * 1000);
-        Cookies.set("access", access, { expires: inTwentyMinutes });
-        Cookies.set("refresh", refresh, { expires: 14 });
-      } else {
-        Cookies.set("access", access);
-        Cookies.set("refresh", refresh);
-      }
-      dispatch(
-        updateUserinfo({
-          is_logged_in: true,
-          is_admin: data.is_admin,
-          is_verified: data.is_verified,
-          email: data.email,
-          first_name: data.first_name,
-          last_name: data.last_name,
-          username: data.username,
-          profile_pic: data.profile_pic,
-        })
-      );
-      dispatch(notifyFirstLoad());
-      router.push("/");
-    } else {
-      setIsError({
-        ...isError,
-        email: { error: true, details: "" },
-        password: { error: true, details: "Account not verified !" },
-      });
-    }
-  };
+  // const postAuthentication = (tokens: TokensI, remember_me: Boolean) => {
+  //   const { access, refresh } = tokens;
+  //   const data = Parsetoken(access);
+  //   console.log("data", data);
+  //   if (data.is_verified) {
+  //     if (remember_me) {
+  //       var inTwentyMinutes = new Date(new Date().getTime() + 20 * 60 * 1000);
+  //       Cookies.set("access", access, { expires: inTwentyMinutes });
+  //       Cookies.set("refresh", refresh, { expires: 14 });
+  //     } else {
+  //       Cookies.set("access", access);
+  //       Cookies.set("refresh", refresh);
+  //     }
+  //     dispatch(
+  //       updateUserinfo({
+  //         is_logged_in: true,
+  //         is_admin: data.is_admin,
+  //         is_verified: data.is_verified,
+  //         email: data.email,
+  //         first_name: data.first_name,
+  //         last_name: data.last_name,
+  //         username: data.username,
+  //         profile_pic: data.profile_pic,
+  //       })
+  //     );
+  //     dispatch(notifyFirstLoad());
+  //     router.push("/");
+  //   } else {
+  //     setIsError({
+  //       ...isError,
+  //       email: { error: true, details: "" },
+  //       password: { error: true, details: "Account not verified !" },
+  //     });
+  //   }
+  // };
 
   const submitLoginForm = async (data: any) => {
     setIsDisabled(true);
-      try {
-        await signinApi
-          .post<TokensI>("/", data)
-          .then((result) => {
-            postAuthentication(result.data, data.remember_me);
-          })
-          .catch(() => {
-            setIsError({
-              ...isError,
-              email: { error: true, details: "Invalid Credentials !" },
-              password: { error: true, details: "Invalid Credentials !" },
-            });
-            console.error("Invalid Credentials !");
-          });
-      } catch (e) {
-        console.error("Server Error !");
-      }
+    try {
+      await signinApi
+        .post<TokensI>("/", data)
+        .then((result) => {
+          // postAuthentication(result.data, data.remember_me);
+          dispatch(
+            setUserData({
+              access: result.data.access,
+              refresh: result.data.refresh,
+              remember_me: data.remember_me,
+            })
+          );
+        })
+        .catch(() => {
+          // setIsError({
+          //   ...isError,
+          //   email: { error: true, details: "Invalid Credentials !" },
+          //   password: { error: true, details: "Invalid Credentials !" },
+          // });
+          // console.error("Invalid Credentials !");
+          dispatch(setSigninError({ errorString: "Invalid Credentials !" }));
+        });
+    } catch (e) {
+      dispatch(setSigninError({ errorString: "Server Error !" }));
+      // console.error("Server Error !");
+    }
     setIsDisabled(false);
     dispatch(updateSignInSpinner(false));
     return;
   };
- 
-  
+
   return (
     <>
       <Head>
@@ -180,116 +199,123 @@ function Signin(props: Props): ReactElement {
                 <p className="text-gray-500">Please sign in to your account.</p>
               </div>
               <div className="space-y-5">
-                <form noValidate autoComplete="off" onSubmit={handleSubmit(submitLoginForm)}>
-                    <div className="space-y-1">
+                <form
+                  noValidate
+                  autoComplete="off"
+                  onSubmit={handleSubmit(submitLoginForm)}
+                >
+                  <div className="space-y-1">
                     <Controller
                       name="email"
                       control={control}
                       render={({ field: { onChange, onBlur, value } }) => (
                         <TextInput
-                        key="email"
-                        error={errors.email?.message || isError.email?.details}
-                        value={value}
-                        radius="md"
-                        onChange={onChange}
-                        onBlur={() => {
-                          setIsError({
-                            ...isError,
-                            email: { error: false, details: "" },
-                          });
-                          onBlur();
-                        }}
-                        label="Email"
-                        placeholder="your email address"
-                        // onInvalid={isError.email.error || errors.email?.message}
-                        required
-                        size="sm"
+                          key="email"
+                          error={
+                            errors.email?.message || isError.email?.details
+                          }
+                          value={value}
+                          radius="md"
+                          onChange={onChange}
+                          onBlur={() => {
+                            setIsError({
+                              ...isError,
+                              email: { error: false, details: "" },
+                            });
+                            onBlur();
+                          }}
+                          label="Email"
+                          placeholder="your email address"
+                          // onInvalid={isError.email.error || errors.email?.message}
+                          required
+                          size="sm"
                         />
                       )}
                     />
-                    </div>
-                    <div className="space-y-1">
-                      <Controller
+                  </div>
+                  <div className="space-y-1">
+                    <Controller
                       name="password"
                       control={control}
                       render={({ field: { onChange, onBlur, value } }) => (
                         <PasswordInput
-                        key="password"
-                        error={errors.password?.message || isError.password.details}
-                        radius="md"
-                        placeholder="Your password here"
-                        value={value}
-                        onBlur={() => {
-                          setIsError({
-                            ...isError,
-                            password: { error: false, details: "" },
-                          });
-                          onBlur();
-                        }}
-                        onChange={onChange}
-                        label="Password"
-                        size="sm"
-                        required
-                        // onInvalid={isError.password.error || errors.password?.message}
+                          key="password"
+                          error={
+                            errors.password?.message || isError.password.details
+                          }
+                          radius="md"
+                          placeholder="Your password here"
+                          value={value}
+                          onBlur={() => {
+                            setIsError({
+                              ...isError,
+                              password: { error: false, details: "" },
+                            });
+                            onBlur();
+                          }}
+                          onChange={onChange}
+                          label="Password"
+                          size="sm"
+                          required
+                          // onInvalid={isError.password.error || errors.password?.message}
                         />
                       )}
                     />
-                    </div>
-                    <div className="flex items-center justify-between my-2">
-                      <div className="flex items-center accent-custom-indigo">
-                        
+                  </div>
+                  <div className="flex items-center justify-between my-2">
+                    <div className="flex items-center accent-custom-indigo">
                       <Controller
                         name="remember_me"
                         control={control}
                         render={({ field: { onChange, onBlur, value } }) => (
                           <input
-                          id="remember_me"
-                          name="remember_me"
-                          type="checkbox"
-                          checked={value}
-                          onBlur={onBlur}
-                          onChange={onChange}
-                          className="h-4 w-4 bg-blue-500 focus:ring-blue-400 border-gray-300 rounded"
-                        />
-                      )}
-                    />
-                        <label
-                          htmlFor="remember_me"
-                          className="ml-2 block text-sm text-gray-800"
-                        >
-                          Remember me
-                        </label>
-                      </div>
-                      <div className="text-sm">
-                        <Link href="/auth/resetpassword">
-                          <a className="text-indigo-400 text-xs hover:text-black">
-                            Forgot your password?
-                          </a>
-                        </Link>
-                      </div>
+                            id="remember_me"
+                            name="remember_me"
+                            type="checkbox"
+                            checked={value}
+                            onBlur={onBlur}
+                            onChange={onChange}
+                            className="h-4 w-4 bg-blue-500 focus:ring-blue-400 border-gray-300 rounded"
+                          />
+                        )}
+                      />
+                      <label
+                        htmlFor="remember_me"
+                        className="ml-2 block text-sm text-gray-800"
+                      >
+                        Remember me
+                      </label>
                     </div>
-                      <button
-                        disabled={isDisabled ? true : false}
-                        type="submit"
-                        className={`social-login-btn  bg-custom-indigo hover:bg-indigo-900 hover:outline-black
+                    <div className="text-sm">
+                      <Link href="/auth/resetpassword">
+                        <a className="text-indigo-400 text-xs hover:text-black">
+                          Forgot your password?
+                        </a>
+                      </Link>
+                    </div>
+                  </div>
+                  <button
+                    disabled={isDisabled ? true : false}
+                    type="submit"
+                    className={`social-login-btn  bg-custom-indigo hover:bg-indigo-900 hover:outline-black
                           transition ease-in duration-500
                           ${isDisabled && "opacity-50 cursor-not-allowed"}
                         `}
-                        autoFocus
-                      >
-                        {isDisabled ? (
-                          <>
-                            <span>{antIcon}</span>
-                          </>
-                        ) : (
-                          <span className="text-sm font-light">Sign In</span>
-                        )}{" "}
-                      </button>
+                    autoFocus
+                  >
+                    {isDisabled ? (
+                      <>
+                        <span>{antIcon}</span>
+                      </>
+                    ) : (
+                      <span className="text-sm font-light">Sign In</span>
+                    )}{" "}
+                  </button>
                 </form>
-              <div>
-                <GoogleButton dispatch={dispatch} loader={antIcon}/>
-                <GitHubButton dispatch={dispatch} loader={antIcon}/>
-              </div>
+                <div>
+                  <GoogleButton dispatch={dispatch} loader={antIcon} />
+                  <GitHubButton dispatch={dispatch} loader={antIcon} />
+                </div>
               </div>
               <div className="pt-5 text-center text-gray-400 text-xs">
                 <span>
@@ -312,6 +338,5 @@ function Signin(props: Props): ReactElement {
 Signin.getLayout = function PageLayout(page: any) {
   return <>{page}</>;
 };
-
 
 export default Signin;

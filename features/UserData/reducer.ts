@@ -1,8 +1,9 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { getUserData } from "./actions";
-import Cookies from "js-cookie";
-import { Parsetoken } from "imports/Signin";
-import parseToken from "helper/parseToken";
+import {
+  getUserData,
+  setSigninError,
+  setUserData as setUserDataAction,
+} from "./actions";
 import { setUserData } from "helper/setUserData";
 
 export type userData = {
@@ -45,25 +46,20 @@ export const userDataReducer = createReducer(initialState, (builder) => {
       state.pending = true;
     })
     .addCase(getUserData.fulfilled, (state, { payload }) => {
-      // state.pending = false;
-      // const { access, refresh } = payload;
-      // var inTwentyMinutes = new Date(new Date().getTime() + 20 * 60 * 1000);
-      // Cookies.set("access", access, { expires: inTwentyMinutes });
-      // Cookies.set("refresh", refresh, { expires: 14 });
-      // const data = parseToken(access);
-      // if (data.is_verified) {
-      //   state.data.email = data.email;
-
-      // } else {
-      //   state.error = true;
-      //   state.errorString = "User Not Verified !";
-      // }
-      setUserData(state, { payload });
+      setUserData(state, payload);
     })
     .addCase(getUserData.rejected, (state) => {
       state.pending = false;
       state.error = true;
       state.errorString = "Invalid Token !";
+    })
+    .addCase(setUserDataAction, (state, action) => {
+      const { access, refresh, remember_me } = action.payload;
+      setUserData(state, { access, refresh }, remember_me);
+    })
+    .addCase(setSigninError, (state, action) => {
+      state.error = true;
+      state.errorString = action.payload.errorString;
     });
 });
 
