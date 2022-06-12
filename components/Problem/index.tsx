@@ -10,13 +10,16 @@ import {GoogleIcon, FacebookIcon, AmazonIcon, MicrosoftIcon, PlusIcon} from '../
 import CompanyTags from "../CompanyTags/CompanyTags";
 import { filterProblemData } from "../api/apis";
 import WrapperLayout from "../../Layout/Layout";
-import { problemListI } from "../../redux/interfaces";
 import { Context } from "../../Context";
 import Fade from 'react-reveal/Fade';
 import { getProblems, updateProblemList } from "redux/actions";
 import { useDebouncedValue } from "@mantine/hooks";
 import MultiSelect from '../MultiSelect'
 import Divider from '../Divider'
+
+import { problemListI } from "redux/interfaces";
+import { getProblemsList } from "components/api/apis";
+import { Updateproblemsstatus } from "components/Helper/Updateproblemsstatus";
 
 
 const companyData = [
@@ -55,18 +58,48 @@ function Problem(props): ReactElement {
   const [tags, setTags] = useState([]);
   // const [currentDataList, setCurrentDataList] = useState<problemListI[]>([]);
   const {tags :tagsList} = useContext(Context)
-  const problemList = useSelector((state: any) => state.problemList);
+  const [problemList, setProblemList] = useState<problemListI[]>([]);
+  // const problemList = useSelector((state: any) => state.problemList);
 
   const [debounced] = useDebouncedValue(searchQuery, 500);
+
+  const isLoggedIn  = useSelector((state: any) => state.userData.is_logged_in);
+
+  console.log('prblemlist ', problemList)
   
+    
   useEffect(() => {
-    function getData() {
-      if(tags.length === 0 && difficulty.length === 0 && searchQuery.length === 0){
-        dispatch(getProblems())
+    async function getProblemList(){
+      try {
+        if(tags.length === 0 && difficulty.length === 0 && searchQuery.length === 0){ 
+        const result = await getProblemsList.get<problemListI[]>("/");
+        setProblemList(result.data)
+        }
+      } catch {
+        console.error("Server Error in Problems List Fetching");
       }
     }
-    getData();
-  }, [tags, searchQuery, difficulty, dispatch]);
+    getProblemList()
+  }, [tags, difficulty, searchQuery])
+
+  useEffect(() => {
+    async function getUserStatus(){
+      if (isLoggedIn) {
+        const data = await Updateproblemsstatus(problemList);
+        setProblemList(data);
+      }
+    }
+    getUserStatus()
+  }, [problemList, isLoggedIn])
+  
+  // useEffect(() => {
+  //   function getData() {
+  //     if(tags.length === 0 && difficulty.length === 0 && searchQuery.length === 0){
+  //       dispatch(getProblems())
+  //     }
+  //   }
+  //   getData();
+  // }, [tags, searchQuery, difficulty, dispatch]);
 
   const filteredData = useCallback( async (debounced) => {
       const {data} = await filterProblemData.post<problemListI[]>("/", {
@@ -74,7 +107,7 @@ function Problem(props): ReactElement {
         tags: tags,
         difficulty: difficulty,
       });
-      dispatch(updateProblemList(data))
+      setProblemList(data)
   }, [tags, difficulty, dispatch])
 
   
