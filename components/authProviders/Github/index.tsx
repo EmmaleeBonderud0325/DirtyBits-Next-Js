@@ -3,10 +3,10 @@ import GitHubLogin from "react-github-login";
 import { AiFillGithub } from "react-icons/ai";
 import { githubLogin, setSigninError } from "features/UserData";
 import { selectSprinnerData, setGithubSpinner } from "features/Spinners";
-import { useAppSelector as useAppSelectorD } from "app/hooks";
+import { useAppSelector } from "app/hooks";
 
 function GitHubLoginButton({ dispatch, loader }) {
-  const isLoading = useAppSelectorD(selectSprinnerData).githubSpinner;
+  const isLoading = useAppSelector(selectSprinnerData).githubSpinner;
   return (
     <GitHubLogin
       clientId={process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}
@@ -42,6 +42,4 @@ function GitHubLoginButton({ dispatch, loader }) {
     </GitHubLogin>
   );
 }
-import { useAppSelector } from "app/hooks";
-
 export default GitHubLoginButton;
