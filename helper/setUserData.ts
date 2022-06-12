@@ -32,6 +32,10 @@ export const setUserData = (
       (state.data.last_name = data.last_name),
       (state.data.username = data.username),
       (state.data.profile_pic = data.profile_pic);
+    if (state.error) {
+      state.error = false;
+      state.errorString = "";
+    }
   } else {
     state.error = true;
     state.errorString = "User Not Verified !";

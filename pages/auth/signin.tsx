@@ -4,17 +4,17 @@ import {
   useState,
   Link,
   Head,
-  useRouter,
-  Cookies,
-  useDispatch,
+  // useRouter,
+  // Cookies,
+  // useDispatch,
   SmoothList,
   updateSignInSpinner,
-  updateUserinfo,
+  // updateUserinfo,
   signinApi,
-  Parsetoken,
+  // Parsetoken,
 } from "imports/Signin";
 import Background from "components/Background";
-import { notifyFirstLoad } from "redux/actions";
+// import { notifyFirstLoad } from "redux/actions";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -25,17 +25,17 @@ import { useAppDispatch } from "app/hooks";
 import { setSigninError, setUserData } from "features/UserData";
 import {useSelector} from 'react-redux'
 
-interface Props {
-  googleSpinner: boolean;
-  githubSpinner: boolean;
-  signInSpinner: boolean;
-}
+// interface Props {
+//   googleSpinner: boolean;
+//   githubSpinner: boolean;
+//   signInSpinner: boolean;
+// }
 
-interface FormDataI {
-  email: string;
-  password: string;
-  remeberMe: boolean;
-}
+// interface FormDataI {
+//   email: string;
+//   password: string;
+//   remeberMe: boolean;
+// }
 
 interface ErrorI {
   error: boolean;
@@ -52,7 +52,7 @@ interface TokensI {
   refresh: string;
 }
 
-function Signin(props: Props): ReactElement {
+function Signin(): ReactElement {
   const dispatch = useAppDispatch();
   // const router = useRouter();
   const antIcon = <Loader color="indigo" size="sm" />;

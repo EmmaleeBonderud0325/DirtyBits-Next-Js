@@ -2,10 +2,16 @@ import React from "react";
 import GoogleLogin from "react-google-login";
 import { FcGoogle } from "react-icons/fc";
 import { useSelector } from "react-redux";
-import { googleLogin } from "../../../redux/actions/authenticate";
+// import { googleLogin } from "../../../redux/actions/authenticate";
+import { googleLogin, setSigninError } from "features/UserData";
+import { selectSprinnerData, setGoogleSpinner } from "features/Spinners";
+import { useAppSelector } from "app/hooks";
 
-function GoogleSignInButton({ dispatch, loader }) {
-  const isLoading = useSelector((state) => state.googleLoginSpinner);
+function GoogleSignInButton({
+  dispatch,
+  loader,
+}) {
+  const isLoading = useAppSelector(selectSprinnerData).googleSpinner;
   return (
     <GoogleLogin
       clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
@@ -28,10 +34,17 @@ function GoogleSignInButton({ dispatch, loader }) {
         </button>
       )}
       onSuccess={(data) => {
-        dispatch(googleLogin(data["tokenId"]));
+        dispatch(setGoogleSpinner(true));
+        dispatch(
+          googleLogin({
+            auth_token: data["tokenId"],
+          })
+        );
       }}
       onFailure={() => {
-        console.error("Google Authentication failed !");
+        dispatch(
+          setSigninError({ errorString: "Google Authentication failed !" })
+        );
       }}
       cookiePolicy={"single_host_origin"}
     />

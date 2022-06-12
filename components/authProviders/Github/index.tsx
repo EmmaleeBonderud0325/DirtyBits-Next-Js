@@ -1,19 +1,30 @@
 import React from "react";
 import GitHubLogin from "react-github-login";
 import { AiFillGithub } from "react-icons/ai";
-import { useSelector } from "react-redux";
-import { githubLogin } from "../../../redux/actions/authenticate";
+import { githubLogin, setSigninError } from "features/UserData";
+import { selectSprinnerData, setGithubSpinner } from "features/Spinners";
+import { useAppSelector } from "app/hooks";
 
 function GitHubLoginButton({ dispatch, loader }) {
-  const isLoading = useSelector((state) => state.githubLoginSpinner);
+  const isLoading = useAppSelector(selectSprinnerData).githubSpinner;
   return (
     <GitHubLogin
       clientId={process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}
-      onSuccess={(response) => {
-        dispatch(githubLogin(response.code));
+      onSuccess={(response: any) => {
+        dispatch(setGithubSpinner(true));
+        dispatch(
+          githubLogin({
+            auth_token: response.code,
+          })
+        );
       }}
-      onFailure={(response) => {
+      onFailure={(response: any) => {
         console.error(response);
+        dispatch(
+          setSigninError({
+            errorString: "Error Occured in Github Login!!",
+          })
+        );
       }}
       redirectUri=""
       scope="read:user,user:email"
@@ -31,5 +42,4 @@ function GitHubLoginButton({ dispatch, loader }) {
     </GitHubLogin>
   );
 }
-
 export default GitHubLoginButton;
