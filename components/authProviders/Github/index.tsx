@@ -1,22 +1,17 @@
 import React from "react";
 import GitHubLogin from "react-github-login";
 import { AiFillGithub } from "react-icons/ai";
-import { AnyIfEmpty, useSelector } from "react-redux";
-// import { githubLogin } from "../../../redux/actions/authenticate";
 import { githubLogin, setSigninError } from "features/UserData";
+import { selectSprinnerData, setGithubSpinner } from "features/Spinners";
+import { useAppSelector as useAppSelectorD } from "app/hooks";
 
-function GitHubLoginButton({
-  dispatch,
-  loader,
-  githubLoginSpinnerState,
-  setGithubLoginSpinnerState,
-}) {
-  const isLoading = githubLoginSpinnerState;
+function GitHubLoginButton({ dispatch, loader }) {
+  const isLoading = useAppSelectorD(selectSprinnerData).githubSpinner;
   return (
     <GitHubLogin
       clientId={process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}
       onSuccess={(response: any) => {
-        // dispatch(githubLogin(response.code));
+        dispatch(setGithubSpinner(true));
         dispatch(
           githubLogin({
             auth_token: response.code,
@@ -47,5 +42,6 @@ function GitHubLoginButton({
     </GitHubLogin>
   );
 }
+import { useAppSelector } from "app/hooks";
 
 export default GitHubLoginButton;

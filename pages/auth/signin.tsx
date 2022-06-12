@@ -56,9 +56,6 @@ function Signin(): ReactElement {
   // const router = useRouter();
   const antIcon = <Loader color="indigo" size="sm" />;
 
-  const [googleLoginSpinner, setGoogleLoginSpinner] = useState<boolean>(false);
-  const [githubLoginSpinner, setGithubLoginSpinner] = useState<boolean>(false);
-
   const schema = yup
     .object({
       email: yup
@@ -316,18 +313,8 @@ function Signin(): ReactElement {
                   </button>
                 </form>
                 <div>
-                  <GoogleButton
-                    dispatch={dispatch}
-                    loader={antIcon}
-                    googleLoginSpinnerState={googleLoginSpinner}
-                    setGoogleLoginSpinnerState={setGoogleLoginSpinner}
-                  />
-                  <GitHubButton
-                    dispatch={dispatch}
-                    loader={antIcon}
-                    githubLoginSpinnerState={githubLoginSpinner}
-                    setGithubLoginSpinnerState={setGithubLoginSpinner}
-                  />
+                  <GoogleButton dispatch={dispatch} loader={antIcon} />
+                  <GitHubButton dispatch={dispatch} loader={antIcon} />
                 </div>
               </div>
               <div className="pt-5 text-center text-gray-400 text-xs">

@@ -4,6 +4,7 @@ import {
   googleLoginApi,
   refreshTokenApi,
 } from "components/api/apis";
+import { setGithubSpinner, setGoogleSpinner } from "features/Spinners";
 
 export type tokens = {
   access: string;
@@ -33,18 +34,20 @@ export const getUserData = createAsyncThunk(
 
 export const googleLogin = createAsyncThunk(
   "user/googleLogin",
-  async ({ auth_token }: { auth_token: string }) => {
+  async ({ auth_token }: { auth_token: string }, thunkAPI) => {
     const response = await googleLoginApi.post<tokens>("/", {
       auth_token,
     });
+    thunkAPI.dispatch(setGoogleSpinner(false));
     return response.data;
   }
 );
 
 export const githubLogin = createAsyncThunk(
   "user/githubLogin",
-  async ({ auth_token }: { auth_token: string }) => {
+  async ({ auth_token }: { auth_token: string }, thunkAPI) => {
     const response = await githubLoginApi.post<tokens>("/", { auth_token });
+    thunkAPI.dispatch(setGithubSpinner(false));
     return response.data;
   }
 );
