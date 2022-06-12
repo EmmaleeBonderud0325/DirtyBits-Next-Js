@@ -23,6 +23,7 @@ import GoogleButton from "components/authProviders/Google";
 import GitHubButton from "components/authProviders/Github";
 import { useAppDispatch } from "app/hooks";
 import { setSigninError, setUserData } from "features/UserData";
+import {useSelector} from 'react-redux'
 
 interface Props {
   googleSpinner: boolean;
@@ -55,7 +56,8 @@ function Signin(props: Props): ReactElement {
   const dispatch = useAppDispatch();
   // const router = useRouter();
   const antIcon = <Loader color="indigo" size="sm" />;
-
+  const user = useSelector((state: any) => state.userData)
+  console.log('user', user)
   const schema = yup
     .object({
       email: yup
@@ -67,10 +69,10 @@ function Signin(props: Props): ReactElement {
     })
     .required();
 
-  let [isError, setIsError] = useState<ErrorsI>({
-    email: { error: false, details: "" },
-    password: { error: false, details: "" },
-  });
+  // let [isError, setIsError] = useState<ErrorsI>({
+  //   email: { error: false, details: "" },
+  //   password: { error: false, details: "" },
+  // });
 
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const {
@@ -81,73 +83,24 @@ function Signin(props: Props): ReactElement {
     resolver: yupResolver(schema),
   });
 
-  // const postAuthentication = (tokens: TokensI, remember_me: Boolean) => {
-  //   const { access, refresh } = tokens;
-  //   const data = Parsetoken(access);
-  //   console.log("data", data);
-  //   if (data.is_verified) {
-  //     if (remember_me) {
-  //       var inTwentyMinutes = new Date(new Date().getTime() + 20 * 60 * 1000);
-  //       Cookies.set("access", access, { expires: inTwentyMinutes });
-  //       Cookies.set("refresh", refresh, { expires: 14 });
-  //     } else {
-  //       Cookies.set("access", access);
-  //       Cookies.set("refresh", refresh);
-  //     }
-  //     dispatch(
-  //       updateUserinfo({
-  //         is_logged_in: true,
-  //         is_admin: data.is_admin,
-  //         is_verified: data.is_verified,
-  //         email: data.email,
-  //         first_name: data.first_name,
-  //         last_name: data.last_name,
-  //         username: data.username,
-  //         profile_pic: data.profile_pic,
-  //       })
-  //     );
-  //     dispatch(notifyFirstLoad());
-  //     router.push("/");
-  //   } else {
-  //     setIsError({
-  //       ...isError,
-  //       email: { error: true, details: "" },
-  //       password: { error: true, details: "Account not verified !" },
-  //     });
-  //   }
-  // };
-
   const submitLoginForm = async (data: any) => {
     setIsDisabled(true);
     try {
-      await signinApi
-        .post<TokensI>("/", data)
-        .then((result) => {
-          // postAuthentication(result.data, data.remember_me);
-          dispatch(
-            setUserData({
-              access: result.data.access,
-              refresh: result.data.refresh,
-              remember_me: data.remember_me,
-            })
-          );
-        })
-        .catch(() => {
-          // setIsError({
-          //   ...isError,
-          //   email: { error: true, details: "Invalid Credentials !" },
-          //   password: { error: true, details: "Invalid Credentials !" },
-          // });
-          // console.error("Invalid Credentials !");
-          dispatch(setSigninError({ errorString: "Invalid Credentials !" }));
-        });
+      try {
+        const response = await signinApi.post<TokensI>("/", data)
+        dispatch(setUserData({
+          access: response.data.access,
+          refresh: response.data.refresh,
+          remember_me: data.remember_me,
+        }))
+      }catch (e) {
+        dispatch(setSigninError({ errorString: "Invalid Credentials !" }));
+      }
     } catch (e) {
       dispatch(setSigninError({ errorString: "Server Error !" }));
-      // console.error("Server Error !");
     }
     setIsDisabled(false);
-    dispatch(updateSignInSpinner(false));
-    return;
+    // dispatch(updateSignInSpinner(false));
   };
 
   return (
@@ -212,16 +165,13 @@ function Signin(props: Props): ReactElement {
                         <TextInput
                           key="email"
                           error={
-                            errors.email?.message || isError.email?.details
+                            errors.email?.message || user?.errorString
                           }
                           value={value}
                           radius="md"
                           onChange={onChange}
                           onBlur={() => {
-                            setIsError({
-                              ...isError,
-                              email: { error: false, details: "" },
-                            });
+                            dispatch(setSigninError({ errorString: "" }))
                             onBlur();
                           }}
                           label="Email"
@@ -241,16 +191,13 @@ function Signin(props: Props): ReactElement {
                         <PasswordInput
                           key="password"
                           error={
-                            errors.password?.message || isError.password.details
+                            errors.password?.message || user?.errorString
                           }
                           radius="md"
                           placeholder="Your password here"
                           value={value}
                           onBlur={() => {
-                            setIsError({
-                              ...isError,
-                              password: { error: false, details: "" },
-                            });
+                            dispatch(setSigninError({ errorString: "" }))
                             onBlur();
                           }}
                           onChange={onChange}
