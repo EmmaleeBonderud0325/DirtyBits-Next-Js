@@ -4,6 +4,7 @@ import {
   googleLogin,
   setSigninError,
   setUserData as setUserDataAction,
+  githubLogin,
 } from "./actions";
 import { setUserData } from "helper/setUserData";
 
@@ -65,6 +66,17 @@ export const userDataReducer = createReducer(initialState, (builder) => {
       setUserData(state, payload);
     })
     .addCase(googleLogin.rejected, (state) => {
+      state.pending = false;
+      state.error = true;
+      state.errorString = "Invalid Token !";
+    })
+    .addCase(githubLogin.pending, (state) => {
+      state.pending = true;
+    })
+    .addCase(githubLogin.fulfilled, (state, { payload }) => {
+      setUserData(state, payload);
+    })
+    .addCase(githubLogin.rejected, (state) => {
       state.pending = false;
       state.error = true;
       state.errorString = "Invalid Token !";

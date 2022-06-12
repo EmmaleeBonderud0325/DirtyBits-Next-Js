@@ -57,6 +57,7 @@ function Signin(): ReactElement {
   const antIcon = <Loader color="indigo" size="sm" />;
 
   const [googleLoginSpinner, setGoogleLoginSpinner] = useState<boolean>(false);
+  const [githubLoginSpinner, setGithubLoginSpinner] = useState<boolean>(false);
 
   const schema = yup
     .object({
@@ -321,7 +322,12 @@ function Signin(): ReactElement {
                     googleLoginSpinnerState={googleLoginSpinner}
                     setGoogleLoginSpinnerState={setGoogleLoginSpinner}
                   />
-                  <GitHubButton dispatch={dispatch} loader={antIcon} />
+                  <GitHubButton
+                    dispatch={dispatch}
+                    loader={antIcon}
+                    githubLoginSpinnerState={githubLoginSpinner}
+                    setGithubLoginSpinnerState={setGithubLoginSpinner}
+                  />
                 </div>
               </div>
               <div className="pt-5 text-center text-gray-400 text-xs">

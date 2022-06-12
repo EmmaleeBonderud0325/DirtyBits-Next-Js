@@ -1,5 +1,9 @@
 import { createAsyncThunk, createAction } from "@reduxjs/toolkit";
-import { googleLoginApi, refreshTokenApi } from "components/api/apis";
+import {
+  githubLoginApi,
+  googleLoginApi,
+  refreshTokenApi,
+} from "components/api/apis";
 
 export type tokens = {
   access: string;
@@ -16,11 +20,6 @@ export type Error = {
   errorString: string;
 };
 
-type GoogleApiResponseType = {
-  access: string;
-  refresh: string;
-};
-
 export const setUserData = createAction<setUserDataType>("user/setUserData");
 export const setSigninError = createAction<Error>("user/setSigninError");
 
@@ -35,9 +34,17 @@ export const getUserData = createAsyncThunk(
 export const googleLogin = createAsyncThunk(
   "user/googleLogin",
   async ({ auth_token }: { auth_token: string }) => {
-    const response = await googleLoginApi.post<GoogleApiResponseType>("/", {
+    const response = await googleLoginApi.post<tokens>("/", {
       auth_token,
     });
+    return response.data;
+  }
+);
+
+export const githubLogin = createAsyncThunk(
+  "user/githubLogin",
+  async ({ auth_token }: { auth_token: string }) => {
+    const response = await githubLoginApi.post<tokens>("/", { auth_token });
     return response.data;
   }
 );
