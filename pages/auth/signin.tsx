@@ -28,12 +28,6 @@ interface Props {
   signInSpinner: boolean;
 }
 
-interface FormDataI {
-  email: string;
-  password: string;
-  remeberMe: boolean;
-}
-
 interface ErrorI {
   error: boolean;
   details: string;
@@ -201,7 +195,6 @@ function Signin(props: Props): ReactElement {
                         }}
                         label="Email"
                         placeholder="your email address"
-                        // onInvalid={isError.email.error || errors.email?.message}
                         required
                         size="sm"
                         />
@@ -230,7 +223,6 @@ function Signin(props: Props): ReactElement {
                         label="Password"
                         size="sm"
                         required
-                        // onInvalid={isError.password.error || errors.password?.message}
                         />
                       )}
                     />

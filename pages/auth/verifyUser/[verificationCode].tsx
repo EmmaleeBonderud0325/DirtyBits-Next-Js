@@ -13,9 +13,9 @@ interface VerifyRequestI {
   message: string;
 }
 
-function CodeVerify(props: Props): ReactElement {
+function CodeVerify({message}: Props): ReactElement {
   let isVerified: any;
-  if (props.message.includes("Wrong")) {
+  if (message.includes("Wrong")) {
     isVerified = close;
   } else {
     isVerified = success;
@@ -30,7 +30,7 @@ function CodeVerify(props: Props): ReactElement {
         <Modal
           source={isVerified}
           title={"Verification Status"}
-          content={props.message}
+          content={message}
         />
       </>
     </body>
@@ -51,7 +51,3 @@ export const getServerSideProps = async (context: any) => {
 };
 
 export default CodeVerify;
-
-// CodeVerify.getLayout = function PageLayout(page: any) {
-//   return <>{page}</>;
-// };
