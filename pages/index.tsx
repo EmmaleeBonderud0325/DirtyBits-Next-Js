@@ -1,26 +1,13 @@
 import React, { useEffect } from "react";
 import Head from "next/head";
 import SmoothList from "react-smooth-list";
-import Cookies from "js-cookie";
 
 import Hero from "components/Hero";
 import Feature from "components/Feature/index";
 import Navbar from "components/NavbarT";
 import Terminal from "components/Terminal";
-import { useAppDispatch, useAppSelector } from "app/hooks";
-import { getUserData, selectUserData } from "features/UserData";
 
 function Homepage() {
-  const dispatch = useAppDispatch();
-  const is_loggeed_in = useAppSelector(selectUserData).data.is_logged_in;
-  useEffect(() => {
-    if (!is_loggeed_in) {
-      const refresh: string = Cookies.get("refresh");
-      if (typeof refresh != "undefined") {
-        dispatch(getUserData({ refresh }));
-      }
-    }
-  });
   return (
     <div className="backgroundGrdient">
       <Head>
