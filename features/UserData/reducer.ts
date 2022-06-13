@@ -63,7 +63,7 @@ export const userDataReducer = createReducer(initialState, (builder) => {
       state.pending = true;
     })
     .addCase(googleLogin.fulfilled, (state, { payload }) => {
-      setUserData(state, payload);
+      setUserData(state, payload, true);
     })
     .addCase(googleLogin.rejected, (state) => {
       state.pending = false;
@@ -74,7 +74,7 @@ export const userDataReducer = createReducer(initialState, (builder) => {
       state.pending = true;
     })
     .addCase(githubLogin.fulfilled, (state, { payload }) => {
-      setUserData(state, payload);
+      setUserData(state, payload, true);
     })
     .addCase(githubLogin.rejected, (state) => {
       state.pending = false;

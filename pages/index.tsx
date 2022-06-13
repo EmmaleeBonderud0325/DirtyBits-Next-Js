@@ -7,15 +7,18 @@ import Hero from "components/Hero";
 import Feature from "components/Feature/index";
 import Navbar from "components/NavbarT";
 import Terminal from "components/Terminal";
-import { useAppDispatch } from "app/hooks";
-import { getUserData } from "features/UserData";
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import { getUserData, selectUserData } from "features/UserData";
 
 function Homepage() {
   const dispatch = useAppDispatch();
+  const is_loggeed_in = useAppSelector(selectUserData).data.is_logged_in;
   useEffect(() => {
-    const refresh: string = Cookies.get("refresh");
-    if (typeof refresh != "undefined") {
-      dispatch(getUserData({ refresh }));
+    if (!is_loggeed_in) {
+      const refresh: string = Cookies.get("refresh");
+      if (typeof refresh != "undefined") {
+        dispatch(getUserData({ refresh }));
+      }
     }
   });
   return (

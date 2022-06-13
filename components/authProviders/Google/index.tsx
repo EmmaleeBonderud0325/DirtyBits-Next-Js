@@ -1,7 +1,7 @@
 import React from "react";
 import GoogleLogin from "react-google-login";
 import { FcGoogle } from "react-icons/fc";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 // import { googleLogin } from "../../../redux/actions/authenticate";
 import { googleLogin, setSigninError } from "features/UserData";
 import { selectSprinnerData, setGoogleSpinner } from "features/Spinners";
