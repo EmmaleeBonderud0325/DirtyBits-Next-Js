@@ -54,6 +54,7 @@ export const githubLogin =
       .post<ResultI>("/", { auth_token })
       .then((result) => {
         updatedata(result.data, dispatch);
+        Router.push('/')
       })
       .catch((error) => {
         if (error.response.status === 401) {
@@ -76,6 +77,7 @@ export const googleLogin =
       .post<ResultI>("/", { auth_token })
       .then((result) => {
         updatedata(result.data, dispatch);
+        Router.push('/')
       })
       .catch((error) => {
         if (error.response.status === 401) {
