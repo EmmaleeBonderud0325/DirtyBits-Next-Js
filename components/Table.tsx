@@ -8,6 +8,7 @@ import { Pagination } from "@mantine/core";
 
 interface Props {
   dataList: problemListI[];
+  isLoading: boolean;
 }
 
 function Table(props: Props): ReactElement {
@@ -15,7 +16,7 @@ function Table(props: Props): ReactElement {
   let problemColor: string;
   let status: JSX.Element;
 
-  let problemMarkup = props.dataList.map((problem, idx) => {
+  let problemMarkup = props?.dataList?.map((problem, idx) => {
     switch (problem.problem_level) {
       case "E":
         problemLevel = "Easy";
@@ -44,14 +45,17 @@ function Table(props: Props): ReactElement {
     return (
       <tr key={problem.id}>
         <td className="table-data text-white border-b border-slate-800">
-          <Link href={`/problem/${problem.id}/${problem.title}`}>
-          <a
-            
-            className="text-stone-200 tracking-wide no-underline hover:text-indigo-400 transition-all duration-200 ease-in md:text-sm"
-            >
-            {idx + 1} . {problem.title}
-          </a>
-            </Link>
+          <Link
+            href={{ pathname: `/problem/v2/${problem.title}`, query: { problemId: problem.id } }}
+          //  href={`/problem/v2/${problem.id}/${problem.title}`}
+           >
+            <a
+              
+              className="text-stone-200 tracking-wide no-underline hover:text-indigo-400 transition-all duration-200 ease-in md:text-sm"
+              >
+              {idx + 1} . {problem.title}
+            </a>
+          </Link>
         </td>
         <td className="py-4 px-6 border-b border-slate-800">
           <p
@@ -69,6 +73,9 @@ function Table(props: Props): ReactElement {
 
   return (
     <div className="lg:w-2/3 md:w-full sm:w-full xs:w-full">
+      {props.isLoading && (
+        <TableLoader />
+      )}
       <div className="bg-slate-800 shadow-md rounded-md my-6">
         <table className="text-left w-full border-collapse">
           <thead>
@@ -79,12 +86,11 @@ function Table(props: Props): ReactElement {
             </tr>
           </thead>
           <tbody className="">
-            {props.dataList.length > 0 && problemMarkup}
+            {props?.dataList?.length > 0 && problemMarkup}
           </tbody>
         </table>
       </div>
-      {props.dataList.length <= 0 && <TableLoader />}
-
+        {props?.dataList?.length <= 0 && <div className="text-white text-3xl">Error</div>}
       <div className="hidden md:flex justify-center">
         <Pagination total={2} radius="md" color="violet"/>
         </div>

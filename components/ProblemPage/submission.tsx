@@ -1,53 +1,39 @@
-import { ReactElement, useEffect } from "react";
-import { connect, useDispatch } from "react-redux";
+import { ReactElement } from "react";
 import moment from "moment";
-
-import { getSubmissionsListAction } from "../../redux/actions/ProblemPage";
 import { submissionsListI } from "../../redux/interfaces";
-import { IRootState } from "../../redux/reducers";
 import RecentSubmission from '../Submission'
 import { Loader } from "@mantine/core";
+import useGetSubmissions from 'hooks/useGetSubmissions'
 
 interface Props {
   submissionList: submissionsListI[];
   isRunning: boolean;
   result: submissionsListI;
+  pId: number;
 }
 
 const Submission = (props: Props): ReactElement => {
-  const dispatch = useDispatch();
+  const [data, isLoading, error, isFetching] = useGetSubmissions(props.pId)
 
-  useEffect(() => {
-    dispatch(getSubmissionsListAction());
-  }, []);
-
-  const listRowHandler = () => {
-    let rowMarkup = props.submissionList.map((submission) => {
-      if (submission.status === "Running") {
-        return <></>;
-      }
-      return (
-        <RecentSubmission key={submission.submission_Date_Time} submission={submission}/>
-      );
-    });
-
-    return rowMarkup;
-  };
-
-  if (Object.keys(props.result).length > 0) {
-    var statusColor;
-    switch (props.result.status) {
-      case "Accepted":
-        statusColor = "text-green-500";
-        break;
-      case "Wrong Answer":
-        statusColor = "text-red-500";
-        break;
-    }
+  if(data){
+    console.log('sublist', data)
   }
+  
+  
+  // if (Object.keys(props.result).length > 0) {
+  //   var statusColor;
+  //   switch (props.result.status) {
+  //     case "Accepted":
+  //       statusColor = "text-green-500";
+  //       break;
+  //     case "Wrong Answer":
+  //       statusColor = "text-red-500";
+  //       break;
+  //   }
+  // }
   return (
     <section className="container mx-auto p-6 font-mono scrollbar-hide">
-      {props.isRunning && (
+      {/* {props.isRunning && (
         <div className="pl-5 h-36">
           <Loader className="w-full md:h-6 lg:h-10 xl:h-16 mt-10 flex justify-center items-center" color="violet" variant="bars" />
         </div>
@@ -82,7 +68,7 @@ const Submission = (props: Props): ReactElement => {
             </span>
           </p>
         </div>
-      )}
+      )} */}
       <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg scrollbar-hide">
         <div className="w-full overflow-x-hidden">
           <table className="w-full">
@@ -95,17 +81,21 @@ const Submission = (props: Props): ReactElement => {
               </tr>
             </thead>
             <tbody className="bg-slate-800">
-              {props.submissionList !== null && listRowHandler()}
+              {data?.length >= 0 && (
+                data.map(submission => (
+                  <RecentSubmission key={submission.submission_Date_Time} submission={submission}/>
+                ))
+              )}
             </tbody>
           </table>
-          {props.submissionList === null && (
+          {isFetching && (
             <div className="text-center w-full">
               <p className="text-white font-bold text-2xl p-4">
                 Loading...
               </p>
             </div>
           )}
-          {props.submissionList !== null && props.submissionList.length <= 0 && (
+          {data !== null && data?.length <= 0 && (
             <div className="text-center w-full">
               <p className="text-white p-4 font-bold text-2xl">
                 No Submissions
@@ -118,10 +108,5 @@ const Submission = (props: Props): ReactElement => {
   );
 };
 
-const mapStateToProps = (state: IRootState) => {
-  return {
-    submissionList: state.submissionsList,
-  };
-};
 
-export default connect(mapStateToProps)(Submission);
+export default Submission;

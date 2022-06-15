@@ -1,25 +1,19 @@
 import { ReactElement, useCallback, useContext, useEffect, useState, } from "react";
 
 import { AiOutlineSearch } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
 import { Input} from '@mantine/core';
 import Checkbox from '../Checkbox'
 
 import Table from "../Table";
 import {GoogleIcon, FacebookIcon, AmazonIcon, MicrosoftIcon, PlusIcon} from '../../SVG'
 import CompanyTags from "../CompanyTags/CompanyTags";
-import { filterProblemData } from "../api/apis";
 import WrapperLayout from "../../Layout/Layout";
 import { Context } from "../../Context";
 import Fade from 'react-reveal/Fade';
-import { getProblems, updateProblemList } from "redux/actions";
 import { useDebouncedValue } from "@mantine/hooks";
 import MultiSelect from '../MultiSelect'
 import Divider from '../Divider'
-
-import { problemListI } from "redux/interfaces";
-import { getProblemsList } from "components/api/apis";
-import { Updateproblemsstatus } from "components/Helper/Updateproblemsstatus";
+import {useGetFilteredProblemSetMutation} from 'apis/problemSet'
 
 
 const companyData = [
@@ -50,111 +44,67 @@ const companyData = [
 }
 ]
 
-function Problem(props): ReactElement {
-  const dispatch = useDispatch()
-  
+function Problem(props): ReactElement {  
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [difficulty, setDifficulty] = useState<string[]>([]);
   const [tags, setTags] = useState([]);
-  // const [currentDataList, setCurrentDataList] = useState<problemListI[]>([]);
   const {tags :tagsList} = useContext(Context)
-  const [problemList, setProblemList] = useState<problemListI[]>([]);
-  // const problemList = useSelector((state: any) => state.problemList);
 
   const [debounced] = useDebouncedValue(searchQuery, 500);
 
-  const isLoggedIn  = useSelector((state: any) => state.userData.is_logged_in);
+  const [getFilteredData, { status, data: filteredDataList,  isLoading: filteredDatalistLoading }] = useGetFilteredProblemSetMutation();
 
-  console.log('prblemlist ', problemList)
+  console.log('filteredDataList', filteredDataList)
   
-    
-  useEffect(() => {
-    async function getProblemList(){
-      try {
-        if(tags.length === 0 && difficulty.length === 0 && searchQuery.length === 0){ 
-        const result = await getProblemsList.get<problemListI[]>("/");
-        setProblemList(result.data)
-        }
-      } catch {
-        console.error("Server Error in Problems List Fetching");
-      }
-    }
-    getProblemList()
-  }, [tags, difficulty, searchQuery])
-
-  useEffect(() => {
-    async function getUserStatus(){
-      if (isLoggedIn) {
-        const data = await Updateproblemsstatus(problemList);
-        setProblemList(data);
-      }
-    }
-    getUserStatus()
-  }, [problemList, isLoggedIn])
   
-  // useEffect(() => {
-  //   function getData() {
-  //     if(tags.length === 0 && difficulty.length === 0 && searchQuery.length === 0){
-  //       dispatch(getProblems())
-  //     }
-  //   }
-  //   getData();
-  // }, [tags, searchQuery, difficulty, dispatch]);
+  const isLoading =  filteredDatalistLoading;
 
   const filteredData = useCallback( async (debounced) => {
-      const {data} = await filterProblemData.post<problemListI[]>("/", {
-        keyword: debounced,
-        tags: tags,
-        difficulty: difficulty,
-      });
-      setProblemList(data)
-  }, [tags, difficulty, dispatch])
+    getFilteredData({
+      keyword: debounced,
+      tags: tags,
+      difficulty: difficulty,
+    })
+}, [getFilteredData, tags, difficulty])
 
   
   useEffect(() => {
-    if(tags.length > 0 || difficulty.length > 0 || searchQuery.length > 0){
-      filteredData(debounced)
-    }
+    filteredData(debounced)
   }, [tags, difficulty, debounced, filteredData])
   
-  // const _debounceSearchField = useCallback(debounce(fetchFilteredData, 500), [searchQuery, tags, difficulty])
 
   const onSearchQueryChange = e => {
     setSearchQuery(e.target.value);
-    // _debounceSearchField(e.target.value);
   };
 
   return (
     <WrapperLayout>
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-6 md:gap-10 mb-10">
-          {companyData.map(company => (
-            <Fade bottom key={company.id}>
-              <CompanyTags Icon={company.Icon} title={company.name} />
-            </Fade>
-          ))}
-        </div>
-      <Divider/>     
-      <MultiSelect
-        tagsList={tagsList}
-        setTags={setTags}
-      />
-
-      {/* SEARCH BAR */}
-
-      <div className="space-x-3 w-full block">
-        <Input
-          className="w-full md:w-1/2"
-          icon={<AiOutlineSearch className="text-custom-indigo"/>}
-          placeholder="Search Questions"
-          styles={{ rightSection: { pointerEvents: 'none' } }}
-          radius="xl"
-          value={searchQuery}
-          onChange={onSearchQueryChange}
-        />
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-6 md:gap-10 mb-10">
+        {companyData.map(company => (
+          <Fade bottom key={company.id}>
+            <CompanyTags Icon={company.Icon} title={company.name} />
+          </Fade>
+        ))}
       </div>
-          <Checkbox setDifficulty={setDifficulty}/>
-      <div className="flex flex-col">
-    <Table dataList={problemList} />
+    <Divider/>     
+    <MultiSelect
+      tagsList={tagsList}
+      setTags={setTags}
+    />
+    <div className="space-x-3 w-full block">
+      <Input
+        className="w-full md:w-1/2"
+        icon={<AiOutlineSearch className="text-custom-indigo"/>}
+        placeholder="Search Questions"
+        styles={{ rightSection: { pointerEvents: 'none' } }}
+        radius="xl"
+        value={searchQuery}
+        onChange={onSearchQueryChange}
+      />
+    </div>
+    <Checkbox setDifficulty={setDifficulty}/>
+    <div className="flex flex-col">
+    <Table isLoading={isLoading} dataList={filteredDataList} />
     </div>
     </WrapperLayout>
   );
