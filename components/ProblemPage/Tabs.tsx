@@ -1,11 +1,9 @@
 import { ReactElement } from "react";
-import { connect, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { TabView, TabPanel as Panel } from "primereact/tabview";
-import dynamic from "next/dynamic";
 
 import { IRootState } from "../../redux/reducers";
-import { problemDataI, submissionResultI } from "../../redux/interfaces";
-import ProblemTab from './ProblemTab'
+import { submissionResultI } from "../../redux/interfaces";
 
 
 import "primereact/resources/themes/mdc-dark-indigo/theme.css";
@@ -23,7 +21,7 @@ interface Props {
   submissionTab: ReactElement;
 }
 
-function BasicTabs({codeRunner, submissionData, currentTabValue, currentTabFunction, problemTab, submissionTab}: Props): ReactElement {
+function BasicTabs({currentTabValue, currentTabFunction, problemTab, submissionTab}: Props): ReactElement {
   const { is_logged_in } = useSelector((state: IRootState) => state.userData.data);
 
   return (
