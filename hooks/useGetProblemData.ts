@@ -2,9 +2,9 @@ import React from 'react'
 import {useGetProblemDataQuery} from 'apis/ProblemPage/problemData'
 
 function useGetProblemData(problemId: number) {
-  const {data, isLoading, isFetching, error} = useGetProblemDataQuery(problemId)
+  const {data, isLoading, isFetching, error, refetch} = useGetProblemDataQuery(problemId)
 
-  return [data, isLoading, isFetching, error]
+  return [data, isLoading, isFetching, error, refetch]
 }
 
 export default useGetProblemData
