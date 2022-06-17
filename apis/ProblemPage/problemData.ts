@@ -16,33 +16,66 @@ const baseQuery = fetchBaseQuery({
 export const problemDataApi = createApi({
     reducerPath: 'problemData',
     baseQuery: baseQuery,
+    tagTypes: ['getData'],
     endpoints: (builder) => ({
         getProblemData: builder.query({
             query: (problemId) => {
                 return ({
                     url: `problems/getProblem/${problemId}/`,
                 })
-            }
+            },
+            providesTags: ['getData'],
         }),
         getProblemMetaData: builder.query({
           query: (problemId) => {
             return ({
               url: `problems/getProblemPageData/${problemId}/`,
             })
-          }
+          },
+          providesTags: ['getData'],
         }),
         postBookmark: builder.mutation({
           query: (problemId) => {
             return ({
-              url: `problems/handlebookmark/`,
+              url: 'problems/handlebookmark/',
               method: 'POST',
               body: {
                 problem_id: problemId,
               },
             })
-          }
+          },
+        }),
+        postUpvote: builder.mutation({
+          query: (problemId) => {
+            return ({
+              url: 'problems/handleupvotedownvote/',
+              method: 'POST',
+              body: {
+                data: {
+                  problem_id: problemId,
+                  type: "upvote",
+                }
+              },
+            })
+          },
+          invalidatesTags: ['getData'],
+        }),
+        postDownvote: builder.mutation({
+          query: (problemId) => {
+            return ({
+              url: 'problems/handleupvotedownvote/',
+              method: 'POST',
+              body: {
+                data: {
+                  problem_id: problemId,
+                  type: "downvote",
+                }
+              },
+            })
+          },
+          invalidatesTags: ['getData'],
         }),
     })
 })
 
-export const {useGetProblemDataQuery, useGetProblemMetaDataQuery, usePostBookmarkMutation} = problemDataApi;
+export const {useGetProblemDataQuery, useGetProblemMetaDataQuery, usePostBookmarkMutation, usePostUpvoteMutation, usePostDownvoteMutation} = problemDataApi;
