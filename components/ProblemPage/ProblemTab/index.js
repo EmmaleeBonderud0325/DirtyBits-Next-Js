@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import SmoothList from "react-smooth-list";
 import {
   AiOutlineDislike,
@@ -24,12 +24,13 @@ import {
 import useGetProblemDataQuery from "hooks/useGetProblemData";
 import useGetProblemMetaData from "hooks/useGetProblemMetaData";
 import useHandleBookmark from "hooks/useHandleBookmark";
+import useHandleUpvote from "hooks/useHandleUpvote";
+import useHandleDownvote from "hooks/useHandleDownvote";
 
 function ProblemTab(props) {
   const { is_logged_in } = useSelector((state) => state.userData.data);
   const parseHtml = useHtmlParser();
-
-  const [data, isLoading, isFetching, error] = useGetProblemDataQuery(
+  const [data, isLoading, isFetching, error, refetch] = useGetProblemDataQuery(
     props.pId
   );
   const {
@@ -39,11 +40,29 @@ function ProblemTab(props) {
     error: metaDataError,
   } = useGetProblemMetaData(props.pId);
 
-  const [handleBookmark] = useHandleBookmark();
+  const [isBookmarked, setIsBookmarked, handleBookmarkStatus] =
+    useHandleBookmark();
+  const [handleUpvoteStatus] = useHandleUpvote(metaData?.upvote);
+  const [handleDownvoteStatus] = useHandleDownvote(metaData?.downvote);
 
   if (metaData) {
     console.log("problem page data", metaData);
   }
+  if (data) {
+    console.log("poblr", data);
+  }
+
+  React.useEffect(() => {
+    setIsBookmarked(metaData?.bookmarked);
+  }, [metaData?.bookmarked]);
+
+  // React.useEffect(() => {
+  //   setIsUpvoted(metaData?.upvote);
+  // }, [metaData?.upvote]);
+
+  // React.useEffect(() => {
+  //   setIsDownvoted(metaData?.downvote);
+  // }, [metaData?.downvote]);
 
   let level;
   let color;
@@ -64,6 +83,11 @@ function ProblemTab(props) {
   if (isFetching || isLoading || metaDataLoading || metaDataFetching) {
     return <div>Loading...</div>;
   }
+
+  const handleUpvote = () => {
+    handleUpvoteStatus(props.pId);
+  };
+
   return (
     <div className="space-y-5 transition-all ease-in-out tracking-wider">
       <SmoothList>
@@ -88,12 +112,12 @@ function ProblemTab(props) {
             <div>{data?.title}</div>
             {/* BOOKMARK */}
             <div
-              onClick={() => handleBookmark(props.pId)}
+              onClick={() => handleBookmarkStatus(props.pId)}
               className={`${
                 is_logged_in ? "block cursor-pointer mt-1" : "hidden"
               } `}
             >
-              {metaData?.bookmarked ? <BsFillBookmarkFill /> : <BsBookmark />}
+              {isBookmarked ? <BsFillBookmarkFill /> : <BsBookmark />}
             </div>
           </div>
         </div>
@@ -104,24 +128,18 @@ function ProblemTab(props) {
         </p>
 
         <div
-          onClick={() => {
-            dispatch(upvoteHandler());
-          }}
+          onClick={handleUpvote}
           className="flex items-center space-x-1 cursor-pointer"
         >
-          <p>{metaData?.isUpVoted ? <AiFillLike /> : <AiOutlineLike />}</p>
+          <p>{metaData?.upvote ? <AiFillLike /> : <AiOutlineLike />}</p>
           <p className="text-xs">{data?.up_votes}</p>
         </div>
 
         <div
-          onClick={() => {
-            dispatch(downvoteHandler());
-          }}
+          onClick={() => handleDownvoteStatus(props.pId)}
           className="flex items-center space-x-1 cursor-pointer"
         >
-          <p>
-            {metaData?.isDownVoted ? <AiFillDislike /> : <AiOutlineDislike />}
-          </p>
+          <p>{metaData?.downvote ? <AiFillDislike /> : <AiOutlineDislike />}</p>
           <p className="text-xs">{data?.down_votes}</p>
         </div>
 
