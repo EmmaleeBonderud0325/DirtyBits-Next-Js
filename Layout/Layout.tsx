@@ -1,15 +1,18 @@
-import React from "react";
+import { Container, MantineNumberSize } from "@mantine/core";
+import React, {memo} from "react";
 
 interface Props {
   children: any;
+  className?: string;
+  size?: MantineNumberSize;
 }
 
-function WrapperLayout({ children }: Props) {
+function WrapperLayout({ children, className = "", size = "xl" }: Props) {
   return (
-    <div className="space-y-8 container p-10 mx-auto max-w-screen-xl flex-col justify-center items-center">
+    <Container size={size} className={className}>
       {children}
-    </div>
+    </Container>
   );
 }
 
-export default WrapperLayout;
+export default memo(WrapperLayout);

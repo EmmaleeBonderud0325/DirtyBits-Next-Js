@@ -3,7 +3,9 @@ import { createStyles, Header, Container, Group, Button } from '@mantine/core';
 import UserDropdown from 'components/UserDropdown';
 import {colors} from 'constants/colors';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useSelector } from 'react-redux';
+import logo from "public/logo.png";
 
 const HEADER_HEIGHT = 60;
 
@@ -112,7 +114,11 @@ const links =  [
     <Header height={HEADER_HEIGHT} mb={120} className={classes.root}>
       <Container size="xl" className={classes.header}>
         {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-        <a href='/' className="text-custom-indigo text-2xl font-semibold tracking-wider no-underline">DirtyBits</a>
+        {/* <a href='/' className="text-custom-indigo text-2xl font-semibold tracking-wider no-underline">DirtyBits</a> */}
+        <a href="/">
+            {/* <div className="brand mr-2"></div> */}
+            <Image height={40} width={120} src={logo} alt="Logo" />
+          </a>
         <Group spacing={10} className={classes.links}>
           <Group spacing={10} className={classes.linksWrapper}>
             {items}

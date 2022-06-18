@@ -4,6 +4,7 @@ import {
   googleLoginApi,
   refreshTokenApi,
 } from "components/api/apis";
+import { userData } from "./reducer";
 import { setGithubSpinner, setGoogleSpinner } from "features/Spinners";
 
 export type tokens = {
@@ -12,14 +13,18 @@ export type tokens = {
 };
 
 export type setUserDataType = {
-  access: string;
-  refresh: string;
-  remember_me: boolean;
+  user: null | userData;
+  token: null | string;
 };
 
 export type Error = {
   errorString: string;
 };
+
+export const setCredentials = createAction<setUserDataType>(
+  "user/setUserCredentials"
+);
+export const logOut = createAction("user/logOut");
 
 export const setUserData = createAction<setUserDataType>("user/setUserData");
 export const setSigninError = createAction<Error>("user/setSigninError");

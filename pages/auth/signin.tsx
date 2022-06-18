@@ -32,12 +32,6 @@ import Router from 'next/router'
 //   signInSpinner: boolean;
 // }
 
-// interface FormDataI {
-//   email: string;
-//   password: string;
-//   remeberMe: boolean;
-// }
-
 interface ErrorI {
   error: boolean;
   details: string;
@@ -165,22 +159,22 @@ function Signin(): ReactElement {
                       control={control}
                       render={({ field: { onChange, onBlur, value } }) => (
                         <TextInput
-                          key="email"
-                          error={
-                            errors.email?.message || user?.errorString
-                          }
-                          value={value}
-                          radius="md"
-                          onChange={onChange}
-                          onBlur={() => {
-                            dispatch(setSigninError({ errorString: "" }))
-                            onBlur();
-                          }}
-                          label="Email"
-                          placeholder="your email address"
-                          // onInvalid={isError.email.error || errors.email?.message}
-                          required
-                          size="sm"
+                        key="email"
+                        error={errors.email?.message || isError.email?.details}
+                        value={value}
+                        radius="md"
+                        onChange={onChange}
+                        onBlur={() => {
+                          setIsError({
+                            ...isError,
+                            email: { error: false, details: "" },
+                          });
+                          onBlur();
+                        }}
+                        label="Email"
+                        placeholder="your email address"
+                        required
+                        size="sm"
                         />
                       )}
                     />
@@ -191,22 +185,22 @@ function Signin(): ReactElement {
                       control={control}
                       render={({ field: { onChange, onBlur, value } }) => (
                         <PasswordInput
-                          key="password"
-                          error={
-                            errors.password?.message || user?.errorString
-                          }
-                          radius="md"
-                          placeholder="Your password here"
-                          value={value}
-                          onBlur={() => {
-                            dispatch(setSigninError({ errorString: "" }))
-                            onBlur();
-                          }}
-                          onChange={onChange}
-                          label="Password"
-                          size="sm"
-                          required
-                          // onInvalid={isError.password.error || errors.password?.message}
+                        key="password"
+                        error={errors.password?.message || isError.password.details}
+                        radius="md"
+                        placeholder="Your password here"
+                        value={value}
+                        onBlur={() => {
+                          setIsError({
+                            ...isError,
+                            password: { error: false, details: "" },
+                          });
+                          onBlur();
+                        }}
+                        onChange={onChange}
+                        label="Password"
+                        size="sm"
+                        required
                         />
                       )}
                     />

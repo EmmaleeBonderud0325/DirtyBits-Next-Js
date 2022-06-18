@@ -283,6 +283,7 @@ const Editor: FC<Props> = (props): ReactElement => {
   let options = {
     mode: editorLanguage.value,
     theme: themeValue.value,
+    
     lineWrapping: true,
     smartIndent: true,
     foldGutter: true,
@@ -379,8 +380,7 @@ const Editor: FC<Props> = (props): ReactElement => {
 
   return (
     <div
-      style={{ height: "100vh" }}
-      className="problem-page-right-container p-2"
+      className="h-[100vh] problem-page-right-container p-2"
     >
       <Header/>
       <div>
@@ -442,20 +442,22 @@ const Editor: FC<Props> = (props): ReactElement => {
       </div>
       
       {showConsole && (
-        <Tabs variant="pills" className="text-white p-5">
-          <Tabs.Tab label="Input">{handleOutput()}</Tabs.Tab>
-          <Tabs.Tab label="Output">
-            <textarea
-              className="w-full placeholder:text-base placeholder:p-1 bg-gray-800 border-none text-white outline-none rounded-lg p-1 text-lg"
-              rows={6}
-              id="input-btn"
-              placeholder="Custom Input here"
-              value={inputValue}
-              onChange={(e) => changeInputValue(e.target.value)}
-              spellCheck="false"
-            />
-          </Tabs.Tab>
-        </Tabs>
+        <div className="h-auto scrollbar-hide overflow-scroll">
+          <Tabs variant="pills" className="text-white p-5">
+            <Tabs.Tab label="Input">{handleOutput()}</Tabs.Tab>
+            <Tabs.Tab label="Output">
+              <textarea
+                className="w-full placeholder:text-base placeholder:p-1 bg-gray-800 border-none text-white outline-none rounded-lg p-1 text-lg"
+                rows={6}
+                id="input-btn"
+                placeholder="Custom Input here"
+                value={inputValue}
+                onChange={(e) => changeInputValue(e.target.value)}
+                spellCheck="false"
+              />
+            </Tabs.Tab>
+          </Tabs>
+        </div>
       )}
     </div>
   );

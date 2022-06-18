@@ -1,7 +1,7 @@
 import { Checkbox, CheckboxGroup } from "@mantine/core";
-import React from "react";
+import React, {Dispatch, SetStateAction} from "react";
 
-function CheckBox({ setDifficulty = () => {} }) {
+function StyledCheckBox({ setDifficulty = () => {} }: { setDifficulty: Dispatch<SetStateAction<string[]>> }) {
   return (
     <div className="space-y-2">
       <CheckboxGroup
@@ -17,4 +17,4 @@ function CheckBox({ setDifficulty = () => {} }) {
   );
 }
 
-export default React.memo(CheckBox);
+export default React.memo(StyledCheckBox);

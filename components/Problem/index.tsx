@@ -1,112 +1,126 @@
-import { ReactElement, useCallback, useContext, useEffect, useState, } from "react";
-
-import { AiOutlineSearch } from "react-icons/ai";
-import { Input} from '@mantine/core';
-import Checkbox from '../Checkbox'
-
-import Table from "../Table";
-import {GoogleIcon, FacebookIcon, AmazonIcon, MicrosoftIcon, PlusIcon} from '../../SVG'
-import CompanyTags from "../CompanyTags/CompanyTags";
-import WrapperLayout from "../../Layout/Layout";
-import { Context } from "../../Context";
-import Fade from 'react-reveal/Fade';
+import {
+  ReactElement,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useDebouncedValue } from "@mantine/hooks";
-import MultiSelect from '../MultiSelect'
-import Divider from '../Divider'
-import {useGetFilteredProblemSetMutation} from 'apis/problemSet'
 
+import StyledContainer from "Layout/Layout";
+import {
+  GoogleIcon,
+  FacebookIcon,
+  AmazonIcon,
+  MicrosoftIcon,
+  PlusIcon,
+} from "SVG";
+import { getProblems, updateProblemList } from "redux/actions";
+import { problemListI } from "redux/interfaces";
+import CompanyTags from "components/CompanyTags/CompanyTags";
+import Table from "components/Table";
+import { filterProblemData } from "components/api/apis";
+import Checkbox from "components/Checkbox";
+import MultiSelect from "components/MultiSelect";
+import Divider from "components/Divider";
+import { Context } from "Context";
+import SearchInput from "components/InputField";
+import { useGetFilteredProblemSetMutation } from "apis/problemSet";
 
 const companyData = [
   {
     id: 1,
-  Icon: <GoogleIcon/>,
-  name: "Google Questions",
-}, 
-{
-  id: 2,
-  Icon: <FacebookIcon/>,
-  name: "Facebook Questions",
-},
-{
-  id: 3,
-  Icon: <AmazonIcon/>,
-  name: "Amazon Questions",
-},
-{
-  id: 4,
-  Icon: <MicrosoftIcon/>,
-  name: "Microsoft Questions",
-},
-{
-  id: 5,
-  Icon: <PlusIcon/>,
-  name: "Plus",
-}
-]
+    Icon: <GoogleIcon />,
+    name: "Google Questions",
+  },
+  {
+    id: 2,
+    Icon: <FacebookIcon />,
+    name: "Facebook Questions",
+  },
+  {
+    id: 3,
+    Icon: <AmazonIcon />,
+    name: "Amazon Questions",
+  },
+  {
+    id: 4,
+    Icon: <MicrosoftIcon />,
+    name: "Microsoft Questions",
+  },
+  {
+    id: 5,
+    Icon: <PlusIcon />,
+    name: "Plus",
+  },
+];
 
-function Problem(props): ReactElement {  
+function Problem(props): ReactElement {
+  const dispatch = useDispatch();
+  const { tags: tagsList } = useContext(Context);
+  const problemList = useSelector((state: any) => state.problemList);
+
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [difficulty, setDifficulty] = useState<string[]>([]);
   const [tags, setTags] = useState([]);
-  const {tags :tagsList} = useContext(Context)
 
   const [debounced] = useDebouncedValue(searchQuery, 500);
 
-  const [getFilteredData, { status, data: filteredDataList,  isLoading: filteredDatalistLoading }] = useGetFilteredProblemSetMutation();
+  const [
+    getFilteredData,
+    { status, data: filteredDataList, isLoading: filteredDatalistLoading },
+  ] = useGetFilteredProblemSetMutation();
 
-  console.log('filteredDataList', filteredDataList)
-  
-  
-  const isLoading =  filteredDatalistLoading;
+  console.log("filteredDataList", filteredDataList);
 
-  const filteredData = useCallback( async (debounced) => {
-    getFilteredData({
-      keyword: debounced,
-      tags: tags,
-      difficulty: difficulty,
-    })
-}, [getFilteredData, tags, difficulty])
+  const isLoading = filteredDatalistLoading;
 
-  
+  const filteredData = useCallback(
+    async (debounced: string) => {
+      const { data } = await filterProblemData.post<problemListI[]>("/", {
+        keyword: debounced,
+        tags: tags,
+        difficulty: difficulty,
+      });
+      dispatch(updateProblemList(data));
+    },
+    [tags, difficulty, dispatch]
+  );
+
   useEffect(() => {
-    filteredData(debounced)
-  }, [tags, difficulty, debounced, filteredData])
-  
+    filteredData(debounced);
+  }, [tags, difficulty, debounced, filteredData]);
 
-  const onSearchQueryChange = e => {
-    setSearchQuery(e.target.value);
-  };
+  // const onSearchQueryChange = e => {
+  //   setSearchQuery(e.target.value);
+  // };
 
   return (
-    <WrapperLayout>
+    <StyledContainer className="space-y-10 mt-10">
       <div className="grid grid-cols-2 gap-4 md:grid-cols-6 md:gap-10 mb-10">
-        {companyData.map(company => (
-          <Fade bottom key={company.id}>
-            <CompanyTags Icon={company.Icon} title={company.name} />
-          </Fade>
+        {companyData.map((company) => (
+          <CompanyTags
+            key={company.id}
+            Icon={company.Icon}
+            title={company.name}
+          />
         ))}
       </div>
-    <Divider/>     
-    <MultiSelect
-      tagsList={tagsList}
-      setTags={setTags}
-    />
-    <div className="space-x-3 w-full block">
-      <Input
-        className="w-full md:w-1/2"
-        icon={<AiOutlineSearch className="text-custom-indigo"/>}
-        placeholder="Search Questions"
-        styles={{ rightSection: { pointerEvents: 'none' } }}
-        radius="xl"
-        value={searchQuery}
-        onChange={onSearchQueryChange}
-      />
-    </div>
-    <Checkbox setDifficulty={setDifficulty}/>
-    <div className="flex flex-col">
-    <Table isLoading={isLoading} dataList={filteredDataList} />
-    </div>
-    </WrapperLayout>
+      <Divider />
+      <MultiSelect tagsList={tagsList} setTags={setTags} />
+      {/* SEARCH BAR */}
+      <div className="space-x-3 w-full block">
+        <SearchInput
+          searchQuery={searchQuery}
+          onSearchQueryChange={setSearchQuery}
+        />
+      </div>
+      <Checkbox setDifficulty={setDifficulty} />
+      <div className="flex flex-col">
+        <Table dataList={problemList} />
+      </div>
+    </StyledContainer>
   );
 }
 

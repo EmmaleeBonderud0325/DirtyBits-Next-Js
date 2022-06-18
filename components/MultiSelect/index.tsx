@@ -1,10 +1,9 @@
-import React from "react";
+import React, {Dispatch, SetStateAction} from "react";
 import { MultiSelect } from "@mantine/core";
 
-function CustomSelect({ tagsList = [], setTags = () => {} }) {
+function CustomSelect({ tagsList = [], setTags = () => {} }: {tagsList: string[], setTags: Dispatch<SetStateAction<any[]>>}) {
   return (
     <MultiSelect
-      // @ts-ignore
       data={tagsList}
       className="w-full md:w-1/2"
       placeholder="Select Tags"
