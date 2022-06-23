@@ -22,9 +22,9 @@ import { Loader } from "@mantine/core";
 import GoogleButton from "components/authProviders/Google";
 import GitHubButton from "components/authProviders/Github";
 import { useAppDispatch } from "app/hooks";
-import { setSigninError, setUserData } from "features/UserData";
-import {useSelector} from 'react-redux'
-import Router from 'next/router'
+import { loginUser, setSigninError, setUserData } from "features/UserData";
+import { useSelector } from "react-redux";
+import Router from "next/router";
 
 // interface Props {
 //   googleSpinner: boolean;
@@ -51,8 +51,8 @@ function Signin(): ReactElement {
   const dispatch = useAppDispatch();
   // const router = useRouter();
   const antIcon = <Loader color="indigo" size="sm" />;
-  const user = useSelector((state: any) => state.userData)
-  console.log('user', user)
+  const user = useSelector((state: any) => state.userData);
+  console.log("user", user);
   const schema = yup
     .object({
       email: yup
@@ -64,10 +64,10 @@ function Signin(): ReactElement {
     })
     .required();
 
-  // let [isError, setIsError] = useState<ErrorsI>({
-  //   email: { error: false, details: "" },
-  //   password: { error: false, details: "" },
-  // });
+  let [isError, setIsError] = useState<ErrorsI>({
+    email: { error: false, details: "" },
+    password: { error: false, details: "" },
+  });
 
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const {
@@ -79,23 +79,25 @@ function Signin(): ReactElement {
   });
 
   const submitLoginForm = async (data: any) => {
-    setIsDisabled(true);
-    try {
-      try {
-        const response = await signinApi.post<TokensI>("/", data)
-        dispatch(setUserData({
-          access: response.data.access,
-          refresh: response.data.refresh,
-          remember_me: data.remember_me,
-        }))
-        Router.push('/')
-      }catch (e) {
-        dispatch(setSigninError({ errorString: "Invalid Credentials !" }));
-      }
-    } catch (e) {
-      dispatch(setSigninError({ errorString: "Server Error !" }));
-    }
-    setIsDisabled(false);
+    // console.log(data);
+    dispatch(loginUser(data));
+    // setIsDisabled(true);
+    // try {
+    //   try {
+    //     const response = await signinApi.post<TokensI>("/", data)
+    //     dispatch(setUserData({
+    //       access: response.data.access,
+    //       refresh: response.data.refresh,
+    //       remember_me: data.remember_me,
+    //     }))
+    //     Router.push('/')
+    //   }catch (e) {
+    //     dispatch(setSigninError({ errorString: "Invalid Credentials !" }));
+    //   }
+    // } catch (e) {
+    //   dispatch(setSigninError({ errorString: "Server Error !" }));
+    // }
+    // setIsDisabled(false);
     // dispatch(updateSignInSpinner(false));
   };
 
@@ -159,22 +161,24 @@ function Signin(): ReactElement {
                       control={control}
                       render={({ field: { onChange, onBlur, value } }) => (
                         <TextInput
-                        key="email"
-                        error={errors.email?.message || isError.email?.details}
-                        value={value}
-                        radius="md"
-                        onChange={onChange}
-                        onBlur={() => {
-                          setIsError({
-                            ...isError,
-                            email: { error: false, details: "" },
-                          });
-                          onBlur();
-                        }}
-                        label="Email"
-                        placeholder="your email address"
-                        required
-                        size="sm"
+                          key="email"
+                          error={
+                            errors.email?.message || isError.email?.details
+                          }
+                          value={value}
+                          radius="md"
+                          onChange={onChange}
+                          onBlur={() => {
+                            setIsError({
+                              ...isError,
+                              email: { error: false, details: "" },
+                            });
+                            onBlur();
+                          }}
+                          label="Email"
+                          placeholder="your email address"
+                          required
+                          size="sm"
                         />
                       )}
                     />
@@ -185,22 +189,24 @@ function Signin(): ReactElement {
                       control={control}
                       render={({ field: { onChange, onBlur, value } }) => (
                         <PasswordInput
-                        key="password"
-                        error={errors.password?.message || isError.password.details}
-                        radius="md"
-                        placeholder="Your password here"
-                        value={value}
-                        onBlur={() => {
-                          setIsError({
-                            ...isError,
-                            password: { error: false, details: "" },
-                          });
-                          onBlur();
-                        }}
-                        onChange={onChange}
-                        label="Password"
-                        size="sm"
-                        required
+                          key="password"
+                          error={
+                            errors.password?.message || isError.password.details
+                          }
+                          radius="md"
+                          placeholder="Your password here"
+                          value={value}
+                          onBlur={() => {
+                            setIsError({
+                              ...isError,
+                              password: { error: false, details: "" },
+                            });
+                            onBlur();
+                          }}
+                          onChange={onChange}
+                          label="Password"
+                          size="sm"
+                          required
                         />
                       )}
                     />

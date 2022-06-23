@@ -6,8 +6,14 @@ import Hero from "components/Hero";
 import Feature from "components/Feature/index";
 import Navbar from "components/NavbarT";
 import Terminal from "components/Terminal";
+import { getUserData } from "features/UserData";
+import { useAppDispatch } from "app/hooks";
 
 function Homepage() {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getUserData());
+  }, []);
   return (
     <div className="backgroundGrdient">
       <Head>
@@ -26,5 +32,6 @@ function Homepage() {
 export default Homepage;
 
 Homepage.getLayout = function PageLayout(page: any) {
+  
   return <>{page}</>;
 };

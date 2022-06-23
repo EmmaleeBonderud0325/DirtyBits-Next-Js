@@ -12,8 +12,8 @@ const initialState: InitialState = {
 };
 
 export const spinnerReducer = createReducer(initialState, (builder) => {
-  builder.addCase(setGoogleSpinner, (state, acttion) => {
-    state.googleSpinner = acttion.payload;
+  builder.addCase(setGoogleSpinner, (state, action) => {
+    state.googleSpinner = action.payload;
   });
   builder.addCase(setGithubSpinner, (state, action) => {
     state.githubSpinner = action.payload;

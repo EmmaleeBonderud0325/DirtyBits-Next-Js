@@ -1,6 +1,6 @@
 import "@fontsource/space-grotesk";
 import type { AppProps } from "next/app";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { useRouter } from "next/router";
 import { NextPage } from "next";
 import { MantineProvider } from "@mantine/core";
@@ -75,10 +75,5 @@ function MyApp({ Component, pageProps }: Props) {
     </>
   );
 }
-
-// const makeStore = () => store;
-// const wrapper = createWrapper(makeStore);
-
-// export default wrapper.withRedux(MyApp);
 
 export default MyApp;

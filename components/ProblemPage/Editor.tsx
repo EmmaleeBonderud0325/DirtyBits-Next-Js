@@ -8,8 +8,14 @@ import { VscRunAll } from "react-icons/vsc";
 
 import { BsCheck2Circle } from "react-icons/bs";
 import { ImCross } from "react-icons/im";
-import { Alert, Button, Group, Loader, Text, UnstyledButton } from '@mantine/core';
-
+import {
+  Alert,
+  Button,
+  Group,
+  Loader,
+  Text,
+  UnstyledButton,
+} from "@mantine/core";
 
 import { base64_encode } from "./Helper2";
 require("codemirror/lib/codemirror.css");
@@ -35,16 +41,17 @@ import {
   userDataI,
 } from "../../redux/interfaces";
 import { IRootState } from "../../redux/reducers";
-import {BsTerminal} from "react-icons/bs";
+import { BsTerminal } from "react-icons/bs";
 import dynamic from "next/dynamic";
-import { CaretDown } from 'tabler-icons-react';
+import { CaretDown } from "tabler-icons-react";
 
 const TabView = dynamic(() =>
-  import('primereact/tabview').then((mod) => mod.TabView)
-)
+  import("primereact/tabview").then((mod) => mod.TabView)
+);
 
-import { Tabs } from '@mantine/core';
-import useSavedCode from 'hooks/savedCode'
+import { Tabs } from "@mantine/core";
+import useSavedCode from "hooks/savedCode";
+import { RootState } from "app/store";
 
 let CodeMirror = null;
 const FONT_SIZE = 20;
@@ -138,14 +145,15 @@ interface Props {
 
 const Editor: FC<Props> = (props): ReactElement => {
   const dispatch = useDispatch();
-  const [savedCode, savedLanguage, savedSubmissionTime] = useSavedCode(1)
+  const [savedCode, savedLanguage, savedSubmissionTime] = useSavedCode(1);
 
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(false);
 
-  const [currentEditorValue, setCurrentEditorValue] = useState<string>(savedCode);
-  
+  const [currentEditorValue, setCurrentEditorValue] =
+    useState<string>(savedCode);
+
   let [customInput, setCustomInput] = useState<boolean>(false);
   let [inputValue, changeInputValue] = useState<string>("");
   let [outputValue, changeOutputValue] = useState<string>(
@@ -157,10 +165,14 @@ const Editor: FC<Props> = (props): ReactElement => {
   const [value, setValue] = useState<number>(0);
 
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const [testCaseResult, setTestCaseResult] = useState<any>()
+  const [testCaseResult, setTestCaseResult] = useState<any>();
 
-  const { is_logged_in } = useSelector((state: IRootState) => state.userData.data);
-  const totalSampleTestCases  = useSelector((state: IRootState) => state.problemData.sample_Tc);
+  const { is_logged_in } = useSelector(
+    (state: RootState) => state.userData.is_logged_in
+  );
+  const totalSampleTestCases = useSelector(
+    (state: IRootState) => state.problemData.sample_Tc
+  );
 
   useEffect(() => {
     return () => {
@@ -210,7 +222,7 @@ const Editor: FC<Props> = (props): ReactElement => {
       })
       .then((result) => {
         console.log("result", result.data);
-        setTestCaseResult(result.data)
+        setTestCaseResult(result.data);
         setIsDisabled(false);
         setShowLoader(false);
         if (result.data["status"] !== "Accepted") {
@@ -283,7 +295,7 @@ const Editor: FC<Props> = (props): ReactElement => {
   let options = {
     mode: editorLanguage.value,
     theme: themeValue.value,
-    
+
     lineWrapping: true,
     smartIndent: true,
     foldGutter: true,
@@ -328,61 +340,106 @@ const Editor: FC<Props> = (props): ReactElement => {
     setShowConsole(!showConsole);
   };
 
-  console.log('test cases result', testCaseResult)
+  console.log("test cases result", testCaseResult);
 
-  const successArray = Array.apply(null, Array(totalSampleTestCases)).map(function (x, i) { return i; })
-  
+  const successArray = Array.apply(null, Array(totalSampleTestCases)).map(
+    function (x, i) {
+      return i;
+    }
+  );
+
   const handleOutput = () => {
-    if(showLoader){
-      return <Loader className="w-full md:h-10 lg:h-20 xl:h-24 mt-10 flex justify-center items-center" color="violet" variant="bars" />
-    }else if(!testCaseResult && showConsole){
+    if (showLoader) {
+      return (
+        <Loader
+          className="w-full md:h-10 lg:h-20 xl:h-24 mt-10 flex justify-center items-center"
+          color="violet"
+          variant="bars"
+        />
+      );
+    } else if (!testCaseResult && showConsole) {
       return (
         <div className="w-full md:h-10 lg:h-20 xl:h-24 mt-10 flex justify-center items-center">
           <pre className="text-2xl font-bold">{outputValue}</pre>
-          </div>
-      )
-    }else {
-      if(testCaseResult.status === 'Accepted') {
-          return (
-            <div className="pl-4">
-              <pre className="text-left mb-4 text-4xl font-bold text-green-500">
-                <span className="inline-flex items-center gap-4">
-                <BsCheck2Circle/>
+        </div>
+      );
+    } else {
+      if (testCaseResult.status === "Accepted") {
+        return (
+          <div className="pl-4">
+            <pre className="text-left mb-4 text-4xl font-bold text-green-500">
+              <span className="inline-flex items-center gap-4">
+                <BsCheck2Circle />
                 {outputValue}
-                </span>
-              </pre>
-              <h1 className="text-left text-slate-400 tracking-wider text-2xl font-bold">{totalSampleTestCases}/{totalSampleTestCases} Test Cases Passed</h1>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-                {successArray.map(index => <Alert children={null} key={index} style={{ marginTop: 20, maxWidth:'13rem', maxHeight:'5rem' }} icon={<BsCheck2Circle size={16} />} variant="filled" title={`Test Case ${index + 1}`} color="green" radius="lg"/>)}
-              </div>
+              </span>
+            </pre>
+            <h1 className="text-left text-slate-400 tracking-wider text-2xl font-bold">
+              {totalSampleTestCases}/{totalSampleTestCases} Test Cases Passed
+            </h1>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+              {successArray.map((index) => (
+                <Alert
+                  children={null}
+                  key={index}
+                  style={{
+                    marginTop: 20,
+                    maxWidth: "13rem",
+                    maxHeight: "5rem",
+                  }}
+                  icon={<BsCheck2Circle size={16} />}
+                  variant="filled"
+                  title={`Test Case ${index + 1}`}
+                  color="green"
+                  radius="lg"
+                />
+              ))}
             </div>
-          )
-      }else if(testCaseResult.status === 'error'){
+          </div>
+        );
+      } else if (testCaseResult.status === "error") {
         return (
           <div className="pl-4 pt-4">
-              <pre className="text-left mb-4 text-3xl font-bold text-red-500">
-                <span className="inline-flex items-center gap-4">
-                <ImCross/>
+            <pre className="text-left mb-4 text-3xl font-bold text-red-500">
+              <span className="inline-flex items-center gap-4">
+                <ImCross />
                 {testCaseResult.error}
-                </span>
-              </pre>
-              <h1 className="text-left text-slate-400 tracking-wider text-2xl font-bold">{testCaseResult['testCase No'] - 1}/{totalSampleTestCases} Test Cases Passed</h1>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-                {successArray.map(index => <Alert children={null} key={index} style={{ marginTop: 20, maxWidth:'13rem', maxHeight:'5rem' }} icon={<ImCross size={16} />} variant="filled" title={`Test Case ${index + 1}`} color={`${index + 1 < testCaseResult.error ? 'green' : 'red'}`} radius="lg"/>)}
-              </div>
+              </span>
+            </pre>
+            <h1 className="text-left text-slate-400 tracking-wider text-2xl font-bold">
+              {testCaseResult["testCase No"] - 1}/{totalSampleTestCases} Test
+              Cases Passed
+            </h1>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+              {successArray.map((index) => (
+                <Alert
+                  children={null}
+                  key={index}
+                  style={{
+                    marginTop: 20,
+                    maxWidth: "13rem",
+                    maxHeight: "5rem",
+                  }}
+                  icon={<ImCross size={16} />}
+                  variant="filled"
+                  title={`Test Case ${index + 1}`}
+                  color={`${
+                    index + 1 < testCaseResult.error ? "green" : "red"
+                  }`}
+                  radius="lg"
+                />
+              ))}
+            </div>
           </div>
-        )
-      }else {
-        return <pre className="text-left font-bold">{outputValue}</pre>
+        );
+      } else {
+        return <pre className="text-left font-bold">{outputValue}</pre>;
       }
     }
-  }
+  };
 
   return (
-    <div
-      className="h-[100vh] problem-page-right-container p-2"
-    >
-      <Header/>
+    <div className="h-[100vh] problem-page-right-container p-2">
+      <Header />
       <div>
         {CodeMirror && (
           <CodeMirror
@@ -391,56 +448,62 @@ const Editor: FC<Props> = (props): ReactElement => {
             options={options}
             onBeforeChange={(_: any, __: any, value: string) => {
               // dispatch(changeEditorValue(value));
-              setCurrentEditorValue(value)
+              setCurrentEditorValue(value);
             }}
-            
           />
         )}
       </div>
       <div className="absolute px-5 py-1 left-0 bottom-0 right-0">
         <div className="flex justify-between">
-          <UnstyledButton className="flex items-center text-white text-base font-semibold" onClick={handleConsole}>
-              <div>
-                <Text>Console</Text>
-              </div>
-              <CaretDown
-                size={14}
-                strokeWidth={2}
-                color={'#fff'}
-                className="ml-2 mt-1"
-              />
+          <UnstyledButton
+            className="flex items-center text-white text-base font-semibold"
+            onClick={handleConsole}
+          >
+            <div>
+              <Text>Console</Text>
+            </div>
+            <CaretDown
+              size={14}
+              strokeWidth={2}
+              color={"#fff"}
+              className="ml-2 mt-1"
+            />
           </UnstyledButton>
           <div className="flex space-x-3">
             <SmoothList>
               <Button
                 className="text-black"
-                leftIcon={<VscRunAll className="text-lg group-hover:animate-bounce" />}
+                leftIcon={
+                  <VscRunAll className="text-lg group-hover:animate-bounce" />
+                }
                 onClick={handleRunCode}
                 disabled={isDisabled}
                 loading={isDisabled}
                 variant="white"
                 radius="xl"
-              >     
+              >
                 Run
               </Button>
             </SmoothList>
             <SmoothList>
               <Button
                 className="text-black"
-                leftIcon={<AiOutlineSend className="text-lg group-hover:rotate-45 transition-all ease-in-out" />}
+                leftIcon={
+                  <AiOutlineSend className="text-lg group-hover:rotate-45 transition-all ease-in-out" />
+                }
                 onClick={handleSubmitCode}
                 disabled={isSubmitDisabled}
                 loading={isSubmitDisabled}
                 variant="white"
                 radius="xl"
-              >     
+              >
                 Submit
               </Button>
             </SmoothList>
           </div>
         </div>
       </div>
-      
+
       {showConsole && (
         <div className="h-auto scrollbar-hide overflow-scroll">
           <Tabs variant="pills" className="text-white p-5">
