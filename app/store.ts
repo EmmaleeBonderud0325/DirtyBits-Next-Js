@@ -1,21 +1,12 @@
-import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
-import { reducers } from "features/reducers";
-import {problemSetApi} from 'apis/problemSet'
-import {submissionListApi} from 'apis/ProblemPage/submissionList'
-import {problemDataApi} from 'apis/ProblemPage/problemData'
+import {configureStore} from '@reduxjs/toolkit'
+import {setupListeners} from '@reduxjs/toolkit/query/react'
+import {authApi} from 'apis/auth'
+import userDataReducer from 'features/UserData/userDataSlice'
 
-export const store = configureStore({
-  reducer: reducers,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(problemSetApi.middleware).concat(submissionListApi.middleware).concat(problemDataApi.middleware),
-  // reducer: reducers,
-});
-
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->;
+export const store =  configureStore({
+    reducer: {
+        userData : userDataReducer,
+        [authApi.reducerPath] : authApi.reducer,     
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(authApi.middleware)
+})

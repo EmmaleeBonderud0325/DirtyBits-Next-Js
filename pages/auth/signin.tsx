@@ -4,7 +4,7 @@ import {
   useState,
   Link,
   Head,
-  // useRouter,
+  useRouter,
   // Cookies,
   // useDispatch,
   SmoothList,
@@ -21,22 +21,12 @@ import * as yup from "yup";
 import { Loader } from "@mantine/core";
 import GoogleButton from "components/authProviders/Google";
 import GitHubButton from "components/authProviders/Github";
-import { useAppDispatch } from "app/hooks";
-import { setSigninError, setUserData } from "features/UserData";
-import {useSelector} from 'react-redux'
-import Router from 'next/router'
+import {useDispatch, useSelector} from 'react-redux'
+import {useLoginMutationMutation} from 'apis/auth'
+import Cookies from 'js-cookie'
+import { setUserData } from "features/UserData/userDataSlice";
+import jwtDecode from "jwt-decode";
 
-// interface Props {
-//   googleSpinner: boolean;
-//   githubSpinner: boolean;
-//   signInSpinner: boolean;
-// }
-
-// interface FormDataI {
-//   email: string;
-//   password: string;
-//   remeberMe: boolean;
-// }
 
 interface ErrorI {
   error: boolean;
@@ -54,11 +44,11 @@ interface TokensI {
 }
 
 function Signin(): ReactElement {
-  const dispatch = useAppDispatch();
-  // const router = useRouter();
+  const dispatch = useDispatch()
+  const router = useRouter();
+  const [loginUser, {data : loginUserData, isSuccess, isError, error}] = useLoginMutationMutation()
   const antIcon = <Loader color="indigo" size="sm" />;
   const user = useSelector((state: any) => state.userData)
-  console.log('user', user)
   const schema = yup
     .object({
       email: yup
@@ -69,11 +59,6 @@ function Signin(): ReactElement {
       remember_me: yup.boolean(),
     })
     .required();
-
-  // let [isError, setIsError] = useState<ErrorsI>({
-  //   email: { error: false, details: "" },
-  //   password: { error: false, details: "" },
-  // });
 
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const {
@@ -87,22 +72,19 @@ function Signin(): ReactElement {
   const submitLoginForm = async (data: any) => {
     setIsDisabled(true);
     try {
-      try {
-        const response = await signinApi.post<TokensI>("/", data)
-        dispatch(setUserData({
-          access: response.data.access,
-          refresh: response.data.refresh,
-          remember_me: data.remember_me,
-        }))
-        Router.push('/')
-      }catch (e) {
-        dispatch(setSigninError({ errorString: "Invalid Credentials !" }));
+      const response = await loginUser(data)
+      if(response?.data){
+        Cookies.set('access', response.data.access)
+        Cookies.set('refresh', response.data.refresh)
+        const parsedUser = jwtDecode(response.data.access)
+        dispatch(setUserData({user: parsedUser, isLoggedIn: true, token: response.data.access}))
+        router.push('/')
       }
+      
     } catch (e) {
-      dispatch(setSigninError({ errorString: "Server Error !" }));
+      console.error('server error', e)
     }
     setIsDisabled(false);
-    // dispatch(updateSignInSpinner(false));
   };
 
   return (
@@ -173,7 +155,6 @@ function Signin(): ReactElement {
                           radius="md"
                           onChange={onChange}
                           onBlur={() => {
-                            dispatch(setSigninError({ errorString: "" }))
                             onBlur();
                           }}
                           label="Email"
@@ -199,7 +180,6 @@ function Signin(): ReactElement {
                           placeholder="Your password here"
                           value={value}
                           onBlur={() => {
-                            dispatch(setSigninError({ errorString: "" }))
                             onBlur();
                           }}
                           onChange={onChange}
@@ -261,8 +241,8 @@ function Signin(): ReactElement {
                   </button>
                 </form>
                 <div>
-                  <GoogleButton dispatch={dispatch} loader={antIcon} />
-                  <GitHubButton dispatch={dispatch} loader={antIcon} />
+                  {/* <GoogleButton dispatch={dispatch} loader={antIcon} />
+                  <GitHubButton dispatch={dispatch} loader={antIcon} /> */}
                 </div>
               </div>
               <div className="pt-5 text-center text-gray-400 text-xs">

@@ -1,12 +1,12 @@
 import "@fontsource/space-grotesk";
 import type { AppProps } from "next/app";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { useRouter } from "next/router";
 import { NextPage } from "next";
 import { MantineProvider } from "@mantine/core";
 import NextNProgress from "nextjs-progressbar";
 import { NotificationsProvider } from "@mantine/notifications";
-import { Provider } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import { store } from "app/store";
 
 import { colors } from "constants/colors";
@@ -34,7 +34,6 @@ type Props = AppProps & {
 
 function MyApp({ Component, pageProps }: Props) {
   const router = useRouter();
-
   if (typeof window !== "undefined" && router.pathname === "/") {
     window.addEventListener("scroll", () => {
       let nav = document.getElementById("glassNavbar");
@@ -75,10 +74,5 @@ function MyApp({ Component, pageProps }: Props) {
     </>
   );
 }
-
-// const makeStore = () => store;
-// const wrapper = createWrapper(makeStore);
-
-// export default wrapper.withRedux(MyApp);
 
 export default MyApp;

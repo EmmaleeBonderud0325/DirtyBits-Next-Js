@@ -16,7 +16,7 @@ function Homepage() {
       <Navbar />
       <SmoothList>
         <Hero />
-        <Terminal />
+        {/* <Terminal /> */}
         <Feature title="Features" description="Some of our basics features" />
       </SmoothList>
     </div>

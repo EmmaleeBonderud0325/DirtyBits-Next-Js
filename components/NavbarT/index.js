@@ -4,8 +4,11 @@ import React from "react";
 import { FaRegUser } from "react-icons/fa";
 import logo from "public/logo.png";
 import Image from "next/image";
+import { useDispatch } from "react-redux";
+import { logout } from "features/UserData/userDataSlice";
 
 function Navbar() {
+  const dispatch = useDispatch();
   return (
     <div id="glassNavbar" className="glassNavbar">
       <Container size="xl">
@@ -34,7 +37,10 @@ function Navbar() {
               </Link>
               <div className="h-0.5 bg-custom-indigo scale-x-0 group-hover:scale-100 transition-transform origin-left rounded-full duration-300 ease-out"></div>
             </li>
-            <li className="group text-lg font-medium hover:cursor-pointer tracking-wide space-y-1">
+            <li
+              onClick={() => dispatch(logout())}
+              className="group text-lg font-medium hover:cursor-pointer tracking-wide space-y-1"
+            >
               {/* <Link href="/blogs"> */}
               {/* <a className="text-lg no-underline text-white"> */}
               <FaRegUser />
