@@ -4,15 +4,13 @@ import { ReactNode, useEffect } from "react";
 import { useRouter } from "next/router";
 import { NextPage } from "next";
 import { MantineProvider } from "@mantine/core";
-import NextNProgress from "nextjs-progressbar";
-import { NotificationsProvider } from "@mantine/notifications";
+
 import { Provider } from "react-redux";
 import { store } from "app/store";
 
 import { colors } from "constants/colors";
 import Context from "../Context";
 import theme from "theme/theme";
-import Navbar from "components/Navbar2.0";
 
 import "react-quill/dist/quill.snow.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
@@ -23,6 +21,7 @@ import "styles/Profile/profile.css";
 import "../styles/tinymce.css";
 import "../styles/Editor.css";
 import "../styles/index.css";
+import Layout from "Layout/Layout";
 
 type Page<P = {}> = NextPage<P> & {
   getLayout?: (page: ReactNode) => ReactNode;
@@ -49,12 +48,11 @@ function MyApp({ Component, pageProps }: Props) {
   if (Component.getLayout) {
     return Component.getLayout(
       <MantineProvider theme={theme}>
-        <NotificationsProvider position="top-right" zIndex={2077}>
-          <NextNProgress height={2} color={colors.primary} />
-          <Provider store={store}>
+        <Provider store={store}>
+          <Layout>
             <Component {...pageProps} />
-          </Provider>
-        </NotificationsProvider>
+          </Layout>
+        </Provider>
       </MantineProvider>
     );
   }
@@ -63,13 +61,11 @@ function MyApp({ Component, pageProps }: Props) {
     <>
       <Context>
         <MantineProvider theme={theme}>
-          <NotificationsProvider position="top-right" zIndex={2077}>
-            <NextNProgress height={2} color={colors.primary} />
-            <Provider store={store}>
-              <Navbar />
+          <Provider store={store}>
+            <Layout>
               <Component {...pageProps} />
-            </Provider>
-          </NotificationsProvider>
+            </Layout>
+          </Provider>
         </MantineProvider>
       </Context>
     </>
