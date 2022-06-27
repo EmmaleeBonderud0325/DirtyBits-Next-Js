@@ -4,13 +4,13 @@ import { ReactNode, useEffect } from "react";
 import { useRouter } from "next/router";
 import { NextPage } from "next";
 import { MantineProvider } from "@mantine/core";
-
-import { Provider } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import { store } from "app/store";
 
 import { colors } from "constants/colors";
 import Context from "../Context";
 import theme from "theme/theme";
+import Layout from "components/Layout";
 
 import "react-quill/dist/quill.snow.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
@@ -21,7 +21,6 @@ import "styles/Profile/profile.css";
 import "../styles/tinymce.css";
 import "../styles/Editor.css";
 import "../styles/index.css";
-import Layout from "Layout/Layout";
 
 type Page<P = {}> = NextPage<P> & {
   getLayout?: (page: ReactNode) => ReactNode;
@@ -33,7 +32,6 @@ type Props = AppProps & {
 
 function MyApp({ Component, pageProps }: Props) {
   const router = useRouter();
-
   if (typeof window !== "undefined" && router.pathname === "/") {
     window.addEventListener("scroll", () => {
       let nav = document.getElementById("glassNavbar");

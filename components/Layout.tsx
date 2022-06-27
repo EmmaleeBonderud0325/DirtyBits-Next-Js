@@ -3,10 +3,13 @@ import { NotificationsProvider } from "@mantine/notifications";
 import NextNProgress from "nextjs-progressbar";
 import { colors } from "constants/colors";
 import Navbar from "components/Navbar2.0";
+import { useAppDispatch } from "app/hooks";
+import { getUserData } from "features/UserData";
 
 const Layout = ({ children }) => {
+  const dispatch = useAppDispatch();
   useEffect(() => {
-    console.log("Layout called");
+    dispatch(getUserData());
   }, []);
   return (
     <div>
