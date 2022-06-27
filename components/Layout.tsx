@@ -9,13 +9,13 @@ const layout = ({ children }) => {
     console.log("UseEffect Called");
   }, []);
   return (
-    <>
+    <div>
       <NotificationsProvider position="top-right" zIndex={2077}>
         <NextNProgress height={2} color={colors.primary} />
         <Navbar />
         {children}
       </NotificationsProvider>
-    </>
+    </div>
   );
 };
 
