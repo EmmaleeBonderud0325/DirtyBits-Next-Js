@@ -1,17 +1,17 @@
 import React, { useEffect } from "react";
-import Navbar from "components/Navbar2.0";
-import NextNProgress from "nextjs-progressbar";
 import { NotificationsProvider } from "@mantine/notifications";
+import NextNProgress from "nextjs-progressbar";
 import { colors } from "constants/colors";
+import Navbar from "components/Navbar2.0";
 
-const layout = ({ children }) => {
+const Layout = ({ children }) => {
   useEffect(() => {
-    console.log("UseEffect Called");
+    console.log("Layout called");
   }, []);
   return (
     <div>
+      <NextNProgress height={2} color={colors.primary} />
       <NotificationsProvider position="top-right" zIndex={2077}>
-        <NextNProgress height={2} color={colors.primary} />
         <Navbar />
         {children}
       </NotificationsProvider>
@@ -19,4 +19,4 @@ const layout = ({ children }) => {
   );
 };
 
-export default layout;
+export default Layout;
