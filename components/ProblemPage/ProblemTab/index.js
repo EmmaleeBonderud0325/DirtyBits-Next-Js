@@ -1,31 +1,21 @@
-import Link from "next/link";
-import React, { useState } from "react";
-import SmoothList from "react-smooth-list";
-import {
-  AiOutlineDislike,
-  AiOutlineLike,
-  AiFillLike,
-  AiFillDislike,
-  AiOutlineBars,
-} from "react-icons/ai";
-import { IoPlayBackOutline } from "react-icons/io5";
-import { BsFillBookmarkFill, BsBookmark } from "react-icons/bs";
-import IoTable from "../IoTable";
-import { BiTrendingUp } from "react-icons/bi";
-import { VscCollapseAll } from "react-icons/vsc";
-import { useDispatch, useSelector } from "react-redux";
-import useHtmlParser from "hooks/htmlParser";
 import { Button } from "@mantine/core";
-import {
-  bookmarkStatusHandler,
-  downvoteHandler,
-  upvoteHandler,
-} from "redux/actions/ProblemPage";
+import useHtmlParser from "hooks/htmlParser";
 import useGetProblemDataQuery from "hooks/useGetProblemData";
 import useGetProblemMetaData from "hooks/useGetProblemMetaData";
 import useHandleBookmark from "hooks/useHandleBookmark";
-import useHandleUpvote from "hooks/useHandleUpvote";
 import useHandleDownvote from "hooks/useHandleDownvote";
+import useHandleUpvote from "hooks/useHandleUpvote";
+import Link from "next/link";
+import React from "react";
+import {
+  AiFillDislike, AiFillLike, AiOutlineBars, AiOutlineDislike,
+  AiOutlineLike
+} from "react-icons/ai";
+import { BiTrendingUp } from "react-icons/bi";
+import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
+import { VscCollapseAll } from "react-icons/vsc";
+import { useSelector } from "react-redux";
+import SmoothList from "react-smooth-list";
 
 function ProblemTab(props) {
   const { is_logged_in } = useSelector((state) => state.userData.data);
